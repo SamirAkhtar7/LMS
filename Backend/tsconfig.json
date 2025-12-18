@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": "Backend/src",
     "outDir": "./dist",
     "target": "ES2020",
     "module": "CommonJS",
@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "sourceMap": true
   },
-  "include": ["src"]
+  "include": ["Backend/src"]
 }
