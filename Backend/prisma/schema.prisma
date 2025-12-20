@@ -1,14 +1,96 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// =====================
+// Prisma Schema: Loan Management System
+// =====================
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../generated/prisma-client"
 }
 
 datasource db {
   provider = "mysql"
+  // Connection URL moved to prisma.config.ts per Prisma 7+ requirements
+}
+
+// =================================USERS=====================================
+
+model User {
+  id        String   @id @default(cuid())
+  fullName  String
+  email     String   @unique
+  password  String
+  role      Role
+  phone     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  profile  UserProfile?
+  admin    Admin?
+  partner  Partner?
+  employee Employee?
+}
+
+model UserProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  dob            DateTime
+  gender         String
+  meritalStatus  String
+  educationLevel String
+  occupation     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Employee {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  employeeCode String   @unique
+  designation  String
+  branchId     String
+  department   String
+  joiningDate  DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Partner {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  partnerType      String?
+  experience       String?
+  targetArea       String?
+  totalReferrals   Int?     @default(0)
+  activeReferrals  Int?     @default(0)
+  commissionEarned Float?   @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+// =================================ENUMS=====================================
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+  PARTNER
 }
