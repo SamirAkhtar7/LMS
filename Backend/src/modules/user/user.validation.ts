@@ -1,0 +1,13 @@
+import { query, body, param } from "express-validator";
+
+export const createUserValidation = [
+  body("fullName").trim().notEmpty().withMessage("Full name is required"),
+  body("email").isEmail().withMessage("Valid email is required"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long"),
+  body("role")
+    .isIn(["ADMIN", "EMPLOYEE", "PARTNER"])
+    .withMessage("Role must be one of ADMIN, EMPLOYEE, PARTNER"),
+  body("phone").trim().notEmpty().withMessage("Phone number is required"),
+];

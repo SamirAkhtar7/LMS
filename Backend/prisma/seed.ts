@@ -1,21 +1,21 @@
 // import { Decimal } from "@prisma/client/runtime/library";
 // import prisma from "../src/db/db.js";
-// import { hashPassword } from "../src/utils/utils.js";
+import { hashPassword  }from "../src/common/utils/utils.ts";
 import {prisma }from "../src/db/prismaService.ts";
 
 async function main(): Promise<void> {
   const now: Date = new Date();
 
   let password: string = "Admin@123";
-//   password = await hashPassword(password);
+  password = await hashPassword(password);
 
   const user = await prisma.user.create({
     data: {
       fullName: "Samir Akhtar",
       email: "admin@gmail.com",
       password,
-      role: "ADMIN", // "ADMIN" | "EMPLOYEE" | "PARTNER"
-      phone: "99999999",
+      role: "ADMIN", 
+      phone: "9999999999",
       location: "Jaipur, India",
       isActive: true,
       createdAt: now,

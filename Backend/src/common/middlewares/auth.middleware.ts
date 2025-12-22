@@ -1,9 +1,16 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import ENV from "../config/env";
-import logger from "../logger";
-import { ApiError } from "../utils/apiError";
+import ENV from "../config/env.js";
+import logger from "../logger.js";
+import { ApiError } from "../utils/apiError.js";
 import { Request, Response, NextFunction } from "express";
-import { handleError } from "../utils/handleError";
+import { handleError } from "../utils/handleError.js";
+
+interface AuthPayload extends JwtPayload {
+  id: string;
+  email: string;
+  role: string;
+  // Add other user properties as needed
+}
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -17,13 +24,16 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const decoded = jwt.verify(
       accessToken,
       ENV.ACCESS_TOKEN_SECRET
-    ) as JwtPayload;
+    ) as AuthPayload;
     if (!decoded) {
       logger.warn("Invalid access token.");
       return ApiError.send(res, 401, "Invalid access token.");
     }
-    const { password, ...userWithoutPassword } = decoded 
-    req.user = userWithoutPassword;
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+      role: decoded.role,
+    };
     return next();
   } catch (error: unknown) {
     handleError(res, error, 401, "Authentication failed.");

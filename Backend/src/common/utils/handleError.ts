@@ -1,6 +1,6 @@
 import { Response } from "express";
-import logger from "../logger";
-import { ApiError } from "./apiError";
+import logger from "../logger.js";
+import { ApiError } from "./apiError.js";
 
 export const handleError = (
   res: Response,
