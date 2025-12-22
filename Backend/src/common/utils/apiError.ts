@@ -1,5 +1,5 @@
 import { Response } from "express";
-import logger from "../logger";
+import logger from "../logger.js";
 
 class ApiError extends Error {
   static send(

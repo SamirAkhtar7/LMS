@@ -1,105 +1,63 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import ENV from "../config/env";
-import logger from "../logger";
+import ENV from "../config/env.js";
+import logger from "../logger.js";
+import { JwtPayload as JWT } from "jsonwebtoken";
+
+export interface JwtPayload extends JWT {
+  id: string;
+  email: string;
+  role: "ADMIN" | "EMPLOYEE" | "PARTNER";
+}
 
 export const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "strict" as const,
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
 export const hashPassword = async (password: string) => {
-  if (!password) {
-    logger.error("Password is required for hashing.");
-    throw new Error("Password is required for hashing.");
-  }
-  logger.debug("Hashing password...");
-  return await bcrypt.hash(password, 10);
+  if (!password) throw new Error("Password is required for hashing");
+  return bcrypt.hash(password, 10);
 };
 
-export const comparePassword = async (
-  password: string,
-  hashedPassword: string
-) => {
-  logger.debug("Comparing password.");
-  return await bcrypt.compare(password, hashedPassword);
+export const comparePassword = async (password: string, hash: string) => {
+  return bcrypt.compare(password, hash);
 };
 
-interface JwtPayload {
-  id: string;
-  email: string;
-  role: string;
-}
+const getSecret = (type: "ACCESS" | "REFRESH") => {
+  const secret =
+    type === "ACCESS" ? ENV.ACCESS_TOKEN_SECRET : ENV.REFRESH_TOKEN_SECRET;
+  if (!secret) throw new Error(`${type} token secret missing in ENV`);
+  return secret;
+};
 
 export const generateAccessToken = (
   id: string,
   email: string,
   role: string
 ) => {
-  const secret = ENV.ACCESS_TOKEN_SECRET;
-  if (!secret) {
-    logger.error("JWT secret key is missing in environment variables.");
-    throw new Error("JWT secret key is missing in environment variables.");
-  }
-
-  const payload: JwtPayload = {
-    id,
-    email,
-    role,
-  };
-
-  const token = jwt.sign(payload, secret, {
+  return jwt.sign({ id, email, role }, getSecret("ACCESS"), {
     expiresIn: ENV.ACCESS_TOKEN_EXPIRY,
   });
-  logger.debug("Generated access token for id %s", id);
-  return token;
 };
-
 
 export const generateRefreshToken = (
   id: string,
   email: string,
   role: string
 ) => {
-  const secret = ENV.REFRESH_TOKEN_SECRET;
-  if (!secret) {
-    logger.error("JWT refresh secret key is missing in environment variables.");
-    throw new Error(
-      "JWT refresh secret key is missing in environment variables."
-    );
-  }
-  const payload: JwtPayload = {
-    id,
-    email,
-    role,
-  };
-
-  const token = jwt.sign(payload, secret, {
+  return jwt.sign({ id, email, role }, getSecret("REFRESH"), {
     expiresIn: ENV.REFRESH_TOKEN_EXPIRY,
   });
-  logger.debug("Generated refresh token for id %s", id);
-  return token;
 };
 
 export const verifyRefreshToken = (token: string) => {
-  const secret = ENV.REFRESH_TOKEN_SECRET;
-  if (!secret) {
-    logger.error("JWT refresh secret key is missing in environment variables.");
-    throw new Error(
-      "JWT refresh secret key is missing in environment variables."
-    );
-  }
   try {
-    const payload = jwt.verify(token, secret) as JwtPayload;
-    logger.debug(
-      "Refresh token verified for id %s",
-      (payload && payload.id) || "unknown"
-    );
-    return payload;
+    return jwt.verify(token, getSecret("REFRESH")) as JwtPayload;
   } catch (err) {
-    logger.error("Failed to verify refresh token: %o", err);
+    logger.error("Failed to verify refresh token", err);
     throw err;
   }
 };
