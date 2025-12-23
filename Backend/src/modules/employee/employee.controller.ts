@@ -1,6 +1,10 @@
-import e, { Request, Response } from "express";
-import { createEmployeeService ,getAllEmployeesService ,getEmployeeByIdService ,updateEmployeeService } from "./employee.service.js";
-
+import { Request, Response } from "express";
+import {
+  createEmployeeService,
+  getAllEmployeesService,
+  getEmployeeByIdService,
+  updateEmployeeService,
+} from "./employee.service.js";
 
 export const createEmployeeController = async (req: Request, res: Response) => {
   try {
@@ -16,36 +20,50 @@ export const createEmployeeController = async (req: Request, res: Response) => {
     if (error.message && error.message.includes("already exists")) {
       return res.status(409).json({ success: false, message: error.message });
     }
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: "Employee creation failed",
-        error: error,
-      });
+    res.status(400).json({
+      success: false,
+      message: "Employee creation failed",
+      error: error,
+    });
   }
 };
 
-export const getAllEmployeesController = async (req: Request, res: Response) => {
-
-    const employees = await getAllEmployeesService();
-    res.status(200).json({
-        success: true,  
-        message: "Employees retrieved successfully",
-        data: employees,
-    });
-
-};
-
-export const getEmployeeByIdController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const employee = await getEmployeeByIdService(id);
+export const getAllEmployeesController = async (
+  req: Request,
+  res: Response
+) => {
+  const employees = await getAllEmployeesService();
   res.status(200).json({
     success: true,
-    message: "Employee retrieved successfully",
-    data: employee,
+    message: "Employees retrieved successfully",
+    data: employees,
   });
-}
+};
+
+export const getEmployeeByIdController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  try {
+    const employee = await getEmployeeByIdService(id);
+    res.status(200).json({
+      success: true,
+      message: "Employee retrieved successfully",
+      data: employee,
+    });
+   }
+  catch (error: any) {
+    if (error.message && error.message.includes("not found")) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    res.status(400).json({
+      success: false,
+      message: "Failed to retrieve employee",
+      error: error,
+    });
+  }
+};
 
 export const updateEmployeeController = async (req: Request, res: Response) => {
   const { id } = req.params;

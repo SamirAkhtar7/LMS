@@ -70,8 +70,21 @@ export async function getAllEmployeesService() {
 export async function getEmployeeByIdService(id: string) {
   const employee = await prisma.employee.findUnique({
     where: { id },
+    include: { user: true },
   });
-  return employee;
+  if (employee) {
+    const { password, ...safeUser } = employee.user;
+    return {
+      ...employee,
+      user: safeUser,
+    };
+  }
+  else {
+    const e: any = new Error("Employee not found");
+    e.statusCode = 404;
+    throw e;
+  }
+
 }
 
 export async function updateEmployeeService(

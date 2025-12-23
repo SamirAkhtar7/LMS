@@ -4,40 +4,89 @@ import logger from "../logger.js";
 import { ApiError } from "../utils/apiError.js";
 import { Request, Response, NextFunction } from "express";
 import { handleError } from "../utils/handleError.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+  cookieOptions,
+} from "../utils/utils.js";
 
 interface AuthPayload extends JwtPayload {
   id: string;
   email: string;
   role: string;
-  // Add other user properties as needed
 }
 
-const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const accessToken =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
-    if (!accessToken) {
-      logger.warn("Access token is missing in the request.");
-      return ApiError.send(res, 401, "Access token is missing.");
+
+    // 1️⃣ Try access token
+    if (accessToken) {
+      try {
+        const decoded = jwt.verify(
+          accessToken,
+          ENV.ACCESS_TOKEN_SECRET
+        ) as AuthPayload;
+
+        req.user = {
+          id: decoded.id,
+          email: decoded.email,
+          role: decoded.role,
+        };
+
+        return next();
+      } catch (err: any) {
+        if (err.name !== "TokenExpiredError") {
+          logger.warn("Invalid access token");
+          return ApiError.send(res, 401, "Invalid access token");
+        }
+      }
     }
-    const decoded = jwt.verify(
-      accessToken,
-      ENV.ACCESS_TOKEN_SECRET
-    ) as AuthPayload;
-    if (!decoded) {
-      logger.warn("Invalid access token.");
-      return ApiError.send(res, 401, "Invalid access token.");
+
+    // 2️⃣ Try refresh token (COOKIE ONLY)
+    const refreshToken = req.cookies?.refreshToken;
+
+    if (!refreshToken) {
+      return ApiError.send(res, 401, "Authentication required");
     }
+
+    let decodedRefresh: AuthPayload;
+
+    try {
+      decodedRefresh = verifyRefreshToken(refreshToken) as AuthPayload;
+    } catch {
+      return ApiError.send(res, 401, "Invalid refresh token");
+    }
+
+    // 3️⃣ Generate new tokens
+    const newAccess = generateAccessToken(
+      decodedRefresh.id,
+      decodedRefresh.email,
+      decodedRefresh.role
+    );
+
+    const newRefresh = generateRefreshToken(
+      decodedRefresh.id,
+      decodedRefresh.email,
+      decodedRefresh.role
+    );
+
+    // 4️⃣ Set cookies
+    res.cookie("accessToken", newAccess, cookieOptions);
+    res.cookie("refreshToken", newRefresh, cookieOptions);
+
     req.user = {
-      id: decoded.id,
-      email: decoded.email,
-      role: decoded.role,
+      id: decodedRefresh.id,
+      email: decodedRefresh.email,
+      role: decodedRefresh.role,
     };
+
     return next();
-  } catch (error: unknown) {
-    handleError(res, error, 401, "Authentication failed.");
+  } catch (error) {
+    return handleError(res, error, 401, "Authentication failed");
   }
 };
 
-export default authMiddleware;

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "outDir": "dist",
     "target": "ES2020",
     "module": "NodeNext",

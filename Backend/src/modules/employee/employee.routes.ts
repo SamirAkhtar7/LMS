@@ -10,8 +10,12 @@ import {
   createEmployeeValidation,
   updateEmployeeValidation,
 } from "./employee.vaildation.js";
+import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 
 export const employeeRouter = Router();
+
+// Protect all routes defined after this middleware
+employeeRouter.use(authMiddleware);
 employeeRouter.post(
   "/",
   createEmployeeValidation,
