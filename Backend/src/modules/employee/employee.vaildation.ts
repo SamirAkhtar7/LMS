@@ -56,7 +56,7 @@ export const updateEmployeeValidation = [
     .isString()
     .trim()
     .notEmpty()
-    .withMessage("Phone is required"),
+    .withMessage("Phone must be a non-empty string"),
   body("isActive")
     .optional()
     .isBoolean()

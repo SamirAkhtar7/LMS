@@ -11,7 +11,7 @@ import { createEmployeeValidation,updateEmployeeValidation } from "./employee.va
 export const employeeRouter = Router();
 employeeRouter.post("/", createEmployeeValidation, validationResultMiddleware, createEmployeeController);
 employeeRouter.get("/all", getAllEmployeesController);
-employeeRouter.post("/:id", updateEmployeeValidation, validationResultMiddleware, updateEmployeeController);
+employeeRouter.patch("/:id", updateEmployeeValidation, validationResultMiddleware, updateEmployeeController);
 employeeRouter.get("/:id", getEmployeeByIdController);
 
 export default employeeRouter;
