@@ -1,7 +1,4 @@
 
-
-
-
 export interface CreateUser {
     fullName: string;
     email: string;
