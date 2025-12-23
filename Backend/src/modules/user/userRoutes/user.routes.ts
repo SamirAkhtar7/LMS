@@ -5,7 +5,7 @@ import {
   getUserByIdController,
   updateUserController,
 } from "../userController/user.controller.js";
-import { createUserValidation } from "../userValidation/user.validation.js";
+import { createUserValidation ,updateUserValidation } from "../userValidation/user.validation.js";
 import { validationResultMiddleware } from "../../../common/middlewares/validate.js";
 
 const router: Router = Router();
@@ -19,6 +19,6 @@ router.post(
 );
 router.get("/all", getallUsersController);
 router.get("/:id", getUserByIdController);
-router.post("/:id/update-user", updateUserController);
+router.post("/:id/update-user", updateUserValidation, validationResultMiddleware, updateUserController);
 
 export default router;
