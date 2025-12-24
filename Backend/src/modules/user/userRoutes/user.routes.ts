@@ -6,30 +6,30 @@ import {
   updateUserController,
 } from "../userController/user.controller.js";
 import {
-  createUserValidation,
-  updateUserValidation,
-} from "../userValidation/user.validation.js";
-import { validationResultMiddleware } from "../../../common/middlewares/validate.js";
+  createUserSchema,
+  updateUserSchema,
+  userIdParamSchema,
+} from "../userValidation/user.schema.js";
+import {validate} from "../../../common/middlewares/zod.middleware.js";
 import { authMiddleware } from "../../../common/middlewares/auth.middleware.js";
 
 const router: Router = Router();
 
-// Sample route to get user info
 // Protect all routes defined after this middleware
 router.use(authMiddleware);
 router.post(
   "/create",
-  createUserValidation,
-  validationResultMiddleware,
+validate(createUserSchema),
   createUserController
 );
 
 router.get("/all", getallUsersController);
-router.get("/:id", getUserByIdController);
+router.get("/:id",
+  validate(userIdParamSchema, "params"),
+  getUserByIdController);
 router.patch(
   "/:id",
-  updateUserValidation,
-  validationResultMiddleware,
+validate(updateUserSchema),
   updateUserController
 );
 

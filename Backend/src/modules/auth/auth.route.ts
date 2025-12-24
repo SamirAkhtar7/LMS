@@ -7,7 +7,5 @@ export const authRouter = Router();
 // Public route
 authRouter.post("/login", loginController);
 
-// Protect all routes defined after this middleware
-authRouter.use(authMiddleware);
 
 export default authRouter;

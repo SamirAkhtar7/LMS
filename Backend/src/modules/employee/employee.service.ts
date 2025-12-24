@@ -73,6 +73,12 @@ export async function getEmployeeByIdService(id: string) {
     include: { user: true },
   });
   if (employee) {
+    if (!employee.user) {
+      const e: any = new Error("Associated user not found");
+      e.statusCode = 404;
+      throw e;
+    }
+
     const { password, ...safeUser } = employee.user;
     return {
       ...employee,

@@ -90,7 +90,7 @@ export const updatePartnerService = async (id: string, updateData: any) => {
 const partner = await prisma.partner.findUnique({ where: { id } });
 
   if (!partner) {
-    const e: any = new Error("Employee not found");
+    const e: any = new Error("Partner not found");
     e.statusCode = 404;
     throw e;
     }

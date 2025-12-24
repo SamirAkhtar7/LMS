@@ -13,7 +13,8 @@ export interface CreatePartner {
   targetArea?: string;
 }
 
-export interface UpdatePartner extends Partial<CreatePartner> {
+export interface UpdatePartner
+  extends Omit<Partial<CreatePartner>, "password" | "role"> {
   totalReferrals?: number;
   activeReferrals?: number;
   commissionEarned?: number;
@@ -31,5 +32,3 @@ export interface PartnerModel {
   createdAt: Date;
   updatedAt: Date;
 }
-
-export default {} as any;
