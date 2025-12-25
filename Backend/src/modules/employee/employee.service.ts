@@ -1,8 +1,6 @@
 import { prisma } from "../../db/prismaService.js";
-import { Prisma } from "@prisma/client";
 import { hashPassword } from "../../common/utils/utils.js";
 import { CreateEmployee } from "./employee.types.js";
-
 
 //Todo: add permission checks where necessary
 
@@ -27,33 +25,62 @@ export async function createEmployeeService(data: CreateEmployee) {
         email: data.email,
         password: hashedPassword,
         role: data.role,
-        phone: data.phone,
+        contactNumber: data.contactNumber ?? data.mobileNumber ?? "",
         isActive: typeof data.isActive === "boolean" ? data.isActive : true,
       },
     });
 
-    // generate a simple unique employee code
-    //todo: improve employee code generation logic
-    const employeeCode = `EMP-${Date.now()}`;
+    // generate a simple unique employee id
+    const employeeId = `EMP-${Date.now()}`;
+
+    // derive a userName for the employee record if not provided
+    const derivedUserName = data.userName ?? data.email.split("@")[0];
+
+    // normalize dates
+    const dobVal = data.dob
+      ? typeof data.dob === "string"
+        ? new Date(data.dob)
+        : data.dob
+      : null;
+    const dojVal = data.dateOfJoining
+      ? typeof data.dateOfJoining === "string"
+        ? new Date(data.dateOfJoining)
+        : data.dateOfJoining
+      : null;
 
     // create the employee record (use sensible defaults for required fields)
     const employee = await prisma.employee.create({
       data: {
         userId: user.id,
-        employeeCode,
-        designation: "Employee",
-        branchId: "default",
-        department: "general",
-        joiningDate: new Date(),
+        userName: data.userName,
+        employeeId,
+        mobileNumber: data.mobileNumber ?? data. contactNumber ?? "",
+        atlMobileNumber: data.atlMobileNumber ?? "",
+        dob: dobVal ?? new Date(),
+        gender: (data.gender ?? "OTHER") as any,
+        maritalStatus: (data.maritalStatus ?? "SINGLE") as any,
+        designation: data.designation ?? "",
+        emergencyContact: data.emergencyContact ?? "",
+        emergencyRelationship: (data.emergencyRelationship ?? "OTHER") as any,
+        experience: data.experience ?? "",
+        reportingManagerId: data.reportingManagerId ?? "",
+        workLocation: (data.workLocation ?? "OFFICE") as any,
+        department: data.department ?? "",
+        dateOfJoining: dojVal ?? new Date(),
+        salary: typeof data.salary === "number" ? data.salary : 0,
+        address: data.address ?? "",
+        city: data.city ?? "",
+        state: data.state ?? "",
+        pinCode: data.pinCode ?? "",
       },
     });
 
-    return { user, employee };
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
+    // hide password before returning
+    const { password: _pw, ...safeUser } = user as any;
+    return { user: safeUser, employee };
+  } catch (error: unknown) {
+    const eAny = error as any;
+    if (eAny && eAny.code === "P2002") {
       const e: any = new Error("Duplicate entry");
       e.statusCode = 409;
       throw e;
@@ -84,13 +111,11 @@ export async function getEmployeeByIdService(id: string) {
       ...employee,
       user: safeUser,
     };
-  }
-  else {
+  } else {
     const e: any = new Error("Employee not found");
     e.statusCode = 404;
     throw e;
   }
-
 }
 
 export async function updateEmployeeService(
@@ -114,7 +139,7 @@ export async function updateEmployeeService(
       "email",
       "password",
       "role",
-      "phone",
+      " contactNumber",
       "isActive",
     ];
     for (const key of userFields) {
@@ -145,7 +170,7 @@ export async function updateEmployeeService(
       }
     }
 
-    const prismaData: Prisma.EmployeeUpdateArgs["data"] = {} as any;
+    const prismaData: any = {};
     if (Object.keys(userUpdateData).length > 0)
       prismaData.user = { update: userUpdateData } as any;
     if (Object.keys(employeeUpdateData).length > 0)
@@ -162,11 +187,9 @@ export async function updateEmployeeService(
       return { employee: employeeOnly, user: safeUser };
     }
     return { employee: employeeOnly, user: null };
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
+  } catch (error: unknown) {
+    const eAny = error as any;
+    if (eAny && eAny.code === "P2002") {
       const e: any = new Error("Duplicate entry");
       e.statusCode = 409;
       throw e;
@@ -175,5 +198,4 @@ export async function updateEmployeeService(
   }
 }
 
-
-//Todo: delete employee service 
+//Todo: delete employee service

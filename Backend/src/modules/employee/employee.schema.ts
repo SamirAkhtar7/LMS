@@ -4,17 +4,41 @@ import { z } from "zod";
 
 export const createEmployeeSchema = z
   .object({
-    fullName: z.string().trim().min(1, "fullName is required"),
-
-    email: z.string().email("Valid email is required"),
-
-    password: z.string().min(8, "Password must be at least 8 characters"),
-
-    role: z.literal("EMPLOYEE").optional(),
-
-    phone: z.string().trim().min(1, "Phone is required"),
-
-    isActive: z.coerce.boolean().optional(),
+    // allow top-level user fields commonly sent with employee creation
+    fullName: z.string().trim().min(1),
+    email: z.string().email(),
+    password: z.string().min(6),
+    role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"]),
+    contactNumber: z.string().trim().min(10),
+    isActive: z.coerce.boolean(),
+    userName: z.string().trim().min(1),
+    mobileNumber: z.string().min(10),
+    atlMobileNumber: z.string().min(10),
+    dob: z.string(),
+    gender: z.enum(["MALE", "FEMALE", "OTHER"]),
+    maritalStatus: z.enum(["SINGLE", "MARRIED", "DIVORCED", "WIDOWED"]),
+    designation: z.string().min(1),
+    emergencyContact: z.string().min(10),
+    emergencyRelationship: z.string().min(1),
+    experience: z
+      .union([z.string().min(1), z.number().nonnegative()])
+      .optional(),
+    reportingManagerId: z.string().optional(),
+    workLocation: z
+      .string()
+      .trim()
+      .transform((s) => s.toUpperCase())
+      .refine((v) => ["ONSITE", "REMOTE", "HYBRID"].includes(v), {
+        message: 'Invalid option: expected one of "ONSITE"|"REMOTE"|"HYBRID"',
+      })
+      .optional(),
+    department: z.string().min(1),
+    dateOfJoining: z.string().optional(),
+    salary: z.number().positive().optional(),
+    address: z.string().min(1),
+    city: z.string().min(1),
+    state: z.string().min(1),
+    pinCode: z.string().min(6),
   })
   .strict();
 
@@ -30,7 +54,7 @@ export const updateEmployeeSchema = z
 
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"]).optional(),
 
-    phone: z.string().trim().min(1).optional(),
+    contactNumber: z.string().trim().min(1).optional(),
 
     isActive: z.coerce.boolean().optional(),
 
