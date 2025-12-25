@@ -7,7 +7,7 @@ export type Relationship =
   | "SIBLING"
   | "FRIEND"
   | "OTHER";
-export type WorkLocation = "OFFICE" | "REMOTE" | "HYBRID";
+export type WorkLocation = " OFFICE" | "REMOTE" | "HYBRID";
 
 export interface CreateEmployee {
   fullName: string;
