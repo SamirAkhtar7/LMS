@@ -17,6 +17,15 @@ export const createLeadController = async (req: Request, res: Response) => {
       data: lead, // return created lead data
     });
   } catch (error: any) {
+      if(error.name === "ValidationError"){
+          return res.status(400).json({
+              success: false,
+              message: "Invalid lead data",
+              error: error.message,
+          });
+      }
+      
+          
     res.status(500).json({
       success: false,
       message: "Lead creation failed",
@@ -61,26 +70,25 @@ export const getLeadByIdController = async (req: Request, res: Response) => {
 };
 export const updateLeadStatusController = async (
   req: Request,
-  res: Response
+    res: Response
 ) => {
   try {
-    const { id } = req.params;
-    const updateData = req.body;
-    const lead = await updateLeadStatusService(id, updateData.status);
-    res.status(200).json({
-      success: true,
-      message: "Lead updated successfully",
-      data: lead, // return updated lead data
-    });
+      const { id } = req.params;
+      const { status } = req.body;
+      const updatedLead = await updateLeadStatusService(id, status);
+      res.status(200).json({
+          success: true,
+          message: "Lead status updated successfully",
+          data: updatedLead,
+      });
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Lead update failed",
-      error: "INTERNAL_SERVER_ERROR",
-    });
-  }
+      res.status(400).json({
+          success: false,
+          message: "Failed to update lead status",
+          error: error.message || "INTERNAL_SERVER_ERROR",
+      });
+    }
 };
-
 export const assignLeadController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

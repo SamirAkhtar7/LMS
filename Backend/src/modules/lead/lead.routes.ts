@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLeadSchema } from "./lead.schema.js";
+import { createLeadSchema , updateLeadSchema,leadIdParamSchema,leadStatusParamSchema, leadAssigedSchema} from "./lead.schema.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import {
@@ -17,10 +17,9 @@ leadRouter.post("/", validate(createLeadSchema), createLeadController);
 
 leadRouter.use(authMiddleware);
 leadRouter.get("/all", getAllLeadsController);
-leadRouter.get("/:id", getLeadByIdController);
+leadRouter.get("/:id", validate(leadIdParamSchema,"params"), getLeadByIdController);
 
-leadRouter.patch("update-status/:id", updateLeadStatusController);
+leadRouter.patch("update-status/:id", validate(leadStatusParamSchema,"params"), updateLeadStatusController);
 
-leadRouter.patch("/assign/:id", assignLeadController); // Assign lead route requires auth
-
+leadRouter.patch("/assign/:id", validate(leadAssigedSchema), assignLeadController); // Assign lead route requires auth
 export default leadRouter;

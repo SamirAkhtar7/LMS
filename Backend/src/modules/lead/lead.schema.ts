@@ -60,5 +60,6 @@ export const leadStatusParamSchema = z.object({
 
 export const leadAssigedSchema = z.object({
     assignedTo: z.string().trim().min(1, "assignedTo is required"),
-    assignedBy: z.string().trim().min(1, "assignedBy is required"),  
+  // assignedBy is optional in the payload because the server derives it from the authenticated user
+ // assignedBy: z.string().trim().min(1, "assignedBy is required").optional().nullable(),
 });
