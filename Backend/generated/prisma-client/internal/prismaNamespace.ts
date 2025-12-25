@@ -388,7 +388,8 @@ export const ModelName = {
   UserProfile: 'UserProfile',
   Admin: 'Admin',
   Employee: 'Employee',
-  Partner: 'Partner'
+  Partner: 'Partner',
+  Leads: 'Leads'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -738,6 +739,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Leads: {
+      payload: Prisma.$LeadsPayload<ExtArgs>
+      fields: Prisma.LeadsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeadsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeadsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        findFirst: {
+          args: Prisma.LeadsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeadsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        findMany: {
+          args: Prisma.LeadsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>[]
+        }
+        create: {
+          args: Prisma.LeadsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        createMany: {
+          args: Prisma.LeadsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LeadsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        update: {
+          args: Prisma.LeadsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeadsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeadsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LeadsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadsPayload>
+        }
+        aggregate: {
+          args: Prisma.LeadsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeads>
+        }
+        groupBy: {
+          args: Prisma.LeadsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeadsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -783,7 +850,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  phone: 'phone',
+  contactNumber: 'contactNumber',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -820,11 +887,26 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 export const EmployeeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  employeeCode: 'employeeCode',
+  employeeId: 'employeeId',
+  userName: 'userName',
+  mobileNumber: 'mobileNumber',
+  atlMobileNumber: 'atlMobileNumber',
+  dob: 'dob',
   designation: 'designation',
-  branchId: 'branchId',
+  gender: 'gender',
+  maritalStatus: 'maritalStatus',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  emergencyContact: 'emergencyContact',
+  emergencyRelationship: 'emergencyRelationship',
   department: 'department',
-  joiningDate: 'joiningDate',
+  dateOfJoining: 'dateOfJoining',
+  experience: 'experience',
+  reportingManagerId: 'reportingManagerId',
+  workLocation: 'workLocation',
+  salary: 'salary',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -835,6 +917,7 @@ export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typ
 export const PartnerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userName: 'userName',
   partnerType: 'partnerType',
   experience: 'experience',
   targetArea: 'targetArea',
@@ -846,6 +929,29 @@ export const PartnerScalarFieldEnum = {
 } as const
 
 export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
+
+
+export const LeadsScalarFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  dob: 'dob',
+  gender: 'gender',
+  loanAmount: 'loanAmount',
+  typeOfLoan: 'typeOfLoan',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  address: 'address',
+  assignedTo: 'assignedTo',
+  assignedBy: 'assignedBy',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeadsScalarFieldEnum = (typeof LeadsScalarFieldEnum)[keyof typeof LeadsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -861,7 +967,7 @@ export const UserOrderByRelevanceFieldEnum = {
   fullName: 'fullName',
   email: 'email',
   password: 'password',
-  phone: 'phone'
+  contactNumber: 'contactNumber'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -890,10 +996,19 @@ export type AdminOrderByRelevanceFieldEnum = (typeof AdminOrderByRelevanceFieldE
 export const EmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
-  employeeCode: 'employeeCode',
+  employeeId: 'employeeId',
+  userName: 'userName',
+  mobileNumber: 'mobileNumber',
+  atlMobileNumber: 'atlMobileNumber',
   designation: 'designation',
-  branchId: 'branchId',
-  department: 'department'
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  emergencyContact: 'emergencyContact',
+  department: 'department',
+  experience: 'experience',
+  reportingManagerId: 'reportingManagerId'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
@@ -910,12 +1025,29 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 export const PartnerOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userName: 'userName',
   partnerType: 'partnerType',
   experience: 'experience',
   targetArea: 'targetArea'
 } as const
 
 export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
+
+
+export const LeadsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  address: 'address',
+  assignedTo: 'assignedTo',
+  assignedBy: 'assignedBy'
+} as const
+
+export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldEnum)[keyof typeof LeadsOrderByRelevanceFieldEnum]
 
 
 
@@ -953,9 +1085,30 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 
 
 /**
- * Reference to a field of type 'Int'
+ * Reference to a field of type 'Gender'
  */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
+    
+
+
+/**
+ * Reference to a field of type 'MaritalStatus'
+ */
+export type EnumMaritalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaritalStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'Relationship'
+ */
+export type EnumRelationshipFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Relationship'>
+    
+
+
+/**
+ * Reference to a field of type 'WorkLocation'
+ */
+export type EnumWorkLocationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkLocation'>
     
 
 
@@ -963,6 +1116,27 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'LonenType'
+ */
+export type EnumLonenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LonenType'>
+    
+
+
+/**
+ * Reference to a field of type 'LeadStatus'
+ */
+export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadStatus'>
     
 
 /**
@@ -1065,6 +1239,7 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   employee?: Prisma.EmployeeOmit
   partner?: Prisma.PartnerOmit
+  leads?: Prisma.LeadsOmit
 }
 
 /* Types for Logging */

@@ -4,7 +4,7 @@ export interface CreatePartner {
   password: string;
   role: "PARTNER";
   address: string;
-  phone: string;
+  contactNumber: string;
   isActive?: boolean;
 
   // partner-specific

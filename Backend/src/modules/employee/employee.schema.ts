@@ -6,15 +6,15 @@ export const createEmployeeSchema = z
   .object({
     // allow top-level user fields commonly sent with employee creation
     fullName: z.string().trim().min(1),
-    email: z.string().email(),
-    password: z.string().min(6),
+    email: z.string().trim().email(),
+    password: z.string().min(8),
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"]),
-    contactNumber: z.string().trim().min(10),
+    contactNumber: z.string().trim().min(10).max(15),
     isActive: z.coerce.boolean(),
     userName: z.string().trim().min(1),
     mobileNumber: z.string().min(10),
     atlMobileNumber: z.string().min(10),
-    dob: z.string(),
+    dob: z.coerce.date(),
     gender: z.enum(["MALE", "FEMALE", "OTHER"]),
     maritalStatus: z.enum(["SINGLE", "MARRIED", "DIVORCED", "WIDOWED"]),
     designation: z.string().min(1),
@@ -54,8 +54,7 @@ export const updateEmployeeSchema = z
 
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"]).optional(),
 
-    contactNumber: z.string().trim().min(1).optional(),
-
+    contactNumber: z.string().trim().min(10).optional(),
     isActive: z.coerce.boolean().optional(),
 
     // TODO: employeeCode should be immutable later

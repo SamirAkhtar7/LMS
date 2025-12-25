@@ -12,6 +12,7 @@ function sanitizeError(error: any) {
     message: error?.message ?? String(error),
     name: error?.name ?? "Error",
     code: error?.code ?? null,
+    stack: error?.stack ?? null,
   };
 }
 

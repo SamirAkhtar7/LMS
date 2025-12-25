@@ -4,11 +4,11 @@ import { z } from "zod";
 
 export const createPartnerSchema = z.object({
   fullName: z.string().trim().min(1, "fullName is required"),
-  email: z.string().email("Valid email is required"),
+  email: z.string().toLowerCase().email("Valid email is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   role: z.literal("PARTNER").optional(),
 
-  phone: z.string().trim().min(1, "Phone is required"),
+  contactNumber: z.string().trim().min(1, " contactNumber is required"),
 
   isActive: z.coerce.boolean().optional(),
   partnerType: z.string().trim().optional(),
@@ -21,8 +21,8 @@ export const createPartnerSchema = z.object({
 export const updatePartnerSchema = z
   .object({
     fullName: z.string().trim().min(1).optional(),
-    email: z.string().email().optional(),
-    phone: z.string().trim().min(1).optional(),
+    email: z.string().toLowerCase().email().optional(),
+    contactNumber: z.string().trim().min(1).optional(),
 
     isActive: z.coerce.boolean().optional(),
 

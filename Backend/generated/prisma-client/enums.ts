@@ -16,3 +16,70 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
+} as const
+
+export type Gender = (typeof Gender)[keyof typeof Gender]
+
+
+export const MaritalStatus = {
+  SINGLE: 'SINGLE',
+  MARRIED: 'MARRIED',
+  DIVORCED: 'DIVORCED',
+  WIDOWED: 'WIDOWED'
+} as const
+
+export type MaritalStatus = (typeof MaritalStatus)[keyof typeof MaritalStatus]
+
+
+export const Relationship = {
+  FATHER: 'FATHER',
+  MOTHER: 'MOTHER',
+  SPOUSE: 'SPOUSE',
+  SIBLING: 'SIBLING',
+  FRIEND: 'FRIEND',
+  OTHER: 'OTHER'
+} as const
+
+export type Relationship = (typeof Relationship)[keyof typeof Relationship]
+
+
+export const WorkLocation = {
+  OFFICE: 'OFFICE',
+  REMOTE: 'REMOTE',
+  HYBRID: 'HYBRID'
+} as const
+
+export type WorkLocation = (typeof WorkLocation)[keyof typeof WorkLocation]
+
+
+export const LonenType = {
+  PERSONAL: 'PERSONAL',
+  HOME: 'HOME',
+  EDUCATION: 'EDUCATION',
+  BUSINESS: 'BUSINESS'
+} as const
+
+export type LonenType = (typeof LonenType)[keyof typeof LonenType]
+
+
+export const LeadStatus = {
+  CONTACTED: 'CONTACTED',
+  INTERESTED: 'INTERESTED',
+  APPLICATION_IN_PROGRESS: 'APPLICATION_IN_PROGRESS',
+  APPLICATION_SUBMITTED: 'APPLICATION_SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  FUNDED: 'FUNDED',
+  CLOSED: 'CLOSED',
+  DROPPED: 'DROPPED',
+  PENDING: 'PENDING'
+} as const
+
+export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus]

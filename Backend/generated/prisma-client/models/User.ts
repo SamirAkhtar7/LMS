@@ -30,7 +30,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   password: string | null
   role: $Enums.Role | null
-  phone: string | null
+  contactNumber: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -42,7 +42,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   password: string | null
   role: $Enums.Role | null
-  phone: string | null
+  contactNumber: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -54,7 +54,7 @@ export type UserCountAggregateOutputType = {
   email: number
   password: number
   role: number
-  phone: number
+  contactNumber: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -68,7 +68,7 @@ export type UserMinAggregateInputType = {
   email?: true
   password?: true
   role?: true
-  phone?: true
+  contactNumber?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -80,7 +80,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   password?: true
   role?: true
-  phone?: true
+  contactNumber?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -92,7 +92,7 @@ export type UserCountAggregateInputType = {
   email?: true
   password?: true
   role?: true
-  phone?: true
+  contactNumber?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -177,7 +177,7 @@ export type UserGroupByOutputType = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -210,7 +210,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  phone?: Prisma.StringFilter<"User"> | string
+  contactNumber?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -218,6 +218,8 @@ export type UserWhereInput = {
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  leadsAssignedTo?: Prisma.LeadsListRelationFilter
+  leadsAssignedBy?: Prisma.LeadsListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -226,7 +228,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -234,6 +236,8 @@ export type UserOrderByWithRelationInput = {
   admin?: Prisma.AdminOrderByWithRelationInput
   partner?: Prisma.PartnerOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
+  leadsAssignedTo?: Prisma.LeadsOrderByRelationAggregateInput
+  leadsAssignedBy?: Prisma.LeadsOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -246,7 +250,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   fullName?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  phone?: Prisma.StringFilter<"User"> | string
+  contactNumber?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -254,6 +258,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  leadsAssignedTo?: Prisma.LeadsListRelationFilter
+  leadsAssignedBy?: Prisma.LeadsListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -262,7 +268,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -280,7 +286,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-  phone?: Prisma.StringWithAggregatesFilter<"User"> | string
+  contactNumber?: Prisma.StringWithAggregatesFilter<"User"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -292,7 +298,7 @@ export type UserCreateInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -300,6 +306,8 @@ export type UserCreateInput = {
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -308,7 +316,7 @@ export type UserUncheckedCreateInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -316,6 +324,8 @@ export type UserUncheckedCreateInput = {
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUpdateInput = {
@@ -324,7 +334,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -332,6 +342,8 @@ export type UserUpdateInput = {
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -340,7 +352,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,6 +360,8 @@ export type UserUncheckedUpdateInput = {
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -356,7 +370,7 @@ export type UserCreateManyInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -368,7 +382,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,7 +394,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -398,7 +412,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -410,7 +424,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -422,7 +436,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -431,6 +445,11 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -505,19 +524,53 @@ export type UserUpdateOneRequiredWithoutPartnerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPartnerInput, Prisma.UserUpdateWithoutPartnerInput>, Prisma.UserUncheckedUpdateWithoutPartnerInput>
 }
 
+export type UserCreateNestedOneWithoutLeadsAssignedToInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedToInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedToInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedToInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutLeadsAssignedByInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedByInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedByInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedByInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutLeadsAssignedToNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedToInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedToInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedToInput
+  upsert?: Prisma.UserUpsertWithoutLeadsAssignedToInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsAssignedToInput, Prisma.UserUpdateWithoutLeadsAssignedToInput>, Prisma.UserUncheckedUpdateWithoutLeadsAssignedToInput>
+}
+
+export type UserUpdateOneWithoutLeadsAssignedByNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedByInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedByInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedByInput
+  upsert?: Prisma.UserUpsertWithoutLeadsAssignedByInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsAssignedByInput, Prisma.UserUpdateWithoutLeadsAssignedByInput>, Prisma.UserUncheckedUpdateWithoutLeadsAssignedByInput>
+}
+
 export type UserCreateWithoutProfileInput = {
   id?: string
   fullName: string
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -526,13 +579,15 @@ export type UserUncheckedCreateWithoutProfileInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -557,13 +612,15 @@ export type UserUpdateWithoutProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -572,13 +629,15 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserCreateWithoutAdminInput = {
@@ -587,13 +646,15 @@ export type UserCreateWithoutAdminInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminInput = {
@@ -602,13 +663,15 @@ export type UserUncheckedCreateWithoutAdminInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminInput = {
@@ -633,13 +696,15 @@ export type UserUpdateWithoutAdminInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminInput = {
@@ -648,13 +713,15 @@ export type UserUncheckedUpdateWithoutAdminInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserCreateWithoutEmployeeInput = {
@@ -663,13 +730,15 @@ export type UserCreateWithoutEmployeeInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUncheckedCreateWithoutEmployeeInput = {
@@ -678,13 +747,15 @@ export type UserUncheckedCreateWithoutEmployeeInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserCreateOrConnectWithoutEmployeeInput = {
@@ -709,13 +780,15 @@ export type UserUpdateWithoutEmployeeInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmployeeInput = {
@@ -724,13 +797,15 @@ export type UserUncheckedUpdateWithoutEmployeeInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserCreateWithoutPartnerInput = {
@@ -739,13 +814,15 @@ export type UserCreateWithoutPartnerInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserUncheckedCreateWithoutPartnerInput = {
@@ -754,13 +831,15 @@ export type UserUncheckedCreateWithoutPartnerInput = {
   email: string
   password: string
   role: $Enums.Role
-  phone: string
+  contactNumber: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
 export type UserCreateOrConnectWithoutPartnerInput = {
@@ -785,13 +864,15 @@ export type UserUpdateWithoutPartnerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPartnerInput = {
@@ -800,15 +881,223 @@ export type UserUncheckedUpdateWithoutPartnerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
+export type UserCreateWithoutLeadsAssignedToInput = {
+  id?: string
+  fullName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
+}
+
+export type UserUncheckedCreateWithoutLeadsAssignedToInput = {
+  id?: string
+  fullName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
+}
+
+export type UserCreateOrConnectWithoutLeadsAssignedToInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedToInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedToInput>
+}
+
+export type UserCreateWithoutLeadsAssignedByInput = {
+  id?: string
+  fullName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+}
+
+export type UserUncheckedCreateWithoutLeadsAssignedByInput = {
+  id?: string
+  fullName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+}
+
+export type UserCreateOrConnectWithoutLeadsAssignedByInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedByInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedByInput>
+}
+
+export type UserUpsertWithoutLeadsAssignedToInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedToInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedToInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedToInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedToInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLeadsAssignedToInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedToInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedToInput>
+}
+
+export type UserUpdateWithoutLeadsAssignedToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLeadsAssignedToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
+}
+
+export type UserUpsertWithoutLeadsAssignedByInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedByInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedByInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedByInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedByInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLeadsAssignedByInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedByInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedByInput>
+}
+
+export type UserUpdateWithoutLeadsAssignedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLeadsAssignedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  leadsAssignedTo: number
+  leadsAssignedBy: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  leadsAssignedTo?: boolean | UserCountOutputTypeCountLeadsAssignedToArgs
+  leadsAssignedBy?: boolean | UserCountOutputTypeCountLeadsAssignedByArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLeadsAssignedToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadsWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLeadsAssignedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadsWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -817,7 +1106,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   password?: boolean
   role?: boolean
-  phone?: boolean
+  contactNumber?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -825,6 +1114,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
+  leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 
@@ -835,18 +1127,21 @@ export type UserSelectScalar = {
   email?: boolean
   password?: boolean
   role?: boolean
-  phone?: boolean
+  contactNumber?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "password" | "role" | "phone" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "password" | "role" | "contactNumber" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
+  leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -856,6 +1151,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     admin: Prisma.$AdminPayload<ExtArgs> | null
     partner: Prisma.$PartnerPayload<ExtArgs> | null
     employee: Prisma.$EmployeePayload<ExtArgs> | null
+    leadsAssignedTo: Prisma.$LeadsPayload<ExtArgs>[]
+    leadsAssignedBy: Prisma.$LeadsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -863,7 +1160,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     password: string
     role: $Enums.Role
-    phone: string
+    contactNumber: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1211,6 +1508,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   admin<T extends Prisma.User$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminArgs<ExtArgs>>): Prisma.Prisma__AdminClient<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   partner<T extends Prisma.User$partnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$partnerArgs<ExtArgs>>): Prisma.Prisma__PartnerClient<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.User$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  leadsAssignedTo<T extends Prisma.User$leadsAssignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadsAssignedBy<T extends Prisma.User$leadsAssignedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedByArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1245,7 +1544,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
-  readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly contactNumber: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -1665,6 +1964,54 @@ export type User$employeeArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * User.leadsAssignedTo
+ */
+export type User$leadsAssignedToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Leads
+   */
+  select?: Prisma.LeadsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Leads
+   */
+  omit?: Prisma.LeadsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadsInclude<ExtArgs> | null
+  where?: Prisma.LeadsWhereInput
+  orderBy?: Prisma.LeadsOrderByWithRelationInput | Prisma.LeadsOrderByWithRelationInput[]
+  cursor?: Prisma.LeadsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadsScalarFieldEnum | Prisma.LeadsScalarFieldEnum[]
+}
+
+/**
+ * User.leadsAssignedBy
+ */
+export type User$leadsAssignedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Leads
+   */
+  select?: Prisma.LeadsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Leads
+   */
+  omit?: Prisma.LeadsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadsInclude<ExtArgs> | null
+  where?: Prisma.LeadsWhereInput
+  orderBy?: Prisma.LeadsOrderByWithRelationInput | Prisma.LeadsOrderByWithRelationInput[]
+  cursor?: Prisma.LeadsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadsScalarFieldEnum | Prisma.LeadsScalarFieldEnum[]
 }
 
 /**

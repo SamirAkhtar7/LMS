@@ -17,7 +17,11 @@ interface AuthPayload extends JwtPayload {
   role: string;
 }
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const accessToken =
       req.cookies?.accessToken ||
@@ -36,6 +40,10 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
           email: decoded.email,
           role: decoded.role,
         };
+
+        // expose tokens to downstream handlers/controllers if needed
+        // (req as any).accessToken = accessToken;
+        // (req as any).refreshToken = req.cookies?.refreshToken;
 
         return next();
       } catch (err: any) {
@@ -84,9 +92,12 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       role: decodedRefresh.role,
     };
 
+    // expose the freshly generated tokens on the request for controllers that may want them
+    // (req as any).accessToken = newAccess;
+    // (req as any).refreshToken = newRefresh;
+
     return next();
   } catch (error) {
     return handleError(res, error, 401, "Authentication failed");
   }
 };
-

@@ -8,11 +8,18 @@ export const createUserSchema = z
 
     email: z.string().email("Valid email is required"),
 
-    password: z.string().min(8, "Password must be at least 8 characters long"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .max(128, "Password must not exceed 128 characters"),
+    isActive: z.coerce.boolean().optional(),
 
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"] as const).optional(),
 
-    phone: z.string().trim().min(1, "Phone number is required"),
+    contactNumber: z
+      .string()
+      .trim()
+      .min(1, " contactNumber number is required"),
   })
   .strict();
 
@@ -24,11 +31,14 @@ export const updateUserSchema = z
 
     email: z.string().email().optional(),
 
-    password: z.string().min(8).optional(),
-
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .max(128, "Password must not exceed 128 characters")
+      .optional(),
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"] as const).optional(),
 
-    phone: z.string().trim().min(1).optional(),
+    contactNumber: z.string().trim().min(1).optional(),
   })
   .strict();
 /* ================= PARAM ================= */

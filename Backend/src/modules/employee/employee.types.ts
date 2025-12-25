@@ -17,15 +17,16 @@ export interface CreateEmployee {
   contactNumber?: string;
   isActive?: boolean;
 
-  // Optional employee-specific fields
+  // Required employee-specific fields
   userName: string;
   mobileNumber: string;
   atlMobileNumber: string;
   dob: string | Date;
+
+  // Optional employee-specific fields
   designation?: string;
   gender?: Gender;
   maritalStatus?: MaritalStatus;
-
   // Contact & address
   address?: string;
   city?: string;

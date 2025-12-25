@@ -16,12 +16,12 @@ import { authMiddleware } from "../../../common/middlewares/auth.middleware.js";
 const router: Router = Router();
 
 // Protect all routes defined after this middleware
-router.use(authMiddleware);
 router.post(
   "/create",
-validate(createUserSchema),
+  validate(createUserSchema),
   createUserController
 );
+router.use(authMiddleware);
 
 router.get("/all", getallUsersController);
 router.get("/:id",

@@ -34,7 +34,6 @@ export async function createEmployeeService(data: CreateEmployee) {
     const employeeId = `EMP-${Date.now()}`;
 
     // derive a userName for the employee record if not provided
-    const derivedUserName = data.userName ?? data.email.split("@")[0];
 
     // normalize dates
     const dobVal = data.dob
@@ -54,7 +53,7 @@ export async function createEmployeeService(data: CreateEmployee) {
         userId: user.id,
         userName: data.userName,
         employeeId,
-        mobileNumber: data.mobileNumber ?? data. contactNumber ?? "",
+        mobileNumber: data. contactNumber ?? "",
         atlMobileNumber: data.atlMobileNumber ?? "",
         dob: dobVal ?? new Date(),
         gender: (data.gender ?? "OTHER") as any,
@@ -139,9 +138,8 @@ export async function updateEmployeeService(
       "email",
       "password",
       "role",
-      " contactNumber",
-      "isActive",
-    ];
+      "contactNumber",
+      "contactNumber", ];
     for (const key of userFields) {
       if (Object.prototype.hasOwnProperty.call(updateData, key)) {
         (userUpdateData as any)[key] = (updateData as any)[key];

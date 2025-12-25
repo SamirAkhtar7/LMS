@@ -24,6 +24,7 @@ partnerRouter.get("/all", getAllPartnersController);
 partnerRouter.get("/:id", validate(partnerIdParamSchema, "params"), getPartnerByIdController);
 partnerRouter.patch(
   "/:id",
+  validate(partnerIdParamSchema, "params"),
   validate(updatePartnerSchema),
   updatePartnerController
 );

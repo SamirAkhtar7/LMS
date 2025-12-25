@@ -1,7 +1,5 @@
-// import { Decimal } from "@prisma/client/runtime/library";
-// import prisma from "../src/db/db.js";
-import { hashPassword  }from "../src/common/utils/utils.ts";
-import {prisma }from "../src/db/prismaService.ts";
+import { hashPassword } from "../src/common/utils/utils.ts";
+import { prisma } from "../src/db/prismaService.ts";
 
 async function main(): Promise<void> {
   const now: Date = new Date();
@@ -14,8 +12,8 @@ async function main(): Promise<void> {
       fullName: "Samir Akhtar",
       email: "admin@gmail.com",
       password,
-      role: "ADMIN", 
-      phone: "9999999999",
+      role: "ADMIN",
+      contactNumber: "9999999999",
       location: "Jaipur, India",
       isActive: true,
       createdAt: now,
