@@ -55,7 +55,8 @@ export const ModelName = {
   UserProfile: 'UserProfile',
   Admin: 'Admin',
   Employee: 'Employee',
-  Partner: 'Partner'
+  Partner: 'Partner',
+  Leads: 'Leads'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,7 +81,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  phone: 'phone',
+  contactNumber: 'contactNumber',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -117,11 +118,26 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 export const EmployeeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  employeeCode: 'employeeCode',
+  employeeId: 'employeeId',
+  userName: 'userName',
+  mobileNumber: 'mobileNumber',
+  atlMobileNumber: 'atlMobileNumber',
+  dob: 'dob',
   designation: 'designation',
-  branchId: 'branchId',
+  gender: 'gender',
+  maritalStatus: 'maritalStatus',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  emergencyContact: 'emergencyContact',
+  emergencyRelationship: 'emergencyRelationship',
   department: 'department',
-  joiningDate: 'joiningDate',
+  dateOfJoining: 'dateOfJoining',
+  experience: 'experience',
+  reportingManagerId: 'reportingManagerId',
+  workLocation: 'workLocation',
+  salary: 'salary',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -132,6 +148,7 @@ export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typ
 export const PartnerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userName: 'userName',
   partnerType: 'partnerType',
   experience: 'experience',
   targetArea: 'targetArea',
@@ -143,6 +160,29 @@ export const PartnerScalarFieldEnum = {
 } as const
 
 export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
+
+
+export const LeadsScalarFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  dob: 'dob',
+  gender: 'gender',
+  loanAmount: 'loanAmount',
+  typeOfLoan: 'typeOfLoan',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  address: 'address',
+  assignedTo: 'assignedTo',
+  assignedBy: 'assignedBy',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeadsScalarFieldEnum = (typeof LeadsScalarFieldEnum)[keyof typeof LeadsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -158,7 +198,7 @@ export const UserOrderByRelevanceFieldEnum = {
   fullName: 'fullName',
   email: 'email',
   password: 'password',
-  phone: 'phone'
+  contactNumber: 'contactNumber'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -187,10 +227,19 @@ export type AdminOrderByRelevanceFieldEnum = (typeof AdminOrderByRelevanceFieldE
 export const EmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
-  employeeCode: 'employeeCode',
+  employeeId: 'employeeId',
+  userName: 'userName',
+  mobileNumber: 'mobileNumber',
+  atlMobileNumber: 'atlMobileNumber',
   designation: 'designation',
-  branchId: 'branchId',
-  department: 'department'
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  emergencyContact: 'emergencyContact',
+  department: 'department',
+  experience: 'experience',
+  reportingManagerId: 'reportingManagerId'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
@@ -207,10 +256,27 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 export const PartnerOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  userName: 'userName',
   partnerType: 'partnerType',
   experience: 'experience',
   targetArea: 'targetArea'
 } as const
 
 export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
+
+
+export const LeadsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  address: 'address',
+  assignedTo: 'assignedTo',
+  assignedBy: 'assignedBy'
+} as const
+
+export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldEnum)[keyof typeof LeadsOrderByRelevanceFieldEnum]
 

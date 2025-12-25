@@ -5,26 +5,30 @@ import {
   getEmployeeByIdController,
   updateEmployeeController,
 } from "./employee.controller.js";
-import { validationResultMiddleware } from "../../common/middlewares/validate.js";
-import {
-  createEmployeeValidation,
-  updateEmployeeValidation,
-} from "./employee.vaildation.js";
+import {validate } from "../../common/middlewares/zod.middleware.js";
+import {createEmployeeSchema, updateEmployeeSchema, employeeIdParamSchema
+} from "./employee.schema.js";
+import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 
 export const employeeRouter = Router();
+
+// Protect all routes defined after this middleware
+employeeRouter.use(authMiddleware);
 employeeRouter.post(
   "/",
-  createEmployeeValidation,
-  validationResultMiddleware,
+validate(createEmployeeSchema),
+
   createEmployeeController
 );
 employeeRouter.get("/all", getAllEmployeesController);
 employeeRouter.patch(
   "/:id",
-  updateEmployeeValidation,
-  validationResultMiddleware,
+validate(updateEmployeeSchema),
+
   updateEmployeeController
 );
-employeeRouter.get("/:id", getEmployeeByIdController);
+employeeRouter.get("/:id",
+  validate(employeeIdParamSchema, "params"),
+  getEmployeeByIdController);
 
 export default employeeRouter;
