@@ -19,7 +19,7 @@ leadRouter.use(authMiddleware);
 leadRouter.get("/all", getAllLeadsController);
 leadRouter.get("/:id", validate(leadIdParamSchema,"params"), getLeadByIdController);
 
-leadRouter.patch("update-status/:id", validate(leadStatusParamSchema,"params"), updateLeadStatusController);
+leadRouter.patch("/update-status/:id", validate(leadStatusParamSchema,"params"), updateLeadStatusController);
 
 leadRouter.patch("/assign/:id", validate(leadAssigedSchema), assignLeadController); // Assign lead route requires auth
 export default leadRouter;

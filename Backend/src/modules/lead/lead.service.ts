@@ -13,7 +13,7 @@ export const createLeadService = async (leadData: CreateLead) => {
       dob,
       gender: leadData.gender,
       loanAmount: leadData.loanAmount,
-      typeOfLoan: leadData.typeOfLoan,
+      loanType: leadData.loanType,
       city: leadData.city,
       state: leadData.state,
       pinCode: leadData.pinCode,
