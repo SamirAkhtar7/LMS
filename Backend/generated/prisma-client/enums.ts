@@ -58,14 +58,16 @@ export const WorkLocation = {
 export type WorkLocation = (typeof WorkLocation)[keyof typeof WorkLocation]
 
 
-export const LonenType = {
-  PERSONAL: 'PERSONAL',
-  HOME: 'HOME',
-  EDUCATION: 'EDUCATION',
-  BUSINESS: 'BUSINESS'
+export const LoanType = {
+  PERSONAL_LOAN: 'PERSONAL_LOAN',
+  VEHICLE_LOAN: 'VEHICLE_LOAN',
+  HOME_LOAN: 'HOME_LOAN',
+  EDUCATION_LOAN: 'EDUCATION_LOAN',
+  BUSINESS_LOAN: 'BUSINESS_LOAN',
+  GOLD_LOAN: 'GOLD_LOAN'
 } as const
 
-export type LonenType = (typeof LonenType)[keyof typeof LonenType]
+export type LoanType = (typeof LoanType)[keyof typeof LoanType]
 
 
 export const LeadStatus = {
@@ -83,3 +85,33 @@ export const LeadStatus = {
 } as const
 
 export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus]
+
+
+export const PartnerType = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  COMPANY: 'COMPANY',
+  INSTITUTION: 'INSTITUTION',
+  CORPARATE: 'CORPARATE',
+  AGENCY: 'AGENCY'
+} as const
+
+export type PartnerType = (typeof PartnerType)[keyof typeof PartnerType]
+
+
+export const commissionType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+} as const
+
+export type commissionType = (typeof commissionType)[keyof typeof commissionType]
+
+
+export const PaymentCycle = {
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  HALF_YEARLY: 'HALF_YEARLY',
+  YEARLY: 'YEARLY',
+  PER_TRANSACTION: 'PER_TRANSACTION'
+} as const
+
+export type PaymentCycle = (typeof PaymentCycle)[keyof typeof PaymentCycle]

@@ -16,6 +16,7 @@ datasource db {
 model User {
   id            String   @id @default(cuid())
   fullName      String
+  userName      String   @unique
   email         String   @unique
   password      String
   role          Role
@@ -29,10 +30,9 @@ model User {
   admin    Admin?
   partner  Partner?
   employee Employee?
-  
+
   leadsAssignedTo Leads[] @relation("LeadAssignedTo")
   leadsAssignedBy Leads[] @relation("LeadAssignedBy")
-
 }
 
 model UserProfile {
@@ -61,10 +61,10 @@ model Admin {
 }
 
 model Employee {
-  id              String        @id @default(cuid())
-  userId          String        @unique
-  employeeId      String        @unique
-  userName String @unique
+  id         String @id @default(cuid())
+  userId     String @unique
+  employeeId String @unique
+
   mobileNumber    String
   atlMobileNumber String
   dob             DateTime
@@ -102,11 +102,35 @@ model Employee {
 }
 
 model Partner {
-  id               String   @id @default(cuid())
-  userId           String   @unique
-  userName         String   @unique
-  partnerType      String?
-  experience       String?
+  id     String @id @default(cuid())
+  userId String @unique
+
+  partnerId       String      @unique
+  companyName     String
+  contactPerson   String
+  alternateNumber String?
+  website         String?
+  establishedYear Int?
+  partnerType     PartnerType
+  businessNature  String?
+
+  fullAddress                String?
+  city                       String?
+  state                      String?
+  pinCode                    String?
+  degination                 String?
+  BusinessCategory           String?
+  specialization             String?
+  totalEmployees             Int?
+  annualTurnover             Float?
+  businessRegistrationNumber String?
+
+  commisionType   commissionType
+  commissionValue Float?
+  paymentCycle    PaymentCycle
+  minimumPayout   Float?
+  taxDeduction    Float?
+
   targetArea       String?
   totalReferrals   Int?     @default(0)
   activeReferrals  Int?     @default(0)
@@ -119,29 +143,253 @@ model Partner {
 }
 
 model Leads {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   fullName      String
   contactNumber String
   email         String
   dob           DateTime
   gender        Gender
   loanAmount    Float
-  typeOfLoan    LonenType
+  loanType      LoanType
   city          String
   state         String
   pinCode       String
   address       String
 
-  assignedTo String?  @unique
-  assignedBy String?  @unique
-  status     LeadStatus   @default(PENDING)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
+  assignedTo String?    @unique
+  assignedBy String?    @unique
+  status     LeadStatus @default(PENDING)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 
   // Relations  assignedToUser User? @relation("LeadAssignedTo", fields: [assignedTo], references
   assignedToUser User? @relation("LeadAssignedTo", fields: [assignedTo], references: [id])
   assignedByUser User? @relation("LeadAssignedBy", fields: [assignedBy], references: [id])
+}
+
+model LoanApplication {
+  id              String              @id @default(cuid())
+  leadId          String              @unique
+  applicationDate DateTime            @default(now())
+  customerId      String
+  customer        Customer            @relation(fields: [customerId], references: [id])
+  loanProductId   String
+  requestedAmount Float
+  approvedAmount  Float?
+  tenureMonths    Int?
+  interestRate    Float?
+  interestType    InterestType
+  emiAmount       Float?
+  totalPayable    Float?
+  loanPurpose     String?
+  cibilScore      Int?
+  status          LoanStatus          @default(application_in_progress)
+  approvalDate    DateTime?
+  activationDate  DateTime?
+  rejectionReason String?
+  product         LoanProduct         @relation(fields: [loanProductId], references: [id])
+  documents       LoanDocument[]
+  approvals       LoanApproval[]
+  disbursements   LoanDisbursement[]
+  emis            LoanEmiSchedule[]
+  payments        LoanPayment[]
+  charges         LoanCharge[]
+  statusHistory   LoanStatusHistory[]
+  nachMandates    LoanNachMandate[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model LoanDocument {
+  id                 String             @id @default(cuid())
+  loanApplicationId  String
+  documentType       String
+  documentPath       String
+  verificationStatus VerificationStatus
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+// Loan products offered by the system
+model LoanProduct {
+  id           String        @id @default(cuid())
+  name         String
+  code         String?       @unique
+  description  String?
+  interestRate Float?
+  category     LoanCategory?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  applications LoanApplication[]
+}
+
+// APPROVAL
+
+model LoanApproval {
+  id                String        @id @default(cuid())
+  loanApplicationId String
+  approvalLevel     ApprovalLevel
+  approvedAmount    Float
+  approvedInterest  Float
+  remarks           String?
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  approvedAt DateTime @default(now())
+}
+
+// DISBURSEMENT
+
+model LoanDisbursement {
+  id                String @id @default(cuid())
+  loanApplicationId String
+
+  disbursedAmount Decimal @db.Decimal(15, 2)
+  bankAccount     String
+  ifscCode        String
+  transactionRef  String
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  disbursedAt DateTime @default(now())
+}
+
+// EMI SCHEDULE
+//////////////////////////////////
+
+model LoanEmiSchedule {
+  id                String   @id @default(cuid())
+  loanApplicationId String
+  emiNo             Int
+  dueDate           DateTime
+
+  principalAmount Decimal @db.Decimal(15, 2)
+  openingBalance  Decimal @db.Decimal(15, 2)
+  interestAmount  Decimal @db.Decimal(15, 2)
+  emiAmount       Decimal @db.Decimal(15, 2)
+  closingBalance  Decimal @db.Decimal(15, 2)
+
+  status   EmiStatus
+  paidDate DateTime?
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+}
+
+// PAYMENTS
+//////////////////////////////////
+
+model LoanPayment {
+  id                String  @id @default(cuid())
+  loanApplicationId String
+  emiId             String?
+
+  paymentAmount  Decimal     @db.Decimal(15, 2)
+  paymentMode    PaymentMode
+  transactionRef String
+  paymentDate    DateTime
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+}
+
+// NACH
+//////////////////////////////////
+
+model LoanNachMandate {
+  id                String @id @default(cuid())
+  loanApplicationId String @unique
+
+  mandateReference String
+  bankName         String
+  accountNumber    String
+  ifscCode         String
+  status           VerificationStatus
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  registeredAt DateTime @default(now())
+}
+
+// CHARGES
+//////////////////////////////////
+
+model LoanCharge {
+  id                String     @id @default(cuid())
+  loanApplicationId String
+  chargeType        ChargeType
+  chargeAmount      Decimal    @db.Decimal(15, 2)
+  chargeDate        DateTime
+  status            String
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+}
+
+// STATUS HISTORY
+
+model LoanStatusHistory {
+  id                String     @id @default(cuid())
+  loanApplicationId String
+  oldStatus         LoanStatus
+  newStatus         LoanStatus
+  remarks           String?
+
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  changedAt DateTime @default(now())
+}
+
+//===================================CUSTOMER=====================================
+
+model Customer {
+  id                String         @id @default(cuid())
+  title             Title
+  firstName         String
+  lastName          String
+  middleName        String?
+  gender            Gender
+  dob               DateTime
+  aadhaarNumber     String?
+  panNumber         String?
+  voterId           String?
+  passportNumber    String?
+  contactNumber     String
+  alternateNumber   String?
+  email             String?
+  address           String
+  city              String
+  state             String
+  pinCode           String
+  employmentType    EmploymentType
+  monthlyIncome     Float?
+  annualIncome      Float?
+  bankName          String?
+  bankAccountNumber String?
+  ifscCode          String?
+
+  status           CustomerStatus    @default(ACTIVE)
+  loanApplications LoanApplication[]
+  kycs             CustomerKYC[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+// ================================CUSTOMER KYC=====================================
+
+model CustomerKYC {
+  id               String    @id @default(cuid())
+  customerId       String
+  documentType     KycType
+  documentNumber   String
+  documentFilePath String
+  issuedBy         String?
+  issueDate        DateTime?
+  expiryDate       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id])
 }
 
 // =================================ENUMS=====================================
@@ -180,15 +428,17 @@ enum WorkLocation {
   HYBRID
 }
 
-enum LonenType {
-  PERSONAL
-  HOME
-  EDUCATION
-  BUSINESS
+enum LoanType {
+  PERSONAL_LOAN
+  VEHICLE_LOAN
+  HOME_LOAN
+  EDUCATION_LOAN
+  BUSINESS_LOAN
+  GOLD_LOAN
 }
 
 enum LeadStatus {
- CONTACTED
+  CONTACTED
   INTERESTED
   APPLICATION_IN_PROGRESS
   APPLICATION_SUBMITTED
@@ -199,4 +449,115 @@ enum LeadStatus {
   CLOSED
   DROPPED
   PENDING
+}
+
+enum PartnerType {
+  INDIVIDUAL
+  COMPANY
+  INSTITUTION
+  CORPARATE
+  AGENCY
+}
+
+enum commissionType {
+  FIXED
+  PERCENTAGE
+}
+
+enum PaymentCycle {
+  MONTHLY
+  QUARTERLY
+  HALF_YEARLY
+  YEARLY
+  PER_TRANSACTION
+}
+
+enum Title {
+  MR
+  MRS
+  MS
+  DR
+  PROF
+}
+
+enum EmploymentType {
+  salaried
+  self_employed
+  business
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  BLACKLISTED
+}
+
+enum KycType {
+  aadhaar
+  pan
+  video
+  ckyc
+}
+
+enum VerificationStatus {
+  pending
+  verified
+  rejected
+}
+
+enum LoanCategory {
+  personal
+  home
+  vehicle
+  education
+  gold
+  business
+}
+
+enum InterestType {
+  flat
+  reducing
+}
+
+enum LoanStatus {
+  draft
+  submitted
+  kyc_pending
+  credit_check
+  under_review
+  approved
+  rejected
+  disbursed
+  active
+  closed
+  written_off
+  defaulted
+  application_in_progress
+}
+
+enum ApprovalLevel {
+  l1
+  l2
+  l3
+}
+
+enum PaymentMode {
+  upi
+  nach
+  net_banking
+  cash
+  cheque
+}
+
+enum EmiStatus {
+  pending
+  paid
+  overdue
+}
+
+enum ChargeType {
+  late_fee
+  penalty
+  bounce
+  foreclosure
 }

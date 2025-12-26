@@ -12,6 +12,7 @@ export const createUserSchema = z
       .string()
       .min(8, "Password must be at least 8 characters long")
       .max(128, "Password must not exceed 128 characters"),
+    userName: z.string().trim().min(1, "User name is required"),
     isActive: z.coerce.boolean().optional(),
 
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"] as const).optional(),
@@ -36,6 +37,7 @@ export const updateUserSchema = z
       .min(8, "Password must be at least 8 characters long")
       .max(128, "Password must not exceed 128 characters")
       .optional(),
+    userName: z.string().trim().optional(),
     role: z.enum(["ADMIN", "EMPLOYEE", "PARTNER"] as const).optional(),
 
     contactNumber: z.string().trim().min(1).optional(),

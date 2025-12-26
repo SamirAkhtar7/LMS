@@ -38,7 +38,6 @@ export type EmployeeMinAggregateOutputType = {
   id: string | null
   userId: string | null
   employeeId: string | null
-  userName: string | null
   mobileNumber: string | null
   atlMobileNumber: string | null
   dob: Date | null
@@ -65,7 +64,6 @@ export type EmployeeMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   employeeId: string | null
-  userName: string | null
   mobileNumber: string | null
   atlMobileNumber: string | null
   dob: Date | null
@@ -92,7 +90,6 @@ export type EmployeeCountAggregateOutputType = {
   id: number
   userId: number
   employeeId: number
-  userName: number
   mobileNumber: number
   atlMobileNumber: number
   dob: number
@@ -129,7 +126,6 @@ export type EmployeeMinAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  userName?: true
   mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
@@ -156,7 +152,6 @@ export type EmployeeMaxAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  userName?: true
   mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
@@ -183,7 +178,6 @@ export type EmployeeCountAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  userName?: true
   mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
@@ -297,7 +291,6 @@ export type EmployeeGroupByOutputType = {
   id: string
   userId: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date
@@ -347,7 +340,6 @@ export type EmployeeWhereInput = {
   id?: Prisma.StringFilter<"Employee"> | string
   userId?: Prisma.StringFilter<"Employee"> | string
   employeeId?: Prisma.StringFilter<"Employee"> | string
-  userName?: Prisma.StringFilter<"Employee"> | string
   mobileNumber?: Prisma.StringFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringFilter<"Employee"> | string
   dob?: Prisma.DateTimeFilter<"Employee"> | Date | string
@@ -375,7 +367,6 @@ export type EmployeeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
   mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
@@ -404,7 +395,6 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   userId?: string
   employeeId?: string
-  userName?: string
   AND?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   OR?: Prisma.EmployeeWhereInput[]
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
@@ -429,13 +419,12 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId" | "employeeId" | "userName">
+}, "id" | "userId" | "employeeId">
 
 export type EmployeeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
   mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
@@ -470,7 +459,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   employeeId?: Prisma.StringWithAggregatesFilter<"Employee"> | string
-  userName?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   mobileNumber?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   dob?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
@@ -496,7 +484,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
 export type EmployeeCreateInput = {
   id?: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
@@ -524,7 +511,6 @@ export type EmployeeUncheckedCreateInput = {
   id?: string
   userId: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
@@ -550,7 +536,6 @@ export type EmployeeUncheckedCreateInput = {
 export type EmployeeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -578,7 +563,6 @@ export type EmployeeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -605,7 +589,6 @@ export type EmployeeCreateManyInput = {
   id?: string
   userId: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
@@ -631,7 +614,6 @@ export type EmployeeCreateManyInput = {
 export type EmployeeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,7 +640,6 @@ export type EmployeeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -696,7 +677,6 @@ export type EmployeeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
   mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
@@ -727,7 +707,6 @@ export type EmployeeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
   mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
@@ -754,7 +733,6 @@ export type EmployeeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
   mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
@@ -840,7 +818,6 @@ export type FloatFieldUpdateOperationsInput = {
 export type EmployeeCreateWithoutUserInput = {
   id?: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
@@ -866,7 +843,6 @@ export type EmployeeCreateWithoutUserInput = {
 export type EmployeeUncheckedCreateWithoutUserInput = {
   id?: string
   employeeId: string
-  userName: string
   mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
@@ -908,7 +884,6 @@ export type EmployeeUpdateToOneWithWhereWithoutUserInput = {
 export type EmployeeUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -934,7 +909,6 @@ export type EmployeeUpdateWithoutUserInput = {
 export type EmployeeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
   mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -963,7 +937,6 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   userId?: boolean
   employeeId?: boolean
-  userName?: boolean
   mobileNumber?: boolean
   atlMobileNumber?: boolean
   dob?: boolean
@@ -993,7 +966,6 @@ export type EmployeeSelectScalar = {
   id?: boolean
   userId?: boolean
   employeeId?: boolean
-  userName?: boolean
   mobileNumber?: boolean
   atlMobileNumber?: boolean
   dob?: boolean
@@ -1016,7 +988,7 @@ export type EmployeeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "userName" | "mobileNumber" | "atlMobileNumber" | "dob" | "designation" | "gender" | "maritalStatus" | "address" | "city" | "state" | "pinCode" | "emergencyContact" | "emergencyRelationship" | "department" | "dateOfJoining" | "experience" | "reportingManagerId" | "workLocation" | "salary" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "mobileNumber" | "atlMobileNumber" | "dob" | "designation" | "gender" | "maritalStatus" | "address" | "city" | "state" | "pinCode" | "emergencyContact" | "emergencyRelationship" | "department" | "dateOfJoining" | "experience" | "reportingManagerId" | "workLocation" | "salary" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -1030,7 +1002,6 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     userId: string
     employeeId: string
-    userName: string
     mobileNumber: string
     atlMobileNumber: string
     dob: Date
@@ -1424,7 +1395,6 @@ export interface EmployeeFieldRefs {
   readonly id: Prisma.FieldRef<"Employee", 'String'>
   readonly userId: Prisma.FieldRef<"Employee", 'String'>
   readonly employeeId: Prisma.FieldRef<"Employee", 'String'>
-  readonly userName: Prisma.FieldRef<"Employee", 'String'>
   readonly mobileNumber: Prisma.FieldRef<"Employee", 'String'>
   readonly atlMobileNumber: Prisma.FieldRef<"Employee", 'String'>
   readonly dob: Prisma.FieldRef<"Employee", 'DateTime'>

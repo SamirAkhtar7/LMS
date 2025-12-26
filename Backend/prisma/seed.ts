@@ -11,10 +11,10 @@ async function main(): Promise<void> {
     data: {
       fullName: "Samir Akhtar",
       email: "admin@gmail.com",
+      userName: "admin123",
       password,
       role: "ADMIN",
       contactNumber: "9999999999",
-      location: "Jaipur, India",
       isActive: true,
       createdAt: now,
     },

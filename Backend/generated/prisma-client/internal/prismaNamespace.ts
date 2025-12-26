@@ -847,6 +847,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   fullName: 'fullName',
+  userName: 'userName',
   email: 'email',
   password: 'password',
   role: 'role',
@@ -888,7 +889,6 @@ export const EmployeeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   employeeId: 'employeeId',
-  userName: 'userName',
   mobileNumber: 'mobileNumber',
   atlMobileNumber: 'atlMobileNumber',
   dob: 'dob',
@@ -917,9 +917,29 @@ export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typ
 export const PartnerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  userName: 'userName',
+  partnerId: 'partnerId',
+  companyName: 'companyName',
+  contactPerson: 'contactPerson',
+  alternateNumber: 'alternateNumber',
+  website: 'website',
+  establishedYear: 'establishedYear',
   partnerType: 'partnerType',
-  experience: 'experience',
+  businessNature: 'businessNature',
+  fullAddress: 'fullAddress',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  degination: 'degination',
+  BusinessCategory: 'BusinessCategory',
+  specialization: 'specialization',
+  totalEmployees: 'totalEmployees',
+  annualTurnover: 'annualTurnover',
+  businessRegistrationNumber: 'businessRegistrationNumber',
+  commisionType: 'commisionType',
+  commissionValue: 'commissionValue',
+  paymentCycle: 'paymentCycle',
+  minimumPayout: 'minimumPayout',
+  taxDeduction: 'taxDeduction',
   targetArea: 'targetArea',
   totalReferrals: 'totalReferrals',
   activeReferrals: 'activeReferrals',
@@ -939,7 +959,7 @@ export const LeadsScalarFieldEnum = {
   dob: 'dob',
   gender: 'gender',
   loanAmount: 'loanAmount',
-  typeOfLoan: 'typeOfLoan',
+  loanType: 'loanType',
   city: 'city',
   state: 'state',
   pinCode: 'pinCode',
@@ -965,6 +985,7 @@ export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 export const UserOrderByRelevanceFieldEnum = {
   id: 'id',
   fullName: 'fullName',
+  userName: 'userName',
   email: 'email',
   password: 'password',
   contactNumber: 'contactNumber'
@@ -997,7 +1018,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
   employeeId: 'employeeId',
-  userName: 'userName',
   mobileNumber: 'mobileNumber',
   atlMobileNumber: 'atlMobileNumber',
   designation: 'designation',
@@ -1025,9 +1045,20 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 export const PartnerOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
-  userName: 'userName',
-  partnerType: 'partnerType',
-  experience: 'experience',
+  partnerId: 'partnerId',
+  companyName: 'companyName',
+  contactPerson: 'contactPerson',
+  alternateNumber: 'alternateNumber',
+  website: 'website',
+  businessNature: 'businessNature',
+  fullAddress: 'fullAddress',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  degination: 'degination',
+  BusinessCategory: 'BusinessCategory',
+  specialization: 'specialization',
+  businessRegistrationNumber: 'businessRegistrationNumber',
   targetArea: 'targetArea'
 } as const
 
@@ -1127,9 +1158,30 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 
 
 /**
- * Reference to a field of type 'LonenType'
+ * Reference to a field of type 'PartnerType'
  */
-export type EnumLonenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LonenType'>
+export type EnumPartnerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartnerType'>
+    
+
+
+/**
+ * Reference to a field of type 'commissionType'
+ */
+export type EnumcommissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'commissionType'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentCycle'
+ */
+export type EnumPaymentCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentCycle'>
+    
+
+
+/**
+ * Reference to a field of type 'LoanType'
+ */
+export type EnumLoanTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanType'>
     
 
 

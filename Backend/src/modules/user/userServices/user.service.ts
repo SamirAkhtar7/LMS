@@ -18,6 +18,7 @@ export async function createUserService(data: CreateUser) {
     data: {
       fullName: data.fullName,
       email: data.email,
+      userName: data.userName,
       password: hashedPassword,
       role: data.role,
       contactNumber: data.contactNumber,
@@ -50,8 +51,8 @@ export async function updateUserService(id: string, data: Partial<CreateUser>) {
     throw new Error("User not found");
   }
 
-  // Remove role from update payload
-  const { role, ...allowedData } = data;
+  // Remove role and userName from update payload
+  const { role, userName, ...allowedData } = data;
 
   const updatedUser = await prisma.user.update({
     where: { id },

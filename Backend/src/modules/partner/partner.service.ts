@@ -14,24 +14,56 @@ export async function createPartnerService(partnerData: CreatePartner) {
     const user = await prisma.user.create({
       data: {
         fullName: partnerData.fullName,
+        userName: partnerData.userName,
         email: partnerData.email,
         password: hashedPassword,
         role: "PARTNER",
-        contactNumber: partnerData.contactNumber,
+        contactNumber: partnerData.contactNumber ?? "",
         isActive: partnerData.isActive ?? true,
       },
     });
+    // derive partner/user names and partnerId if not provided
+    const derivedPartnerId = partnerData.partnerId ?? `PRT-${Date.now()}`;
+
     const partner = await prisma.partner.create({
       data: {
         userId: user.id,
-        // partner.userName is required by the Prisma type — derive from provided value or email/localpart
-        userName: partnerData.fullName,
-        partnerType: partnerData.partnerType,
-        experience: partnerData.experience,
-        targetArea: partnerData.targetArea,
+        partnerId: derivedPartnerId,
+        companyName: partnerData.companyName ?? "",
+        contactPerson: partnerData.contactPerson ?? partnerData.fullName ?? "",
+        alternateNumber: partnerData.alternateNumber ?? "",
+        website: partnerData.website ?? "",
+        establishedYear: partnerData.establishedYear ?? null,
+        partnerType: (partnerData.partnerType ?? "INDIVIDUAL") as any,
+        businessNature: partnerData.businessNature ?? null,
+
+        fullAddress: partnerData.fullAddress ?? null,
+        city: partnerData.city ?? null,
+        state: partnerData.state ?? null,
+        pinCode: partnerData.pinCode ?? "",
+        degination: partnerData.degination ?? "",
+        BusinessCategory: partnerData.BusinessCategory ?? "",
+        specialization: partnerData.specialization ?? "",
+        totalEmployees: partnerData.totalEmployees,
+        annualTurnover: partnerData.annualTurnover,
+        businessRegistrationNumber:
+          partnerData.businessRegistrationNumber ?? "",
+
+        commisionType: (partnerData.commisionType ?? "FIXED") as any,
+        commissionValue: partnerData.commissionValue ?? null,
+        paymentCycle: (partnerData.paymentCycle ?? "MONTHLY") as any,
+        minimumPayout: partnerData.minimumPayout,
+        taxDeduction: partnerData.taxDeduction,
+
+        targetArea: partnerData.targetArea ?? "",
+        totalReferrals: 0,
+        activeReferrals: 0,
+        commissionEarned: 0,
       },
     });
-    return { user, partner };
+
+    const { password: _pw, ...safeUser } = user as any;
+    return { user: safeUser, partner };
   } catch (error: any) {
     if (error.code === "P2002") {
       throw new Error("Partner with this unique field already exists");
@@ -88,23 +120,37 @@ export const updatePartnerService = async (id: string, updateData: any) => {
   const userUpdateData: Record<string, any> = {};
   const partnerUpdateData: Record<string, any> = {};
 
-  // user-scoped fields
+  // user-scoped fields (do NOT allow updating `role` or `userName` here)
   const userFields = [
     "fullName",
     "email",
     "password",
-    " contactNumber",
+    "contactNumber",
     "isActive",
   ];
 
   for (const key of userFields) {
     if (Object.prototype.hasOwnProperty.call(updateData, key)) {
       (userUpdateData as any)[key] = (updateData as any)[key];
+      continue;
     }
-    if (userUpdateData.password) {
-      userUpdateData.password = await hashPassword(userUpdateData.password);
+    if (
+      updateData &&
+      typeof updateData.user === "object" &&
+      Object.prototype.hasOwnProperty.call(updateData.user, key)
+    ) {
+      (userUpdateData as any)[key] = (updateData.user as any)[key];
     }
   }
+
+  // hash password if provided
+  if (userUpdateData.password) {
+    userUpdateData.password = await hashPassword(userUpdateData.password);
+  }
+
+  // Prevent role and userName updates via this service regardless of input
+  if ((userUpdateData as any).role) delete (userUpdateData as any).role;
+  if ((userUpdateData as any).userName) delete (userUpdateData as any).userName;
 
   const partnerFields = ["partnerType", "experience", "targetArea"];
   for (const key of partnerFields) {

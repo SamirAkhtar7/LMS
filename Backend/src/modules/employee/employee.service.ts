@@ -23,6 +23,7 @@ export async function createEmployeeService(data: CreateEmployee) {
       data: {
         fullName: data.fullName,
         email: data.email,
+        userName: data.userName,
         password: hashedPassword,
         role: data.role,
         contactNumber: data.contactNumber ?? data.mobileNumber ?? "",
@@ -51,9 +52,8 @@ export async function createEmployeeService(data: CreateEmployee) {
     const employee = await prisma.employee.create({
       data: {
         userId: user.id,
-        userName: data.userName,
         employeeId,
-        mobileNumber: data. contactNumber ?? "",
+        mobileNumber: data.mobileNumber ?? data.contactNumber ?? "",
         atlMobileNumber: data.atlMobileNumber ?? "",
         dob: dobVal ?? new Date(),
         gender: (data.gender ?? "OTHER") as any,
@@ -136,13 +136,26 @@ export async function updateEmployeeService(
     const userFields = [
       "fullName",
       "email",
+      "userName",
       "password",
       "role",
       "contactNumber",
-      "contactNumber", ];
+    ];
+    // accept user updates either at top-level or inside `user` object
     for (const key of userFields) {
       if (Object.prototype.hasOwnProperty.call(updateData, key)) {
         (userUpdateData as any)[key] = (updateData as any)[key];
+      }
+    }
+    if (
+      updateData &&
+      typeof updateData.user === "object" &&
+      updateData.user !== null
+    ) {
+      for (const [k, v] of Object.entries(updateData.user)) {
+        if (userFields.includes(k) || k === "role" || k === "userName") {
+          (userUpdateData as any)[k] = v;
+        }
       }
     }
 
@@ -152,7 +165,7 @@ export async function updateEmployeeService(
 
     // employee-scoped fields
     const empFields = [
-      "employeeCode",
+      "employeeId",
       "designation",
       "branchId",
       "department",
