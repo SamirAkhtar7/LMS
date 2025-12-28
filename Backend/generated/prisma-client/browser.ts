@@ -47,3 +47,63 @@ export type Partner = Prisma.PartnerModel
  * 
  */
 export type Leads = Prisma.LeadsModel
+/**
+ * Model LoanApplication
+ * 
+ */
+export type LoanApplication = Prisma.LoanApplicationModel
+/**
+ * Model LoanDocument
+ * 
+ */
+export type LoanDocument = Prisma.LoanDocumentModel
+/**
+ * Model LoanProduct
+ * 
+ */
+export type LoanProduct = Prisma.LoanProductModel
+/**
+ * Model LoanApproval
+ * 
+ */
+export type LoanApproval = Prisma.LoanApprovalModel
+/**
+ * Model LoanDisbursement
+ * 
+ */
+export type LoanDisbursement = Prisma.LoanDisbursementModel
+/**
+ * Model LoanEmiSchedule
+ * 
+ */
+export type LoanEmiSchedule = Prisma.LoanEmiScheduleModel
+/**
+ * Model LoanPayment
+ * 
+ */
+export type LoanPayment = Prisma.LoanPaymentModel
+/**
+ * Model LoanNachMandate
+ * 
+ */
+export type LoanNachMandate = Prisma.LoanNachMandateModel
+/**
+ * Model LoanCharge
+ * 
+ */
+export type LoanCharge = Prisma.LoanChargeModel
+/**
+ * Model LoanStatusHistory
+ * 
+ */
+export type LoanStatusHistory = Prisma.LoanStatusHistoryModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model CustomerKYC
+ * 
+ */
+export type CustomerKYC = Prisma.CustomerKYCModel

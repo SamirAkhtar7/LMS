@@ -1,12 +1,13 @@
 import { z } from "zod";
 
+
 export const partnerTypeEnum = z.enum([
   "INDIVIDUAL",
   "COMPANY",
   "INSTITUTION",
-  "CORPARATE",
+  "CORPORATE",
   "AGENCY",
-]);
+]); 
 
 export const commissionTypeEnum = z.enum(["FIXED", "PERCENTAGE"]);
 
@@ -50,15 +51,15 @@ export const createPartnerSchema = z
     city: z.string().trim().optional(),
     state: z.string().trim().optional(),
     pinCode: z.string().trim().optional(),
-    degination: z.string().trim().optional(),
-    BusinessCategory: z.string().trim().optional(),
+    designation: z.string().trim().optional(),
+    businessCategory: z.string().trim().optional(),
     specialization: z.string().trim().optional(),
     totalEmployees: z.coerce.number().int().min(0).optional(),
     annualTurnover: z.coerce.number().min(0).optional(),
     businessRegistrationNumber: z.string().trim().optional(),
 
     // commission & payouts
-    commisionType: commissionTypeEnum.optional(),
+    commissionType: commissionTypeEnum.optional(),
     commissionValue: z.coerce.number().min(0).optional(),
     paymentCycle: paymentCycleEnum.optional(),
     minimumPayout: z.coerce.number().min(0).optional(),

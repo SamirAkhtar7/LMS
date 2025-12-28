@@ -97,8 +97,7 @@ model Employee {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId],references: [id],map: "fk_employee_user")
 }
 
 model Partner {
@@ -118,18 +117,17 @@ model Partner {
   city                       String?
   state                      String?
   pinCode                    String?
-  degination                 String?
-  BusinessCategory           String?
+  designation                String?
+  businessCategory           String?
   specialization             String?
   totalEmployees             Int?
   annualTurnover             Float?
   businessRegistrationNumber String?
-
-  commisionType   commissionType
-  commissionValue Float?
-  paymentCycle    PaymentCycle
-  minimumPayout   Float?
-  taxDeduction    Float?
+  commissionType             CommissionType
+  commissionValue            Float?
+  paymentCycle               PaymentCycle
+  minimumPayout              Float?
+  taxDeduction               Float?
 
   targetArea       String?
   totalReferrals   Int?     @default(0)
@@ -156,8 +154,8 @@ model Leads {
   pinCode       String
   address       String
 
-  assignedTo String?    @unique
-  assignedBy String?    @unique
+  assignedTo String?
+  assignedBy String?
   status     LeadStatus @default(PENDING)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
@@ -169,7 +167,7 @@ model Leads {
 
 model LoanApplication {
   id              String              @id @default(cuid())
-  leadId          String              @unique
+  // leadId          String              @unique
   applicationDate DateTime            @default(now())
   customerId      String
   customer        Customer            @relation(fields: [customerId], references: [id])
@@ -276,15 +274,17 @@ model LoanEmiSchedule {
   paidDate DateTime?
 
   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+  payments        LoanPayment[]
 }
 
 // PAYMENTS
 //////////////////////////////////
 
 model LoanPayment {
-  id                String  @id @default(cuid())
+  id                String           @id @default(cuid())
   loanApplicationId String
   emiId             String?
+  emi               LoanEmiSchedule? @relation(fields: [emiId], references: [id])
 
   paymentAmount  Decimal     @db.Decimal(15, 2)
   paymentMode    PaymentMode
@@ -455,11 +455,11 @@ enum PartnerType {
   INDIVIDUAL
   COMPANY
   INSTITUTION
-  CORPARATE
+  CORPORATE
   AGENCY
 }
 
-enum commissionType {
+enum CommissionType {
   FIXED
   PERCENTAGE
 }

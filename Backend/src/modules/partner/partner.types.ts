@@ -2,9 +2,8 @@ export type PartnerType =
   | "INDIVIDUAL"
   | "COMPANY"
   | "INSTITUTION"
-  | "CORPARATE"
+  | "CORPORATE"
   | "AGENCY";
-
 export type CommissionType = "FIXED" | "PERCENTAGE";
 
 export type PaymentCycle =
@@ -43,15 +42,16 @@ export interface CreatePartner {
   city?: string;
   state?: string;
   pinCode?: string;
-  degination?: string;
-  BusinessCategory?: string;
+
+  designation?: string;
+  businessCategory?: string;
   specialization?: string;
   totalEmployees?: number;
   annualTurnover?: number;
   businessRegistrationNumber?: string;
 
   // commission & payouts
-  commisionType?: CommissionType;
+  commissionType?: CommissionType;
   commissionValue?: number;
   paymentCycle?: PaymentCycle;
   minimumPayout?: number;
@@ -83,14 +83,13 @@ export interface PartnerModel {
   city?: string | null;
   state?: string | null;
   pinCode?: string | null;
-  degination?: string | null;
-  BusinessCategory?: string | null;
+  designation?: string | null;
+  businessCategory?: string | null;
   specialization?: string | null;
   totalEmployees?: number | null;
   annualTurnover?: number | null;
   businessRegistrationNumber?: string | null;
-  commisionType?: CommissionType | null;
-  commissionValue?: number | null;
+  commissionType?: CommissionType | null;
   paymentCycle?: PaymentCycle | null;
   minimumPayout?: number | null;
   taxDeduction?: number | null;

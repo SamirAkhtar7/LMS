@@ -91,19 +91,19 @@ export const PartnerType = {
   INDIVIDUAL: 'INDIVIDUAL',
   COMPANY: 'COMPANY',
   INSTITUTION: 'INSTITUTION',
-  CORPARATE: 'CORPARATE',
+  CORPORATE: 'CORPORATE',
   AGENCY: 'AGENCY'
 } as const
 
 export type PartnerType = (typeof PartnerType)[keyof typeof PartnerType]
 
 
-export const commissionType = {
+export const CommissionType = {
   FIXED: 'FIXED',
   PERCENTAGE: 'PERCENTAGE'
 } as const
 
-export type commissionType = (typeof commissionType)[keyof typeof commissionType]
+export type CommissionType = (typeof CommissionType)[keyof typeof CommissionType]
 
 
 export const PaymentCycle = {
@@ -115,3 +115,129 @@ export const PaymentCycle = {
 } as const
 
 export type PaymentCycle = (typeof PaymentCycle)[keyof typeof PaymentCycle]
+
+
+export const Title = {
+  MR: 'MR',
+  MRS: 'MRS',
+  MS: 'MS',
+  DR: 'DR',
+  PROF: 'PROF'
+} as const
+
+export type Title = (typeof Title)[keyof typeof Title]
+
+
+export const EmploymentType = {
+  salaried: 'salaried',
+  self_employed: 'self_employed',
+  business: 'business'
+} as const
+
+export type EmploymentType = (typeof EmploymentType)[keyof typeof EmploymentType]
+
+
+export const CustomerStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  BLACKLISTED: 'BLACKLISTED'
+} as const
+
+export type CustomerStatus = (typeof CustomerStatus)[keyof typeof CustomerStatus]
+
+
+export const KycType = {
+  aadhaar: 'aadhaar',
+  pan: 'pan',
+  video: 'video',
+  ckyc: 'ckyc'
+} as const
+
+export type KycType = (typeof KycType)[keyof typeof KycType]
+
+
+export const VerificationStatus = {
+  pending: 'pending',
+  verified: 'verified',
+  rejected: 'rejected'
+} as const
+
+export type VerificationStatus = (typeof VerificationStatus)[keyof typeof VerificationStatus]
+
+
+export const LoanCategory = {
+  personal: 'personal',
+  home: 'home',
+  vehicle: 'vehicle',
+  education: 'education',
+  gold: 'gold',
+  business: 'business'
+} as const
+
+export type LoanCategory = (typeof LoanCategory)[keyof typeof LoanCategory]
+
+
+export const InterestType = {
+  flat: 'flat',
+  reducing: 'reducing'
+} as const
+
+export type InterestType = (typeof InterestType)[keyof typeof InterestType]
+
+
+export const LoanStatus = {
+  draft: 'draft',
+  submitted: 'submitted',
+  kyc_pending: 'kyc_pending',
+  credit_check: 'credit_check',
+  under_review: 'under_review',
+  approved: 'approved',
+  rejected: 'rejected',
+  disbursed: 'disbursed',
+  active: 'active',
+  closed: 'closed',
+  written_off: 'written_off',
+  defaulted: 'defaulted',
+  application_in_progress: 'application_in_progress'
+} as const
+
+export type LoanStatus = (typeof LoanStatus)[keyof typeof LoanStatus]
+
+
+export const ApprovalLevel = {
+  l1: 'l1',
+  l2: 'l2',
+  l3: 'l3'
+} as const
+
+export type ApprovalLevel = (typeof ApprovalLevel)[keyof typeof ApprovalLevel]
+
+
+export const PaymentMode = {
+  upi: 'upi',
+  nach: 'nach',
+  net_banking: 'net_banking',
+  cash: 'cash',
+  cheque: 'cheque'
+} as const
+
+export type PaymentMode = (typeof PaymentMode)[keyof typeof PaymentMode]
+
+
+export const EmiStatus = {
+  pending: 'pending',
+  paid: 'paid',
+  overdue: 'overdue'
+} as const
+
+export type EmiStatus = (typeof EmiStatus)[keyof typeof EmiStatus]
+
+
+export const ChargeType = {
+  late_fee: 'late_fee',
+  penalty: 'penalty',
+  bounce: 'bounce',
+  foreclosure: 'foreclosure'
+} as const
+
+export type ChargeType = (typeof ChargeType)[keyof typeof ChargeType]

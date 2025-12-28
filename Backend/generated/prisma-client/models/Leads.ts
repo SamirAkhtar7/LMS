@@ -341,8 +341,6 @@ export type LeadsOrderByWithRelationInput = {
 
 export type LeadsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  assignedTo?: string
-  assignedBy?: string
   AND?: Prisma.LeadsWhereInput | Prisma.LeadsWhereInput[]
   OR?: Prisma.LeadsWhereInput[]
   NOT?: Prisma.LeadsWhereInput | Prisma.LeadsWhereInput[]
@@ -357,12 +355,14 @@ export type LeadsWhereUniqueInput = Prisma.AtLeast<{
   state?: Prisma.StringFilter<"Leads"> | string
   pinCode?: Prisma.StringFilter<"Leads"> | string
   address?: Prisma.StringFilter<"Leads"> | string
+  assignedTo?: Prisma.StringNullableFilter<"Leads"> | string | null
+  assignedBy?: Prisma.StringNullableFilter<"Leads"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"Leads"> | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFilter<"Leads"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Leads"> | Date | string
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   assignedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "assignedTo" | "assignedBy">
+}, "id">
 
 export type LeadsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

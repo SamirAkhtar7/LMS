@@ -23,7 +23,8 @@ export async function createPartnerService(partnerData: CreatePartner) {
       },
     });
     // derive partner/user names and partnerId if not provided
-    const derivedPartnerId = partnerData.partnerId ?? `PRT-${Date.now()}`;
+    const derivedPartnerId =
+      partnerData.partnerId ?? `PRT-${crypto.randomUUID()}`;
 
     const partner = await prisma.partner.create({
       data: {
@@ -41,15 +42,15 @@ export async function createPartnerService(partnerData: CreatePartner) {
         city: partnerData.city ?? null,
         state: partnerData.state ?? null,
         pinCode: partnerData.pinCode ?? "",
-        degination: partnerData.degination ?? "",
-        BusinessCategory: partnerData.BusinessCategory ?? "",
+        designation: partnerData.designation ?? "",
+        businessCategory: partnerData.businessCategory ?? "",
         specialization: partnerData.specialization ?? "",
         totalEmployees: partnerData.totalEmployees,
         annualTurnover: partnerData.annualTurnover,
         businessRegistrationNumber:
           partnerData.businessRegistrationNumber ?? "",
 
-        commisionType: (partnerData.commisionType ?? "FIXED") as any,
+        commissionType: (partnerData.commissionType ?? "FIXED") as any,
         commissionValue: partnerData.commissionValue ?? null,
         paymentCycle: (partnerData.paymentCycle ?? "MONTHLY") as any,
         minimumPayout: partnerData.minimumPayout,
