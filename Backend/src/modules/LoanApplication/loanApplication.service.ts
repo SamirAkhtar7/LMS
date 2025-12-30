@@ -173,30 +173,59 @@ export async function createLoanApplicationService(
     let customer = existingCustomer;
 
     if (!customer) {
-      customer = await prisma.customer.create({
-        data: {
-          title: parsed.title as unknown as Enums.Title,
-          firstName: parsed.firstName as string,
-          lastName: parsed.lastName as string,
-          middleName: parsed.middleName ?? undefined,
-          gender: parsed.gender as unknown as Enums.Gender,
-          dob: dob as Date,
-          aadhaarNumber: parsed.aadhaarNumber ?? undefined,
-          panNumber: parsed.panNumber ?? undefined,
-          contactNumber: parsed.contactNumber as string,
-          alternateNumber: parsed.alternateNumber ?? undefined,
-          employmentType:
-            parsed.employmentType as unknown as Enums.EmploymentType,
-          monthlyIncome: parsed.monthlyIncome ?? undefined,
-          annualIncome: parsed.annualIncome ?? undefined,
-          email: parsed.email ?? undefined,
-          address: parsed.address as string,
-          city: parsed.city as string,
-          state: parsed.state as string,
-          pinCode: parsed.pinCode as string,
-          status: "ACTIVE",
-        },
-      });
+      try {
+        customer = await prisma.customer.create({
+          data: {
+            title: parsed.title as unknown as Enums.Title,
+            firstName: parsed.firstName as string,
+            lastName: parsed.lastName as string,
+            middleName: parsed.middleName ?? undefined,
+            gender: parsed.gender as unknown as Enums.Gender,
+            dob: dob as Date,
+            aadhaarNumber: parsed.aadhaarNumber ?? undefined,
+            panNumber: parsed.panNumber ?? undefined,
+            contactNumber: parsed.contactNumber as string,
+            alternateNumber: parsed.alternateNumber ?? undefined,
+            employmentType:
+              parsed.employmentType as unknown as Enums.EmploymentType,
+            monthlyIncome: parsed.monthlyIncome ?? undefined,
+            annualIncome: parsed.annualIncome ?? undefined,
+            email: parsed.email ?? undefined,
+            address: parsed.address as string,
+            city: parsed.city as string,
+            state: parsed.state as string,
+            pinCode: parsed.pinCode as string,
+            status: "ACTIVE",
+          },
+        });
+      } catch (err: unknown) {
+        const eAny = err as any;
+        if (eAny?.code === "P2002") {
+          // Unique constraint violation likely due to a concurrent create — re-query the customer
+          const requery = await prisma.customer.findFirst({
+            where: {
+              OR: [
+                parsed.panNumber ? { panNumber: parsed.panNumber } : undefined,
+                parsed.aadhaarNumber
+                  ? { aadhaarNumber: parsed.aadhaarNumber }
+                  : undefined,
+                parsed.contactNumber
+                  ? { contactNumber: parsed.contactNumber }
+                  : undefined,
+              ].filter(Boolean) as object[],
+            },
+          });
+
+          if (requery) {
+            customer = requery;
+          } else {
+            // If we couldn't find the conflicting record, rethrow the original error
+            throw err;
+          }
+        } else {
+          throw err;
+        }
+      }
     }
 
     // 4. Create loan application
@@ -227,7 +256,6 @@ export async function createLoanApplicationService(
       e.statusCode = 409;
       throw e;
     }
-
     throw error;
   }
 }

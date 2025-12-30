@@ -7,7 +7,6 @@ export const employmentTypeEnum = z.enum([
   "self_employed",
   "business",
 ]);
-
 export const interestTypeEnum = z.enum(["flat", "reducing"]);
 
 export const loanStatusEnum = z.enum([
@@ -75,44 +74,40 @@ export const customerInlineSchema = z.object({
 //     }
 //   });
 
-
 export const createLoanApplicationSchema = z.object({
   // Customer fields
-  title: z.string(),
-  firstName: z.string(),
-  lastName: z.string().optional(),
-  middleName: z.string().optional(),
-  gender: z.enum(["MALE", "FEMALE", "OTHER"]).optional(),
+  title: titleEnum,
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1).optional(),
+  middleName: z.string().trim().min(1).optional(),
+  gender: genderEnum.optional(),
   dob: z.coerce.date().optional(),
-  aadhaarNumber: z.string().optional(),
-  panNumber: z.string().optional(),
-  contactNumber: z.string(),
-  alternateNumber: z.string().optional(),
-  employmentType: z.string(),
+  aadhaarNumber: z.string().trim().min(1).optional(),
+  panNumber: z.string().trim().min(1).optional(),
+  contactNumber: z.string().trim().min(1),
+  alternateNumber: z.string().trim().min(1).optional(),
+  employmentType: employmentTypeEnum,
   monthlyIncome: z.coerce.number().optional(),
   annualIncome: z.coerce.number().optional(),
-  email: z.string().email().optional(),
-  address: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  pinCode: z.string().optional(),
+  email: z.string().trim().email().optional(),
+  address: z.string().trim().min(1).optional(),
+  city: z.string().trim().min(1).optional(),
+  state: z.string().trim().min(1).optional(),
+  pinCode: z.string().trim().min(1).optional(),
 
   // Bank (optional – stored later if needed)
-  bankName: z.string().optional(),
-  bankAccountNumber: z.string().optional(),
-  ifscCode: z.string().optional(),
+  bankName: z.string().trim().min(1).optional(),
+  bankAccountNumber: z.string().trim().min(1).optional(),
+  ifscCode: z.string().trim().min(1).optional(),
 
   // Loan fields
   requestedAmount: z.coerce.number().positive(),
   tenureMonths: z.coerce.number().int().optional(),
   interestRate: z.coerce.number().optional(),
-  interestType: z.enum(["flat", "reducing"]).optional(),
-  loanPurpose: z.string().optional(),
+  interestType: interestTypeEnum.optional(),
+  loanPurpose: z.string().trim().min(1).optional(),
   cibilScore: z.coerce.number().int().optional(),
 });
-
-
-
 
 export const updateLoanApplicationSchema = createLoanApplicationSchema
   .partial()
