@@ -49,31 +49,70 @@ export const customerInlineSchema = z.object({
   annualIncome: z.coerce.number().optional(),
 });
 
-export const createLoanApplicationSchema = z
-  .object({
-    // either reference an existing customer or supply customer details
-    customerId: z.string().optional(),
-    customer: customerInlineSchema.optional(),
+// export const createLoanApplicationSchema = z
+//   .object({
+//     // either reference an existing customer or supply customer details
+//     customerId: z.string().optional(),
+//     customer: customerInlineSchema.optional(),
 
-    loanProductId: z.string().optional(),
-    requestedAmount: z.coerce.number().positive(),
-    tenureMonths: z.coerce.number().int().optional(),
-    interestRate: z.coerce.number().optional(),
-    interestType: interestTypeEnum.optional(),
-    emiAmount: z.coerce.number().optional(),
-    totalPayable: z.coerce.number().optional(),
-    loanPurpose: z.string().trim().optional(),
-    cibilScore: z.coerce.number().int().optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.customerId && !data.customer) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Either customerId or customer object must be provided",
-        path: ["customerId"],
-      });
-    }
-  });
+//     loanProductId: z.string().optional(),
+//     requestedAmount: z.coerce.number().positive(),
+//     tenureMonths: z.coerce.number().int().optional(),
+//     interestRate: z.coerce.number().optional(),
+//     interestType: interestTypeEnum.optional(),
+//     emiAmount: z.coerce.number().optional(),
+//     totalPayable: z.coerce.number().optional(),
+//     loanPurpose: z.string().trim().optional(),
+//     cibilScore: z.coerce.number().int().optional(),
+//   })
+//   .superRefine((data, ctx) => {
+//     if (!data.customerId && !data.customer) {
+//       ctx.addIssue({
+//         code: z.ZodIssueCode.custom,
+//         message: "Either customerId or customer object must be provided",
+//         path: ["customerId"],
+//       });
+//     }
+//   });
+
+
+export const createLoanApplicationSchema = z.object({
+  // Customer fields
+  title: z.string(),
+  firstName: z.string(),
+  lastName: z.string().optional(),
+  middleName: z.string().optional(),
+  gender: z.enum(["MALE", "FEMALE", "OTHER"]).optional(),
+  dob: z.coerce.date().optional(),
+  aadhaarNumber: z.string().optional(),
+  panNumber: z.string().optional(),
+  contactNumber: z.string(),
+  alternateNumber: z.string().optional(),
+  employmentType: z.string(),
+  monthlyIncome: z.coerce.number().optional(),
+  annualIncome: z.coerce.number().optional(),
+  email: z.string().email().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  pinCode: z.string().optional(),
+
+  // Bank (optional – stored later if needed)
+  bankName: z.string().optional(),
+  bankAccountNumber: z.string().optional(),
+  ifscCode: z.string().optional(),
+
+  // Loan fields
+  requestedAmount: z.coerce.number().positive(),
+  tenureMonths: z.coerce.number().int().optional(),
+  interestRate: z.coerce.number().optional(),
+  interestType: z.enum(["flat", "reducing"]).optional(),
+  loanPurpose: z.string().optional(),
+  cibilScore: z.coerce.number().int().optional(),
+});
+
+
+
 
 export const updateLoanApplicationSchema = createLoanApplicationSchema
   .partial()
