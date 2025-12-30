@@ -5,8 +5,13 @@ import {
   generateRefreshToken,
 } from "../../common/utils/utils.js";
 
-export async function loginService(email: string, password: string) {
-  const user = await prisma.user.findUnique({ where: { email } });
+export async function loginService(identifier: string, password: string) {
+  // Find by email OR userName
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email: identifier }, { userName: identifier }],
+    },
+  });
   if (!user) throw new Error("Invalid credentials");
 
   const isMatch = await comparePassword(password, user.password);

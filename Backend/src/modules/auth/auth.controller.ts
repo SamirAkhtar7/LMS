@@ -4,9 +4,20 @@ import { cookieOptions } from "../../common/utils/utils.js";
 
 export const loginController = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    // Accept either `email` or `userName` from the client as identifier
+    const { email, userName, password } = req.body as {
+      email?: string;
+      userName?: string;
+      password: string;
+    };
+    const identifier = email ?? userName;
+    if (!identifier)
+      return res
+        .status(400)
+        .json({ success: false, message: "email or userName is required" });
+
     const { user, accessToken, refreshToken } = await loginService(
-      email,
+      identifier,
       password
     );
 
