@@ -397,7 +397,6 @@ export type CustomerWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   loanApplications?: Prisma.LoanApplicationListRelationFilter
-  kycs?: Prisma.CustomerKYCListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -429,7 +428,6 @@ export type CustomerOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   loanApplications?: Prisma.LoanApplicationOrderByRelationAggregateInput
-  kycs?: Prisma.CustomerKYCOrderByRelationAggregateInput
   _relevance?: Prisma.CustomerOrderByRelevanceInput
 }
 
@@ -465,7 +463,6 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   loanApplications?: Prisma.LoanApplicationListRelationFilter
-  kycs?: Prisma.CustomerKYCListRelationFilter
 }, "id">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -565,7 +562,6 @@ export type CustomerCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
-  kycs?: Prisma.CustomerKYCCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -597,7 +593,6 @@ export type CustomerUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
-  kycs?: Prisma.CustomerKYCUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -629,7 +624,6 @@ export type CustomerUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
-  kycs?: Prisma.CustomerKYCUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -661,7 +655,6 @@ export type CustomerUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
-  kycs?: Prisma.CustomerKYCUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -891,20 +884,6 @@ export type EnumCustomerStatusFieldUpdateOperationsInput = {
   set?: $Enums.CustomerStatus
 }
 
-export type CustomerCreateNestedOneWithoutKycsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutKycsInput, Prisma.CustomerUncheckedCreateWithoutKycsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutKycsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutKycsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutKycsInput, Prisma.CustomerUncheckedCreateWithoutKycsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutKycsInput
-  upsert?: Prisma.CustomerUpsertWithoutKycsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutKycsInput, Prisma.CustomerUpdateWithoutKycsInput>, Prisma.CustomerUncheckedUpdateWithoutKycsInput>
-}
-
 export type CustomerCreateWithoutLoanApplicationsInput = {
   id?: string
   title: $Enums.Title
@@ -933,7 +912,6 @@ export type CustomerCreateWithoutLoanApplicationsInput = {
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  kycs?: Prisma.CustomerKYCCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutLoanApplicationsInput = {
@@ -964,7 +942,6 @@ export type CustomerUncheckedCreateWithoutLoanApplicationsInput = {
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  kycs?: Prisma.CustomerKYCUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutLoanApplicationsInput = {
@@ -1011,7 +988,6 @@ export type CustomerUpdateWithoutLoanApplicationsInput = {
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  kycs?: Prisma.CustomerKYCUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutLoanApplicationsInput = {
@@ -1042,147 +1018,6 @@ export type CustomerUncheckedUpdateWithoutLoanApplicationsInput = {
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  kycs?: Prisma.CustomerKYCUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutKycsInput = {
-  id?: string
-  title: $Enums.Title
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  gender: $Enums.Gender
-  dob: Date | string
-  aadhaarNumber?: string | null
-  panNumber?: string | null
-  voterId?: string | null
-  passportNumber?: string | null
-  contactNumber: string
-  alternateNumber?: string | null
-  email?: string | null
-  address: string
-  city: string
-  state: string
-  pinCode: string
-  employmentType: $Enums.EmploymentType
-  monthlyIncome?: number | null
-  annualIncome?: number | null
-  bankName?: string | null
-  bankAccountNumber?: string | null
-  ifscCode?: string | null
-  status?: $Enums.CustomerStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutKycsInput = {
-  id?: string
-  title: $Enums.Title
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  gender: $Enums.Gender
-  dob: Date | string
-  aadhaarNumber?: string | null
-  panNumber?: string | null
-  voterId?: string | null
-  passportNumber?: string | null
-  contactNumber: string
-  alternateNumber?: string | null
-  email?: string | null
-  address: string
-  city: string
-  state: string
-  pinCode: string
-  employmentType: $Enums.EmploymentType
-  monthlyIncome?: number | null
-  annualIncome?: number | null
-  bankName?: string | null
-  bankAccountNumber?: string | null
-  ifscCode?: string | null
-  status?: $Enums.CustomerStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutKycsInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutKycsInput, Prisma.CustomerUncheckedCreateWithoutKycsInput>
-}
-
-export type CustomerUpsertWithoutKycsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutKycsInput, Prisma.CustomerUncheckedUpdateWithoutKycsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutKycsInput, Prisma.CustomerUncheckedCreateWithoutKycsInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutKycsInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutKycsInput, Prisma.CustomerUncheckedUpdateWithoutKycsInput>
-}
-
-export type CustomerUpdateWithoutKycsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.EnumTitleFieldUpdateOperationsInput | $Enums.Title
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
-  employmentType?: Prisma.EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-  monthlyIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutKycsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.EnumTitleFieldUpdateOperationsInput | $Enums.Title
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
-  employmentType?: Prisma.EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-  monthlyIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 
@@ -1192,12 +1027,10 @@ export type CustomerUncheckedUpdateWithoutKycsInput = {
 
 export type CustomerCountOutputType = {
   loanApplications: number
-  kycs: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplications?: boolean | CustomerCountOutputTypeCountLoanApplicationsArgs
-  kycs?: boolean | CustomerCountOutputTypeCountKycsArgs
 }
 
 /**
@@ -1215,13 +1048,6 @@ export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  */
 export type CustomerCountOutputTypeCountLoanApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LoanApplicationWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountKycsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CustomerKYCWhereInput
 }
 
 
@@ -1254,7 +1080,6 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   loanApplications?: boolean | Prisma.Customer$loanApplicationsArgs<ExtArgs>
-  kycs?: boolean | Prisma.Customer$kycsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -1293,7 +1118,6 @@ export type CustomerSelectScalar = {
 export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "firstName" | "lastName" | "middleName" | "gender" | "dob" | "aadhaarNumber" | "panNumber" | "voterId" | "passportNumber" | "contactNumber" | "alternateNumber" | "email" | "address" | "city" | "state" | "pinCode" | "employmentType" | "monthlyIncome" | "annualIncome" | "bankName" | "bankAccountNumber" | "ifscCode" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplications?: boolean | Prisma.Customer$loanApplicationsArgs<ExtArgs>
-  kycs?: boolean | Prisma.Customer$kycsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1301,7 +1125,6 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Customer"
   objects: {
     loanApplications: Prisma.$LoanApplicationPayload<ExtArgs>[]
-    kycs: Prisma.$CustomerKYCPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1672,7 +1495,6 @@ readonly fields: CustomerFieldRefs;
 export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   loanApplications<T extends Prisma.Customer$loanApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$loanApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  kycs<T extends Prisma.Customer$kycsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$kycsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerKYCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2093,30 +1915,6 @@ export type Customer$loanApplicationsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.LoanApplicationScalarFieldEnum | Prisma.LoanApplicationScalarFieldEnum[]
-}
-
-/**
- * Customer.kycs
- */
-export type Customer$kycsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CustomerKYC
-   */
-  select?: Prisma.CustomerKYCSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CustomerKYC
-   */
-  omit?: Prisma.CustomerKYCOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CustomerKYCInclude<ExtArgs> | null
-  where?: Prisma.CustomerKYCWhereInput
-  orderBy?: Prisma.CustomerKYCOrderByWithRelationInput | Prisma.CustomerKYCOrderByWithRelationInput[]
-  cursor?: Prisma.CustomerKYCWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CustomerKYCScalarFieldEnum | Prisma.CustomerKYCScalarFieldEnum[]
 }
 
 /**

@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export const titleEnum = z.enum(["MR", "MRS", "MS", "DR", "PROF"]);
+export const genderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
+export const employmentTypeEnum = z.enum([
+  "salaried",
+  "self_employed",
+  "business",
+]);
+
 export const interestTypeEnum = z.enum(["flat", "reducing"]);
 
 export const loanStatusEnum = z.enum([
@@ -19,11 +27,11 @@ export const loanStatusEnum = z.enum([
 ]);
 
 export const customerInlineSchema = z.object({
-  title: z.enum(["MR", "MRS", "MS"]),
+  title: titleEnum,
   firstName: z.string().trim().min(1),
   lastName: z.string().trim().optional(),
   middleName: z.string().trim().optional(),
-  gender: z.enum(["MALE", "FEMALE", "OTHER"]).optional(),
+  gender: genderEnum.optional(),
   dob: z
     .preprocess((v) => (v ? new Date(v as string) : v), z.date())
     .optional(),
@@ -36,7 +44,7 @@ export const customerInlineSchema = z.object({
   city: z.string().trim().optional(),
   state: z.string().trim().optional(),
   pinCode: z.string().trim().optional(),
-  employmentType: z.enum(["SALARIED", "SELF_EMPLOYED", "BUSINESS"]),
+  employmentType: employmentTypeEnum,
   monthlyIncome: z.coerce.number().optional(),
   annualIncome: z.coerce.number().optional(),
 });
@@ -47,8 +55,8 @@ export const createLoanApplicationSchema = z
     customerId: z.string().optional(),
     customer: customerInlineSchema.optional(),
 
-    loanProductId: z.string().trim().min(1),
-    requestedAmount: z.number().positive(),
+    loanProductId: z.string().optional(),
+    requestedAmount: z.coerce.number().positive(),
     tenureMonths: z.coerce.number().int().optional(),
     interestRate: z.coerce.number().optional(),
     interestType: interestTypeEnum.optional(),
@@ -92,3 +100,5 @@ export type CreateLoanApplicationBody = z.infer<
 export type UpdateLoanApplicationBody = z.infer<
   typeof updateLoanApplicationSchema
 >;
+
+export default createLoanApplicationSchema;

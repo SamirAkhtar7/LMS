@@ -171,7 +171,7 @@ model LoanApplication {
   applicationDate DateTime            @default(now())
   customerId      String
   customer        Customer            @relation(fields: [customerId], references: [id])
-  loanProductId   String
+  // loanProductId   String
   requestedAmount Float
   approvedAmount  Float?
   tenureMonths    Int?
@@ -185,160 +185,160 @@ model LoanApplication {
   approvalDate    DateTime?
   activationDate  DateTime?
   rejectionReason String?
-  product         LoanProduct         @relation(fields: [loanProductId], references: [id])
-  documents       LoanDocument[]
-  approvals       LoanApproval[]
-  disbursements   LoanDisbursement[]
-  emis            LoanEmiSchedule[]
-  payments        LoanPayment[]
-  charges         LoanCharge[]
-  statusHistory   LoanStatusHistory[]
-  nachMandates    LoanNachMandate[]
+  // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
+  // documents       LoanDocument[]
+  // approvals       LoanApproval[]
+  // disbursements   LoanDisbursement[]
+  // emis            LoanEmiSchedule[]
+  // payments        LoanPayment[]
+  // charges         LoanCharge[]
+  // statusHistory   LoanStatusHistory[]
+  // nachMandates    LoanNachMandate[]
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 }
 
-model LoanDocument {
-  id                 String             @id @default(cuid())
-  loanApplicationId  String
-  documentType       String
-  documentPath       String
-  verificationStatus VerificationStatus
+// model LoanDocument {
+//   id                 String             @id @default(cuid())
+//   loanApplicationId  String
+//   documentType       String
+//   documentPath       String
+//   verificationStatus VerificationStatus
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
-  createdAt DateTime @default(now())
-}
+//   createdAt DateTime @default(now())
+// }
 
 // Loan products offered by the system
-model LoanProduct {
-  id           String        @id @default(cuid())
-  name         String
-  code         String?       @unique
-  description  String?
-  interestRate Float?
-  category     LoanCategory?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+// model LoanProduct {
+//   id           String        @id @default(cuid())
+//   name         String
+//   code         String?       @unique
+//   description  String?
+//   interestRate Float?
+//   category     LoanCategory?
+//   createdAt    DateTime      @default(now())
+//   updatedAt    DateTime      @updatedAt
 
-  applications LoanApplication[]
-}
+//   applications LoanApplication[]
+// }
 
 // APPROVAL
 
-model LoanApproval {
-  id                String        @id @default(cuid())
-  loanApplicationId String
-  approvalLevel     ApprovalLevel
-  approvedAmount    Float
-  approvedInterest  Float
-  remarks           String?
+// model LoanApproval {
+//   id                String        @id @default(cuid())
+//   loanApplicationId String
+//   approvalLevel     ApprovalLevel
+//   approvedAmount    Float
+//   approvedInterest  Float
+//   remarks           String?
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
-  approvedAt DateTime @default(now())
-}
+//   approvedAt DateTime @default(now())
+// }
 
 // DISBURSEMENT
 
-model LoanDisbursement {
-  id                String @id @default(cuid())
-  loanApplicationId String
+// model LoanDisbursement {
+//   id                String @id @default(cuid())
+//   loanApplicationId String
 
-  disbursedAmount Decimal @db.Decimal(15, 2)
-  bankAccount     String
-  ifscCode        String
-  transactionRef  String
+//   disbursedAmount Decimal @db.Decimal(15, 2)
+//   bankAccount     String
+//   ifscCode        String
+//   transactionRef  String
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
-  disbursedAt DateTime @default(now())
-}
+//   disbursedAt DateTime @default(now())
+// }
 
 // EMI SCHEDULE
 //////////////////////////////////
 
-model LoanEmiSchedule {
-  id                String   @id @default(cuid())
-  loanApplicationId String
-  emiNo             Int
-  dueDate           DateTime
+// model LoanEmiSchedule {
+//   id                String   @id @default(cuid())
+//   loanApplicationId String
+//   emiNo             Int
+//   dueDate           DateTime
 
-  principalAmount Decimal @db.Decimal(15, 2)
-  openingBalance  Decimal @db.Decimal(15, 2)
-  interestAmount  Decimal @db.Decimal(15, 2)
-  emiAmount       Decimal @db.Decimal(15, 2)
-  closingBalance  Decimal @db.Decimal(15, 2)
+//   principalAmount Decimal @db.Decimal(15, 2)
+//   openingBalance  Decimal @db.Decimal(15, 2)
+//   interestAmount  Decimal @db.Decimal(15, 2)
+//   emiAmount       Decimal @db.Decimal(15, 2)
+//   closingBalance  Decimal @db.Decimal(15, 2)
 
-  status   EmiStatus
-  paidDate DateTime?
+//   status   EmiStatus
+//   paidDate DateTime?
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-  payments        LoanPayment[]
-}
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   payments        LoanPayment[]
+// }
 
 // PAYMENTS
 //////////////////////////////////
 
-model LoanPayment {
-  id                String           @id @default(cuid())
-  loanApplicationId String
-  emiId             String?
-  emi               LoanEmiSchedule? @relation(fields: [emiId], references: [id])
+// model LoanPayment {
+//   id                String           @id @default(cuid())
+//   loanApplicationId String
+//   emiId             String?
+//   emi               LoanEmiSchedule? @relation(fields: [emiId], references: [id])
 
-  paymentAmount  Decimal     @db.Decimal(15, 2)
-  paymentMode    PaymentMode
-  transactionRef String
-  paymentDate    DateTime
+//   paymentAmount  Decimal     @db.Decimal(15, 2)
+//   paymentMode    PaymentMode
+//   transactionRef String
+//   paymentDate    DateTime
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-}
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+// }
 
 // NACH
 //////////////////////////////////
 
-model LoanNachMandate {
-  id                String @id @default(cuid())
-  loanApplicationId String @unique
+// model LoanNachMandate {
+//   id                String @id @default(cuid())
+//   loanApplicationId String @unique
 
-  mandateReference String
-  bankName         String
-  accountNumber    String
-  ifscCode         String
-  status           VerificationStatus
+//   mandateReference String
+//   bankName         String
+//   accountNumber    String
+//   ifscCode         String
+//   status           VerificationStatus
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
-  registeredAt DateTime @default(now())
-}
+//   registeredAt DateTime @default(now())
+// }
 
 // CHARGES
 //////////////////////////////////
 
-model LoanCharge {
-  id                String     @id @default(cuid())
-  loanApplicationId String
-  chargeType        ChargeType
-  chargeAmount      Decimal    @db.Decimal(15, 2)
-  chargeDate        DateTime
-  status            String
+// model LoanCharge {
+//   id                String     @id @default(cuid())
+//   loanApplicationId String
+//   chargeType        ChargeType
+//   chargeAmount      Decimal    @db.Decimal(15, 2)
+//   chargeDate        DateTime
+//   status            String
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-}
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+// }
 
 // STATUS HISTORY
 
-model LoanStatusHistory {
-  id                String     @id @default(cuid())
-  loanApplicationId String
-  oldStatus         LoanStatus
-  newStatus         LoanStatus
-  remarks           String?
+// model LoanStatusHistory {
+//   id                String     @id @default(cuid())
+//   loanApplicationId String
+//   oldStatus         LoanStatus
+//   newStatus         LoanStatus
+//   remarks           String?
 
-  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
-  changedAt DateTime @default(now())
-}
+//   changedAt DateTime @default(now())
+// }
 
 //===================================CUSTOMER=====================================
 
@@ -370,27 +370,27 @@ model Customer {
 
   status           CustomerStatus    @default(ACTIVE)
   loanApplications LoanApplication[]
-  kycs             CustomerKYC[]
+  // kycs             CustomerKYC[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
 }
 
 // ================================CUSTOMER KYC=====================================
 
-model CustomerKYC {
-  id               String    @id @default(cuid())
-  customerId       String
-  documentType     KycType
-  documentNumber   String
-  documentFilePath String
-  issuedBy         String?
-  issueDate        DateTime?
-  expiryDate       DateTime?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+// model CustomerKYC {
+//   id               String    @id @default(cuid())
+//   customerId       String
+//   documentType     KycType
+//   documentNumber   String
+//   documentFilePath String
+//   issuedBy         String?
+//   issueDate        DateTime?
+//   expiryDate       DateTime?
+//   createdAt        DateTime  @default(now())
+//   updatedAt        DateTime  @updatedAt
 
-  customer Customer @relation(fields: [customerId], references: [id])
-}
+//   customer Customer @relation(fields: [customerId], references: [id])
+// }
 
 // =================================ENUMS=====================================
 

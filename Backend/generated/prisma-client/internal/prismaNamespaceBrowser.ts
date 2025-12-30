@@ -58,17 +58,7 @@ export const ModelName = {
   Partner: 'Partner',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
-  LoanDocument: 'LoanDocument',
-  LoanProduct: 'LoanProduct',
-  LoanApproval: 'LoanApproval',
-  LoanDisbursement: 'LoanDisbursement',
-  LoanEmiSchedule: 'LoanEmiSchedule',
-  LoanPayment: 'LoanPayment',
-  LoanNachMandate: 'LoanNachMandate',
-  LoanCharge: 'LoanCharge',
-  LoanStatusHistory: 'LoanStatusHistory',
-  Customer: 'Customer',
-  CustomerKYC: 'CustomerKYC'
+  Customer: 'Customer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -221,7 +211,6 @@ export const LoanApplicationScalarFieldEnum = {
   id: 'id',
   applicationDate: 'applicationDate',
   customerId: 'customerId',
-  loanProductId: 'loanProductId',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
@@ -240,126 +229,6 @@ export const LoanApplicationScalarFieldEnum = {
 } as const
 
 export type LoanApplicationScalarFieldEnum = (typeof LoanApplicationScalarFieldEnum)[keyof typeof LoanApplicationScalarFieldEnum]
-
-
-export const LoanDocumentScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  documentType: 'documentType',
-  documentPath: 'documentPath',
-  verificationStatus: 'verificationStatus',
-  createdAt: 'createdAt'
-} as const
-
-export type LoanDocumentScalarFieldEnum = (typeof LoanDocumentScalarFieldEnum)[keyof typeof LoanDocumentScalarFieldEnum]
-
-
-export const LoanProductScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  code: 'code',
-  description: 'description',
-  interestRate: 'interestRate',
-  category: 'category',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LoanProductScalarFieldEnum = (typeof LoanProductScalarFieldEnum)[keyof typeof LoanProductScalarFieldEnum]
-
-
-export const LoanApprovalScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  approvalLevel: 'approvalLevel',
-  approvedAmount: 'approvedAmount',
-  approvedInterest: 'approvedInterest',
-  remarks: 'remarks',
-  approvedAt: 'approvedAt'
-} as const
-
-export type LoanApprovalScalarFieldEnum = (typeof LoanApprovalScalarFieldEnum)[keyof typeof LoanApprovalScalarFieldEnum]
-
-
-export const LoanDisbursementScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  disbursedAmount: 'disbursedAmount',
-  bankAccount: 'bankAccount',
-  ifscCode: 'ifscCode',
-  transactionRef: 'transactionRef',
-  disbursedAt: 'disbursedAt'
-} as const
-
-export type LoanDisbursementScalarFieldEnum = (typeof LoanDisbursementScalarFieldEnum)[keyof typeof LoanDisbursementScalarFieldEnum]
-
-
-export const LoanEmiScheduleScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  emiNo: 'emiNo',
-  dueDate: 'dueDate',
-  principalAmount: 'principalAmount',
-  openingBalance: 'openingBalance',
-  interestAmount: 'interestAmount',
-  emiAmount: 'emiAmount',
-  closingBalance: 'closingBalance',
-  status: 'status',
-  paidDate: 'paidDate'
-} as const
-
-export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
-
-
-export const LoanPaymentScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  emiId: 'emiId',
-  paymentAmount: 'paymentAmount',
-  paymentMode: 'paymentMode',
-  transactionRef: 'transactionRef',
-  paymentDate: 'paymentDate'
-} as const
-
-export type LoanPaymentScalarFieldEnum = (typeof LoanPaymentScalarFieldEnum)[keyof typeof LoanPaymentScalarFieldEnum]
-
-
-export const LoanNachMandateScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  mandateReference: 'mandateReference',
-  bankName: 'bankName',
-  accountNumber: 'accountNumber',
-  ifscCode: 'ifscCode',
-  status: 'status',
-  registeredAt: 'registeredAt'
-} as const
-
-export type LoanNachMandateScalarFieldEnum = (typeof LoanNachMandateScalarFieldEnum)[keyof typeof LoanNachMandateScalarFieldEnum]
-
-
-export const LoanChargeScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  chargeType: 'chargeType',
-  chargeAmount: 'chargeAmount',
-  chargeDate: 'chargeDate',
-  status: 'status'
-} as const
-
-export type LoanChargeScalarFieldEnum = (typeof LoanChargeScalarFieldEnum)[keyof typeof LoanChargeScalarFieldEnum]
-
-
-export const LoanStatusHistoryScalarFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  oldStatus: 'oldStatus',
-  newStatus: 'newStatus',
-  remarks: 'remarks',
-  changedAt: 'changedAt'
-} as const
-
-export type LoanStatusHistoryScalarFieldEnum = (typeof LoanStatusHistoryScalarFieldEnum)[keyof typeof LoanStatusHistoryScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -393,22 +262,6 @@ export const CustomerScalarFieldEnum = {
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
-
-
-export const CustomerKYCScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  documentType: 'documentType',
-  documentNumber: 'documentNumber',
-  documentFilePath: 'documentFilePath',
-  issuedBy: 'issuedBy',
-  issueDate: 'issueDate',
-  expiryDate: 'expiryDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CustomerKYCScalarFieldEnum = (typeof CustomerKYCScalarFieldEnum)[keyof typeof CustomerKYCScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -521,100 +374,11 @@ export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldE
 export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
-  loanProductId: 'loanProductId',
   loanPurpose: 'loanPurpose',
   rejectionReason: 'rejectionReason'
 } as const
 
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]
-
-
-export const LoanDocumentOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  documentType: 'documentType',
-  documentPath: 'documentPath'
-} as const
-
-export type LoanDocumentOrderByRelevanceFieldEnum = (typeof LoanDocumentOrderByRelevanceFieldEnum)[keyof typeof LoanDocumentOrderByRelevanceFieldEnum]
-
-
-export const LoanProductOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  code: 'code',
-  description: 'description'
-} as const
-
-export type LoanProductOrderByRelevanceFieldEnum = (typeof LoanProductOrderByRelevanceFieldEnum)[keyof typeof LoanProductOrderByRelevanceFieldEnum]
-
-
-export const LoanApprovalOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  remarks: 'remarks'
-} as const
-
-export type LoanApprovalOrderByRelevanceFieldEnum = (typeof LoanApprovalOrderByRelevanceFieldEnum)[keyof typeof LoanApprovalOrderByRelevanceFieldEnum]
-
-
-export const LoanDisbursementOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  bankAccount: 'bankAccount',
-  ifscCode: 'ifscCode',
-  transactionRef: 'transactionRef'
-} as const
-
-export type LoanDisbursementOrderByRelevanceFieldEnum = (typeof LoanDisbursementOrderByRelevanceFieldEnum)[keyof typeof LoanDisbursementOrderByRelevanceFieldEnum]
-
-
-export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId'
-} as const
-
-export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
-
-
-export const LoanPaymentOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  emiId: 'emiId',
-  transactionRef: 'transactionRef'
-} as const
-
-export type LoanPaymentOrderByRelevanceFieldEnum = (typeof LoanPaymentOrderByRelevanceFieldEnum)[keyof typeof LoanPaymentOrderByRelevanceFieldEnum]
-
-
-export const LoanNachMandateOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  mandateReference: 'mandateReference',
-  bankName: 'bankName',
-  accountNumber: 'accountNumber',
-  ifscCode: 'ifscCode'
-} as const
-
-export type LoanNachMandateOrderByRelevanceFieldEnum = (typeof LoanNachMandateOrderByRelevanceFieldEnum)[keyof typeof LoanNachMandateOrderByRelevanceFieldEnum]
-
-
-export const LoanChargeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  status: 'status'
-} as const
-
-export type LoanChargeOrderByRelevanceFieldEnum = (typeof LoanChargeOrderByRelevanceFieldEnum)[keyof typeof LoanChargeOrderByRelevanceFieldEnum]
-
-
-export const LoanStatusHistoryOrderByRelevanceFieldEnum = {
-  id: 'id',
-  loanApplicationId: 'loanApplicationId',
-  remarks: 'remarks'
-} as const
-
-export type LoanStatusHistoryOrderByRelevanceFieldEnum = (typeof LoanStatusHistoryOrderByRelevanceFieldEnum)[keyof typeof LoanStatusHistoryOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {
@@ -639,15 +403,4 @@ export const CustomerOrderByRelevanceFieldEnum = {
 } as const
 
 export type CustomerOrderByRelevanceFieldEnum = (typeof CustomerOrderByRelevanceFieldEnum)[keyof typeof CustomerOrderByRelevanceFieldEnum]
-
-
-export const CustomerKYCOrderByRelevanceFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  documentNumber: 'documentNumber',
-  documentFilePath: 'documentFilePath',
-  issuedBy: 'issuedBy'
-} as const
-
-export type CustomerKYCOrderByRelevanceFieldEnum = (typeof CustomerKYCOrderByRelevanceFieldEnum)[keyof typeof CustomerKYCOrderByRelevanceFieldEnum]
 
