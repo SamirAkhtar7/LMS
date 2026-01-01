@@ -15,10 +15,20 @@ interface AuthPayload extends JwtPayload {
   id: string;
   email: string;
   role: string;
+  
 }
 
+
+export interface AuthRequest extends Request {
+  user?: {
+    id: string;
+    email: string;
+    role: string;
+  };
+  permissions?: string[];
+}
 export const authMiddleware = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
