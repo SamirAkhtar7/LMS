@@ -263,20 +263,31 @@ export async function createLoanApplicationService(
 export const getAllLoanApplicationsService = async () => {
   // Implementation for retrieving all loan applications
   try {
-    // Simulate retrieval logic
+    const loanApplications = await prisma.loanApplication.findMany({
+      include: {
+        customer: true,
+      },
+    });
+    return loanApplications;
   } catch (error) {
     throw error;
   }
-  return []; // return array of loan applications
+
 };
 export const getLoanApplicationByIdService = async (id: string) => {
   // Implementation for retrieving a loan application by ID
   try {
-    // Simulate retrieval logic
+    const loanApplication = await prisma.loanApplication.findUnique({
+      where: { id },
+      include: {
+        customer: true,
+      },
+    });
+    return loanApplication;
   } catch (error) {
     throw error;
   }
-  return {}; // return loan application data
+
 };
 export const updateLoanApplicationStatusService = async (
   id: string,

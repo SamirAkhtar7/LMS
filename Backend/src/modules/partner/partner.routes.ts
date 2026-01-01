@@ -12,6 +12,7 @@ import {
   partnerIdParamSchema,
 } from "./partner.schema.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
+import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 
 const partnerRouter = Router();
 
@@ -19,13 +20,28 @@ const partnerRouter = Router();
 // Protect all routes defined after this middleware
 partnerRouter.use(authMiddleware);
 
-partnerRouter.post("/", validate(createPartnerSchema), createPartnerController);
-partnerRouter.get("/all", getAllPartnersController);
-partnerRouter.get("/:id", validate(partnerIdParamSchema, "params"), getPartnerByIdController);
+partnerRouter.post(
+  "/",
+  validate(createPartnerSchema),
+  checkPermissionMiddleware("Create_Partner"),
+  createPartnerController
+);
+partnerRouter.get(
+  "/all",
+  checkPermissionMiddleware("View_All_Partners"),
+  getAllPartnersController
+);
+partnerRouter.get(
+  "/:id",
+  validate(partnerIdParamSchema, "params"),
+  checkPermissionMiddleware("View_Partner_Details"),
+  getPartnerByIdController
+);
 partnerRouter.patch(
   "/:id",
   validate(partnerIdParamSchema, "params"),
   validate(updatePartnerSchema),
+  checkPermissionMiddleware("Update_Partner"),
   updatePartnerController
 );
 

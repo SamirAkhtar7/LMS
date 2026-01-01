@@ -23,11 +23,11 @@ export const getAllLoanApplicationsController = async (
   req: Request,
   res: Response
 ) => {
-  // Implement the logic to get all loan applications
+const loanApplications = await getAllLoanApplicationsService();
   res.status(200).json({
     success: true,
     message: "Loan applications retrieved successfully",
-    data: [], // return array of loan applications
+    data: loanApplications, // return array of loan applications
   });
 };
 

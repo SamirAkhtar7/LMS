@@ -12,6 +12,7 @@ import {
 } from "../userValidation/user.schema.js";
 import {validate} from "../../../common/middlewares/zod.middleware.js";
 import { authMiddleware } from "../../../common/middlewares/auth.middleware.js";
+import { checkPermissionMiddleware } from "../../../common/middlewares/permission.middleware.js";
 
 const router: Router = Router();
 
@@ -23,13 +24,17 @@ router.post(
 );
 router.use(authMiddleware);
 
-router.get("/all", getallUsersController);
+router.get("/all",
+  checkPermissionMiddleware("View_All_Users"),
+  getallUsersController);
 router.get("/:id",
   validate(userIdParamSchema, "params"),
+  checkPermissionMiddleware("View_User_Details"),
   getUserByIdController);
 router.patch(
   "/:id",
-validate(updateUserSchema),
+  validate(updateUserSchema),
+  checkPermissionMiddleware("Update_User"),
   updateUserController
 );
 

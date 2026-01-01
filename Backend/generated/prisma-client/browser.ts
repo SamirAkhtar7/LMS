@@ -53,6 +53,16 @@ export type Leads = Prisma.LeadsModel
  */
 export type LoanApplication = Prisma.LoanApplicationModel
 /**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model UserPermission
+ * 
+ */
+export type UserPermission = Prisma.UserPermissionModel
+/**
  * Model Customer
  * 
  */

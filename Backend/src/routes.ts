@@ -5,7 +5,7 @@ import { employeeRouter } from "./modules/employee/employee.routes.js";
 import partnerRouter from "./modules/partner/partner.routes.js";
 import { leadRouter } from "./modules/lead/lead.routes.js";
 import loanApplicationRouter from "./modules/LoanApplication/loanApplication.routes.js";
-
+import permissionRouter from "./modules/permission/permission.routes.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -17,5 +17,6 @@ router.use("/employee", employeeRouter);
 router.use("/partner", partnerRouter);
 router.use("/lead", leadRouter);
 router.use("/loan-applications", loanApplicationRouter);
+router.use("/permissions", permissionRouter);
 
 export default router;

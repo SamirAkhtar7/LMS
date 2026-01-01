@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { AuthRequest } from "./auth.middleware.js";
 import { prisma } from "../../db/prismaService.js";
+import logger from "../logger.js";
 
 export const checkPermissionMiddleware = (permissionCode: string) => {
   return async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -15,8 +16,7 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
       if (role === "admin") {
         return next();
       }
-
-      const permission = await prisma.userPermission.findMany({
+      const permission = await prisma.userPermission.findFirst({
         where: {
           userId: id,
           allowed: true,
@@ -24,25 +24,19 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
             code: permissionCode,
           },
         },
-        include: {
-          permission: true,
-        },
       });
-
-      if (permission.length === 0) {
-        return res
-          .status(403)
-          .json({
-            success: false,
-            message: "Forbidden: Insufficient permissions",
-          });
+      if (!permission) {
+        return res.status(403).json({
+          success: false,
+          message: "Forbidden: Insufficient permissions",
+        });
       }
 
-      next();
+      return next();
     } catch (error) {
-      res
+      logger.error("Permission check error:", error);
+      return res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
-    }
+    }    }
   };
-};

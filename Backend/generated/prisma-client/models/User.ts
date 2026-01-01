@@ -226,6 +226,7 @@ export type UserWhereInput = {
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  permissions?: Prisma.UserPermissionListRelationFilter
   leadsAssignedTo?: Prisma.LeadsListRelationFilter
   leadsAssignedBy?: Prisma.LeadsListRelationFilter
 }
@@ -245,6 +246,7 @@ export type UserOrderByWithRelationInput = {
   admin?: Prisma.AdminOrderByWithRelationInput
   partner?: Prisma.PartnerOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
+  permissions?: Prisma.UserPermissionOrderByRelationAggregateInput
   leadsAssignedTo?: Prisma.LeadsOrderByRelationAggregateInput
   leadsAssignedBy?: Prisma.LeadsOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
@@ -268,6 +270,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  permissions?: Prisma.UserPermissionListRelationFilter
   leadsAssignedTo?: Prisma.LeadsListRelationFilter
   leadsAssignedBy?: Prisma.LeadsListRelationFilter
 }, "id" | "userName" | "email">
@@ -319,6 +322,7 @@ export type UserCreateInput = {
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
@@ -338,6 +342,7 @@ export type UserUncheckedCreateInput = {
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
@@ -357,6 +362,7 @@ export type UserUpdateInput = {
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -376,6 +382,7 @@ export type UserUncheckedUpdateInput = {
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -578,6 +585,20 @@ export type UserUpdateOneWithoutLeadsAssignedByNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsAssignedByInput, Prisma.UserUpdateWithoutLeadsAssignedByInput>, Prisma.UserUncheckedUpdateWithoutLeadsAssignedByInput>
 }
 
+export type UserCreateNestedOneWithoutPermissionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPermissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput
+  upsert?: Prisma.UserUpsertWithoutPermissionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPermissionsInput, Prisma.UserUpdateWithoutPermissionsInput>, Prisma.UserUncheckedUpdateWithoutPermissionsInput>
+}
+
 export type UserCreateWithoutProfileInput = {
   id?: string
   fullName: string
@@ -592,6 +613,7 @@ export type UserCreateWithoutProfileInput = {
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
@@ -610,6 +632,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
@@ -644,6 +667,7 @@ export type UserUpdateWithoutProfileInput = {
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -662,6 +686,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -680,6 +705,7 @@ export type UserCreateWithoutAdminInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
@@ -698,6 +724,7 @@ export type UserUncheckedCreateWithoutAdminInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
@@ -732,6 +759,7 @@ export type UserUpdateWithoutAdminInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -750,6 +778,7 @@ export type UserUncheckedUpdateWithoutAdminInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -768,6 +797,7 @@ export type UserCreateWithoutEmployeeInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
@@ -786,6 +816,7 @@ export type UserUncheckedCreateWithoutEmployeeInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
@@ -820,6 +851,7 @@ export type UserUpdateWithoutEmployeeInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -838,6 +870,7 @@ export type UserUncheckedUpdateWithoutEmployeeInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -856,6 +889,7 @@ export type UserCreateWithoutPartnerInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
@@ -874,6 +908,7 @@ export type UserUncheckedCreateWithoutPartnerInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
@@ -908,6 +943,7 @@ export type UserUpdateWithoutPartnerInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -926,6 +962,7 @@ export type UserUncheckedUpdateWithoutPartnerInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
@@ -945,6 +982,7 @@ export type UserCreateWithoutLeadsAssignedToInput = {
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
 }
 
@@ -963,6 +1001,7 @@ export type UserUncheckedCreateWithoutLeadsAssignedToInput = {
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
 }
 
@@ -986,6 +1025,7 @@ export type UserCreateWithoutLeadsAssignedByInput = {
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
 }
 
@@ -1004,6 +1044,7 @@ export type UserUncheckedCreateWithoutLeadsAssignedByInput = {
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
 }
 
@@ -1038,6 +1079,7 @@ export type UserUpdateWithoutLeadsAssignedToInput = {
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
 }
 
@@ -1056,6 +1098,7 @@ export type UserUncheckedUpdateWithoutLeadsAssignedToInput = {
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
@@ -1085,6 +1128,7 @@ export type UserUpdateWithoutLeadsAssignedByInput = {
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
 }
 
@@ -1103,7 +1147,100 @@ export type UserUncheckedUpdateWithoutLeadsAssignedByInput = {
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+}
+
+export type UserCreateWithoutPermissionsInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
+}
+
+export type UserUncheckedCreateWithoutPermissionsInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
+}
+
+export type UserCreateOrConnectWithoutPermissionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+}
+
+export type UserUpsertWithoutPermissionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPermissionsInput, Prisma.UserUncheckedUpdateWithoutPermissionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPermissionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPermissionsInput, Prisma.UserUncheckedUpdateWithoutPermissionsInput>
+}
+
+export type UserUpdateWithoutPermissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPermissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
 }
 
 
@@ -1112,11 +1249,13 @@ export type UserUncheckedUpdateWithoutLeadsAssignedByInput = {
  */
 
 export type UserCountOutputType = {
+  permissions: number
   leadsAssignedTo: number
   leadsAssignedBy: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
   leadsAssignedTo?: boolean | UserCountOutputTypeCountLeadsAssignedToArgs
   leadsAssignedBy?: boolean | UserCountOutputTypeCountLeadsAssignedByArgs
 }
@@ -1129,6 +1268,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserPermissionWhereInput
 }
 
 /**
@@ -1161,6 +1307,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
   leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1187,6 +1334,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
   leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1199,6 +1347,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     admin: Prisma.$AdminPayload<ExtArgs> | null
     partner: Prisma.$PartnerPayload<ExtArgs> | null
     employee: Prisma.$EmployeePayload<ExtArgs> | null
+    permissions: Prisma.$UserPermissionPayload<ExtArgs>[]
     leadsAssignedTo: Prisma.$LeadsPayload<ExtArgs>[]
     leadsAssignedBy: Prisma.$LeadsPayload<ExtArgs>[]
   }
@@ -1557,6 +1706,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   admin<T extends Prisma.User$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminArgs<ExtArgs>>): Prisma.Prisma__AdminClient<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   partner<T extends Prisma.User$partnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$partnerArgs<ExtArgs>>): Prisma.Prisma__PartnerClient<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.User$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  permissions<T extends Prisma.User$permissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadsAssignedTo<T extends Prisma.User$leadsAssignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadsAssignedBy<T extends Prisma.User$leadsAssignedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedByArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2014,6 +2164,30 @@ export type User$employeeArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * User.permissions
+ */
+export type User$permissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPermission
+   */
+  select?: Prisma.UserPermissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPermission
+   */
+  omit?: Prisma.UserPermissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPermissionInclude<ExtArgs> | null
+  where?: Prisma.UserPermissionWhereInput
+  orderBy?: Prisma.UserPermissionOrderByWithRelationInput | Prisma.UserPermissionOrderByWithRelationInput[]
+  cursor?: Prisma.UserPermissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserPermissionScalarFieldEnum | Prisma.UserPermissionScalarFieldEnum[]
 }
 
 /**

@@ -4,16 +4,29 @@ import {
     createPermissionsService,
     getUserPermissionsService,
 } from "./permission.service.js";
-import { Response ,Request } from "express";
-export const  assignPermissionsController = async (req: Request, res: Response) => {
+import { Response, Request } from "express";
+export const assignPermissionsController = async (req: Request, res: Response) => {
     try {
-        const
-            { userId, permissions } = req.body;
+        const { userId, permissions } = req.body;
+
+        if(!userId || !permissions){
+            return  res.status(400).json({
+                success: false,
+                message: "userId and permissions are required",
+            });
+        }
+        if(!Array.isArray(permissions)){
+            return res.status(400).json({
+                success: false,
+                message: "permissions must be an array of permission codes",
+            });
+        }
         await assignPermissionsService(userId, permissions);
         res.status(200).json({
             success: true,
             message: "Permissions assigned successfully",
         });
+
 
     }
     catch (error: any) {
