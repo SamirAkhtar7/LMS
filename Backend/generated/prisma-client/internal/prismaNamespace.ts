@@ -393,6 +393,8 @@ export const ModelName = {
   LoanApplication: 'LoanApplication',
   Permission: 'Permission',
   UserPermission: 'UserPermission',
+  Document: 'Document',
+  Kyc: 'Kyc',
   Customer: 'Customer'
 } as const
 
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "customer"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1007,6 +1009,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Document: {
+      payload: Prisma.$DocumentPayload<ExtArgs>
+      fields: Prisma.DocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        update: {
+          args: Prisma.DocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocument>
+        }
+        groupBy: {
+          args: Prisma.DocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentCountAggregateOutputType> | number
+        }
+      }
+    }
+    Kyc: {
+      payload: Prisma.$KycPayload<ExtArgs>
+      fields: Prisma.KycFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KycFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KycFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        findFirst: {
+          args: Prisma.KycFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KycFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        findMany: {
+          args: Prisma.KycFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>[]
+        }
+        create: {
+          args: Prisma.KycCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        createMany: {
+          args: Prisma.KycCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.KycDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        update: {
+          args: Prisma.KycUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        deleteMany: {
+          args: Prisma.KycDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KycUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.KycUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KycPayload>
+        }
+        aggregate: {
+          args: Prisma.KycAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKyc>
+        }
+        groupBy: {
+          args: Prisma.KycGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KycGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KycCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KycCountAggregateOutputType> | number
+        }
+      }
+    }
     Customer: {
       payload: Prisma.$CustomerPayload<ExtArgs>
       fields: Prisma.CustomerFieldRefs
@@ -1234,6 +1368,7 @@ export const LeadsScalarFieldEnum = {
   address: 'address',
   assignedTo: 'assignedTo',
   assignedBy: 'assignedBy',
+  convertedLoanApplicationId: 'convertedLoanApplicationId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1246,6 +1381,7 @@ export const LoanApplicationScalarFieldEnum = {
   id: 'id',
   applicationDate: 'applicationDate',
   customerId: 'customerId',
+  leadId: 'leadId',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
@@ -1259,6 +1395,12 @@ export const LoanApplicationScalarFieldEnum = {
   approvalDate: 'approvalDate',
   activationDate: 'activationDate',
   rejectionReason: 'rejectionReason',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectedAt: 'rejectedAt',
+  kycId: 'kycId',
+  createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1270,6 +1412,7 @@ export const PermissionScalarFieldEnum = {
   id: 'id',
   code: 'code',
   name: 'name',
+  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1285,6 +1428,37 @@ export const UserPermissionScalarFieldEnum = {
 } as const
 
 export type UserPermissionScalarFieldEnum = (typeof UserPermissionScalarFieldEnum)[keyof typeof UserPermissionScalarFieldEnum]
+
+
+export const DocumentScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  documentType: 'documentType',
+  documentPath: 'documentPath',
+  verificationStatus: 'verificationStatus',
+  kycId: 'kycId',
+  uploadedBy: 'uploadedBy',
+  verified: 'verified',
+  verifiedBy: 'verifiedBy',
+  verifiedAt: 'verifiedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const KycScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  remarks: 'remarks',
+  verifiedBy: 'verifiedBy',
+  verifiedAt: 'verifiedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -1421,7 +1595,8 @@ export const LeadsOrderByRelevanceFieldEnum = {
   pinCode: 'pinCode',
   address: 'address',
   assignedTo: 'assignedTo',
-  assignedBy: 'assignedBy'
+  assignedBy: 'assignedBy',
+  convertedLoanApplicationId: 'convertedLoanApplicationId'
 } as const
 
 export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldEnum)[keyof typeof LeadsOrderByRelevanceFieldEnum]
@@ -1430,8 +1605,13 @@ export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldE
 export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
+  leadId: 'leadId',
   loanPurpose: 'loanPurpose',
-  rejectionReason: 'rejectionReason'
+  rejectionReason: 'rejectionReason',
+  approvedBy: 'approvedBy',
+  rejectedBy: 'rejectedBy',
+  kycId: 'kycId',
+  createdById: 'createdById'
 } as const
 
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]
@@ -1440,7 +1620,8 @@ export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOr
 export const PermissionOrderByRelevanceFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  description: 'description'
 } as const
 
 export type PermissionOrderByRelevanceFieldEnum = (typeof PermissionOrderByRelevanceFieldEnum)[keyof typeof PermissionOrderByRelevanceFieldEnum]
@@ -1453,6 +1634,29 @@ export const UserPermissionOrderByRelevanceFieldEnum = {
 } as const
 
 export type UserPermissionOrderByRelevanceFieldEnum = (typeof UserPermissionOrderByRelevanceFieldEnum)[keyof typeof UserPermissionOrderByRelevanceFieldEnum]
+
+
+export const DocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  documentType: 'documentType',
+  documentPath: 'documentPath',
+  kycId: 'kycId',
+  uploadedBy: 'uploadedBy',
+  verifiedBy: 'verifiedBy'
+} as const
+
+export type DocumentOrderByRelevanceFieldEnum = (typeof DocumentOrderByRelevanceFieldEnum)[keyof typeof DocumentOrderByRelevanceFieldEnum]
+
+
+export const KycOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  remarks: 'remarks',
+  verifiedBy: 'verifiedBy'
+} as const
+
+export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {
@@ -1605,6 +1809,20 @@ export type EnumLoanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 
 
 /**
+ * Reference to a field of type 'VerificationStatus'
+ */
+export type EnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'KycStatus'
+ */
+export type EnumKycStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KycStatus'>
+    
+
+
+/**
  * Reference to a field of type 'Title'
  */
 export type EnumTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Title'>
@@ -1728,6 +1946,8 @@ export type GlobalOmitConfig = {
   loanApplication?: Prisma.LoanApplicationOmit
   permission?: Prisma.PermissionOmit
   userPermission?: Prisma.UserPermissionOmit
+  document?: Prisma.DocumentOmit
+  kyc?: Prisma.KycOmit
   customer?: Prisma.CustomerOmit
 }
 

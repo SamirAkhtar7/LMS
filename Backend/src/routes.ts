@@ -6,6 +6,7 @@ import partnerRouter from "./modules/partner/partner.routes.js";
 import { leadRouter } from "./modules/lead/lead.routes.js";
 import loanApplicationRouter from "./modules/LoanApplication/loanApplication.routes.js";
 import permissionRouter from "./modules/permission/permission.routes.js";
+import kycRouter from "./modules/kyc/kyc.routes.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -18,5 +19,6 @@ router.use("/partner", partnerRouter);
 router.use("/lead", leadRouter);
 router.use("/loan-applications", loanApplicationRouter);
 router.use("/permissions", permissionRouter);
+router.use("/kyc", kycRouter);
 
 export default router;

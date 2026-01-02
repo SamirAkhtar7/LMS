@@ -63,6 +63,16 @@ export type Permission = Prisma.PermissionModel
  */
 export type UserPermission = Prisma.UserPermissionModel
 /**
+ * Model Document
+ * 
+ */
+export type Document = Prisma.DocumentModel
+/**
+ * Model Kyc
+ * 
+ */
+export type Kyc = Prisma.KycModel
+/**
  * Model Customer
  * 
  */

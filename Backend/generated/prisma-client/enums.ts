@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const KycStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type KycStatus = (typeof KycStatus)[keyof typeof KycStatus]
+
+
 export const Role = {
   ADMIN: 'ADMIN',
   EMPLOYEE: 'EMPLOYEE',

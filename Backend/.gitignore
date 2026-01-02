@@ -54,3 +54,9 @@ coverage/
 
 # npx prisma migrate dev --name init
 # npx prisma generate
+
+
+
+# npx prisma format
+# npx prisma migrate dev
+# npx prisma generate

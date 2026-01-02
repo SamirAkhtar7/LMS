@@ -102,3 +102,110 @@ export const assignLeadService = async (
     throw error;
   }
 };
+
+export const convertLeadToLoanApplicationService = async (leadId: string) => {
+  return prisma.$transaction(async (tx) => {
+    const lead = await tx.leads.findUnique({ where: { id: leadId } });
+    if (!lead) {
+      const e: any = new Error("Lead not found");
+      e.statusCode = 404;
+      throw e;
+    }
+
+    if (lead.convertedLoanApplicationId) {
+      const e: any = new Error("Lead already converted to loan application");
+      e.statusCode = 400;
+      throw e;
+    }
+
+    if (
+      !["APPLICATION_IN_PROGRESS", "INTERESTED", "APPROVED"].includes(
+        lead.status
+      )
+    ) {
+      const e: any = new Error("Lead status not eligible for conversion");
+      e.statusCode = 400;
+      throw e;
+    }
+
+    // 1. Try to find an existing customer by email or contact number
+    let customer = await tx.customer.findFirst({
+      where: {
+        OR: [
+          lead.email ? { email: lead.email } : undefined,
+          lead.contactNumber
+            ? { contactNumber: lead.contactNumber }
+            : undefined,
+        ].filter(Boolean) as object[],
+      },
+    });
+
+    // 2. Create customer if not found (use conservative defaults for required fields)
+    if (!customer) {
+      const names = (lead.fullName || "").trim().split(/\s+/);
+      const firstName = names.shift() || "Unknown";
+      const lastName = names.length ? names.join(" ") : "";
+
+      try {
+        customer = await tx.customer.create({
+          data: {
+            title: "MR" as any,
+            firstName,
+            lastName,
+            gender: lead.gender as any,
+            dob: lead.dob as Date,
+            contactNumber: lead.contactNumber,
+            address: lead.address ?? "",
+            city: lead.city ?? "",
+            state: lead.state ?? "",
+            pinCode: lead.pinCode ?? "",
+            employmentType: "salaried" as any,
+            status: "ACTIVE",
+            email: lead.email ?? undefined,
+          },
+        });
+      } catch (err: unknown) {
+        const eAny = err as any;
+        if (eAny?.code === "P2002") {
+          const requery = await tx.customer.findFirst({
+            where: {
+              OR: [
+                lead.email ? { email: lead.email } : undefined,
+                lead.contactNumber
+                  ? { contactNumber: lead.contactNumber }
+                  : undefined,
+              ].filter(Boolean) as object[],
+            },
+          });
+          if (requery) {
+            customer = requery;
+          } else {
+            throw err;
+          }
+        } else {
+          throw err;
+        }
+      }
+    }
+
+    // 3. Create the loan application and associate it with the customer and lead
+    const loanApplication = await tx.loanApplication.create({
+      data: {
+        requestedAmount: lead.loanAmount,
+        interestType: "flat",
+        status: "application_in_progress",
+        customer: { connect: { id: customer.id } },
+        lead: { connect: { id: lead.id } },
+      },
+      include: { customer: true },
+    });
+
+    // 4. Mark lead as converted
+    await tx.leads.update({
+      where: { id: lead.id },
+      data: { convertedLoanApplicationId: loanApplication.id },
+    });
+
+    return loanApplication;
+  });
+};

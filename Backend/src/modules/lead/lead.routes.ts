@@ -1,17 +1,24 @@
 import { Router } from "express";
-import { createLeadSchema , updateLeadSchema,leadIdParamSchema,leadStatusParamSchema, leadAssigedSchema} from "./lead.schema.js";
+import {
+  createLeadSchema,
+  updateLeadSchema,
+  leadIdParamSchema,
+  updateLeadStatusSchema,
+  leadStatusParamSchema,
+  leadAssigedSchema,
+} from "./lead.schema.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import {
   assignLeadController,
+  convertLeadToLoanController,
   createLeadController,
   getAllLeadsController,
   getLeadByIdController,
   updateLeadStatusController,
 } from "./lead.controller.js";
-import router from "../../routes.js";
 export const leadRouter = Router();
-import {checkPermissionMiddleware} from "../../common/middlewares/permission.middleware.js";
+import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 
 // Define lead routes here
 leadRouter.post("/", validate(createLeadSchema), createLeadController);
@@ -22,15 +29,31 @@ leadRouter.get(
   checkPermissionMiddleware("View_All_Leads"),
   getAllLeadsController
 );
-leadRouter.get("/:id", validate(leadIdParamSchema, "params"),
-  checkPermissionMiddleware("View_Lead_Details"),
-  getLeadByIdController);
+leadRouter.get(
+  "/:id",
+  validate(leadIdParamSchema, "params"),
+  // checkPermissionMiddleware("View_Lead_Details"),
+  getLeadByIdController
+);
 
-leadRouter.patch("/update-status/:id", validate(leadStatusParamSchema, "params"),
-  checkPermissionMiddleware("Update_Lead_Status"),
-  updateLeadStatusController);
+leadRouter.patch(
+  "/update-status/:id",
+  validate(updateLeadStatusSchema),
+  // checkPermissionMiddleware("Update_Lead_Status"),
+  updateLeadStatusController
+);
 
-leadRouter.patch("/assign/:id", validate(leadAssigedSchema, "params"),
+leadRouter.patch(
+  "/assign/:id",
+  validate(leadAssigedSchema, "params"),
   checkPermissionMiddleware("Assign_Lead"),
-  assignLeadController); // Assign lead route requires auth
+  assignLeadController
+); // Assign lead route requires auth
+
+leadRouter.get(
+  "/convert-to-loan/:id",
+  validate(leadIdParamSchema, "params"),
+  // checkPermissionMiddleware("Convert_Lead_To_Loan"),
+  convertLeadToLoanController
+); // Convert lead to loan application route requires auth
 export default leadRouter;

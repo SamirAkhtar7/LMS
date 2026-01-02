@@ -50,6 +50,7 @@ export type LoanApplicationMinAggregateOutputType = {
   id: string | null
   applicationDate: Date | null
   customerId: string | null
+  leadId: string | null
   requestedAmount: number | null
   approvedAmount: number | null
   tenureMonths: number | null
@@ -63,6 +64,12 @@ export type LoanApplicationMinAggregateOutputType = {
   approvalDate: Date | null
   activationDate: Date | null
   rejectionReason: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectedBy: string | null
+  rejectedAt: Date | null
+  kycId: string | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,6 +78,7 @@ export type LoanApplicationMaxAggregateOutputType = {
   id: string | null
   applicationDate: Date | null
   customerId: string | null
+  leadId: string | null
   requestedAmount: number | null
   approvedAmount: number | null
   tenureMonths: number | null
@@ -84,6 +92,12 @@ export type LoanApplicationMaxAggregateOutputType = {
   approvalDate: Date | null
   activationDate: Date | null
   rejectionReason: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectedBy: string | null
+  rejectedAt: Date | null
+  kycId: string | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -92,6 +106,7 @@ export type LoanApplicationCountAggregateOutputType = {
   id: number
   applicationDate: number
   customerId: number
+  leadId: number
   requestedAmount: number
   approvedAmount: number
   tenureMonths: number
@@ -105,6 +120,12 @@ export type LoanApplicationCountAggregateOutputType = {
   approvalDate: number
   activationDate: number
   rejectionReason: number
+  approvedBy: number
+  approvedAt: number
+  rejectedBy: number
+  rejectedAt: number
+  kycId: number
+  createdById: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -135,6 +156,7 @@ export type LoanApplicationMinAggregateInputType = {
   id?: true
   applicationDate?: true
   customerId?: true
+  leadId?: true
   requestedAmount?: true
   approvedAmount?: true
   tenureMonths?: true
@@ -148,6 +170,12 @@ export type LoanApplicationMinAggregateInputType = {
   approvalDate?: true
   activationDate?: true
   rejectionReason?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectedBy?: true
+  rejectedAt?: true
+  kycId?: true
+  createdById?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -156,6 +184,7 @@ export type LoanApplicationMaxAggregateInputType = {
   id?: true
   applicationDate?: true
   customerId?: true
+  leadId?: true
   requestedAmount?: true
   approvedAmount?: true
   tenureMonths?: true
@@ -169,6 +198,12 @@ export type LoanApplicationMaxAggregateInputType = {
   approvalDate?: true
   activationDate?: true
   rejectionReason?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectedBy?: true
+  rejectedAt?: true
+  kycId?: true
+  createdById?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -177,6 +212,7 @@ export type LoanApplicationCountAggregateInputType = {
   id?: true
   applicationDate?: true
   customerId?: true
+  leadId?: true
   requestedAmount?: true
   approvedAmount?: true
   tenureMonths?: true
@@ -190,6 +226,12 @@ export type LoanApplicationCountAggregateInputType = {
   approvalDate?: true
   activationDate?: true
   rejectionReason?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectedBy?: true
+  rejectedAt?: true
+  kycId?: true
+  createdById?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -285,6 +327,7 @@ export type LoanApplicationGroupByOutputType = {
   id: string
   applicationDate: Date
   customerId: string
+  leadId: string | null
   requestedAmount: number
   approvedAmount: number | null
   tenureMonths: number | null
@@ -298,6 +341,12 @@ export type LoanApplicationGroupByOutputType = {
   approvalDate: Date | null
   activationDate: Date | null
   rejectionReason: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectedBy: string | null
+  rejectedAt: Date | null
+  kycId: string | null
+  createdById: string | null
   createdAt: Date
   updatedAt: Date
   _count: LoanApplicationCountAggregateOutputType | null
@@ -329,6 +378,7 @@ export type LoanApplicationWhereInput = {
   id?: Prisma.StringFilter<"LoanApplication"> | string
   applicationDate?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   customerId?: Prisma.StringFilter<"LoanApplication"> | string
+  leadId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   requestedAmount?: Prisma.FloatFilter<"LoanApplication"> | number
   approvedAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
   tenureMonths?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
@@ -342,15 +392,26 @@ export type LoanApplicationWhereInput = {
   approvalDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   activationDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   rejectionReason?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  kycId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
+  lead?: Prisma.XOR<Prisma.LeadsNullableScalarRelationFilter, Prisma.LeadsWhereInput> | null
+  kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
+  documents?: Prisma.DocumentListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type LoanApplicationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   applicationDate?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  leadId?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedAmount?: Prisma.SortOrder
   approvedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   tenureMonths?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -364,19 +425,31 @@ export type LoanApplicationOrderByWithRelationInput = {
   approvalDate?: Prisma.SortOrderInput | Prisma.SortOrder
   activationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  kycId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
+  lead?: Prisma.LeadsOrderByWithRelationInput
+  kyc?: Prisma.KycOrderByWithRelationInput
+  documents?: Prisma.DocumentOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.LoanApplicationOrderByRelevanceInput
 }
 
 export type LoanApplicationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  kycId?: string
   AND?: Prisma.LoanApplicationWhereInput | Prisma.LoanApplicationWhereInput[]
   OR?: Prisma.LoanApplicationWhereInput[]
   NOT?: Prisma.LoanApplicationWhereInput | Prisma.LoanApplicationWhereInput[]
   applicationDate?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   customerId?: Prisma.StringFilter<"LoanApplication"> | string
+  leadId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   requestedAmount?: Prisma.FloatFilter<"LoanApplication"> | number
   approvedAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
   tenureMonths?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
@@ -390,15 +463,25 @@ export type LoanApplicationWhereUniqueInput = Prisma.AtLeast<{
   approvalDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   activationDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   rejectionReason?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
-}, "id">
+  lead?: Prisma.XOR<Prisma.LeadsNullableScalarRelationFilter, Prisma.LeadsWhereInput> | null
+  kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
+  documents?: Prisma.DocumentListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+}, "id" | "kycId">
 
 export type LoanApplicationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   applicationDate?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  leadId?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedAmount?: Prisma.SortOrder
   approvedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   tenureMonths?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -412,6 +495,12 @@ export type LoanApplicationOrderByWithAggregationInput = {
   approvalDate?: Prisma.SortOrderInput | Prisma.SortOrder
   activationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  kycId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LoanApplicationCountOrderByAggregateInput
@@ -428,6 +517,7 @@ export type LoanApplicationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"LoanApplication"> | string
   applicationDate?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
   customerId?: Prisma.StringWithAggregatesFilter<"LoanApplication"> | string
+  leadId?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
   requestedAmount?: Prisma.FloatWithAggregatesFilter<"LoanApplication"> | number
   approvedAmount?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
   tenureMonths?: Prisma.IntNullableWithAggregatesFilter<"LoanApplication"> | number | null
@@ -441,6 +531,12 @@ export type LoanApplicationScalarWhereWithAggregatesInput = {
   approvalDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
   activationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
   rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  kycId?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
 }
@@ -461,15 +557,24 @@ export type LoanApplicationCreateInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
+  lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
+  kyc?: Prisma.KycCreateNestedOneWithoutLoanApplicationInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutLoanApplicationInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLoanApplicationsInput
 }
 
 export type LoanApplicationUncheckedCreateInput = {
   id?: string
   applicationDate?: Date | string
   customerId: string
+  leadId?: string | null
   requestedAmount: number
   approvedAmount?: number | null
   tenureMonths?: number | null
@@ -483,8 +588,15 @@ export type LoanApplicationUncheckedCreateInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
 }
 
 export type LoanApplicationUpdateInput = {
@@ -503,15 +615,24 @@ export type LoanApplicationUpdateInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
+  lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
+  kyc?: Prisma.KycUpdateOneWithoutLoanApplicationNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutLoanApplicationNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLoanApplicationsNestedInput
 }
 
 export type LoanApplicationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -525,14 +646,22 @@ export type LoanApplicationUncheckedUpdateInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
 }
 
 export type LoanApplicationCreateManyInput = {
   id?: string
   applicationDate?: Date | string
   customerId: string
+  leadId?: string | null
   requestedAmount: number
   approvedAmount?: number | null
   tenureMonths?: number | null
@@ -546,6 +675,12 @@ export type LoanApplicationCreateManyInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -566,6 +701,10 @@ export type LoanApplicationUpdateManyMutationInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -574,6 +713,7 @@ export type LoanApplicationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -587,8 +727,24 @@ export type LoanApplicationUncheckedUpdateManyInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LoanApplicationListRelationFilter = {
+  every?: Prisma.LoanApplicationWhereInput
+  some?: Prisma.LoanApplicationWhereInput
+  none?: Prisma.LoanApplicationWhereInput
+}
+
+export type LoanApplicationOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type LoanApplicationOrderByRelevanceInput = {
@@ -601,6 +757,7 @@ export type LoanApplicationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationDate?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  leadId?: Prisma.SortOrder
   requestedAmount?: Prisma.SortOrder
   approvedAmount?: Prisma.SortOrder
   tenureMonths?: Prisma.SortOrder
@@ -614,6 +771,12 @@ export type LoanApplicationCountOrderByAggregateInput = {
   approvalDate?: Prisma.SortOrder
   activationDate?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  kycId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -632,6 +795,7 @@ export type LoanApplicationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationDate?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  leadId?: Prisma.SortOrder
   requestedAmount?: Prisma.SortOrder
   approvedAmount?: Prisma.SortOrder
   tenureMonths?: Prisma.SortOrder
@@ -645,6 +809,12 @@ export type LoanApplicationMaxOrderByAggregateInput = {
   approvalDate?: Prisma.SortOrder
   activationDate?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  kycId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -653,6 +823,7 @@ export type LoanApplicationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationDate?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  leadId?: Prisma.SortOrder
   requestedAmount?: Prisma.SortOrder
   approvedAmount?: Prisma.SortOrder
   tenureMonths?: Prisma.SortOrder
@@ -666,6 +837,12 @@ export type LoanApplicationMinOrderByAggregateInput = {
   approvalDate?: Prisma.SortOrder
   activationDate?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  kycId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -680,14 +857,93 @@ export type LoanApplicationSumOrderByAggregateInput = {
   cibilScore?: Prisma.SortOrder
 }
 
-export type LoanApplicationListRelationFilter = {
-  every?: Prisma.LoanApplicationWhereInput
-  some?: Prisma.LoanApplicationWhereInput
-  none?: Prisma.LoanApplicationWhereInput
+export type LoanApplicationNullableScalarRelationFilter = {
+  is?: Prisma.LoanApplicationWhereInput | null
+  isNot?: Prisma.LoanApplicationWhereInput | null
 }
 
-export type LoanApplicationOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type LoanApplicationCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput> | Prisma.LoanApplicationCreateWithoutCreatedByInput[] | Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput | Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.LoanApplicationCreateManyCreatedByInputEnvelope
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+}
+
+export type LoanApplicationUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput> | Prisma.LoanApplicationCreateWithoutCreatedByInput[] | Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput | Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.LoanApplicationCreateManyCreatedByInputEnvelope
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+}
+
+export type LoanApplicationUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput> | Prisma.LoanApplicationCreateWithoutCreatedByInput[] | Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput | Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.LoanApplicationUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.LoanApplicationUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.LoanApplicationCreateManyCreatedByInputEnvelope
+  set?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  disconnect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  delete?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  update?: Prisma.LoanApplicationUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.LoanApplicationUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.LoanApplicationUpdateManyWithWhereWithoutCreatedByInput | Prisma.LoanApplicationUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
+}
+
+export type LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput> | Prisma.LoanApplicationCreateWithoutCreatedByInput[] | Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput | Prisma.LoanApplicationCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.LoanApplicationUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.LoanApplicationUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.LoanApplicationCreateManyCreatedByInputEnvelope
+  set?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  disconnect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  delete?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  update?: Prisma.LoanApplicationUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.LoanApplicationUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.LoanApplicationUpdateManyWithWhereWithoutCreatedByInput | Prisma.LoanApplicationUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
+}
+
+export type LoanApplicationCreateNestedManyWithoutLeadInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput> | Prisma.LoanApplicationCreateWithoutLeadInput[] | Prisma.LoanApplicationUncheckedCreateWithoutLeadInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutLeadInput | Prisma.LoanApplicationCreateOrConnectWithoutLeadInput[]
+  createMany?: Prisma.LoanApplicationCreateManyLeadInputEnvelope
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+}
+
+export type LoanApplicationUncheckedCreateNestedManyWithoutLeadInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput> | Prisma.LoanApplicationCreateWithoutLeadInput[] | Prisma.LoanApplicationUncheckedCreateWithoutLeadInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutLeadInput | Prisma.LoanApplicationCreateOrConnectWithoutLeadInput[]
+  createMany?: Prisma.LoanApplicationCreateManyLeadInputEnvelope
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+}
+
+export type LoanApplicationUpdateManyWithoutLeadNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput> | Prisma.LoanApplicationCreateWithoutLeadInput[] | Prisma.LoanApplicationUncheckedCreateWithoutLeadInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutLeadInput | Prisma.LoanApplicationCreateOrConnectWithoutLeadInput[]
+  upsert?: Prisma.LoanApplicationUpsertWithWhereUniqueWithoutLeadInput | Prisma.LoanApplicationUpsertWithWhereUniqueWithoutLeadInput[]
+  createMany?: Prisma.LoanApplicationCreateManyLeadInputEnvelope
+  set?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  disconnect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  delete?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  update?: Prisma.LoanApplicationUpdateWithWhereUniqueWithoutLeadInput | Prisma.LoanApplicationUpdateWithWhereUniqueWithoutLeadInput[]
+  updateMany?: Prisma.LoanApplicationUpdateManyWithWhereWithoutLeadInput | Prisma.LoanApplicationUpdateManyWithWhereWithoutLeadInput[]
+  deleteMany?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
+}
+
+export type LoanApplicationUncheckedUpdateManyWithoutLeadNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput> | Prisma.LoanApplicationCreateWithoutLeadInput[] | Prisma.LoanApplicationUncheckedCreateWithoutLeadInput[]
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutLeadInput | Prisma.LoanApplicationCreateOrConnectWithoutLeadInput[]
+  upsert?: Prisma.LoanApplicationUpsertWithWhereUniqueWithoutLeadInput | Prisma.LoanApplicationUpsertWithWhereUniqueWithoutLeadInput[]
+  createMany?: Prisma.LoanApplicationCreateManyLeadInputEnvelope
+  set?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  disconnect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  delete?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  connect?: Prisma.LoanApplicationWhereUniqueInput | Prisma.LoanApplicationWhereUniqueInput[]
+  update?: Prisma.LoanApplicationUpdateWithWhereUniqueWithoutLeadInput | Prisma.LoanApplicationUpdateWithWhereUniqueWithoutLeadInput[]
+  updateMany?: Prisma.LoanApplicationUpdateManyWithWhereWithoutLeadInput | Prisma.LoanApplicationUpdateManyWithWhereWithoutLeadInput[]
+  deleteMany?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
 }
 
 export type EnumInterestTypeFieldUpdateOperationsInput = {
@@ -700,6 +956,54 @@ export type EnumLoanStatusFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type LoanApplicationCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+}
+
+export type LoanApplicationUpdateOneWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.LoanApplicationUpsertWithoutDocumentsInput
+  disconnect?: Prisma.LoanApplicationWhereInput | boolean
+  delete?: Prisma.LoanApplicationWhereInput | boolean
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LoanApplicationUpdateToOneWithWhereWithoutDocumentsInput, Prisma.LoanApplicationUpdateWithoutDocumentsInput>, Prisma.LoanApplicationUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type LoanApplicationCreateNestedOneWithoutKycInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutKycInput
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+}
+
+export type LoanApplicationUncheckedCreateNestedOneWithoutKycInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutKycInput
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+}
+
+export type LoanApplicationUpdateOneWithoutKycNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutKycInput
+  upsert?: Prisma.LoanApplicationUpsertWithoutKycInput
+  disconnect?: Prisma.LoanApplicationWhereInput | boolean
+  delete?: Prisma.LoanApplicationWhereInput | boolean
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LoanApplicationUpdateToOneWithWhereWithoutKycInput, Prisma.LoanApplicationUpdateWithoutKycInput>, Prisma.LoanApplicationUncheckedUpdateWithoutKycInput>
+}
+
+export type LoanApplicationUncheckedUpdateOneWithoutKycNestedInput = {
+  create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+  connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutKycInput
+  upsert?: Prisma.LoanApplicationUpsertWithoutKycInput
+  disconnect?: Prisma.LoanApplicationWhereInput | boolean
+  delete?: Prisma.LoanApplicationWhereInput | boolean
+  connect?: Prisma.LoanApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LoanApplicationUpdateToOneWithWhereWithoutKycInput, Prisma.LoanApplicationUpdateWithoutKycInput>, Prisma.LoanApplicationUncheckedUpdateWithoutKycInput>
 }
 
 export type LoanApplicationCreateNestedManyWithoutCustomerInput = {
@@ -744,6 +1048,457 @@ export type LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput = {
   deleteMany?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
 }
 
+export type LoanApplicationCreateWithoutCreatedByInput = {
+  id?: string
+  applicationDate?: Date | string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
+  lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
+  kyc?: Prisma.KycCreateNestedOneWithoutLoanApplicationInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutLoanApplicationInput
+}
+
+export type LoanApplicationUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  applicationDate?: Date | string
+  customerId: string
+  leadId?: string | null
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
+}
+
+export type LoanApplicationCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput>
+}
+
+export type LoanApplicationCreateManyCreatedByInputEnvelope = {
+  data: Prisma.LoanApplicationCreateManyCreatedByInput | Prisma.LoanApplicationCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type LoanApplicationUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  update: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedCreateWithoutCreatedByInput>
+}
+
+export type LoanApplicationUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutCreatedByInput, Prisma.LoanApplicationUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type LoanApplicationUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.LoanApplicationScalarWhereInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateManyMutationInput, Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type LoanApplicationScalarWhereInput = {
+  AND?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
+  OR?: Prisma.LoanApplicationScalarWhereInput[]
+  NOT?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
+  id?: Prisma.StringFilter<"LoanApplication"> | string
+  applicationDate?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
+  customerId?: Prisma.StringFilter<"LoanApplication"> | string
+  leadId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  requestedAmount?: Prisma.FloatFilter<"LoanApplication"> | number
+  approvedAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  tenureMonths?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
+  interestRate?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  interestType?: Prisma.EnumInterestTypeFilter<"LoanApplication"> | $Enums.InterestType
+  emiAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  totalPayable?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  loanPurpose?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  cibilScore?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
+  status?: Prisma.EnumLoanStatusFilter<"LoanApplication"> | $Enums.LoanStatus
+  approvalDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  activationDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  kycId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
+}
+
+export type LoanApplicationCreateWithoutLeadInput = {
+  id?: string
+  applicationDate?: Date | string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
+  kyc?: Prisma.KycCreateNestedOneWithoutLoanApplicationInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutLoanApplicationInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLoanApplicationsInput
+}
+
+export type LoanApplicationUncheckedCreateWithoutLeadInput = {
+  id?: string
+  applicationDate?: Date | string
+  customerId: string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
+}
+
+export type LoanApplicationCreateOrConnectWithoutLeadInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput>
+}
+
+export type LoanApplicationCreateManyLeadInputEnvelope = {
+  data: Prisma.LoanApplicationCreateManyLeadInput | Prisma.LoanApplicationCreateManyLeadInput[]
+  skipDuplicates?: boolean
+}
+
+export type LoanApplicationUpsertWithWhereUniqueWithoutLeadInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  update: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutLeadInput, Prisma.LoanApplicationUncheckedUpdateWithoutLeadInput>
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLeadInput, Prisma.LoanApplicationUncheckedCreateWithoutLeadInput>
+}
+
+export type LoanApplicationUpdateWithWhereUniqueWithoutLeadInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutLeadInput, Prisma.LoanApplicationUncheckedUpdateWithoutLeadInput>
+}
+
+export type LoanApplicationUpdateManyWithWhereWithoutLeadInput = {
+  where: Prisma.LoanApplicationScalarWhereInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateManyMutationInput, Prisma.LoanApplicationUncheckedUpdateManyWithoutLeadInput>
+}
+
+export type LoanApplicationCreateWithoutDocumentsInput = {
+  id?: string
+  applicationDate?: Date | string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
+  lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
+  kyc?: Prisma.KycCreateNestedOneWithoutLoanApplicationInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLoanApplicationsInput
+}
+
+export type LoanApplicationUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  applicationDate?: Date | string
+  customerId: string
+  leadId?: string | null
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LoanApplicationCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedCreateWithoutDocumentsInput>
+}
+
+export type LoanApplicationUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.LoanApplicationWhereInput
+}
+
+export type LoanApplicationUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.LoanApplicationWhereInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutDocumentsInput, Prisma.LoanApplicationUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type LoanApplicationUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
+  lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
+  kyc?: Prisma.KycUpdateOneWithoutLoanApplicationNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLoanApplicationsNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LoanApplicationCreateWithoutKycInput = {
+  id?: string
+  applicationDate?: Date | string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
+  lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutLoanApplicationInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLoanApplicationsInput
+}
+
+export type LoanApplicationUncheckedCreateWithoutKycInput = {
+  id?: string
+  applicationDate?: Date | string
+  customerId: string
+  leadId?: string | null
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  createdById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
+}
+
+export type LoanApplicationCreateOrConnectWithoutKycInput = {
+  where: Prisma.LoanApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+}
+
+export type LoanApplicationUpsertWithoutKycInput = {
+  update: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutKycInput, Prisma.LoanApplicationUncheckedUpdateWithoutKycInput>
+  create: Prisma.XOR<Prisma.LoanApplicationCreateWithoutKycInput, Prisma.LoanApplicationUncheckedCreateWithoutKycInput>
+  where?: Prisma.LoanApplicationWhereInput
+}
+
+export type LoanApplicationUpdateToOneWithWhereWithoutKycInput = {
+  where?: Prisma.LoanApplicationWhereInput
+  data: Prisma.XOR<Prisma.LoanApplicationUpdateWithoutKycInput, Prisma.LoanApplicationUncheckedUpdateWithoutKycInput>
+}
+
+export type LoanApplicationUpdateWithoutKycInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
+  lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutLoanApplicationNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLoanApplicationsNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateWithoutKycInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
+}
+
 export type LoanApplicationCreateWithoutCustomerInput = {
   id?: string
   applicationDate?: Date | string
@@ -760,13 +1515,22 @@ export type LoanApplicationCreateWithoutCustomerInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
+  kyc?: Prisma.KycCreateNestedOneWithoutLoanApplicationInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutLoanApplicationInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLoanApplicationsInput
 }
 
 export type LoanApplicationUncheckedCreateWithoutCustomerInput = {
   id?: string
   applicationDate?: Date | string
+  leadId?: string | null
   requestedAmount: number
   approvedAmount?: number | null
   tenureMonths?: number | null
@@ -780,8 +1544,15 @@ export type LoanApplicationUncheckedCreateWithoutCustomerInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
 }
 
 export type LoanApplicationCreateOrConnectWithoutCustomerInput = {
@@ -810,33 +1581,11 @@ export type LoanApplicationUpdateManyWithWhereWithoutCustomerInput = {
   data: Prisma.XOR<Prisma.LoanApplicationUpdateManyMutationInput, Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerInput>
 }
 
-export type LoanApplicationScalarWhereInput = {
-  AND?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
-  OR?: Prisma.LoanApplicationScalarWhereInput[]
-  NOT?: Prisma.LoanApplicationScalarWhereInput | Prisma.LoanApplicationScalarWhereInput[]
-  id?: Prisma.StringFilter<"LoanApplication"> | string
-  applicationDate?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
-  customerId?: Prisma.StringFilter<"LoanApplication"> | string
-  requestedAmount?: Prisma.FloatFilter<"LoanApplication"> | number
-  approvedAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
-  tenureMonths?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
-  interestRate?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
-  interestType?: Prisma.EnumInterestTypeFilter<"LoanApplication"> | $Enums.InterestType
-  emiAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
-  totalPayable?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
-  loanPurpose?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
-  cibilScore?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
-  status?: Prisma.EnumLoanStatusFilter<"LoanApplication"> | $Enums.LoanStatus
-  approvalDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
-  activationDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
-}
-
-export type LoanApplicationCreateManyCustomerInput = {
+export type LoanApplicationCreateManyCreatedByInput = {
   id?: string
   applicationDate?: Date | string
+  customerId: string
+  leadId?: string | null
   requestedAmount: number
   approvedAmount?: number | null
   tenureMonths?: number | null
@@ -850,6 +1599,231 @@ export type LoanApplicationCreateManyCustomerInput = {
   approvalDate?: Date | string | null
   activationDate?: Date | string | null
   rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LoanApplicationUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
+  lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
+  kyc?: Prisma.KycUpdateOneWithoutLoanApplicationNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutLoanApplicationNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LoanApplicationCreateManyLeadInput = {
+  id?: string
+  applicationDate?: Date | string
+  customerId: string
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LoanApplicationUpdateWithoutLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
+  kyc?: Prisma.KycUpdateOneWithoutLoanApplicationNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutLoanApplicationNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLoanApplicationsNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateWithoutLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
+}
+
+export type LoanApplicationUncheckedUpdateManyWithoutLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interestRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  interestType?: Prisma.EnumInterestTypeFieldUpdateOperationsInput | $Enums.InterestType
+  emiAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPayable?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  loanPurpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cibilScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+  approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LoanApplicationCreateManyCustomerInput = {
+  id?: string
+  applicationDate?: Date | string
+  leadId?: string | null
+  requestedAmount: number
+  approvedAmount?: number | null
+  tenureMonths?: number | null
+  interestRate?: number | null
+  interestType: $Enums.InterestType
+  emiAmount?: number | null
+  totalPayable?: number | null
+  loanPurpose?: string | null
+  cibilScore?: number | null
+  status?: $Enums.LoanStatus
+  approvalDate?: Date | string | null
+  activationDate?: Date | string | null
+  rejectionReason?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  kycId?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -870,13 +1844,22 @@ export type LoanApplicationUpdateWithoutCustomerInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
+  kyc?: Prisma.KycUpdateOneWithoutLoanApplicationNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutLoanApplicationNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLoanApplicationsNestedInput
 }
 
 export type LoanApplicationUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -890,13 +1873,21 @@ export type LoanApplicationUncheckedUpdateWithoutCustomerInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
 }
 
 export type LoanApplicationUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   approvedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   tenureMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -910,16 +1901,52 @@ export type LoanApplicationUncheckedUpdateManyWithoutCustomerInput = {
   approvalDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type LoanApplicationCountOutputType
+ */
+
+export type LoanApplicationCountOutputType = {
+  documents: number
+}
+
+export type LoanApplicationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  documents?: boolean | LoanApplicationCountOutputTypeCountDocumentsArgs
+}
+
+/**
+ * LoanApplicationCountOutputType without action
+ */
+export type LoanApplicationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LoanApplicationCountOutputType
+   */
+  select?: Prisma.LoanApplicationCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LoanApplicationCountOutputType without action
+ */
+export type LoanApplicationCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentWhereInput
+}
 
 
 export type LoanApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   applicationDate?: boolean
   customerId?: boolean
+  leadId?: boolean
   requestedAmount?: boolean
   approvedAmount?: boolean
   tenureMonths?: boolean
@@ -933,9 +1960,20 @@ export type LoanApplicationSelect<ExtArgs extends runtime.Types.Extensions.Inter
   approvalDate?: boolean
   activationDate?: boolean
   rejectionReason?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectedBy?: boolean
+  rejectedAt?: boolean
+  kycId?: boolean
+  createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.LoanApplication$leadArgs<ExtArgs>
+  kyc?: boolean | Prisma.LoanApplication$kycArgs<ExtArgs>
+  documents?: boolean | Prisma.LoanApplication$documentsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.LoanApplication$createdByArgs<ExtArgs>
+  _count?: boolean | Prisma.LoanApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["loanApplication"]>
 
 
@@ -944,6 +1982,7 @@ export type LoanApplicationSelectScalar = {
   id?: boolean
   applicationDate?: boolean
   customerId?: boolean
+  leadId?: boolean
   requestedAmount?: boolean
   approvedAmount?: boolean
   tenureMonths?: boolean
@@ -957,24 +1996,40 @@ export type LoanApplicationSelectScalar = {
   approvalDate?: boolean
   activationDate?: boolean
   rejectionReason?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectedBy?: boolean
+  rejectedAt?: boolean
+  kycId?: boolean
+  createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
+export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "leadId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "kycId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
 export type LoanApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  lead?: boolean | Prisma.LoanApplication$leadArgs<ExtArgs>
+  kyc?: boolean | Prisma.LoanApplication$kycArgs<ExtArgs>
+  documents?: boolean | Prisma.LoanApplication$documentsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.LoanApplication$createdByArgs<ExtArgs>
+  _count?: boolean | Prisma.LoanApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $LoanApplicationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LoanApplication"
   objects: {
     customer: Prisma.$CustomerPayload<ExtArgs>
+    lead: Prisma.$LeadsPayload<ExtArgs> | null
+    kyc: Prisma.$KycPayload<ExtArgs> | null
+    documents: Prisma.$DocumentPayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     applicationDate: Date
     customerId: string
+    leadId: string | null
     requestedAmount: number
     approvedAmount: number | null
     tenureMonths: number | null
@@ -988,6 +2043,12 @@ export type $LoanApplicationPayload<ExtArgs extends runtime.Types.Extensions.Int
     approvalDate: Date | null
     activationDate: Date | null
     rejectionReason: string | null
+    approvedBy: string | null
+    approvedAt: Date | null
+    rejectedBy: string | null
+    rejectedAt: Date | null
+    kycId: string | null
+    createdById: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["loanApplication"]>
@@ -1331,6 +2392,10 @@ readonly fields: LoanApplicationFieldRefs;
 export interface Prisma__LoanApplicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lead<T extends Prisma.LoanApplication$leadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplication$leadArgs<ExtArgs>>): Prisma.Prisma__LeadsClient<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  kyc<T extends Prisma.LoanApplication$kycArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplication$kycArgs<ExtArgs>>): Prisma.Prisma__KycClient<runtime.Types.Result.GetResult<Prisma.$KycPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  documents<T extends Prisma.LoanApplication$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplication$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.LoanApplication$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplication$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1363,6 +2428,7 @@ export interface LoanApplicationFieldRefs {
   readonly id: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly applicationDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly customerId: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly leadId: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly requestedAmount: Prisma.FieldRef<"LoanApplication", 'Float'>
   readonly approvedAmount: Prisma.FieldRef<"LoanApplication", 'Float'>
   readonly tenureMonths: Prisma.FieldRef<"LoanApplication", 'Int'>
@@ -1376,6 +2442,12 @@ export interface LoanApplicationFieldRefs {
   readonly approvalDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly activationDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly rejectionReason: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly approvedBy: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly approvedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly rejectedBy: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly rejectedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly kycId: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly createdById: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly createdAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
 }
@@ -1718,6 +2790,87 @@ export type LoanApplicationDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many LoanApplications to delete.
    */
   limit?: number
+}
+
+/**
+ * LoanApplication.lead
+ */
+export type LoanApplication$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Leads
+   */
+  select?: Prisma.LeadsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Leads
+   */
+  omit?: Prisma.LeadsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadsInclude<ExtArgs> | null
+  where?: Prisma.LeadsWhereInput
+}
+
+/**
+ * LoanApplication.kyc
+ */
+export type LoanApplication$kycArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Kyc
+   */
+  select?: Prisma.KycSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Kyc
+   */
+  omit?: Prisma.KycOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KycInclude<ExtArgs> | null
+  where?: Prisma.KycWhereInput
+}
+
+/**
+ * LoanApplication.documents
+ */
+export type LoanApplication$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Document
+   */
+  select?: Prisma.DocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Document
+   */
+  omit?: Prisma.DocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentInclude<ExtArgs> | null
+  where?: Prisma.DocumentWhereInput
+  orderBy?: Prisma.DocumentOrderByWithRelationInput | Prisma.DocumentOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+}
+
+/**
+ * LoanApplication.createdBy
+ */
+export type LoanApplication$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

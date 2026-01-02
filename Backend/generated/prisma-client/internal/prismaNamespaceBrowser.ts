@@ -60,6 +60,8 @@ export const ModelName = {
   LoanApplication: 'LoanApplication',
   Permission: 'Permission',
   UserPermission: 'UserPermission',
+  Document: 'Document',
+  Kyc: 'Kyc',
   Customer: 'Customer'
 } as const
 
@@ -201,6 +203,7 @@ export const LeadsScalarFieldEnum = {
   address: 'address',
   assignedTo: 'assignedTo',
   assignedBy: 'assignedBy',
+  convertedLoanApplicationId: 'convertedLoanApplicationId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -213,6 +216,7 @@ export const LoanApplicationScalarFieldEnum = {
   id: 'id',
   applicationDate: 'applicationDate',
   customerId: 'customerId',
+  leadId: 'leadId',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
@@ -226,6 +230,12 @@ export const LoanApplicationScalarFieldEnum = {
   approvalDate: 'approvalDate',
   activationDate: 'activationDate',
   rejectionReason: 'rejectionReason',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectedAt: 'rejectedAt',
+  kycId: 'kycId',
+  createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -237,6 +247,7 @@ export const PermissionScalarFieldEnum = {
   id: 'id',
   code: 'code',
   name: 'name',
+  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -252,6 +263,37 @@ export const UserPermissionScalarFieldEnum = {
 } as const
 
 export type UserPermissionScalarFieldEnum = (typeof UserPermissionScalarFieldEnum)[keyof typeof UserPermissionScalarFieldEnum]
+
+
+export const DocumentScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  documentType: 'documentType',
+  documentPath: 'documentPath',
+  verificationStatus: 'verificationStatus',
+  kycId: 'kycId',
+  uploadedBy: 'uploadedBy',
+  verified: 'verified',
+  verifiedBy: 'verifiedBy',
+  verifiedAt: 'verifiedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const KycScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  remarks: 'remarks',
+  verifiedBy: 'verifiedBy',
+  verifiedAt: 'verifiedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -388,7 +430,8 @@ export const LeadsOrderByRelevanceFieldEnum = {
   pinCode: 'pinCode',
   address: 'address',
   assignedTo: 'assignedTo',
-  assignedBy: 'assignedBy'
+  assignedBy: 'assignedBy',
+  convertedLoanApplicationId: 'convertedLoanApplicationId'
 } as const
 
 export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldEnum)[keyof typeof LeadsOrderByRelevanceFieldEnum]
@@ -397,8 +440,13 @@ export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldE
 export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
+  leadId: 'leadId',
   loanPurpose: 'loanPurpose',
-  rejectionReason: 'rejectionReason'
+  rejectionReason: 'rejectionReason',
+  approvedBy: 'approvedBy',
+  rejectedBy: 'rejectedBy',
+  kycId: 'kycId',
+  createdById: 'createdById'
 } as const
 
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]
@@ -407,7 +455,8 @@ export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOr
 export const PermissionOrderByRelevanceFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  description: 'description'
 } as const
 
 export type PermissionOrderByRelevanceFieldEnum = (typeof PermissionOrderByRelevanceFieldEnum)[keyof typeof PermissionOrderByRelevanceFieldEnum]
@@ -420,6 +469,29 @@ export const UserPermissionOrderByRelevanceFieldEnum = {
 } as const
 
 export type UserPermissionOrderByRelevanceFieldEnum = (typeof UserPermissionOrderByRelevanceFieldEnum)[keyof typeof UserPermissionOrderByRelevanceFieldEnum]
+
+
+export const DocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  documentType: 'documentType',
+  documentPath: 'documentPath',
+  kycId: 'kycId',
+  uploadedBy: 'uploadedBy',
+  verifiedBy: 'verifiedBy'
+} as const
+
+export type DocumentOrderByRelevanceFieldEnum = (typeof DocumentOrderByRelevanceFieldEnum)[keyof typeof DocumentOrderByRelevanceFieldEnum]
+
+
+export const KycOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  remarks: 'remarks',
+  verifiedBy: 'verifiedBy'
+} as const
+
+export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {

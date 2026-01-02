@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   assignLeadService,
+  convertLeadToLoanApplicationService,
   createLeadService,
   getAllLeadsService,
   getLeadByIdService,
@@ -30,6 +31,24 @@ export const createLeadController = async (req: Request, res: Response) => {
       success: false,
       message: "Lead creation failed",
       error: "INTERNAL_SERVER_ERROR",
+    });
+  }
+};
+
+export const convertLeadToLoanController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const loan = await convertLeadToLoanApplicationService(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Lead converted to loan application successfully",
+      data: loan, // return converted loan application data
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Conversion failed",
     });
   }
 };
