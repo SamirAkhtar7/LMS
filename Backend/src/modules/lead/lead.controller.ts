@@ -38,6 +38,13 @@ export const createLeadController = async (req: Request, res: Response) => {
 export const convertLeadToLoanController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+       if (!id || typeof id !== 'string' || id.trim() === '') {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid lead ID provided",
+    });
+  }
     const loan = await convertLeadToLoanApplicationService(id);
 
     res.status(200).json({

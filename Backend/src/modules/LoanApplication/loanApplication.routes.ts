@@ -24,10 +24,17 @@ loanApplicationRouter.post(
   validate(createLoanApplicationSchema),
   createLoanApplicationController
 );
-loanApplicationRouter.get("/", getAllLoanApplicationsController);
-loanApplicationRouter.get("/:id", getLoanApplicationByIdController);
+loanApplicationRouter.get("/", authMiddleware, getAllLoanApplicationsController);
+loanApplicationRouter.get(
+  "/:id",
+  authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
+  getLoanApplicationByIdController
+);
 loanApplicationRouter.put(
   "/:id/status",
+  authMiddleware,
+  // checkPermissionMiddleware("UPDATE_LOAN_STATUS"),
   validate(updateLoanApplicationSchema, "body"),
   validate(loanApplicationIdParamSchema, "params"),
   updateLoanApplicationStatusController
@@ -36,6 +43,8 @@ loanApplicationRouter.put(
 loanApplicationRouter.put(
   "/:id/review",
   //  checkPermissionMiddleware("REVIEW_LOAN"),
+  authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
   reviewLoanController
 );
 
@@ -47,6 +56,8 @@ loanApplicationRouter.put(
 
 loanApplicationRouter.put(
   "/:id/reject",
+  authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
  // checkPermissionMiddleware("REJECT_LOAN"),
   rejectLoanController
 );

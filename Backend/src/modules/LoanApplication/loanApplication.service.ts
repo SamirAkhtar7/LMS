@@ -161,10 +161,14 @@ export const getLoanApplicationByIdService = async (id: string) => {
   } catch (error) {
     throw error;
   }
-};
+}; 
+
+type StatusUpdate = {
+  status: Enums.LoanStatus;
+}
 export const updateLoanApplicationStatusService = async (
   id: string,
-  statusData: any
+  statusData: StatusUpdate
 ) => {
   // Implementation for updating loan application status
   try {
@@ -185,7 +189,7 @@ export const updateLoanApplicationStatusService = async (
   } catch (error) {
     throw error;
   }
-  return {}; // return updated loan application data
+ 
 };
 
 export const reviewLoanService = async (loanId: string) => {
@@ -213,23 +217,24 @@ export const reviewLoanService = async (loanId: string) => {
 };
 
 export const approveLoanService = async (loanId: string, userId: string) => {
-  const loan = await prisma.loanApplication.findUnique({
-    where: { id: loanId },
-  });
-
-  if (!loan || loan.status !== "under_review") {
-    throw new Error("Loan not ready for approval");
-  }
-
-  return prisma.loanApplication.update({
-    where: { id: loanId },
+  const result = await prisma.loanApplication.updateMany({
+    where: { 
+      id: loanId,
+      status: "under_review"
+    },
     data: {
       status: "approved",
       approvalDate: new Date(),
       approvedBy: userId,
     },
   });
-};
+
+  if (result.count === 0) {
+    throw new Error("Loan not ready for approval");
+  }
+
+  return prisma.loanApplication.findUnique({ where: { id: loanId } });
+};   
 
 export const rejectLoanService = async (
   loanId: string,

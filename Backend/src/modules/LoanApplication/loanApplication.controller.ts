@@ -1,17 +1,25 @@
 import { Response, Request } from "express";
-import {createLoanApplicationService,
-        getAllLoanApplicationsService,
+import {
+  createLoanApplicationService,
+  getAllLoanApplicationsService,
   getLoanApplicationByIdService,
   reviewLoanService,
   approveLoanService,
   rejectLoanService,
-        updateLoanApplicationStatusService} from "./loanApplication.service.js";
+  updateLoanApplicationStatusService,
+} from "./loanApplication.service.js";
 
-
-export const createLoanApplicationController = async (req: Request, res: Response) => {
+export const createLoanApplicationController = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: "Unauthorized" });
-    const loanApplication = await createLoanApplicationService(req.body, { id: req.user.id, role: req.user.role as any });
+    if (!req.user)
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    const loanApplication = await createLoanApplicationService(req.body, {
+      id: req.user.id,
+      role: req.user.role as any,
+    });
 
     res.status(201).json({
       success: true,
@@ -37,8 +45,11 @@ export const getAllLoanApplicationsController = async (
       message: "Loan applications retrieved successfully",
       data: loanApplications, // return array of loan applications
     });
-  } catch {
-    res.status(500).json({ success: false });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Failed to retrieve loan applications",
+    });
   }
 };
 
@@ -46,36 +57,52 @@ export const getLoanApplicationByIdController = async (
   req: Request,
   res: Response
 ) => {
-    try {
-
-const loanApplication = await getLoanApplicationByIdService(req.params.id);
-  res.status(200).json({
-    success: true,
-    message: "Loan application retrieved successfully",
-    data: loanApplication, // return loan application data
-  });
-      } catch {
-    res.status(500).json({ success: false });
+  try {
+    const loanApplication = await getLoanApplicationByIdService(req.params.id);
+    res.status(200).json({
+      success: true,
+      message: "Loan application retrieved successfully",
+      data: loanApplication, // return loan application data
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Failed to retrieve loan application",
+    });
   }
 };
 export const updateLoanApplicationStatusController = async (
   req: Request,
   res: Response
 ) => {
-const { id } = req.params;
-  const { status } = req.body;
-  const updatedLoanApplication = await updateLoanApplicationStatusService(id, { status });
-  res.status(200).json({
-    success: true,
-    message: "Loan application status updated successfully",
-    data: updatedLoanApplication, // return updated loan application data
-  });
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const { id } = req.params;
+    const { status } = req.body;
+    const updatedLoanApplication = await updateLoanApplicationStatusService(
+      id,
+      { status }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Loan application status updated successfully",
+      data: updatedLoanApplication,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Failed to update loan application status",
+    });
+  }
 };
-
-
 
 export const reviewLoanController = async (req: any, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
     const { id } = req.params;
 
     const loan = await reviewLoanService(id);
@@ -93,9 +120,11 @@ export const reviewLoanController = async (req: any, res: Response) => {
   }
 };
 
-
 export const approveLoanController = async (req: any, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
     const { id } = req.params;
     const approvedBy = req.user.id;
 
@@ -113,8 +142,6 @@ export const approveLoanController = async (req: any, res: Response) => {
     });
   }
 };
-
-
 export const rejectLoanController = async (req: any, res: Response) => {
   try {
     const { id } = req.params;

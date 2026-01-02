@@ -43,9 +43,7 @@ export const verifyDocumentService = async (
 ) => {
   try {
     const Document = await prisma.document.update({
-      where: {
-        id: documentId,
-      },
+      where: { id: documentId },
       data: {
         verified: true,
         verifiedBy: userId,
@@ -53,21 +51,41 @@ export const verifyDocumentService = async (
         verificationStatus: "verified",
       },
     });
+
     // If document is linked to a KYC, check if all documents are verified and update KYC status
     if (Document.kycId) {
       const remaining = await prisma.document.count({
-        where: { kycId: Document.kycId, verificationStatus: { not: "verified" } },
+        where: {
+          kycId: Document.kycId,
+          verificationStatus: { not: "verified" },
+        },
       });
+
       if (remaining === 0) {
-        await prisma.kyc.update({
+        const updatedKyc = await prisma.kyc.update({
           where: { id: Document.kycId },
-          data: { status: "VERIFIED", verifiedBy: userId, verifiedAt: new Date() },
+          data: {
+            status: "VERIFIED",
+            verifiedBy: userId,
+            verifiedAt: new Date(),
+          },
         });
+
+        // Also transition the related loan application to the next stage
+        // if it is currently waiting for KYC.
+        if (updatedKyc.id) {
+          await prisma.loanApplication.updateMany({
+            where: { kycId: updatedKyc.id as string, status: "kyc_pending" },
+            data: { status: "application_in_progress" },
+          });
+        }
       }
     }
+
     return Document;
   } catch (error) {
     logger.error(error);
+    throw error;
   }
 };
 

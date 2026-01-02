@@ -1,5 +1,6 @@
 import multer from "multer";
 import path from "path";
+import { randomUUID } from "crypto";
 import fs from "fs";
 
 const uploadDir = path.resolve(process.cwd(), "public", "uploads");
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueSuffix = Date.now() + "-" + randomUUID();
     const ext = path.extname(file.originalname);
     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
   },
@@ -31,7 +32,7 @@ const upload = multer({
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb(new Error("Only .jpeg, .jpg, webp, avif, .png files are allowed."));
+    cb(new Error("Only .jpeg, .jpg, .webp, .avif, .png files are allowed."));
   },
 });
 

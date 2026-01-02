@@ -8,9 +8,16 @@ const roleMiddleware = (allowedRoles: UserRole[]) => {
         if (!req.user) {
             return ApiError.send(res, 401, "Unauthorized: User not authenticated.");
         }
-        if(!allowedRoles.includes(req.user.role.toUpperCase() as UserRole)) {
-            return ApiError.send(res, 403, "Access denied: Insufficient permissions.");
-        }
+       if (
+         !req.user.role ||
+         !allowedRoles.includes(req.user.role.toUpperCase() as UserRole)
+       ) {
+         return ApiError.send(
+           res,
+           403,
+           "Access denied: Insufficient permissions."
+         );
+       }
 
         next();
     };

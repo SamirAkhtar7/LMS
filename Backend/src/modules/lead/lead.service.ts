@@ -129,27 +129,38 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
     }
 
     // 1. Try to find an existing customer by email or contact number
+    const orConditions = [
+      lead.email ? { email: lead.email } : undefined,
+      lead.contactNumber ? { contactNumber: lead.contactNumber } : undefined,
+    ].filter(Boolean) as object[];
+
+    if (orConditions.length === 0) {
+      const e: any = new Error(
+        "Lead must have email or contact number to convert"
+      );
+      e.statusCode = 400;
+      throw e;
+    }
+
     let customer = await tx.customer.findFirst({
       where: {
-        OR: [
-          lead.email ? { email: lead.email } : undefined,
-          lead.contactNumber
-            ? { contactNumber: lead.contactNumber }
-            : undefined,
-        ].filter(Boolean) as object[],
+        OR: orConditions,
       },
     });
-
     // 2. Create customer if not found (use conservative defaults for required fields)
     if (!customer) {
       const names = (lead.fullName || "").trim().split(/\s+/);
       const firstName = names.shift() || "Unknown";
       const lastName = names.length ? names.join(" ") : "";
+            const titleFromGender = 
+        lead.gender === "FEMALE" ? "MS" : 
+        lead.gender === "MALE" ? "MR" : "MR";
+
 
       try {
         customer = await tx.customer.create({
           data: {
-            title: "MR" as any,
+            title: titleFromGender as any,
             firstName,
             lastName,
             gender: lead.gender as any,

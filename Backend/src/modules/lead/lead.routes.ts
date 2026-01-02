@@ -22,7 +22,7 @@ import { checkPermissionMiddleware } from "../../common/middlewares/permission.m
 
 // Define lead routes here
 leadRouter.post("/", validate(createLeadSchema), createLeadController);
-
+ 
 leadRouter.use(authMiddleware);
 leadRouter.get(
   "/all",
