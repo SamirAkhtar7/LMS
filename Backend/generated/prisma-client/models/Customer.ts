@@ -29,11 +29,13 @@ export type AggregateCustomer = {
 export type CustomerAvgAggregateOutputType = {
   monthlyIncome: number | null
   annualIncome: number | null
+  otherIncome: number | null
 }
 
 export type CustomerSumAggregateOutputType = {
   monthlyIncome: number | null
   annualIncome: number | null
+  otherIncome: number | null
 }
 
 export type CustomerMinAggregateOutputType = {
@@ -47,6 +49,10 @@ export type CustomerMinAggregateOutputType = {
   aadhaarNumber: string | null
   panNumber: string | null
   voterId: string | null
+  maritalStatus: $Enums.MaritalStatus | null
+  nationality: string | null
+  category: $Enums.Category | null
+  spouseName: string | null
   passportNumber: string | null
   contactNumber: string | null
   alternateNumber: string | null
@@ -60,7 +66,9 @@ export type CustomerMinAggregateOutputType = {
   annualIncome: number | null
   bankName: string | null
   bankAccountNumber: string | null
+  otherIncome: number | null
   ifscCode: string | null
+  accountType: string | null
   status: $Enums.CustomerStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +85,10 @@ export type CustomerMaxAggregateOutputType = {
   aadhaarNumber: string | null
   panNumber: string | null
   voterId: string | null
+  maritalStatus: $Enums.MaritalStatus | null
+  nationality: string | null
+  category: $Enums.Category | null
+  spouseName: string | null
   passportNumber: string | null
   contactNumber: string | null
   alternateNumber: string | null
@@ -90,7 +102,9 @@ export type CustomerMaxAggregateOutputType = {
   annualIncome: number | null
   bankName: string | null
   bankAccountNumber: string | null
+  otherIncome: number | null
   ifscCode: string | null
+  accountType: string | null
   status: $Enums.CustomerStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -107,6 +121,10 @@ export type CustomerCountAggregateOutputType = {
   aadhaarNumber: number
   panNumber: number
   voterId: number
+  maritalStatus: number
+  nationality: number
+  category: number
+  spouseName: number
   passportNumber: number
   contactNumber: number
   alternateNumber: number
@@ -120,7 +138,9 @@ export type CustomerCountAggregateOutputType = {
   annualIncome: number
   bankName: number
   bankAccountNumber: number
+  otherIncome: number
   ifscCode: number
+  accountType: number
   status: number
   createdAt: number
   updatedAt: number
@@ -131,11 +151,13 @@ export type CustomerCountAggregateOutputType = {
 export type CustomerAvgAggregateInputType = {
   monthlyIncome?: true
   annualIncome?: true
+  otherIncome?: true
 }
 
 export type CustomerSumAggregateInputType = {
   monthlyIncome?: true
   annualIncome?: true
+  otherIncome?: true
 }
 
 export type CustomerMinAggregateInputType = {
@@ -149,6 +171,10 @@ export type CustomerMinAggregateInputType = {
   aadhaarNumber?: true
   panNumber?: true
   voterId?: true
+  maritalStatus?: true
+  nationality?: true
+  category?: true
+  spouseName?: true
   passportNumber?: true
   contactNumber?: true
   alternateNumber?: true
@@ -162,7 +188,9 @@ export type CustomerMinAggregateInputType = {
   annualIncome?: true
   bankName?: true
   bankAccountNumber?: true
+  otherIncome?: true
   ifscCode?: true
+  accountType?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -179,6 +207,10 @@ export type CustomerMaxAggregateInputType = {
   aadhaarNumber?: true
   panNumber?: true
   voterId?: true
+  maritalStatus?: true
+  nationality?: true
+  category?: true
+  spouseName?: true
   passportNumber?: true
   contactNumber?: true
   alternateNumber?: true
@@ -192,7 +224,9 @@ export type CustomerMaxAggregateInputType = {
   annualIncome?: true
   bankName?: true
   bankAccountNumber?: true
+  otherIncome?: true
   ifscCode?: true
+  accountType?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -209,6 +243,10 @@ export type CustomerCountAggregateInputType = {
   aadhaarNumber?: true
   panNumber?: true
   voterId?: true
+  maritalStatus?: true
+  nationality?: true
+  category?: true
+  spouseName?: true
   passportNumber?: true
   contactNumber?: true
   alternateNumber?: true
@@ -222,7 +260,9 @@ export type CustomerCountAggregateInputType = {
   annualIncome?: true
   bankName?: true
   bankAccountNumber?: true
+  otherIncome?: true
   ifscCode?: true
+  accountType?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -326,6 +366,10 @@ export type CustomerGroupByOutputType = {
   aadhaarNumber: string | null
   panNumber: string | null
   voterId: string | null
+  maritalStatus: $Enums.MaritalStatus | null
+  nationality: string | null
+  category: $Enums.Category | null
+  spouseName: string | null
   passportNumber: string | null
   contactNumber: string
   alternateNumber: string | null
@@ -339,7 +383,9 @@ export type CustomerGroupByOutputType = {
   annualIncome: number | null
   bankName: string | null
   bankAccountNumber: string | null
+  otherIncome: number | null
   ifscCode: string | null
+  accountType: string | null
   status: $Enums.CustomerStatus
   createdAt: Date
   updatedAt: Date
@@ -379,6 +425,10 @@ export type CustomerWhereInput = {
   aadhaarNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   panNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   voterId?: Prisma.StringNullableFilter<"Customer"> | string | null
+  maritalStatus?: Prisma.EnumMaritalStatusNullableFilter<"Customer"> | $Enums.MaritalStatus | null
+  nationality?: Prisma.StringNullableFilter<"Customer"> | string | null
+  category?: Prisma.EnumCategoryNullableFilter<"Customer"> | $Enums.Category | null
+  spouseName?: Prisma.StringNullableFilter<"Customer"> | string | null
   passportNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   contactNumber?: Prisma.StringFilter<"Customer"> | string
   alternateNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -392,7 +442,9 @@ export type CustomerWhereInput = {
   annualIncome?: Prisma.FloatNullableFilter<"Customer"> | number | null
   bankName?: Prisma.StringNullableFilter<"Customer"> | string | null
   bankAccountNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  otherIncome?: Prisma.FloatNullableFilter<"Customer"> | number | null
   ifscCode?: Prisma.StringNullableFilter<"Customer"> | string | null
+  accountType?: Prisma.StringNullableFilter<"Customer"> | string | null
   status?: Prisma.EnumCustomerStatusFilter<"Customer"> | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -410,6 +462,10 @@ export type CustomerOrderByWithRelationInput = {
   aadhaarNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   panNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   voterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  maritalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  nationality?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  spouseName?: Prisma.SortOrderInput | Prisma.SortOrder
   passportNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -423,7 +479,9 @@ export type CustomerOrderByWithRelationInput = {
   annualIncome?: Prisma.SortOrderInput | Prisma.SortOrder
   bankName?: Prisma.SortOrderInput | Prisma.SortOrder
   bankAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  otherIncome?: Prisma.SortOrderInput | Prisma.SortOrder
   ifscCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -445,6 +503,10 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   aadhaarNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   panNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   voterId?: Prisma.StringNullableFilter<"Customer"> | string | null
+  maritalStatus?: Prisma.EnumMaritalStatusNullableFilter<"Customer"> | $Enums.MaritalStatus | null
+  nationality?: Prisma.StringNullableFilter<"Customer"> | string | null
+  category?: Prisma.EnumCategoryNullableFilter<"Customer"> | $Enums.Category | null
+  spouseName?: Prisma.StringNullableFilter<"Customer"> | string | null
   passportNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   contactNumber?: Prisma.StringFilter<"Customer"> | string
   alternateNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -458,7 +520,9 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   annualIncome?: Prisma.FloatNullableFilter<"Customer"> | number | null
   bankName?: Prisma.StringNullableFilter<"Customer"> | string | null
   bankAccountNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  otherIncome?: Prisma.FloatNullableFilter<"Customer"> | number | null
   ifscCode?: Prisma.StringNullableFilter<"Customer"> | string | null
+  accountType?: Prisma.StringNullableFilter<"Customer"> | string | null
   status?: Prisma.EnumCustomerStatusFilter<"Customer"> | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -476,6 +540,10 @@ export type CustomerOrderByWithAggregationInput = {
   aadhaarNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   panNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   voterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  maritalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  nationality?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  spouseName?: Prisma.SortOrderInput | Prisma.SortOrder
   passportNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -489,7 +557,9 @@ export type CustomerOrderByWithAggregationInput = {
   annualIncome?: Prisma.SortOrderInput | Prisma.SortOrder
   bankName?: Prisma.SortOrderInput | Prisma.SortOrder
   bankAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  otherIncome?: Prisma.SortOrderInput | Prisma.SortOrder
   ifscCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -514,6 +584,10 @@ export type CustomerScalarWhereWithAggregatesInput = {
   aadhaarNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   panNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   voterId?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  maritalStatus?: Prisma.EnumMaritalStatusNullableWithAggregatesFilter<"Customer"> | $Enums.MaritalStatus | null
+  nationality?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  category?: Prisma.EnumCategoryNullableWithAggregatesFilter<"Customer"> | $Enums.Category | null
+  spouseName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   passportNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   contactNumber?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   alternateNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
@@ -527,7 +601,9 @@ export type CustomerScalarWhereWithAggregatesInput = {
   annualIncome?: Prisma.FloatNullableWithAggregatesFilter<"Customer"> | number | null
   bankName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   bankAccountNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  otherIncome?: Prisma.FloatNullableWithAggregatesFilter<"Customer"> | number | null
   ifscCode?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  accountType?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   status?: Prisma.EnumCustomerStatusWithAggregatesFilter<"Customer"> | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
@@ -544,6 +620,10 @@ export type CustomerCreateInput = {
   aadhaarNumber?: string | null
   panNumber?: string | null
   voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
   passportNumber?: string | null
   contactNumber: string
   alternateNumber?: string | null
@@ -557,7 +637,9 @@ export type CustomerCreateInput = {
   annualIncome?: number | null
   bankName?: string | null
   bankAccountNumber?: string | null
+  otherIncome?: number | null
   ifscCode?: string | null
+  accountType?: string | null
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -575,6 +657,10 @@ export type CustomerUncheckedCreateInput = {
   aadhaarNumber?: string | null
   panNumber?: string | null
   voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
   passportNumber?: string | null
   contactNumber: string
   alternateNumber?: string | null
@@ -588,7 +674,9 @@ export type CustomerUncheckedCreateInput = {
   annualIncome?: number | null
   bankName?: string | null
   bankAccountNumber?: string | null
+  otherIncome?: number | null
   ifscCode?: string | null
+  accountType?: string | null
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -606,6 +694,10 @@ export type CustomerUpdateInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -619,7 +711,9 @@ export type CustomerUpdateInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -637,6 +731,10 @@ export type CustomerUncheckedUpdateInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -650,7 +748,9 @@ export type CustomerUncheckedUpdateInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -668,6 +768,10 @@ export type CustomerCreateManyInput = {
   aadhaarNumber?: string | null
   panNumber?: string | null
   voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
   passportNumber?: string | null
   contactNumber: string
   alternateNumber?: string | null
@@ -681,7 +785,9 @@ export type CustomerCreateManyInput = {
   annualIncome?: number | null
   bankName?: string | null
   bankAccountNumber?: string | null
+  otherIncome?: number | null
   ifscCode?: string | null
+  accountType?: string | null
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -698,6 +804,10 @@ export type CustomerUpdateManyMutationInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -711,7 +821,9 @@ export type CustomerUpdateManyMutationInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -728,6 +840,10 @@ export type CustomerUncheckedUpdateManyInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -741,7 +857,9 @@ export type CustomerUncheckedUpdateManyInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -769,6 +887,10 @@ export type CustomerCountOrderByAggregateInput = {
   aadhaarNumber?: Prisma.SortOrder
   panNumber?: Prisma.SortOrder
   voterId?: Prisma.SortOrder
+  maritalStatus?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  spouseName?: Prisma.SortOrder
   passportNumber?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
@@ -782,7 +904,9 @@ export type CustomerCountOrderByAggregateInput = {
   annualIncome?: Prisma.SortOrder
   bankName?: Prisma.SortOrder
   bankAccountNumber?: Prisma.SortOrder
+  otherIncome?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -791,6 +915,7 @@ export type CustomerCountOrderByAggregateInput = {
 export type CustomerAvgOrderByAggregateInput = {
   monthlyIncome?: Prisma.SortOrder
   annualIncome?: Prisma.SortOrder
+  otherIncome?: Prisma.SortOrder
 }
 
 export type CustomerMaxOrderByAggregateInput = {
@@ -804,6 +929,10 @@ export type CustomerMaxOrderByAggregateInput = {
   aadhaarNumber?: Prisma.SortOrder
   panNumber?: Prisma.SortOrder
   voterId?: Prisma.SortOrder
+  maritalStatus?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  spouseName?: Prisma.SortOrder
   passportNumber?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
@@ -817,7 +946,9 @@ export type CustomerMaxOrderByAggregateInput = {
   annualIncome?: Prisma.SortOrder
   bankName?: Prisma.SortOrder
   bankAccountNumber?: Prisma.SortOrder
+  otherIncome?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -834,6 +965,10 @@ export type CustomerMinOrderByAggregateInput = {
   aadhaarNumber?: Prisma.SortOrder
   panNumber?: Prisma.SortOrder
   voterId?: Prisma.SortOrder
+  maritalStatus?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  spouseName?: Prisma.SortOrder
   passportNumber?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
@@ -847,7 +982,9 @@ export type CustomerMinOrderByAggregateInput = {
   annualIncome?: Prisma.SortOrder
   bankName?: Prisma.SortOrder
   bankAccountNumber?: Prisma.SortOrder
+  otherIncome?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
+  accountType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -856,6 +993,7 @@ export type CustomerMinOrderByAggregateInput = {
 export type CustomerSumOrderByAggregateInput = {
   monthlyIncome?: Prisma.SortOrder
   annualIncome?: Prisma.SortOrder
+  otherIncome?: Prisma.SortOrder
 }
 
 export type CustomerCreateNestedOneWithoutLoanApplicationsInput = {
@@ -874,6 +1012,14 @@ export type CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput = {
 
 export type EnumTitleFieldUpdateOperationsInput = {
   set?: $Enums.Title
+}
+
+export type NullableEnumMaritalStatusFieldUpdateOperationsInput = {
+  set?: $Enums.MaritalStatus | null
+}
+
+export type NullableEnumCategoryFieldUpdateOperationsInput = {
+  set?: $Enums.Category | null
 }
 
 export type EnumEmploymentTypeFieldUpdateOperationsInput = {
@@ -895,6 +1041,10 @@ export type CustomerCreateWithoutLoanApplicationsInput = {
   aadhaarNumber?: string | null
   panNumber?: string | null
   voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
   passportNumber?: string | null
   contactNumber: string
   alternateNumber?: string | null
@@ -908,7 +1058,9 @@ export type CustomerCreateWithoutLoanApplicationsInput = {
   annualIncome?: number | null
   bankName?: string | null
   bankAccountNumber?: string | null
+  otherIncome?: number | null
   ifscCode?: string | null
+  accountType?: string | null
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -925,6 +1077,10 @@ export type CustomerUncheckedCreateWithoutLoanApplicationsInput = {
   aadhaarNumber?: string | null
   panNumber?: string | null
   voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
   passportNumber?: string | null
   contactNumber: string
   alternateNumber?: string | null
@@ -938,7 +1094,9 @@ export type CustomerUncheckedCreateWithoutLoanApplicationsInput = {
   annualIncome?: number | null
   bankName?: string | null
   bankAccountNumber?: string | null
+  otherIncome?: number | null
   ifscCode?: string | null
+  accountType?: string | null
   status?: $Enums.CustomerStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -971,6 +1129,10 @@ export type CustomerUpdateWithoutLoanApplicationsInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -984,7 +1146,9 @@ export type CustomerUpdateWithoutLoanApplicationsInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1001,6 +1165,10 @@ export type CustomerUncheckedUpdateWithoutLoanApplicationsInput = {
   aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1014,7 +1182,9 @@ export type CustomerUncheckedUpdateWithoutLoanApplicationsInput = {
   annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1062,6 +1232,10 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   aadhaarNumber?: boolean
   panNumber?: boolean
   voterId?: boolean
+  maritalStatus?: boolean
+  nationality?: boolean
+  category?: boolean
+  spouseName?: boolean
   passportNumber?: boolean
   contactNumber?: boolean
   alternateNumber?: boolean
@@ -1075,7 +1249,9 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   annualIncome?: boolean
   bankName?: boolean
   bankAccountNumber?: boolean
+  otherIncome?: boolean
   ifscCode?: boolean
+  accountType?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1096,6 +1272,10 @@ export type CustomerSelectScalar = {
   aadhaarNumber?: boolean
   panNumber?: boolean
   voterId?: boolean
+  maritalStatus?: boolean
+  nationality?: boolean
+  category?: boolean
+  spouseName?: boolean
   passportNumber?: boolean
   contactNumber?: boolean
   alternateNumber?: boolean
@@ -1109,13 +1289,15 @@ export type CustomerSelectScalar = {
   annualIncome?: boolean
   bankName?: boolean
   bankAccountNumber?: boolean
+  otherIncome?: boolean
   ifscCode?: boolean
+  accountType?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "firstName" | "lastName" | "middleName" | "gender" | "dob" | "aadhaarNumber" | "panNumber" | "voterId" | "passportNumber" | "contactNumber" | "alternateNumber" | "email" | "address" | "city" | "state" | "pinCode" | "employmentType" | "monthlyIncome" | "annualIncome" | "bankName" | "bankAccountNumber" | "ifscCode" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "firstName" | "lastName" | "middleName" | "gender" | "dob" | "aadhaarNumber" | "panNumber" | "voterId" | "maritalStatus" | "nationality" | "category" | "spouseName" | "passportNumber" | "contactNumber" | "alternateNumber" | "email" | "address" | "city" | "state" | "pinCode" | "employmentType" | "monthlyIncome" | "annualIncome" | "bankName" | "bankAccountNumber" | "otherIncome" | "ifscCode" | "accountType" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplications?: boolean | Prisma.Customer$loanApplicationsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
@@ -1137,6 +1319,10 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     aadhaarNumber: string | null
     panNumber: string | null
     voterId: string | null
+    maritalStatus: $Enums.MaritalStatus | null
+    nationality: string | null
+    category: $Enums.Category | null
+    spouseName: string | null
     passportNumber: string | null
     contactNumber: string
     alternateNumber: string | null
@@ -1150,7 +1336,9 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     annualIncome: number | null
     bankName: string | null
     bankAccountNumber: string | null
+    otherIncome: number | null
     ifscCode: string | null
+    accountType: string | null
     status: $Enums.CustomerStatus
     createdAt: Date
     updatedAt: Date
@@ -1534,6 +1722,10 @@ export interface CustomerFieldRefs {
   readonly aadhaarNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly panNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly voterId: Prisma.FieldRef<"Customer", 'String'>
+  readonly maritalStatus: Prisma.FieldRef<"Customer", 'MaritalStatus'>
+  readonly nationality: Prisma.FieldRef<"Customer", 'String'>
+  readonly category: Prisma.FieldRef<"Customer", 'Category'>
+  readonly spouseName: Prisma.FieldRef<"Customer", 'String'>
   readonly passportNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly contactNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly alternateNumber: Prisma.FieldRef<"Customer", 'String'>
@@ -1547,7 +1739,9 @@ export interface CustomerFieldRefs {
   readonly annualIncome: Prisma.FieldRef<"Customer", 'Float'>
   readonly bankName: Prisma.FieldRef<"Customer", 'String'>
   readonly bankAccountNumber: Prisma.FieldRef<"Customer", 'String'>
+  readonly otherIncome: Prisma.FieldRef<"Customer", 'Float'>
   readonly ifscCode: Prisma.FieldRef<"Customer", 'String'>
+  readonly accountType: Prisma.FieldRef<"Customer", 'String'>
   readonly status: Prisma.FieldRef<"Customer", 'CustomerStatus'>
   readonly createdAt: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Customer", 'DateTime'>

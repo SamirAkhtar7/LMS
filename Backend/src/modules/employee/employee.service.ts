@@ -98,23 +98,31 @@ export async function getEmployeeByIdService(id: string) {
     where: { id },
     include: { user: true },
   });
-  if (employee) {
-    if (!employee.user) {
-      const e: any = new Error("Associated user not found");
-      e.statusCode = 404;
-      throw e;
-    }
 
-    const { password, ...safeUser } = employee.user;
-    return {
-      ...employee,
-      user: safeUser,
-    };
-  } else {
+  if (!employee) {
     const e: any = new Error("Employee not found");
     e.statusCode = 404;
     throw e;
   }
+
+  if (!employee.user) {
+    const e: any = new Error("Associated user not found");
+    e.statusCode = 404;
+    throw e;
+  }
+
+  const { password, ...safeUser } = employee.user as any;
+
+  // Fetch KYC records separately — `kyc` is not a direct relation on `User` in schema
+  const kycs = await prisma.kyc.findMany({
+    where: { userId: employee.userId },
+  });
+
+  return {
+    ...employee,
+    user: safeUser,
+    kycs,
+  };
 }
 
 export async function updateEmployeeService(

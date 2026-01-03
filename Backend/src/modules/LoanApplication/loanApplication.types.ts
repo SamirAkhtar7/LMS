@@ -17,6 +17,8 @@ export type LoanStatus =
   | "defaulted"
   | "application_in_progress";
 
+  
+
 // export interface LoanProductModel {
 //   id: string;
 //   name: string;
@@ -125,50 +127,79 @@ export type PaymentMode =
   | "NEFT"
   | "RTGS"
   | "IMPS";
+export type MaritalStatus =
+  | "SINGLE"
+  | "MARRIED"
+  | "DIVORCED"
+  | "WIDOWED"
+  | "OTHER";
+export type Category = "GENERAL" | "SC" | "ST" | "OBC" | "OTHER";
+export type LoanType =
+  | "PERSONAL_LOAN"
+  | "VEHICLE_LOAN"
+  | "HOME_LOAN"
+  | "EDUCATION_LOAN"
+  | "BUSINESS_LOAN"
+  | "GOLD_LOAN";
 
 export interface CreateLoanApplication {
   // ----------------- Customer Fields -----------------
   title: Title;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   middleName?: string;
-  gender: Gender;
-  dob: Date | string;
+  gender?: Gender;
+  dob?: Date | string;
 
   aadhaarNumber?: string;
   panNumber?: string;
   voterId?: string;
   passportNumber?: string;
+  maritalStatus?: MaritalStatus;
+  nationality?: string;
+  category?: Category;
+  spouseName?: string;
 
   contactNumber: string;
   alternateNumber?: string;
   email?: string;
 
-  address: string;
-  city: string;
-  state: string;
-  pinCode: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  pinCode?: string;
 
-  employmentType: EmploymentType;
+  employmentType?: EmploymentType;
   monthlyIncome?: number;
   annualIncome?: number;
 
+  // Bank / account
   bankName?: string;
   bankAccountNumber?: string;
   ifscCode?: string;
+  accountType?: string;
+  otherIncome?: number;
+  accountNumber?: string;
 
   // ----------------- Loan Fields -----------------
-  loanProductId: string;
+  loanProductId?: string;
+  loanType?: LoanType;
   requestedAmount: number;
 
   tenureMonths?: number;
   interestRate?: number;
-  interestType: InterestType;
+  interestType?: InterestType;
 
   emiAmount?: number;
   totalPayable?: number;
+  purposeDetails?: string;
   loanPurpose?: string;
   cibilScore?: number;
+
+  coApplicantAadhaarNumber?: string;
+  coApplicantPanNumber?: string;
+  coApplicantName?: string;
+  coApplicantContactNumber?: string;
 
   approvedAmount?: number;
   status?: LoanStatus; // optional, default: application_in_progress

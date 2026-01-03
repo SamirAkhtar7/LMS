@@ -35,6 +35,7 @@ export type UserMinAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  kycStatus: $Enums.KycStatus | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -48,6 +49,7 @@ export type UserMaxAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  kycStatus: $Enums.KycStatus | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -61,6 +63,7 @@ export type UserCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  kycStatus: number
   _all: number
 }
 
@@ -76,6 +79,7 @@ export type UserMinAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  kycStatus?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -89,6 +93,7 @@ export type UserMaxAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  kycStatus?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -102,6 +107,7 @@ export type UserCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  kycStatus?: true
   _all?: true
 }
 
@@ -188,6 +194,7 @@ export type UserGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  kycStatus: $Enums.KycStatus
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -222,10 +229,12 @@ export type UserWhereInput = {
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  kycStatus?: Prisma.EnumKycStatusFilter<"User"> | $Enums.KycStatus
   profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  kycs?: Prisma.KycListRelationFilter
   permissions?: Prisma.UserPermissionListRelationFilter
   leadsAssignedTo?: Prisma.LeadsListRelationFilter
   leadsAssignedBy?: Prisma.LeadsListRelationFilter
@@ -244,10 +253,12 @@ export type UserOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  kycStatus?: Prisma.SortOrder
   profile?: Prisma.UserProfileOrderByWithRelationInput
   admin?: Prisma.AdminOrderByWithRelationInput
   partner?: Prisma.PartnerOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
+  kycs?: Prisma.KycOrderByRelationAggregateInput
   permissions?: Prisma.UserPermissionOrderByRelationAggregateInput
   leadsAssignedTo?: Prisma.LeadsOrderByRelationAggregateInput
   leadsAssignedBy?: Prisma.LeadsOrderByRelationAggregateInput
@@ -270,10 +281,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  kycStatus?: Prisma.EnumKycStatusFilter<"User"> | $Enums.KycStatus
   profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  kycs?: Prisma.KycListRelationFilter
   permissions?: Prisma.UserPermissionListRelationFilter
   leadsAssignedTo?: Prisma.LeadsListRelationFilter
   leadsAssignedBy?: Prisma.LeadsListRelationFilter
@@ -292,6 +305,7 @@ export type UserOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  kycStatus?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -311,6 +325,7 @@ export type UserScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  kycStatus?: Prisma.EnumKycStatusWithAggregatesFilter<"User"> | $Enums.KycStatus
 }
 
 export type UserCreateInput = {
@@ -324,10 +339,12 @@ export type UserCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -346,10 +363,12 @@ export type UserUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -368,10 +387,12 @@ export type UserUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -390,10 +411,12 @@ export type UserUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -412,6 +435,7 @@ export type UserCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
 }
 
 export type UserUpdateManyMutationInput = {
@@ -425,6 +449,7 @@ export type UserUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -438,6 +463,7 @@ export type UserUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
 }
 
 export type UserOrderByRelevanceInput = {
@@ -457,6 +483,7 @@ export type UserCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  kycStatus?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -470,6 +497,7 @@ export type UserMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  kycStatus?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -483,6 +511,7 @@ export type UserMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  kycStatus?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -509,6 +538,10 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type EnumKycStatusFieldUpdateOperationsInput = {
+  set?: $Enums.KycStatus
 }
 
 export type UserCreateNestedOneWithoutProfileInput = {
@@ -635,6 +668,12 @@ export type UserCreateNestedOneWithoutVerifiedKycsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutKycsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKycsInput, Prisma.UserUncheckedCreateWithoutKycsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKycsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneWithoutVerifiedKycsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutVerifiedKycsInput, Prisma.UserUncheckedCreateWithoutVerifiedKycsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifiedKycsInput
@@ -643,6 +682,14 @@ export type UserUpdateOneWithoutVerifiedKycsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerifiedKycsInput, Prisma.UserUpdateWithoutVerifiedKycsInput>, Prisma.UserUncheckedUpdateWithoutVerifiedKycsInput>
+}
+
+export type UserUpdateOneRequiredWithoutKycsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKycsInput, Prisma.UserUncheckedCreateWithoutKycsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKycsInput
+  upsert?: Prisma.UserUpsertWithoutKycsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKycsInput, Prisma.UserUpdateWithoutKycsInput>, Prisma.UserUncheckedUpdateWithoutKycsInput>
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -656,9 +703,11 @@ export type UserCreateWithoutProfileInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -677,9 +726,11 @@ export type UserUncheckedCreateWithoutProfileInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -714,9 +765,11 @@ export type UserUpdateWithoutProfileInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -735,9 +788,11 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -756,9 +811,11 @@ export type UserCreateWithoutAdminInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -777,9 +834,11 @@ export type UserUncheckedCreateWithoutAdminInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -814,9 +873,11 @@ export type UserUpdateWithoutAdminInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -835,9 +896,11 @@ export type UserUncheckedUpdateWithoutAdminInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -856,9 +919,11 @@ export type UserCreateWithoutEmployeeInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -877,9 +942,11 @@ export type UserUncheckedCreateWithoutEmployeeInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -914,9 +981,11 @@ export type UserUpdateWithoutEmployeeInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -935,9 +1004,11 @@ export type UserUncheckedUpdateWithoutEmployeeInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -956,9 +1027,11 @@ export type UserCreateWithoutPartnerInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -977,9 +1050,11 @@ export type UserUncheckedCreateWithoutPartnerInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -1014,9 +1089,11 @@ export type UserUpdateWithoutPartnerInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -1035,9 +1112,11 @@ export type UserUncheckedUpdateWithoutPartnerInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -1056,10 +1135,12 @@ export type UserCreateWithoutLeadsAssignedToInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
   verifiedKycs?: Prisma.KycCreateNestedManyWithoutVerifiedByUserInput
@@ -1077,10 +1158,12 @@ export type UserUncheckedCreateWithoutLeadsAssignedToInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
   verifiedKycs?: Prisma.KycUncheckedCreateNestedManyWithoutVerifiedByUserInput
@@ -1103,10 +1186,12 @@ export type UserCreateWithoutLeadsAssignedByInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   verifiedKycs?: Prisma.KycCreateNestedManyWithoutVerifiedByUserInput
@@ -1124,10 +1209,12 @@ export type UserUncheckedCreateWithoutLeadsAssignedByInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   verifiedKycs?: Prisma.KycUncheckedCreateNestedManyWithoutVerifiedByUserInput
@@ -1161,10 +1248,12 @@ export type UserUpdateWithoutLeadsAssignedToInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
   verifiedKycs?: Prisma.KycUpdateManyWithoutVerifiedByUserNestedInput
@@ -1182,10 +1271,12 @@ export type UserUncheckedUpdateWithoutLeadsAssignedToInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
   verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
@@ -1214,10 +1305,12 @@ export type UserUpdateWithoutLeadsAssignedByInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   verifiedKycs?: Prisma.KycUpdateManyWithoutVerifiedByUserNestedInput
@@ -1235,10 +1328,12 @@ export type UserUncheckedUpdateWithoutLeadsAssignedByInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
@@ -1256,10 +1351,12 @@ export type UserCreateWithoutLoanApplicationsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -1277,10 +1374,12 @@ export type UserUncheckedCreateWithoutLoanApplicationsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -1314,10 +1413,12 @@ export type UserUpdateWithoutLoanApplicationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -1335,10 +1436,12 @@ export type UserUncheckedUpdateWithoutLoanApplicationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
@@ -1356,10 +1459,12 @@ export type UserCreateWithoutPermissionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
   verifiedKycs?: Prisma.KycCreateNestedManyWithoutVerifiedByUserInput
@@ -1377,10 +1482,12 @@ export type UserUncheckedCreateWithoutPermissionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
   verifiedKycs?: Prisma.KycUncheckedCreateNestedManyWithoutVerifiedByUserInput
@@ -1414,10 +1521,12 @@ export type UserUpdateWithoutPermissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
   verifiedKycs?: Prisma.KycUpdateManyWithoutVerifiedByUserNestedInput
@@ -1435,10 +1544,12 @@ export type UserUncheckedUpdateWithoutPermissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
   verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
@@ -1456,10 +1567,12 @@ export type UserCreateWithoutVerifiedKycsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
@@ -1477,10 +1590,12 @@ export type UserUncheckedCreateWithoutVerifiedKycsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
   permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
   leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
   leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
@@ -1490,6 +1605,57 @@ export type UserUncheckedCreateWithoutVerifiedKycsInput = {
 export type UserCreateOrConnectWithoutVerifiedKycsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutVerifiedKycsInput, Prisma.UserUncheckedCreateWithoutVerifiedKycsInput>
+}
+
+export type UserCreateWithoutKycsInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
+  verifiedKycs?: Prisma.KycCreateNestedManyWithoutVerifiedByUserInput
+  loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutKycsInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
+  verifiedKycs?: Prisma.KycUncheckedCreateNestedManyWithoutVerifiedByUserInput
+  loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutKycsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutKycsInput, Prisma.UserUncheckedCreateWithoutKycsInput>
 }
 
 export type UserUpsertWithoutVerifiedKycsInput = {
@@ -1514,10 +1680,12 @@ export type UserUpdateWithoutVerifiedKycsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
   permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
@@ -1535,6 +1703,64 @@ export type UserUncheckedUpdateWithoutVerifiedKycsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
+  loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUpsertWithoutKycsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutKycsInput, Prisma.UserUncheckedUpdateWithoutKycsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutKycsInput, Prisma.UserUncheckedCreateWithoutKycsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutKycsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutKycsInput, Prisma.UserUncheckedUpdateWithoutKycsInput>
+}
+
+export type UserUpdateWithoutKycsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
+  verifiedKycs?: Prisma.KycUpdateManyWithoutVerifiedByUserNestedInput
+  loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutKycsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
@@ -1542,6 +1768,7 @@ export type UserUncheckedUpdateWithoutVerifiedKycsInput = {
   permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
   leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
+  verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -1551,6 +1778,7 @@ export type UserUncheckedUpdateWithoutVerifiedKycsInput = {
  */
 
 export type UserCountOutputType = {
+  kycs: number
   permissions: number
   leadsAssignedTo: number
   leadsAssignedBy: number
@@ -1559,6 +1787,7 @@ export type UserCountOutputType = {
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  kycs?: boolean | UserCountOutputTypeCountKycsArgs
   permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
   leadsAssignedTo?: boolean | UserCountOutputTypeCountLeadsAssignedToArgs
   leadsAssignedBy?: boolean | UserCountOutputTypeCountLeadsAssignedByArgs
@@ -1574,6 +1803,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountKycsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KycWhereInput
 }
 
 /**
@@ -1623,10 +1859,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  kycStatus?: boolean
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  kycs?: boolean | Prisma.User$kycsArgs<ExtArgs>
   permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
   leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
@@ -1648,14 +1886,16 @@ export type UserSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  kycStatus?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "userName" | "email" | "password" | "role" | "contactNumber" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "userName" | "email" | "password" | "role" | "contactNumber" | "isActive" | "createdAt" | "updatedAt" | "kycStatus", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
   employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
+  kycs?: boolean | Prisma.User$kycsArgs<ExtArgs>
   permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   leadsAssignedTo?: boolean | Prisma.User$leadsAssignedToArgs<ExtArgs>
   leadsAssignedBy?: boolean | Prisma.User$leadsAssignedByArgs<ExtArgs>
@@ -1671,6 +1911,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     admin: Prisma.$AdminPayload<ExtArgs> | null
     partner: Prisma.$PartnerPayload<ExtArgs> | null
     employee: Prisma.$EmployeePayload<ExtArgs> | null
+    kycs: Prisma.$KycPayload<ExtArgs>[]
     permissions: Prisma.$UserPermissionPayload<ExtArgs>[]
     leadsAssignedTo: Prisma.$LeadsPayload<ExtArgs>[]
     leadsAssignedBy: Prisma.$LeadsPayload<ExtArgs>[]
@@ -1688,6 +1929,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    kycStatus: $Enums.KycStatus
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2032,6 +2274,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   admin<T extends Prisma.User$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminArgs<ExtArgs>>): Prisma.Prisma__AdminClient<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   partner<T extends Prisma.User$partnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$partnerArgs<ExtArgs>>): Prisma.Prisma__PartnerClient<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.User$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  kycs<T extends Prisma.User$kycsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$kycsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KycPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   permissions<T extends Prisma.User$permissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadsAssignedTo<T extends Prisma.User$leadsAssignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadsAssignedBy<T extends Prisma.User$leadsAssignedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedByArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2076,6 +2319,7 @@ export interface UserFieldRefs {
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly kycStatus: Prisma.FieldRef<"User", 'KycStatus'>
 }
     
 
@@ -2492,6 +2736,30 @@ export type User$employeeArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * User.kycs
+ */
+export type User$kycsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Kyc
+   */
+  select?: Prisma.KycSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Kyc
+   */
+  omit?: Prisma.KycOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KycInclude<ExtArgs> | null
+  where?: Prisma.KycWhereInput
+  orderBy?: Prisma.KycOrderByWithRelationInput | Prisma.KycOrderByWithRelationInput[]
+  cursor?: Prisma.KycWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KycScalarFieldEnum | Prisma.KycScalarFieldEnum[]
 }
 
 /**

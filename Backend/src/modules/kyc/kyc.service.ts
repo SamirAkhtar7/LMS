@@ -110,3 +110,7 @@ export const updateKycStatusService = async (
     logger.error(error);
   }
 };
+
+
+
+// const uploadKycDocumentService =async (data)

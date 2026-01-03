@@ -91,7 +91,8 @@ export const UserScalarFieldEnum = {
   contactNumber: 'contactNumber',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  kycStatus: 'kycStatus'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -217,12 +218,20 @@ export const LoanApplicationScalarFieldEnum = {
   applicationDate: 'applicationDate',
   customerId: 'customerId',
   leadId: 'leadId',
+  loanType: 'loanType',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
   interestRate: 'interestRate',
   interestType: 'interestType',
   emiAmount: 'emiAmount',
+  purposeDetails: 'purposeDetails',
+  coApplicantName: 'coApplicantName',
+  coApplicantRelation: 'coApplicantRelation',
+  coApplicantContact: 'coApplicantContact',
+  coApplicantIncome: 'coApplicantIncome',
+  coApplicantPan: 'coApplicantPan',
+  coApplicantAadhaar: 'coApplicantAadhaar',
   totalPayable: 'totalPayable',
   loanPurpose: 'loanPurpose',
   cibilScore: 'cibilScore',
@@ -307,6 +316,10 @@ export const CustomerScalarFieldEnum = {
   aadhaarNumber: 'aadhaarNumber',
   panNumber: 'panNumber',
   voterId: 'voterId',
+  maritalStatus: 'maritalStatus',
+  nationality: 'nationality',
+  category: 'category',
+  spouseName: 'spouseName',
   passportNumber: 'passportNumber',
   contactNumber: 'contactNumber',
   alternateNumber: 'alternateNumber',
@@ -320,7 +333,9 @@ export const CustomerScalarFieldEnum = {
   annualIncome: 'annualIncome',
   bankName: 'bankName',
   bankAccountNumber: 'bankAccountNumber',
+  otherIncome: 'otherIncome',
   ifscCode: 'ifscCode',
+  accountType: 'accountType',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -441,6 +456,11 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
   leadId: 'leadId',
+  purposeDetails: 'purposeDetails',
+  coApplicantName: 'coApplicantName',
+  coApplicantContact: 'coApplicantContact',
+  coApplicantPan: 'coApplicantPan',
+  coApplicantAadhaar: 'coApplicantAadhaar',
   loanPurpose: 'loanPurpose',
   rejectionReason: 'rejectionReason',
   approvedBy: 'approvedBy',
@@ -502,6 +522,8 @@ export const CustomerOrderByRelevanceFieldEnum = {
   aadhaarNumber: 'aadhaarNumber',
   panNumber: 'panNumber',
   voterId: 'voterId',
+  nationality: 'nationality',
+  spouseName: 'spouseName',
   passportNumber: 'passportNumber',
   contactNumber: 'contactNumber',
   alternateNumber: 'alternateNumber',
@@ -512,7 +534,8 @@ export const CustomerOrderByRelevanceFieldEnum = {
   pinCode: 'pinCode',
   bankName: 'bankName',
   bankAccountNumber: 'bankAccountNumber',
-  ifscCode: 'ifscCode'
+  ifscCode: 'ifscCode',
+  accountType: 'accountType'
 } as const
 
 export type CustomerOrderByRelevanceFieldEnum = (typeof CustomerOrderByRelevanceFieldEnum)[keyof typeof CustomerOrderByRelevanceFieldEnum]

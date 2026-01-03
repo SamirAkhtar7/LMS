@@ -1,0 +1,26 @@
+-- AlterTable
+ALTER TABLE `customer` ADD COLUMN `accountType` VARCHAR(191) NULL,
+    ADD COLUMN `category` ENUM('GENERAL', 'SC', 'ST', 'OBC', 'OTHER') NULL,
+    ADD COLUMN `maritalStatus` ENUM('SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED', 'OTHER') NULL,
+    ADD COLUMN `nationality` VARCHAR(191) NULL,
+    ADD COLUMN `otherIncome` DOUBLE NULL,
+    ADD COLUMN `spouseName` VARCHAR(191) NULL;
+
+-- AlterTable
+ALTER TABLE `employee` MODIFY `maritalStatus` ENUM('SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED', 'OTHER') NOT NULL;
+
+-- AlterTable
+ALTER TABLE `loanapplication` ADD COLUMN `coApplicantAadhaar` VARCHAR(191) NULL,
+    ADD COLUMN `coApplicantContact` VARCHAR(191) NULL,
+    ADD COLUMN `coApplicantIncome` DOUBLE NULL,
+    ADD COLUMN `coApplicantName` VARCHAR(191) NULL,
+    ADD COLUMN `coApplicantPan` VARCHAR(191) NULL,
+    ADD COLUMN `coApplicantRelation` ENUM('SPOUSE', 'PARTNER', 'BUSINESS_PARTNER', 'FATHER', 'MOTHER', 'SIBLING', 'FRIEND', 'OTHER') NULL,
+    ADD COLUMN `loanType` ENUM('PERSONAL_LOAN', 'VEHICLE_LOAN', 'HOME_LOAN', 'EDUCATION_LOAN', 'BUSINESS_LOAN', 'GOLD_LOAN') NULL,
+    ADD COLUMN `purposeDetails` VARCHAR(191) NULL;
+
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `kycStatus` ENUM('NOT_STARTED', 'PENDING', 'VERIFIED', 'REJECTED') NOT NULL DEFAULT 'PENDING';
+
+-- AddForeignKey
+ALTER TABLE `Kyc` ADD CONSTRAINT `Kyc_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

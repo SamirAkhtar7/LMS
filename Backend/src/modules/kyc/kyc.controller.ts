@@ -5,42 +5,9 @@ import {
   verifyDocumentService,
 } from "./kyc.service.js";
 import logger from "../../common/logger.js";
+import { ca } from "zod/locales";
 
-export const uploadKycDocumentController = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    if (!req.file) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No file uploaded" });
-    }
-    if (!req.user) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
-    }
-    if (!req.body.kycId || !req.body.documentType) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Missing required fields: kycId and documentType",
-        });
-    }
-    const doc = await uploadKycDocumentService({
-      kycId: req.body.kycId,
-      documentType: req.body.documentType,
-      documentPath: req.file.path,
-      uploadedBy: req.user.id,
-    });
-    return res.status(201).json({ success: true, data: doc });
-  } catch (error) {
-    logger.error("Error uploading KYC document:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal Server Error" });
-  }
-};
+
 
 export const verifyDocumentSController = async (
   req: Request,
@@ -74,3 +41,32 @@ export const updateKycStatusController = async (
       .json({ success: false, message: "Internal Server Error" });
   }
 };
+
+
+
+
+
+
+
+
+export const uploadKycDocumentController = async (req: Request, res: Response) => {
+    try {
+        
+        const kycDocument = await uploadKycDocumentService(req.body);
+        
+        res.status(201).json({
+            success: true,
+            message: "KYC document uploaded successfully",
+            data: kycDocument,
+        });
+    } catch (error: any) {
+        logger.error("KYC Document Upload Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to upload KYC document",
+            error: error.message || "INTERNAL_SERVER_ERROR",
+        });
+    }
+        
+
+}

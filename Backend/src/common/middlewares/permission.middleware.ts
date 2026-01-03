@@ -13,7 +13,7 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
       }
 
       const { id, role } = req.user;
-      if (role === "admin") {
+      if (role === "ADMIN") {
         return next();
       }
       const permission = await prisma.userPermission.findFirst({

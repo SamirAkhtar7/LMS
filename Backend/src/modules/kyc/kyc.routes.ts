@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { uploadKycDocumentController, updateKycStatusController, verifyDocumentSController } from "./kyc.controller.js";
+import {
+  uploadKycDocumentController,
+  updateKycStatusController,
+  verifyDocumentSController,
+} from "./kyc.controller.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 import  upload  from "../../common/middlewares/multer.middleware.js";
@@ -10,7 +14,7 @@ const router = Router();
 router.post(
   "/document/upload",
   authMiddleware,
- // checkPermissionMiddleware("UPLOAD_DOCUMENT"),
+  // checkPermissionMiddleware("UPLOAD_DOCUMENT"),
   upload.single("document"),
   validate(uploadKycDocumentSchema),
   uploadKycDocumentController

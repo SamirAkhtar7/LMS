@@ -28,6 +28,31 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const Category = {
+  GENERAL: 'GENERAL',
+  SC: 'SC',
+  ST: 'ST',
+  OBC: 'OBC',
+  OTHER: 'OTHER'
+} as const
+
+export type Category = (typeof Category)[keyof typeof Category]
+
+
+export const CoApplicantRelation = {
+  SPOUSE: 'SPOUSE',
+  PARTNER: 'PARTNER',
+  BUSINESS_PARTNER: 'BUSINESS_PARTNER',
+  FATHER: 'FATHER',
+  MOTHER: 'MOTHER',
+  SIBLING: 'SIBLING',
+  FRIEND: 'FRIEND',
+  OTHER: 'OTHER'
+} as const
+
+export type CoApplicantRelation = (typeof CoApplicantRelation)[keyof typeof CoApplicantRelation]
+
+
 export const Gender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
@@ -41,7 +66,8 @@ export const MaritalStatus = {
   SINGLE: 'SINGLE',
   MARRIED: 'MARRIED',
   DIVORCED: 'DIVORCED',
-  WIDOWED: 'WIDOWED'
+  WIDOWED: 'WIDOWED',
+  OTHER: 'OTHER'
 } as const
 
 export type MaritalStatus = (typeof MaritalStatus)[keyof typeof MaritalStatus]

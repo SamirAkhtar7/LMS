@@ -25,12 +25,15 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  kycStatus KycStatus @default(PENDING)
+
   // Relations
   profile  UserProfile?
   admin    Admin?
   partner  Partner?
   employee Employee?
 
+  kycs             Kyc[]
   permissions      UserPermission[]
   leadsAssignedTo  Leads[]           @relation("LeadAssignedTo")
   leadsAssignedBy  Leads[]           @relation("LeadAssignedBy")
@@ -171,24 +174,35 @@ model Leads {
 }
 
 model LoanApplication {
-  id              String       @id @default(cuid())
+  id              String    @id @default(cuid())
   // leadId          String              @unique
-  applicationDate DateTime     @default(now())
+  applicationDate DateTime  @default(now())
   customerId      String
-  customer        Customer     @relation(fields: [customerId], references: [id])
+  customer        Customer  @relation(fields: [customerId], references: [id])
   // loanProductId   String
   leadId          String?
-  lead            Leads?       @relation(fields: [leadId], references: [id])
+  lead            Leads?    @relation(fields: [leadId], references: [id])
+  loanType        LoanType?
   requestedAmount Float
   approvedAmount  Float?
   tenureMonths    Int?
   interestRate    Float?
-  interestType    InterestType
-  emiAmount       Float?
+
+  interestType   InterestType
+  emiAmount      Float?
+  purposeDetails String?
+
+  coApplicantName     String?
+  coApplicantRelation CoApplicantRelation?
+  coApplicantContact  String?
+  coApplicantIncome   Float?
+  coApplicantPan      String?
+  coApplicantAadhaar  String?
+
   totalPayable    Float?
   loanPurpose     String?
   cibilScore      Int?
-  status          LoanStatus   @default(application_in_progress)
+  status          LoanStatus @default(application_in_progress)
   approvalDate    DateTime?
   activationDate  DateTime?
   rejectionReason String?
@@ -196,8 +210,8 @@ model LoanApplication {
   approvedAt      DateTime?
   rejectedBy      String?
   rejectedAt      DateTime?
-  kycId           String?      @unique
-  kyc             Kyc?         @relation(fields: [kycId], references: [id])
+  kycId           String?    @unique
+  kyc             Kyc?       @relation(fields: [kycId], references: [id])
 
   documents Document[]
 
@@ -268,6 +282,7 @@ model Kyc {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 enum KycStatus {
@@ -410,30 +425,39 @@ enum KycStatus {
 //===================================CUSTOMER=====================================
 
 model Customer {
-  id                String         @id @default(cuid())
-  title             Title
-  firstName         String
-  lastName          String
-  middleName        String?
-  gender            Gender
-  dob               DateTime
-  aadhaarNumber     String?
-  panNumber         String?
-  voterId           String?
-  passportNumber    String?
-  contactNumber     String
-  alternateNumber   String?
-  email             String?
-  address           String
-  city              String
-  state             String
-  pinCode           String
-  employmentType    EmploymentType
+  id              String         @id @default(cuid())
+  title           Title
+  firstName       String
+  lastName        String
+  middleName      String?
+  gender          Gender
+  dob             DateTime
+  aadhaarNumber   String?
+  panNumber       String?
+  voterId         String?
+  maritalStatus   MaritalStatus?
+  nationality     String?
+  category        Category?
+  spouseName      String?
+  passportNumber  String?
+  contactNumber   String
+  alternateNumber String?
+  email           String?
+
+  address String
+  city    String
+  state   String
+  pinCode String
+
+  employmentType EmploymentType
+
   monthlyIncome     Float?
   annualIncome      Float?
   bankName          String?
   bankAccountNumber String?
+  otherIncome       Float?
   ifscCode          String?
+  accountType       String?
 
   status           CustomerStatus    @default(ACTIVE)
   loanApplications LoanApplication[]
@@ -467,6 +491,26 @@ enum Role {
   PARTNER
 }
 
+enum Category {
+  GENERAL
+  SC
+  ST
+  OBC
+  OTHER
+}
+
+enum CoApplicantRelation {
+  SPOUSE
+  PARTNER
+  BUSINESS_PARTNER
+
+  FATHER
+  MOTHER
+  SIBLING
+  FRIEND
+  OTHER
+}
+
 enum Gender {
   MALE
   FEMALE
@@ -478,6 +522,7 @@ enum MaritalStatus {
   MARRIED
   DIVORCED
   WIDOWED
+  OTHER
 }
 
 enum Relationship {
