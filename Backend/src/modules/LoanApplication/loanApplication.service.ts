@@ -12,7 +12,7 @@ export async function createLoanApplicationService(
     throw new Error("Not authorized to create loan application");
   }
 
-  const parsed = createLoanApplicationSchema.parse(data as any);
+  const parsed = createLoanApplicationSchema.parse(data);
 
   const dob =
     parsed.dob && typeof parsed.dob === "string"
@@ -46,11 +46,24 @@ export async function createLoanApplicationService(
           dob: dob as Date,
           aadhaarNumber: parsed.aadhaarNumber ?? undefined,
           panNumber: parsed.panNumber ?? undefined,
+          voterId: parsed.voterId ?? undefined,
+          maritalStatus: parsed.maritalStatus as Enums.MaritalStatus,
+          nationality: parsed.nationality,
+          category: parsed.category as Enums.Category,
+          spouseName: parsed.spouseName,
+          passportNumber: parsed.passportNumber,
           contactNumber: parsed.contactNumber,
           alternateNumber: parsed.alternateNumber ?? undefined,
           employmentType: parsed.employmentType as Enums.EmploymentType,
           monthlyIncome: parsed.monthlyIncome ?? undefined,
           annualIncome: parsed.annualIncome ?? undefined,
+
+          bankName: parsed.bankName,
+          bankAccountNumber: parsed.bankAccountNumber,
+          ifscCode: parsed.ifscCode,
+          accountType: parsed.accountType,
+          otherIncome: parsed.otherIncome,
+
           email: parsed.email ?? undefined,
           address: parsed.address ?? "",
           city: parsed.city ?? "",
@@ -91,6 +104,17 @@ export async function createLoanApplicationService(
         requestedAmount: parsed.requestedAmount,
         tenureMonths: parsed.tenureMonths,
         interestRate: parsed.interestRate,
+        emiAmount: parsed.emiAmount,
+        purposeDetails: parsed.purposeDetails,
+
+        coApplicantName: parsed.coApplicantName,
+        coApplicantContact: parsed.coApplicantContact,
+        coApplicantIncome: parsed.coApplicantIncome,
+        coApplicantRelation:
+          parsed.coApplicantRelation as Enums.CoApplicantRelation,
+        coApplicantPan: parsed.coApplicantPan,
+        coApplicantAadhaar: parsed.coApplicantAadhaar,
+
         interestType: parsed.interestType ?? "flat",
         loanPurpose: parsed.loanPurpose,
         cibilScore: parsed.cibilScore,
@@ -104,7 +128,10 @@ export async function createLoanApplicationService(
     const kyc = await tx.kyc.create({
       data: {
         loanApplication: { connect: { id: loanApplication.id } },
-        userId: customer.id,
+        // `Kyc.userId` references `User`, not `Customer` — use the creating
+        // user's id to satisfy the foreign key. To link KYC to the customer,
+        // the `loanApplication` relation is used above.
+        userId: loggedInUser.id,
         status: "PENDING",
       },
     });
@@ -161,11 +188,11 @@ export const getLoanApplicationByIdService = async (id: string) => {
   } catch (error) {
     throw error;
   }
-}; 
+};
 
 type StatusUpdate = {
   status: Enums.LoanStatus;
-}
+};
 export const updateLoanApplicationStatusService = async (
   id: string,
   statusData: StatusUpdate
@@ -189,7 +216,6 @@ export const updateLoanApplicationStatusService = async (
   } catch (error) {
     throw error;
   }
- 
 };
 
 export const reviewLoanService = async (loanId: string) => {
@@ -218,9 +244,9 @@ export const reviewLoanService = async (loanId: string) => {
 
 export const approveLoanService = async (loanId: string, userId: string) => {
   const result = await prisma.loanApplication.updateMany({
-    where: { 
+    where: {
       id: loanId,
-      status: "under_review"
+      status: "under_review",
     },
     data: {
       status: "approved",
@@ -234,7 +260,7 @@ export const approveLoanService = async (loanId: string, userId: string) => {
   }
 
   return prisma.loanApplication.findUnique({ where: { id: loanId } });
-};   
+};
 
 export const rejectLoanService = async (
   loanId: string,
