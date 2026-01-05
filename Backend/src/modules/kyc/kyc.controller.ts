@@ -84,11 +84,15 @@ export const verifyKycController = async (
         .status((error as any).statusCode || 500)
         .json({ success: false, message: error.message });
     }
-  };
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
 }
 
 export const getMyKycController = async (req: Request, res: Response) => {
-  if (!req.user) {
+try {
+ if (!req.user) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
   const kyc = await getMyKycService(req.user.id);
@@ -96,5 +100,12 @@ export const getMyKycController = async (req: Request, res: Response) => {
   res.json({
     success: true,
     data: kyc,
-  });
-};
+  });} catch (error: any) {
+    logger.error("Get My KYC Error:", error);
+    res.status(500).json({
+     success: false,
+     message: "Failed to fetch KYC data",
+      error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
+ };

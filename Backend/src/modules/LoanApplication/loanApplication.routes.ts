@@ -28,10 +28,12 @@ loanApplicationRouter.post(
   checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
   createLoanApplicationController
 );
-loanApplicationRouter.get("/", authMiddleware,
+loanApplicationRouter.get(
+  "/",
   authMiddleware,
   checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
-  getAllLoanApplicationsController);
+  getAllLoanApplicationsController
+);
 
 loanApplicationRouter.get(
   "/:id",
@@ -48,7 +50,6 @@ loanApplicationRouter.put(
   validate(loanApplicationIdParamSchema, "params"),
   updateLoanApplicationStatusController
 );
-
 loanApplicationRouter.put(
   "/:id/review",
   authMiddleware,
@@ -64,12 +65,11 @@ loanApplicationRouter.put(
   validate(loanApplicationIdParamSchema, "params"),
   approveLoanController
 );
-
 loanApplicationRouter.put(
   "/:id/reject",
   authMiddleware,
-  validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("REJECT_LOAN"),
+  validate(loanApplicationIdParamSchema, "params"),
   rejectLoanController
 );
 
@@ -81,7 +81,7 @@ loanApplicationRouter.post(
     { name: "aadhaar_front", maxCount: 1 },
     { name: "aadhaar_back", maxCount: 1 },
     { name: "pan_card", maxCount: 1 },
-/// added to accept `pan` from Postman
+    // added to accept `pan` from Postman
     { name: "voter_id", maxCount: 1 },
     { name: "salary_slip", maxCount: 1 },
     { name: "bank_statement", maxCount: 1 },
@@ -94,7 +94,6 @@ loanApplicationRouter.post(
   uploadLoanDocumentsController
 );
 
-
 loanApplicationRouter.post(
   "/documents/:id/verify",
   authMiddleware,
@@ -102,7 +101,5 @@ loanApplicationRouter.post(
   checkPermissionMiddleware("VERIFY_DOCUMENTS"),
   verifyDocumentController
 );
-
-
 
 export default loanApplicationRouter;

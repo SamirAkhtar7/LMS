@@ -30,12 +30,12 @@ router.post(
 router.put(
   "/:id/verify",
   authMiddleware,
- //checkPermissionMiddleware("VERIFY_DOCUMENT"),
+ checkPermissionMiddleware("VERIFY_DOCUMENT"),
   verifyKycController
 );
 
-router.put(
-  "/kyc/me",
+router.get(
+  "/me",
   authMiddleware,
   getMyKycController
 );
