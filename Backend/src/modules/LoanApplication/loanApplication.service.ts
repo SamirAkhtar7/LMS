@@ -150,6 +150,61 @@ export async function createLoanApplicationService(
   });
 }
 
+export async function uploadLoanDocumentsService(
+  loanApplicationId: string,
+  documents: {
+    documentType: string;
+    documentPath: string;
+    uploadedBy: string;
+  }[],
+  userId: string
+) {
+  return prisma.$transaction(async (tx) => {
+    const loanApplication = await tx.loanApplication.findUnique({
+      where: { id: loanApplicationId },
+      include: { kyc: true },
+    });
+
+    if (!loanApplication) {
+      throw new Error("Loan application not found");
+    }
+    if (!loanApplication.kyc) {
+      throw new Error("KYC record not found for loan application");
+    }
+
+    const createdDocuments = await Promise.all(
+      documents.map((doc) =>
+        tx.document.create({
+          data: {
+            loanApplicationId: loanApplication.id,
+            kycId: loanApplication.kyc!.id,
+            documentType: doc.documentType,
+            documentPath: doc.documentPath,
+            uploadedBy: doc.uploadedBy,
+          },
+        })
+      )
+    );
+
+    return createdDocuments;
+  });
+}
+
+export async function verifyDocumentService(
+  documentId: string,
+  verifierId: string
+) {
+  return prisma.document.update({
+    where: { id: documentId },
+    data: {
+      verified: true,
+      verifiedBy: verifierId,
+      verifiedAt: new Date(),
+      verificationStatus: "verified",
+    },
+  });
+}
+
 export const getAllLoanApplicationsService = async () => {
   // Implementation for retrieving all loan applications
   try {

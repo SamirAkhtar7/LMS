@@ -1,4 +1,4 @@
-import e from "express";
+
 import type { EmploymentType as PrismaEmploymentType } from "../../../generated/prisma-client/enums.js";
 
 export type InterestType = "flat" | "reducing";
