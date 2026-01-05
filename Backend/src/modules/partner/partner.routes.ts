@@ -22,23 +22,27 @@ partnerRouter.use(authMiddleware);
 
 partnerRouter.post(
   "/",
+  authMiddleware,
   validate(createPartnerSchema),
   checkPermissionMiddleware("Create_Partner"),
   createPartnerController
 );
 partnerRouter.get(
   "/all",
+  authMiddleware,
   checkPermissionMiddleware("View_All_Partners"),
   getAllPartnersController
 );
 partnerRouter.get(
   "/:id",
+  authMiddleware,
   validate(partnerIdParamSchema, "params"),
   checkPermissionMiddleware("View_Partner_Details"),
   getPartnerByIdController
 );
 partnerRouter.patch(
   "/:id",
+  authMiddleware,
   validate(partnerIdParamSchema, "params"),
   validate(updatePartnerSchema),
   checkPermissionMiddleware("Update_Partner"),

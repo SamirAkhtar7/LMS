@@ -1,36 +1,44 @@
-import { th } from "zod/locales";
 import logger from "../../common/logger.js";
 import { prisma } from "../../db/prismaService.js";
 
 export const uploadKycDocumentService = async (data: {
-  kycId?: string;
-  documentType: string;
-  documentPath: string;
-  uploadedBy: string;
-  loanApplicationId?: string;
-  verificationStatus?: "pending" | "verified" | "rejected";
+  userId: string;
+  documents: {
+    documentType: string;
+    documentPath: string;
+  }[];
 }) => {
+  const { userId, documents } = data;
   try {
     // Resolve kycId from loanApplicationId when not provided
-    let kycId: string | undefined = data.kycId;
-    if (!kycId && data.loanApplicationId) {
-      const la = await prisma.loanApplication.findUnique({
-        where: { id: data.loanApplicationId },
-        select: { kycId: true },
+    return prisma.$transaction(async (tx) => {
+      let kyc = await tx.kyc.findFirst({
+        where: { userId },
       });
-      kycId = la?.kycId ?? undefined;
-    }
-    const kycDocument = await prisma.document.create({
-      data: {
-        kycId: kycId ?? undefined,
-        documentType: data.documentType,
-        documentPath: data.documentPath,
-        uploadedBy: data.uploadedBy,
-        loanApplicationId: data.loanApplicationId ?? undefined,
-        verificationStatus: data.verificationStatus ?? "pending",
-      },
+
+      if (!kyc) {
+        kyc = await tx.kyc.create({
+          data: {
+            userId,
+            status: "PENDING",
+          },
+        });
+      }
+
+      const saveDocuments = await Promise.all(
+        documents.map((doc) =>
+          tx.document.create({
+            data: {
+              kycId: kyc.id,
+              documentType: doc.documentType,
+              documentPath: doc.documentPath,
+              uploadedBy: userId,
+            },
+          })
+        )
+      );
+      return { kyc, documents: saveDocuments };
     });
-    return kycDocument;
   } catch (error) {
     logger.error(error);
     throw error;
@@ -39,78 +47,68 @@ export const uploadKycDocumentService = async (data: {
 
 export const verifyDocumentService = async (
   documentId: string,
-  userId: string
+  adminId: string
 ) => {
   try {
-    const Document = await prisma.document.update({
-      where: { id: documentId },
-      data: {
-        verified: true,
-        verifiedBy: userId,
-        verifiedAt: new Date(),
-        verificationStatus: "verified",
-      },
-    });
+    return prisma.$transaction(async (tx) => {
+      // Ensure the document exists before attempting update
+      const existingDoc = await tx.document.findUnique({
+        where: { id: documentId },
+      });
+      if (!existingDoc) {
+        const err: any = new Error("Document not found");
+        err.statusCode = 404;
+        throw err;
+      }
 
-    // If document is linked to a KYC, check if all documents are verified and update KYC status
-    if (Document.kycId) {
-      const remaining = await prisma.document.count({
-        where: {
-          kycId: Document.kycId,
-          verificationStatus: { not: "verified" },
+      // Mark the single document as verified
+      const document = await tx.document.update({
+        where: { id: documentId },
+        data: {
+          verified: true,
+          verifiedBy: adminId,
+          verifiedAt: new Date(),
+          verificationStatus: "verified",
         },
       });
 
-      if (remaining === 0) {
-        const updatedKyc = await prisma.kyc.update({
-          where: { id: Document.kycId },
-          data: {
-            status: "VERIFIED",
-            verifiedBy: userId,
-            verifiedAt: new Date(),
+      // If the document is linked to a KYC, check remaining unverified documents
+      if (document.kycId) {
+        const unverifiedCount = await tx.document.count({
+          where: {
+            kycId: document.kycId,
+            verificationStatus: { not: "verified" },
           },
         });
 
-        // Also transition the related loan application to the next stage
-        // if it is currently waiting for KYC.
-        if (updatedKyc.id) {
-          await prisma.loanApplication.updateMany({
-            where: { kycId: updatedKyc.id as string, status: "kyc_pending" },
-            data: { status: "application_in_progress" },
+        if (unverifiedCount === 0) {
+          const updatedKyc = await tx.kyc.update({
+            where: { id: document.kycId },
+            data: {
+              status: "VERIFIED",
+              verifiedBy: adminId,
+              verifiedAt: new Date(),
+            },
+          });
+
+          await tx.user.update({
+            where: { id: updatedKyc.userId },
+            data: { kycStatus: "VERIFIED" },
           });
         }
       }
-    }
 
-    return Document;
+      return document;
+    });
   } catch (error) {
     logger.error(error);
     throw error;
   }
 };
 
-export const updateKycStatusService = async (
-  kycId: string,
-  status: "PENDING" | "VERIFIED" | "REJECTED",
-  remarks?: string
-) => {
-  try {
-    const kycRecord = await prisma.kyc.update({
-      where: {
-        id: kycId,
-      },
-      data: {
-        status: status,
-        remarks: remarks,
-        verifiedAt: status === "VERIFIED" ? new Date() : null,
-      },
-    });
-    return kycRecord;
-  } catch (error) {
-    logger.error(error);
-  }
-};
-
-
-
-// const uploadKycDocumentService =async (data)
+export async function getMyKycService(userId: string) {
+  return prisma.kyc.findFirst({
+    where: { userId },
+    include: { documents: true },
+  });
+}

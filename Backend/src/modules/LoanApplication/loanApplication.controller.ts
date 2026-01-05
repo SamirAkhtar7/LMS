@@ -222,6 +222,7 @@ export const verifyDocumentController = async (req: Request, res: Response) => {
     res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Document verification failed",
+    
     });
   }
 };

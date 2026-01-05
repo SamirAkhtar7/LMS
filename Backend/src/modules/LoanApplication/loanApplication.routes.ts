@@ -19,24 +19,31 @@ import {
 } from "./loanApplication.schema.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import upload from "../../common/middlewares/multer.middleware.js";
+import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 // Define your loan application routes here
 loanApplicationRouter.post(
   "/",
   authMiddleware,
   validate(createLoanApplicationSchema),
+  checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
   createLoanApplicationController
 );
-loanApplicationRouter.get("/", authMiddleware, getAllLoanApplicationsController);
+loanApplicationRouter.get("/", authMiddleware,
+  authMiddleware,
+  checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
+  getAllLoanApplicationsController);
+
 loanApplicationRouter.get(
   "/:id",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
+  checkPermissionMiddleware("VIEW_LOAN_APPLICATION"),
   getLoanApplicationByIdController
 );
 loanApplicationRouter.put(
   "/:id/status",
   authMiddleware,
-  // checkPermissionMiddleware("UPDATE_LOAN_STATUS"),
+  checkPermissionMiddleware("UPDATE_LOAN_STATUS"),
   validate(updateLoanApplicationSchema, "body"),
   validate(loanApplicationIdParamSchema, "params"),
   updateLoanApplicationStatusController
@@ -44,15 +51,17 @@ loanApplicationRouter.put(
 
 loanApplicationRouter.put(
   "/:id/review",
-  //  checkPermissionMiddleware("REVIEW_LOAN"),
   authMiddleware,
+  checkPermissionMiddleware("REVIEW_LOAN"),
   validate(loanApplicationIdParamSchema, "params"),
   reviewLoanController
 );
 
 loanApplicationRouter.put(
   "/:id/approve",
-  //checkPermissionMiddleware("APPROVE_LOAN"),
+  authMiddleware,
+  checkPermissionMiddleware("APPROVE_LOAN"),
+  validate(loanApplicationIdParamSchema, "params"),
   approveLoanController
 );
 
@@ -60,7 +69,7 @@ loanApplicationRouter.put(
   "/:id/reject",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
- // checkPermissionMiddleware("REJECT_LOAN"),
+  checkPermissionMiddleware("REJECT_LOAN"),
   rejectLoanController
 );
 
@@ -90,7 +99,7 @@ loanApplicationRouter.post(
   "/documents/:id/verify",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
-  // checkPermissionMiddleware("VERIFY_DOCUMENTS"),
+  checkPermissionMiddleware("VERIFY_DOCUMENTS"),
   verifyDocumentController
 );
 

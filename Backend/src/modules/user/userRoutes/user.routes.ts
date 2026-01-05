@@ -25,15 +25,19 @@ router.post(
 router.use(authMiddleware);
 
 router.get("/all",
+  authMiddleware,
   checkPermissionMiddleware("View_All_Users"),
   getallUsersController);
 router.get("/:id",
+  authMiddleware,
   validate(userIdParamSchema, "params"),
   checkPermissionMiddleware("View_User_Details"),
   getUserByIdController);
 router.patch(
   "/:id",
-  validate(updateUserSchema),
+  authMiddleware,
+  validate(userIdParamSchema, "params"),
+  validate(updateUserSchema ,"body"),
   checkPermissionMiddleware("Update_User"),
   updateUserController
 );

@@ -194,14 +194,45 @@ export async function verifyDocumentService(
   documentId: string,
   verifierId: string
 ) {
-  return prisma.document.update({
-    where: { id: documentId },
-    data: {
-      verified: true,
-      verifiedBy: verifierId,
-      verifiedAt: new Date(),
-      verificationStatus: "verified",
-    },
+  return prisma.$transaction(async (tx) => {
+    const document = await tx.document.update({
+      where: { id: documentId },
+      data: {
+        verified: true,
+        verifiedBy: verifierId,
+        verifiedAt: new Date(),
+        verificationStatus: "verified",
+      },
+    });
+    const unverifiedCount = await tx.document.count({
+      where: {
+        kycId: document.kycId,
+        verificationStatus: "pending",
+      },
+    });
+
+    if (unverifiedCount === 0) {
+      if (!document.kycId) throw new Error("Document missing kycId");
+      if (!document.loanApplicationId)
+        throw new Error("Document missing loanApplicationId");
+
+      await tx.kyc.update({
+        where: { id: document.kycId },
+        data: {
+          status: "VERIFIED",
+          verifiedBy: verifierId,
+          verifiedAt: new Date(),
+        },
+      });
+      await tx.loanApplication.update({
+        where: { id: document.loanApplicationId },
+        data: {
+          status: "under_review",
+        },
+      });
+    }
+
+    return document;
   });
 }
 
@@ -216,7 +247,6 @@ export const getAllLoanApplicationsService = async () => {
             documents: true,
           },
         },
-        documents: true,
       },
     });
     return loanApplications;
@@ -236,7 +266,6 @@ export const getLoanApplicationByIdService = async (id: string) => {
             documents: true,
           },
         },
-        documents: true,
       },
     });
     return loanApplication;
