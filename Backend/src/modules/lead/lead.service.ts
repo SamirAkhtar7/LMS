@@ -152,10 +152,8 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
       const names = (lead.fullName || "").trim().split(/\s+/);
       const firstName = names.shift() || "Unknown";
       const lastName = names.length ? names.join(" ") : "";
-            const titleFromGender = 
-        lead.gender === "FEMALE" ? "MS" : 
-        lead.gender === "MALE" ? "MR" : "MR";
-
+      const titleFromGender =
+        lead.gender === "FEMALE" ? "MS" : lead.gender === "MALE" ? "MR" : "MR";
 
       try {
         customer = await tx.customer.create({
@@ -203,7 +201,7 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
     const loanApplication = await tx.loanApplication.create({
       data: {
         requestedAmount: lead.loanAmount,
-        interestType: "flat",
+        interestType: "FLAT",
         status: "application_in_progress",
         customer: { connect: { id: customer.id } },
         lead: { connect: { id: lead.id } },

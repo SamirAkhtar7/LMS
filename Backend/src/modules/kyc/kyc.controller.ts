@@ -65,7 +65,7 @@ export const uploadKycDocumentController = async (
   }
 };
 
-
+//Todo add document checklist by role
 
 export const verifyKycController = async (
   req: Request,
