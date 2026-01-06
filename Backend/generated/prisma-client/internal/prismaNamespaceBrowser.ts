@@ -62,6 +62,7 @@ export const ModelName = {
   UserPermission: 'UserPermission',
   Document: 'Document',
   Kyc: 'Kyc',
+  LoanEmiSchedule: 'LoanEmiSchedule',
   Customer: 'Customer'
 } as const
 
@@ -305,6 +306,23 @@ export const KycScalarFieldEnum = {
 export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
 
 
+export const LoanEmiScheduleScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  emiNo: 'emiNo',
+  dueDate: 'dueDate',
+  principalAmount: 'principalAmount',
+  interestAmount: 'interestAmount',
+  emiAmount: 'emiAmount',
+  openingBalance: 'openingBalance',
+  closingBalance: 'closingBalance',
+  status: 'status',
+  paidDate: 'paidDate'
+} as const
+
+export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
 export const CustomerScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -512,6 +530,14 @@ export const KycOrderByRelevanceFieldEnum = {
 } as const
 
 export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
+
+
+export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId'
+} as const
+
+export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {

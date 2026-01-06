@@ -73,6 +73,11 @@ export type Document = Prisma.DocumentModel
  */
 export type Kyc = Prisma.KycModel
 /**
+ * Model LoanEmiSchedule
+ * 
+ */
+export type LoanEmiSchedule = Prisma.LoanEmiScheduleModel
+/**
  * Model Customer
  * 
  */

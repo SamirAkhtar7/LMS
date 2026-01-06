@@ -251,7 +251,7 @@ API Endpoints (detailed)
     "pinCode":"123456",
     "loanProductId":"productId",
     "requestedAmount":250000,
-    "interestType":"flat",
+    "interestType":"FLAT",
     "cibilScore":700
     }
   - Response:

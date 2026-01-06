@@ -218,15 +218,15 @@ model LoanApplication {
   // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
   // approvals       LoanApproval[]
   // disbursements   LoanDisbursement[]
-  // emis            LoanEmiSchedule[]
+  emis        LoanEmiSchedule[]
   // payments        LoanPayment[]
   // charges         LoanCharge[]
   // statusHistory   LoanStatusHistory[]
   // nachMandates    LoanNachMandate[]
   createdById String?
-  createdBy   User?    @relation(fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdBy   User?             @relation(fields: [createdById], references: [id])
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Permission {
@@ -340,24 +340,21 @@ enum KycStatus {
 // EMI SCHEDULE
 //////////////////////////////////
 
-// model LoanEmiSchedule {
-//   id                String   @id @default(cuid())
-//   loanApplicationId String
-//   emiNo             Int
-//   dueDate           DateTime
-
-//   principalAmount Decimal @db.Decimal(15, 2)
-//   openingBalance  Decimal @db.Decimal(15, 2)
-//   interestAmount  Decimal @db.Decimal(15, 2)
-//   emiAmount       Decimal @db.Decimal(15, 2)
-//   closingBalance  Decimal @db.Decimal(15, 2)
-
-//   status   EmiStatus
-//   paidDate DateTime?
-
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-//   payments        LoanPayment[]
-// }
+model LoanEmiSchedule {
+  id                String          @id @default(cuid())
+  loanApplicationId String
+  emiNo             Int
+  dueDate           DateTime
+  principalAmount   Float
+  interestAmount    Float
+  emiAmount         Float
+  openingBalance    Float
+  closingBalance    Float
+  status            EmiStatus       @default(pending)
+  paidDate          DateTime?
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+  // payments LoanPayment[] 
+}
 
 // PAYMENTS
 //////////////////////////////////
@@ -627,8 +624,8 @@ enum LoanCategory {
 }
 
 enum InterestType {
-  flat
-  reducing
+  FLAT
+  REDUCING
 }
 
 enum LoanStatus {

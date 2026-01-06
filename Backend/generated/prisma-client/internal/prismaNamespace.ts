@@ -395,6 +395,7 @@ export const ModelName = {
   UserPermission: 'UserPermission',
   Document: 'Document',
   Kyc: 'Kyc',
+  LoanEmiSchedule: 'LoanEmiSchedule',
   Customer: 'Customer'
 } as const
 
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "customer"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1141,6 +1142,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LoanEmiSchedule: {
+      payload: Prisma.$LoanEmiSchedulePayload<ExtArgs>
+      fields: Prisma.LoanEmiScheduleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoanEmiScheduleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoanEmiScheduleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        findFirst: {
+          args: Prisma.LoanEmiScheduleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoanEmiScheduleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        findMany: {
+          args: Prisma.LoanEmiScheduleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>[]
+        }
+        create: {
+          args: Prisma.LoanEmiScheduleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        createMany: {
+          args: Prisma.LoanEmiScheduleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoanEmiScheduleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        update: {
+          args: Prisma.LoanEmiScheduleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        deleteMany: {
+          args: Prisma.LoanEmiScheduleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoanEmiScheduleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoanEmiScheduleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanEmiSchedulePayload>
+        }
+        aggregate: {
+          args: Prisma.LoanEmiScheduleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanEmiSchedule>
+        }
+        groupBy: {
+          args: Prisma.LoanEmiScheduleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanEmiScheduleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoanEmiScheduleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanEmiScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
     Customer: {
       payload: Prisma.$CustomerPayload<ExtArgs>
       fields: Prisma.CustomerFieldRefs
@@ -1470,6 +1537,23 @@ export const KycScalarFieldEnum = {
 export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
 
 
+export const LoanEmiScheduleScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  emiNo: 'emiNo',
+  dueDate: 'dueDate',
+  principalAmount: 'principalAmount',
+  interestAmount: 'interestAmount',
+  emiAmount: 'emiAmount',
+  openingBalance: 'openingBalance',
+  closingBalance: 'closingBalance',
+  status: 'status',
+  paidDate: 'paidDate'
+} as const
+
+export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
 export const CustomerScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -1679,6 +1763,14 @@ export const KycOrderByRelevanceFieldEnum = {
 export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
 
 
+export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId'
+} as const
+
+export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
+
+
 export const CustomerOrderByRelevanceFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -1853,6 +1945,13 @@ export type EnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'EmiStatus'
+ */
+export type EnumEmiStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmiStatus'>
+    
+
+
+/**
  * Reference to a field of type 'Title'
  */
 export type EnumTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Title'>
@@ -1985,6 +2084,7 @@ export type GlobalOmitConfig = {
   userPermission?: Prisma.UserPermissionOmit
   document?: Prisma.DocumentOmit
   kyc?: Prisma.KycOmit
+  loanEmiSchedule?: Prisma.LoanEmiScheduleOmit
   customer?: Prisma.CustomerOmit
 }
 

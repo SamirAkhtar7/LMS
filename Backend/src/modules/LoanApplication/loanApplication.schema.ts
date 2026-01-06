@@ -32,7 +32,7 @@ export const CoApplicantRelationEnum = z.enum([
   "MOTHER",
 ]);
 
-export const interestTypeEnum = z.enum(["flat", "reducing"]);
+export const interestTypeEnum = z.enum(["FLAT", "REDUCING"]);
 
 export const loanStatusEnum = z.enum([
   "draft",

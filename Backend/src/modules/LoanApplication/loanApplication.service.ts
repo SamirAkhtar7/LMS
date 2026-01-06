@@ -115,7 +115,7 @@ export async function createLoanApplicationService(
         coApplicantPan: parsed.coApplicantPan,
         coApplicantAadhaar: parsed.coApplicantAadhaar,
 
-        interestType: parsed.interestType ?? "flat",
+        interestType: parsed.interestType ?? "FLAT",
         loanPurpose: parsed.loanPurpose,
         cibilScore: parsed.cibilScore,
         status: "kyc_pending",

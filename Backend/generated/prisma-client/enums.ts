@@ -214,8 +214,8 @@ export type LoanCategory = (typeof LoanCategory)[keyof typeof LoanCategory]
 
 
 export const InterestType = {
-  flat: 'flat',
-  reducing: 'reducing'
+  FLAT: 'FLAT',
+  REDUCING: 'REDUCING'
 } as const
 
 export type InterestType = (typeof InterestType)[keyof typeof InterestType]

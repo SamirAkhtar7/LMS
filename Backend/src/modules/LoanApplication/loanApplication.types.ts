@@ -1,7 +1,6 @@
+import type { EmploymentType as PrismaEmploymentType, EmiStatus as PrismaEmiStatus } from "../../../generated/prisma-client/enums.js";
 
-import type { EmploymentType as PrismaEmploymentType } from "../../../generated/prisma-client/enums.js";
-
-export type InterestType = "flat" | "reducing";
+export type InterestType = "FLAT" | "REDUCING";
 export type LoanStatus =
   | "draft"
   | "submitted"
@@ -16,8 +15,6 @@ export type LoanStatus =
   | "written_off"
   | "defaulted"
   | "application_in_progress";
-
-  
 
 // export interface LoanProductModel {
 //   id: string;
@@ -119,7 +116,7 @@ export type CustomerStatus = "ACTIVE" | "INACTIVE" | "BLOCKED";
 export type CustomerKYCStatus = "PENDING" | "VERIFIED" | "REJECTED";
 export type VerificationStatus = "PENDING" | "VERIFIED" | "REJECTED";
 export type ApprovalLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3";
-export type EmiStatus = "PENDING" | "PAID" | "OVERDUE";
+export type EmiStatus = PrismaEmiStatus;
 export type PaymentMode =
   | "CASH"
   | "CHEQUE"
@@ -203,4 +200,26 @@ export interface CreateLoanApplication {
 
   approvedAmount?: number;
   status?: LoanStatus; // optional, default: application_in_progress
+}
+
+export interface EmiScheduleInput {
+  loanId: string;
+  principal: number;
+  annualRate: number;
+  tenureMonths: number;
+  emiAmount: number;
+  startDate: Date;
+}
+
+export interface EmiScheduleItem {
+  loanApplicationId: string;
+  emiNo: number;
+  dueDate: Date;
+  openingBalance: number;
+  interestAmount: number;
+  principalAmount: number;
+  emiAmount: number;
+  closingBalance: number;
+  status?: EmiStatus;
+  paidDate?: Date | null;
 }

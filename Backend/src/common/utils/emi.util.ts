@@ -1,4 +1,7 @@
-import { EmiScheduleItem, EmiScheduleInput } from "../../modules/LoanApplication/loanApplication.types.js";
+import {
+  EmiScheduleItem,
+  EmiScheduleInput,
+} from "../../modules/LoanApplication/loanApplication.types.js";
 
 export function calculateEmi({
   principal,
@@ -31,7 +34,6 @@ export function calculateEmi({
     totalPayable: Number(totalPayable.toFixed(2)),
   };
 }
-
 
 export const generateEmiScheduleService = async ({
   loanId,

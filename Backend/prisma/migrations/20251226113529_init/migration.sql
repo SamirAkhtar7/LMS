@@ -146,7 +146,7 @@ CREATE TABLE `LoanApplication` (
     `approvedAmount` DOUBLE NULL,
     `tenureMonths` INTEGER NULL,
     `interestRate` DOUBLE NULL,
-    `interestType` ENUM('flat', 'reducing') NOT NULL,
+    `interestType` ENUM('FLAT', 'REDUCING') NOT NULL,
     `emiAmount` DOUBLE NULL,
     `totalPayable` DOUBLE NULL,
     `loanPurpose` VARCHAR(191) NULL,
