@@ -13,9 +13,12 @@ export const uploadKycDocumentController = async (
   res: Response
 ) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
-    }
+  
+    const { id } = req.params;
+
+    // if (!req.user || req.user.id !== id) {
+    //   return res.status(401).json({ success: false, message: "Unauthorized" });
+    // }
 
     const files = req.files as Record<string, Express.Multer.File[]>;
     const documents = [];
@@ -46,7 +49,7 @@ export const uploadKycDocumentController = async (
     }
 
     const result = await uploadKycDocumentService({
-      userId: req.user.id,
+      userId: id,
       documents,
     });
 

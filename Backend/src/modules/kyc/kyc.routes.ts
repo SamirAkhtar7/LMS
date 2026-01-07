@@ -12,7 +12,7 @@ import { uploadKycDocumentSchema } from "./kyc.schema.js";
 const router = Router();
 
 router.post(
-  "/document",
+  "/document/:id",
   authMiddleware,
   upload.fields([
     { name:"aadhaar_front" },
@@ -22,7 +22,6 @@ router.post(
 
   ]),
  
-
   uploadKycDocumentController
 );
 
