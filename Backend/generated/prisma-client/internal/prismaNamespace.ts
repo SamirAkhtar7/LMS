@@ -396,6 +396,7 @@ export const ModelName = {
   Document: 'Document',
   Kyc: 'Kyc',
   LoanEmiSchedule: 'LoanEmiSchedule',
+  LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
 
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "customer"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "loanType" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1208,6 +1209,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LoanType: {
+      payload: Prisma.$LoanTypePayload<ExtArgs>
+      fields: Prisma.LoanTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoanTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoanTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        findFirst: {
+          args: Prisma.LoanTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoanTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        findMany: {
+          args: Prisma.LoanTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>[]
+        }
+        create: {
+          args: Prisma.LoanTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        createMany: {
+          args: Prisma.LoanTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoanTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        update: {
+          args: Prisma.LoanTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.LoanTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoanTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoanTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanTypePayload>
+        }
+        aggregate: {
+          args: Prisma.LoanTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanType>
+        }
+        groupBy: {
+          args: Prisma.LoanTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoanTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanTypeCountAggregateOutputType> | number
+        }
+      }
+    }
     Customer: {
       payload: Prisma.$CustomerPayload<ExtArgs>
       fields: Prisma.CustomerFieldRefs
@@ -1429,7 +1496,7 @@ export const LeadsScalarFieldEnum = {
   dob: 'dob',
   gender: 'gender',
   loanAmount: 'loanAmount',
-  loanType: 'loanType',
+  loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',
   pinCode: 'pinCode',
@@ -1450,7 +1517,7 @@ export const LoanApplicationScalarFieldEnum = {
   applicationDate: 'applicationDate',
   customerId: 'customerId',
   leadId: 'leadId',
-  loanType: 'loanType',
+  loanTypeId: 'loanTypeId',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
@@ -1552,6 +1619,48 @@ export const LoanEmiScheduleScalarFieldEnum = {
 } as const
 
 export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
+export const LoanTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  secured: 'secured',
+  minAmount: 'minAmount',
+  maxAmount: 'maxAmount',
+  minTenureMonths: 'minTenureMonths',
+  maxTenureMonths: 'maxTenureMonths',
+  interestType: 'interestType',
+  minInterestRate: 'minInterestRate',
+  maxInterestRate: 'maxInterestRate',
+  defaultInterestRate: 'defaultInterestRate',
+  processingFeeType: 'processingFeeType',
+  processingFee: 'processingFee',
+  gstApplicable: 'gstApplicable',
+  gstPercentage: 'gstPercentage',
+  minAge: 'minAge',
+  maxAge: 'maxAge',
+  minIncome: 'minIncome',
+  employmentType: 'employmentType',
+  minCibilScore: 'minCibilScore',
+  maxCibilScore: 'maxCibilScore',
+  maxLoanToValueRatio: 'maxLoanToValueRatio',
+  prepaymentAllowed: 'prepaymentAllowed',
+  foreclosureAllowed: 'foreclosureAllowed',
+  prepaymentCharges: 'prepaymentCharges',
+  foreclosureCharges: 'foreclosureCharges',
+  isActive: 'isActive',
+  isPublic: 'isPublic',
+  approvalRequired: 'approvalRequired',
+  estimatedProcessingTimeDays: 'estimatedProcessingTimeDays',
+  documentsRequired: 'documentsRequired',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanTypeScalarFieldEnum = (typeof LoanTypeScalarFieldEnum)[keyof typeof LoanTypeScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -1689,6 +1798,7 @@ export const LeadsOrderByRelevanceFieldEnum = {
   fullName: 'fullName',
   contactNumber: 'contactNumber',
   email: 'email',
+  loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',
   pinCode: 'pinCode',
@@ -1705,6 +1815,7 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
   leadId: 'leadId',
+  loanTypeId: 'loanTypeId',
   purposeDetails: 'purposeDetails',
   coApplicantName: 'coApplicantName',
   coApplicantContact: 'coApplicantContact',
@@ -1769,6 +1880,17 @@ export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
 } as const
 
 export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
+
+
+export const LoanTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  documentsRequired: 'documentsRequired'
+} as const
+
+export type LoanTypeOrderByRelevanceFieldEnum = (typeof LoanTypeOrderByRelevanceFieldEnum)[keyof typeof LoanTypeOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {
@@ -1903,13 +2025,6 @@ export type EnumPaymentCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'LoanType'
- */
-export type EnumLoanTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanType'>
-    
-
-
-/**
  * Reference to a field of type 'LeadStatus'
  */
 export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadStatus'>
@@ -1952,6 +2067,20 @@ export type EnumEmiStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'LoanTypes'
+ */
+export type EnumLoanTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanTypes'>
+    
+
+
+/**
+ * Reference to a field of type 'EmploymentType'
+ */
+export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
+    
+
+
+/**
  * Reference to a field of type 'Title'
  */
 export type EnumTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Title'>
@@ -1962,13 +2091,6 @@ export type EnumTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
  * Reference to a field of type 'Category'
  */
 export type EnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category'>
-    
-
-
-/**
- * Reference to a field of type 'EmploymentType'
- */
-export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
     
 
 
@@ -2085,6 +2207,7 @@ export type GlobalOmitConfig = {
   document?: Prisma.DocumentOmit
   kyc?: Prisma.KycOmit
   loanEmiSchedule?: Prisma.LoanEmiScheduleOmit
+  loanType?: Prisma.LoanTypeOmit
   customer?: Prisma.CustomerOmit
 }
 

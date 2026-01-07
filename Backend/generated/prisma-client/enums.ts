@@ -94,7 +94,7 @@ export const WorkLocation = {
 export type WorkLocation = (typeof WorkLocation)[keyof typeof WorkLocation]
 
 
-export const LoanType = {
+export const LoanTypes = {
   PERSONAL_LOAN: 'PERSONAL_LOAN',
   VEHICLE_LOAN: 'VEHICLE_LOAN',
   HOME_LOAN: 'HOME_LOAN',
@@ -103,7 +103,7 @@ export const LoanType = {
   GOLD_LOAN: 'GOLD_LOAN'
 } as const
 
-export type LoanType = (typeof LoanType)[keyof typeof LoanType]
+export type LoanTypes = (typeof LoanTypes)[keyof typeof LoanTypes]
 
 
 export const LeadStatus = {

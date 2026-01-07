@@ -1,10 +1,5 @@
 export type Gender = "MALE" | "FEMALE" | "OTHER";
-export type LoanType = "PERSONAL_LOAN" |
-    "VEHICLE_LOAN" |
-    "HOME_LOAN" |
-    "EDUCATION_LOAN" |
-    "BUSINESS_LOAN" |
-    "GOLD_LOAN";
+
 export interface CreateLead {
   fullName: string;
   contactNumber: string;
@@ -12,7 +7,7 @@ export interface CreateLead {
   dob: string | Date;
   gender: Gender;
   loanAmount: number;
-  loanType: LoanType;
+  loanTypeId: string;
   city: string;
   state: string;
   pinCode: string;
@@ -38,7 +33,7 @@ export interface LeadModel {
   dob: Date;
   gender: Gender;
   loanAmount: number;
-  loanType: LoanType;
+  loanTypeId: string;
   city: string;
   state: string;
   pinCode: string;
@@ -46,5 +41,4 @@ export interface LeadModel {
   assignedTo?: string | null;
   assignedBy?: string | null;
   status?: string;
-  
 }

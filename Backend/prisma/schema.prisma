@@ -11,6 +11,14 @@ datasource db {
   // Connection URL moved to prisma.config.ts per Prisma 7+ requirements
 }
 
+
+
+
+
+ // 🔴 Soft Delete
+  // deletedAt DateTime?
+  // deletedBy String?
+  // @@index([deletedAt])
 // =================================USERS=====================================
 
 model User {
@@ -147,42 +155,41 @@ model Partner {
 }
 
 model Leads {
-  id            String   @id @default(cuid())
-  fullName      String
-  contactNumber String
-  email         String
-  dob           DateTime
-  gender        Gender
-  loanAmount    Float
-  loanType      LoanType
-  city          String
-  state         String
-  pinCode       String
-  address       String
-
+  id                         String            @id @default(cuid())
+  fullName                   String
+  contactNumber              String
+  email                      String
+  dob                        DateTime
+  gender                     Gender
+  loanAmount                 Float
+  loanTypeId                 String
+  city                       String
+  state                      String
+  pinCode                    String
+  address                    String
   assignedTo                 String?
   assignedBy                 String?
   convertedLoanApplicationId String?
-  status                     LeadStatus @default(PENDING)
-  createdAt                  DateTime   @default(now())
-  updatedAt                  DateTime   @updatedAt
-
+  status                     LeadStatus        @default(PENDING)
+  createdAt                  DateTime          @default(now())
+  updatedAt                  DateTime          @updatedAt
   // Relations  assignedToUser User? @relation("LeadAssignedTo", fields: [assignedTo], references
-  assignedToUser   User?             @relation("LeadAssignedTo", fields: [assignedTo], references: [id])
-  assignedByUser   User?             @relation("LeadAssignedBy", fields: [assignedBy], references: [id])
-  loanApplications LoanApplication[]
+  assignedToUser             User?             @relation("LeadAssignedTo", fields: [assignedTo], references: [id])
+  assignedByUser             User?             @relation("LeadAssignedBy", fields: [assignedBy], references: [id])
+  loanApplications           LoanApplication[]
+  loanType                   LoanType          @relation(fields: [loanTypeId], references: [id])
 }
 
 model LoanApplication {
-  id              String    @id @default(cuid())
+  id              String   @id @default(cuid())
   // leadId          String              @unique
-  applicationDate DateTime  @default(now())
+  applicationDate DateTime @default(now())
   customerId      String
-  customer        Customer  @relation(fields: [customerId], references: [id])
+  customer        Customer @relation(fields: [customerId], references: [id])
   // loanProductId   String
   leadId          String?
-  lead            Leads?    @relation(fields: [leadId], references: [id])
-  loanType        LoanType?
+  lead            Leads?   @relation(fields: [leadId], references: [id])
+  loanTypeId      String?
   requestedAmount Float
   approvedAmount  Float?
   tenureMonths    Int?
@@ -227,6 +234,9 @@ model LoanApplication {
   createdBy   User?             @relation(fields: [createdById], references: [id])
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
+
+  // Relations
+  loanType LoanType? @relation(fields: [loanTypeId], references: [id])
 }
 
 model Permission {
@@ -418,6 +428,75 @@ model LoanEmiSchedule {
 
 //   changedAt DateTime @default(now())
 // }
+model LoanType {
+  id String @id @default(cuid())
+
+  //Basic Identification 
+  code        String  @unique // Personal Loan, Home Loan ,Vehicle Loan etc.
+  name        String
+  description String?
+
+  //Classification 
+
+  category LoanTypes
+  secured  Boolean   @default(false)
+
+  //Loan Limits 
+  minAmount       Float
+  maxAmount       Float
+  minTenureMonths Int
+  maxTenureMonths Int
+
+  //Interest configuration
+
+  interestType        InterestType
+  minInterestRate     Float
+  maxInterestRate     Float
+  defaultInterestRate Float
+
+  //processing & Charges
+  processingFeeType CommissionType
+  processingFee     Float // amount or %
+  gstApplicable     Boolean        @default(true)
+  gstPercentage     Float? //usually 18%
+
+  //Eligibility Criteria 
+  minAge         Int
+  maxAge         Int
+  minIncome      Float?
+  employmentType EmploymentType?
+
+  //Risk & Credit 
+
+  minCibilScore Int?
+  maxCibilScore Int?
+
+  //Disbursement Rules
+  maxLoanToValueRatio Float? //for secured loans
+  prepaymentAllowed   Boolean @default(true)
+  foreclosureAllowed  Boolean @default(true)
+
+  prepaymentCharges  Float? // amount or %
+  foreclosureCharges Float? // amount or %
+
+  //visibility & Control 
+
+  isActive         Boolean @default(true)
+  isPublic         Boolean @default(true)
+  approvalRequired Boolean @default(true)
+
+  //SLA & WorkFlow 
+  estimatedProcessingTimeDays Int? //turnaround time
+  documentsRequired           String? //list of documents /comma separated 
+
+  //Audit Fields
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  leads            Leads[]
+  loanApplications LoanApplication[]
+}
 
 //===================================CUSTOMER=====================================
 
@@ -537,7 +616,7 @@ enum WorkLocation {
   HYBRID
 }
 
-enum LoanType {
+enum LoanTypes {
   PERSONAL_LOAN
   VEHICLE_LOAN
   HOME_LOAN

@@ -8,6 +8,7 @@ import loanApplicationRouter from "./modules/LoanApplication/loanApplication.rou
 import permissionRouter from "./modules/permission/permission.routes.js";
 import kycRouter from "./modules/kyc/kyc.routes.js";
 import emiRouter from "./modules/Emi/emi.router.js";
+import loanTypeRouter from "./modules/loanTypes/loanTypes.routes.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -23,5 +24,6 @@ router.use("/permissions", permissionRouter);
 router.use("/kyc", kycRouter);
 
 router.use("/emi", emiRouter);
+router.use("/loantypes", loanTypeRouter);
 
 export default router;

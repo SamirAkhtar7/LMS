@@ -1,14 +1,7 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 export const genderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
-export const loanTypeEnum = z.enum([
-  "PERSONAL_LOAN",
-  "VEHICLE_LOAN",
-  "HOME_LOAN",
-  "EDUCATION_LOAN",
-  "BUSINESS_LOAN",
-  "GOLD_LOAN",
-]);
+
 
 export const statusEnum = z.enum([
  "CONTACTED",
@@ -32,7 +25,7 @@ export const createLeadSchema = z
     dob: z.coerce.date(),
     gender: genderEnum,
     loanAmount: z.coerce.number().nonnegative(),
-    loanType: loanTypeEnum,
+    loanType: string().trim().min(1, "loanType is required")  ,
     city: z.string().trim().nullable(),
     state: z.string().trim().nullable(),
     pinCode: z.string().trim().nullable(),

@@ -180,7 +180,7 @@ export interface CreateLoanApplication {
 
   // ----------------- Loan Fields -----------------
   loanProductId?: string;
-  loanType?: LoanType;
+  loanTypeId?: string;
   requestedAmount: number;
 
   tenureMonths?: number;

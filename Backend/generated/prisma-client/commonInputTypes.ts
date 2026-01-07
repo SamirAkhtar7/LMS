@@ -357,28 +357,11 @@ export type EnumPaymentCycleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPaymentCycleFilter<$PrismaModel>
 }
 
-export type EnumLoanTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LoanType[]
-  notIn?: $Enums.LoanType[]
-  not?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel> | $Enums.LoanType
-}
-
 export type EnumLeadStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LeadStatus | Prisma.EnumLeadStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LeadStatus[]
   notIn?: $Enums.LeadStatus[]
   not?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel> | $Enums.LeadStatus
-}
-
-export type EnumLoanTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LoanType[]
-  notIn?: $Enums.LoanType[]
-  not?: Prisma.NestedEnumLoanTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoanType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel>
 }
 
 export type EnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -389,13 +372,6 @@ export type EnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel>
-}
-
-export type EnumLoanTypeNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel> | null
-  in?: $Enums.LoanType[] | null
-  notIn?: $Enums.LoanType[] | null
-  not?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel> | $Enums.LoanType | null
 }
 
 export type EnumInterestTypeFilter<$PrismaModel = never> = {
@@ -428,16 +404,6 @@ export type DateTimeNullableFilter<$PrismaModel = never> = {
   gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-}
-
-export type EnumLoanTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel> | null
-  in?: $Enums.LoanType[] | null
-  notIn?: $Enums.LoanType[] | null
-  not?: Prisma.NestedEnumLoanTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.LoanType | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel>
 }
 
 export type EnumInterestTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -543,6 +509,40 @@ export type EnumEmiStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEmiStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEmiStatusFilter<$PrismaModel>
+}
+
+export type EnumLoanTypesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoanTypes | Prisma.EnumLoanTypesFieldRefInput<$PrismaModel>
+  in?: $Enums.LoanTypes[]
+  notIn?: $Enums.LoanTypes[]
+  not?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel> | $Enums.LoanTypes
+}
+
+export type EnumEmploymentTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EmploymentType[] | null
+  notIn?: $Enums.EmploymentType[] | null
+  not?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel> | $Enums.EmploymentType | null
+}
+
+export type EnumLoanTypesWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoanTypes | Prisma.EnumLoanTypesFieldRefInput<$PrismaModel>
+  in?: $Enums.LoanTypes[]
+  notIn?: $Enums.LoanTypes[]
+  not?: Prisma.NestedEnumLoanTypesWithAggregatesFilter<$PrismaModel> | $Enums.LoanTypes
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel>
+}
+
+export type EnumEmploymentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EmploymentType[] | null
+  notIn?: $Enums.EmploymentType[] | null
+  not?: Prisma.NestedEnumEmploymentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel>
 }
 
 export type EnumTitleFilter<$PrismaModel = never> = {
@@ -979,28 +979,11 @@ export type NestedEnumPaymentCycleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPaymentCycleFilter<$PrismaModel>
 }
 
-export type NestedEnumLoanTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LoanType[]
-  notIn?: $Enums.LoanType[]
-  not?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel> | $Enums.LoanType
-}
-
 export type NestedEnumLeadStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LeadStatus | Prisma.EnumLeadStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LeadStatus[]
   notIn?: $Enums.LeadStatus[]
   not?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel> | $Enums.LeadStatus
-}
-
-export type NestedEnumLoanTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LoanType[]
-  notIn?: $Enums.LoanType[]
-  not?: Prisma.NestedEnumLoanTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoanType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLoanTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1011,13 +994,6 @@ export type NestedEnumLeadStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeadStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumLoanTypeNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel> | null
-  in?: $Enums.LoanType[] | null
-  notIn?: $Enums.LoanType[] | null
-  not?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel> | $Enums.LoanType | null
 }
 
 export type NestedEnumInterestTypeFilter<$PrismaModel = never> = {
@@ -1050,16 +1026,6 @@ export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
   gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-}
-
-export type NestedEnumLoanTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LoanType | Prisma.EnumLoanTypeFieldRefInput<$PrismaModel> | null
-  in?: $Enums.LoanType[] | null
-  notIn?: $Enums.LoanType[] | null
-  not?: Prisma.NestedEnumLoanTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.LoanType | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLoanTypeNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumInterestTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -1154,6 +1120,40 @@ export type NestedEnumEmiStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEmiStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEmiStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLoanTypesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoanTypes | Prisma.EnumLoanTypesFieldRefInput<$PrismaModel>
+  in?: $Enums.LoanTypes[]
+  notIn?: $Enums.LoanTypes[]
+  not?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel> | $Enums.LoanTypes
+}
+
+export type NestedEnumEmploymentTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EmploymentType[] | null
+  notIn?: $Enums.EmploymentType[] | null
+  not?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel> | $Enums.EmploymentType | null
+}
+
+export type NestedEnumLoanTypesWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoanTypes | Prisma.EnumLoanTypesFieldRefInput<$PrismaModel>
+  in?: $Enums.LoanTypes[]
+  notIn?: $Enums.LoanTypes[]
+  not?: Prisma.NestedEnumLoanTypesWithAggregatesFilter<$PrismaModel> | $Enums.LoanTypes
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLoanTypesFilter<$PrismaModel>
+}
+
+export type NestedEnumEmploymentTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EmploymentType[] | null
+  notIn?: $Enums.EmploymentType[] | null
+  not?: Prisma.NestedEnumEmploymentTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmploymentTypeNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumTitleFilter<$PrismaModel = never> = {

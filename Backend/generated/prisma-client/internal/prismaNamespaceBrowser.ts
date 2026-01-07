@@ -63,6 +63,7 @@ export const ModelName = {
   Document: 'Document',
   Kyc: 'Kyc',
   LoanEmiSchedule: 'LoanEmiSchedule',
+  LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
 
@@ -198,7 +199,7 @@ export const LeadsScalarFieldEnum = {
   dob: 'dob',
   gender: 'gender',
   loanAmount: 'loanAmount',
-  loanType: 'loanType',
+  loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',
   pinCode: 'pinCode',
@@ -219,7 +220,7 @@ export const LoanApplicationScalarFieldEnum = {
   applicationDate: 'applicationDate',
   customerId: 'customerId',
   leadId: 'leadId',
-  loanType: 'loanType',
+  loanTypeId: 'loanTypeId',
   requestedAmount: 'requestedAmount',
   approvedAmount: 'approvedAmount',
   tenureMonths: 'tenureMonths',
@@ -321,6 +322,48 @@ export const LoanEmiScheduleScalarFieldEnum = {
 } as const
 
 export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
+export const LoanTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  secured: 'secured',
+  minAmount: 'minAmount',
+  maxAmount: 'maxAmount',
+  minTenureMonths: 'minTenureMonths',
+  maxTenureMonths: 'maxTenureMonths',
+  interestType: 'interestType',
+  minInterestRate: 'minInterestRate',
+  maxInterestRate: 'maxInterestRate',
+  defaultInterestRate: 'defaultInterestRate',
+  processingFeeType: 'processingFeeType',
+  processingFee: 'processingFee',
+  gstApplicable: 'gstApplicable',
+  gstPercentage: 'gstPercentage',
+  minAge: 'minAge',
+  maxAge: 'maxAge',
+  minIncome: 'minIncome',
+  employmentType: 'employmentType',
+  minCibilScore: 'minCibilScore',
+  maxCibilScore: 'maxCibilScore',
+  maxLoanToValueRatio: 'maxLoanToValueRatio',
+  prepaymentAllowed: 'prepaymentAllowed',
+  foreclosureAllowed: 'foreclosureAllowed',
+  prepaymentCharges: 'prepaymentCharges',
+  foreclosureCharges: 'foreclosureCharges',
+  isActive: 'isActive',
+  isPublic: 'isPublic',
+  approvalRequired: 'approvalRequired',
+  estimatedProcessingTimeDays: 'estimatedProcessingTimeDays',
+  documentsRequired: 'documentsRequired',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanTypeScalarFieldEnum = (typeof LoanTypeScalarFieldEnum)[keyof typeof LoanTypeScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -458,6 +501,7 @@ export const LeadsOrderByRelevanceFieldEnum = {
   fullName: 'fullName',
   contactNumber: 'contactNumber',
   email: 'email',
+  loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',
   pinCode: 'pinCode',
@@ -474,6 +518,7 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   customerId: 'customerId',
   leadId: 'leadId',
+  loanTypeId: 'loanTypeId',
   purposeDetails: 'purposeDetails',
   coApplicantName: 'coApplicantName',
   coApplicantContact: 'coApplicantContact',
@@ -538,6 +583,17 @@ export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
 } as const
 
 export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
+
+
+export const LoanTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  documentsRequired: 'documentsRequired'
+} as const
+
+export type LoanTypeOrderByRelevanceFieldEnum = (typeof LoanTypeOrderByRelevanceFieldEnum)[keyof typeof LoanTypeOrderByRelevanceFieldEnum]
 
 
 export const CustomerOrderByRelevanceFieldEnum = {

@@ -16,6 +16,7 @@ async function main(): Promise<void> {
       role: "ADMIN",
       contactNumber: "9999999999",
       isActive: true,
+      // kycStatus: "VERIFIED",
       createdAt: now,
     },
   });
