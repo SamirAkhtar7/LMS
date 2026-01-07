@@ -13,8 +13,11 @@ export async function loginService(identifier: string, password: string) {
     },
   });
   if (!user) throw new Error("Invalid credentials");
-
-  const isMatch = await comparePassword(password, user.password);
+  if (!user.isActive) throw new Error("User account is inactive");
+  if (user.kycStatus !== "VERIFIED") {
+    throw new Error("User KYC is not verified cannot login");
+  }
+    const isMatch = await comparePassword(password, user.password);
   if (!isMatch) throw new Error("Invalid credentials");
 
   const accessToken = generateAccessToken(user.id, user.email, user.role);

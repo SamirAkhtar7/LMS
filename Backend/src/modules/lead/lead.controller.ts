@@ -72,7 +72,7 @@ export const getAllLeadsController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to retrieve leads",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -90,7 +90,7 @@ export const getLeadByIdController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to retrieve lead",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -145,7 +145,7 @@ export const assignLeadController = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Lead assignment failed",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };

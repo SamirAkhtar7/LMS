@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import {
   createPartnerService,
   getAllPartnerService,
@@ -35,7 +35,7 @@ export const createPartnerController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Partner creation failed",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -53,7 +53,7 @@ export const getAllPartnersController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to retrieve partners",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -76,7 +76,7 @@ export const getPartnerByIdController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to retrieve partner",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -99,7 +99,7 @@ export const updatePartnerController = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Failed to update partner",
-      error: "INTERNAL_SERVER_ERROR",
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };

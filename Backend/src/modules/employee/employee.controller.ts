@@ -23,7 +23,7 @@ export const createEmployeeController = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Employee creation failed",
-      error: error,
+      error: error.message,
     });
   }
 };
@@ -32,12 +32,20 @@ export const getAllEmployeesController = async (
   req: Request,
   res: Response
 ) => {
+  try {
   const employees = await getAllEmployeesService();
   res.status(200).json({
     success: true,
     message: "Employees retrieved successfully",
     data: employees,
   });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: "Failed to retrieve employees",
+      error: error.message,
+    });
+  }
 };
 
 export const getEmployeeByIdController = async (

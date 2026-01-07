@@ -39,7 +39,7 @@ export const getallUsersController = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Failed to retrieve users",
-      error: error,
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -61,7 +61,7 @@ export const getUserByIdController = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Failed to retrieve user",
-      error: error,
+      error: error.message || "INTERNAL_SERVER_ERROR",
     });
   }
 };
@@ -80,6 +80,6 @@ export const updateUserController = async (req: Request, res: Response) => {
   } catch (error: any) {
     res
       .status(400)
-      .json({ success: false, message: "Failed to update user", error: error });
+      .json({ success: false, message: "Failed to update user", error: error.message || "INTERNAL_SERVER_ERROR" });
   }
 };

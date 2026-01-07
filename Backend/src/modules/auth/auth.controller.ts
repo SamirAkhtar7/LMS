@@ -33,6 +33,6 @@ export const loginController = async (req: Request, res: Response) => {
         .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
-    res.status(400).json({ success: false, message: "Login failed", error });
+    res.status(400).json({ success: false, message: "Login failed", error: error.message  });
   }
 };

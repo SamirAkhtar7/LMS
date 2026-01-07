@@ -271,6 +271,7 @@ export const approveLoanController = async (req: any, res: Response) => {
     });
   }
 };
+
 export const rejectLoanController = async (req: any, res: Response) => {
   try {
     const { id } = req.params;

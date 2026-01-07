@@ -4,7 +4,7 @@ import {
     createPermissionsService,
     getUserPermissionsService,
 } from "./permission.service.js";
-import { Response, Request } from "express";
+import e, { Response, Request } from "express";
 export const assignPermissionsController = async (req: Request, res: Response) => {
     try {
         const { userId, permissions } = req.body;
@@ -37,7 +37,7 @@ export const assignPermissionsController = async (req: Request, res: Response) =
         res.status(500).json({
             success: false,
             message: "Failed to assign permissions",
-            error: "INTERNAL_SERVER_ERROR",
+            error:  "INTERNAL_SERVER_ERROR",
         });
     }
 };
@@ -60,7 +60,7 @@ export const createPermissionsController = async (req: Request, res: Response) =
         res.status(500).json({
             success: false,
             message: "Failed to create permission",
-            error: "INTERNAL_SERVER_ERROR",
+            error:  error.message || "INTERNAL_SERVER_ERROR",
         });
     }
 }
@@ -74,7 +74,7 @@ export const getUserPermissionsController = async (req: Request, res: Response) 
         if (error?.message && error.message.includes("not found")) {
             return res.status(404).json({ success: false, message: error.message });
         }
-        res.status(500).json({ success: false, message: "Failed to fetch user permissions" });
+        res.status(500).json({ success: false, message: error.message || "Failed to fetch user permissions" });
     }
 };
         

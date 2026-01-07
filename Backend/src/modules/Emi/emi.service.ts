@@ -4,7 +4,7 @@ import {
   EmiScheduleItem,
   EmiScheduleInput,
 } from "../LoanApplication/loanApplication.types.js";
-import e from "express";
+
 
 export const generateEmiScheduleService = async (loanId: string) => {
   const loan = await prisma.loanApplication.findUnique({

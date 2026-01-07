@@ -15,13 +15,30 @@ export const generateEmiScheduleController = async (
       return res
         .status(404)
         .json({ success: false, message: "Loan not found" });
+    
+    if (
+      loan.emiAmount === null ||
+      loan.emiAmount === undefined ||
+      loan.emiAmount <= 0 ||
+      loan.interestRate === null ||
+      loan.interestRate === undefined ||
+      loan.interestRate <= 0 ||
+      loan.tenureMonths === null ||
+      loan.tenureMonths === undefined ||
+      loan.tenureMonths <= 0  
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "EMI amount not set for the loan, interest rate, or tenure is invalid" });
+    }
 
     const schedule = await generateEmiScheduleService({
+      
       loanId: loan.id,
       principal: loan.approvedAmount ?? loan.requestedAmount,
-      annualRate: loan.interestRate ?? 0,
-      tenureMonths: loan.tenureMonths ?? 0,
-      emiAmount: loan.emiAmount ?? 0,
+      annualRate: loan.interestRate,
+      tenureMonths: loan.tenureMonths,
+      emiAmount: loan.emiAmount,
       startDate: new Date(),
     });
 
@@ -34,7 +51,8 @@ export const generateEmiScheduleController = async (
       .status(500)
       .json({
         success: false,
-        message: error.message || "Failed to generate EMI schedule",
+        message: "Failed to generate EMI schedule",
+        error: error.message,
       });
   }
 };
@@ -51,7 +69,8 @@ export const getLoanEmiController = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false,
-        message: error.message || "Failed to fetch EMI schedule",
+        message: "Failed to fetch EMI schedule",
+        error: error.message,
       });
   }
 };
@@ -70,7 +89,8 @@ export const markEmiPaidController = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false,
-        message: error.message || "Failed to mark EMI as paid",
+        message: "Failed to mark EMI as paid",
+        error: error.message,
       });
   }
 };
