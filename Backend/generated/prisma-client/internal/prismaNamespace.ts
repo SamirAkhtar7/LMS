@@ -1579,6 +1579,7 @@ export const DocumentScalarFieldEnum = {
   documentType: 'documentType',
   documentPath: 'documentPath',
   verificationStatus: 'verificationStatus',
+  rejectionReason: 'rejectionReason',
   kycId: 'kycId',
   uploadedBy: 'uploadedBy',
   verified: 'verified',
@@ -1856,6 +1857,7 @@ export const DocumentOrderByRelevanceFieldEnum = {
   loanApplicationId: 'loanApplicationId',
   documentType: 'documentType',
   documentPath: 'documentPath',
+  rejectionReason: 'rejectionReason',
   kycId: 'kycId',
   uploadedBy: 'uploadedBy',
   verifiedBy: 'verifiedBy'

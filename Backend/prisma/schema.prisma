@@ -11,14 +11,10 @@ datasource db {
   // Connection URL moved to prisma.config.ts per Prisma 7+ requirements
 }
 
-
-
-
-
- // 🔴 Soft Delete
-  // deletedAt DateTime?
-  // deletedBy String?
-  // @@index([deletedAt])
+// 🔴 Soft Delete
+// deletedAt DateTime?
+// deletedBy String?
+// @@index([deletedAt])
 // =================================USERS=====================================
 
 model User {
@@ -118,15 +114,14 @@ model Partner {
   id     String @id @default(cuid())
   userId String @unique
 
-  partnerId       String      @unique
-  companyName     String
-  contactPerson   String
-  alternateNumber String?
-  website         String?
-  establishedYear Int?
-  partnerType     PartnerType
-  businessNature  String?
-
+  partnerId                  String         @unique
+  companyName                String
+  contactPerson              String
+  alternateNumber            String?
+  website                    String?
+  establishedYear            Int?
+  partnerType                PartnerType
+  businessNature             String?
   fullAddress                String?
   city                       String?
   state                      String?
@@ -142,13 +137,12 @@ model Partner {
   paymentCycle               PaymentCycle
   minimumPayout              Float?
   taxDeduction               Float?
-
-  targetArea       String?
-  totalReferrals   Int?     @default(0)
-  activeReferrals  Int?     @default(0)
-  commissionEarned Float?   @default(0)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  targetArea                 String?
+  totalReferrals             Int?           @default(0)
+  activeReferrals            Int?           @default(0)
+  commissionEarned           Float?         @default(0)
+  createdAt                  DateTime       @default(now())
+  updatedAt                  DateTime       @updatedAt
 
   // Relations
   user User @relation(fields: [userId], references: [id])
@@ -189,7 +183,7 @@ model LoanApplication {
   // loanProductId   String
   leadId          String?
   lead            Leads?   @relation(fields: [leadId], references: [id])
-  loanTypeId      String?
+  loanTypeId      String
   requestedAmount Float
   approvedAmount  Float?
   tenureMonths    Int?
@@ -205,20 +199,19 @@ model LoanApplication {
   coApplicantIncome   Float?
   coApplicantPan      String?
   coApplicantAadhaar  String?
-
-  totalPayable    Float?
-  loanPurpose     String?
-  cibilScore      Int?
-  status          LoanStatus @default(application_in_progress)
-  approvalDate    DateTime?
-  activationDate  DateTime?
-  rejectionReason String?
-  approvedBy      String?
-  approvedAt      DateTime?
-  rejectedBy      String?
-  rejectedAt      DateTime?
-  kycId           String?    @unique
-  kyc             Kyc?       @relation(fields: [kycId], references: [id])
+  totalPayable        Float?
+  loanPurpose         String?
+  cibilScore          Int?
+  status              LoanStatus           @default(application_in_progress)
+  approvalDate        DateTime?
+  activationDate      DateTime?
+  rejectionReason     String?
+  approvedBy          String?
+  approvedAt          DateTime?
+  rejectedBy          String?
+  rejectedAt          DateTime?
+  kycId               String?              @unique
+  kyc                 Kyc?                 @relation(fields: [kycId], references: [id])
 
   documents Document[]
 
@@ -268,6 +261,7 @@ model Document {
   documentType       String
   documentPath       String
   verificationStatus VerificationStatus @default(pending)
+  rejectionReason    String?
   kycId              String?
   kyc                Kyc?               @relation("KycDocuments", fields: [kycId], references: [id])
   uploadedBy         String

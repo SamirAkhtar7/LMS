@@ -9,8 +9,9 @@ import {
   updateLoanApplicationStatusService,
   uploadLoanDocumentsService,
   verifyDocumentService,
+  rejectDocumentService,
 } from "./loanApplication.service.js";
-
+import { prisma } from "../../db/prismaService.js";
 
 export const createLoanApplicationController = async (
   req: Request,
@@ -110,93 +111,72 @@ export const uploadLoanDocumentsController = async (
   }
   try {
     const loanApplicationId = req.params.id;
-    const files = (req.files as Record<string, Express.Multer.File[]>) || {};
-    const documents = [];
-    if (files?.aadhaar_front) {
-      documents.push({
-        documentType: "AADHAAR_FRONT",
-        documentPath: files.aadhaar_front[0].path,
-        uploadedBy: req.user.id,
-      });
+    const userId = req.user.id;
+
+    const loanApplication = await prisma.loanApplication.findUnique({
+      where: { id: loanApplicationId },
+      include: {
+        kyc: true,
+        loanType: true,
+      },
+    });
+
+    if (!loanApplication) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Loan application not found" });
     }
-    if (files?.aadhaar_back) {
-      documents.push({
-        documentType: "AADHAAR_BACK",
-        documentPath: files.aadhaar_back[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.pan_card) {
-      documents.push({
-        documentType: "PAN_CARD",
-        documentPath: files.pan_card[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.voter_id) {
-      documents.push({
-        documentType: "VOTER_ID",
-        documentPath: files.voter_id[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.salary_slip) {
-      documents.push({
-        documentType: "SALARY_SLIP",
-        documentPath: files.salary_slip[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.bank_statement) {
-      documents.push({
-        documentType: "BANK_STATEMENT",
-        documentPath: files.bank_statement[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.photo) {
-      documents.push({
-        documentType: "PHOTO",
-        documentPath: files.photo[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.signature) {
-      documents.push({
-        documentType: "SIGNATURE",
-        documentPath: files.signature[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.passport) {
-      documents.push({
-        documentType: "PASSPORT",
-        documentPath: files.passport[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (files?.other) {
-      documents.push({
-        documentType: "OTHER",
-        documentPath: files.other[0].path,
-        uploadedBy: req.user.id,
-      });
-    }
-    if (documents.length === 0) {
+
+    if (!loanApplication.kyc) {
       return res.status(400).json({
         success: false,
-        message: "No valid documents uploaded",
+        message: "KYC not found for this application",
       });
     }
-    const result = await uploadLoanDocumentsService(
-      loanApplicationId,
-      documents,
-      req.user.id
+
+    const requiredDocuments =
+      loanApplication.loanType?.documentsRequired
+        ?.split(",")
+        .map((d) => d.trim()) || [];
+
+    if (!requiredDocuments || requiredDocuments.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No documents required for this loan type",
+      });
+    }
+
+    const files = req.files as Express.Multer.File[];
+
+    const uploadedDocTypes = files.map((file) => file.fieldname);
+
+    const missingDocs = requiredDocuments.filter(
+      (doc) => !uploadedDocTypes.includes(doc)
     );
+
+    if (missingDocs.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Missing required documents: ${missingDocs.join(", ")}`,
+      });
+    }
+
+    const documentsPayload = files.map((file) => ({
+      documentType: file.fieldname,
+      documentPath: file.path,
+      uploadedBy: userId,
+    }));
+
+    const documents = await uploadLoanDocumentsService(
+      loanApplicationId,
+      documentsPayload,
+      userId
+    );
+
     res.status(201).json({
       success: true,
       message: "Documents uploaded successfully",
-      data: result,
+      data: documents,
     });
   } catch (error: any) {
     res.status(error.statusCode || 500).json({
@@ -222,7 +202,32 @@ export const verifyDocumentController = async (req: Request, res: Response) => {
     res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Document verification failed",
-    
+    });
+  }
+};
+
+export const rejectDocumentController = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const documentId = req.params.id;
+    const { reason } = req.body;
+    if (!reason) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Rejection reason is required" });
+    }
+    const doc = await rejectDocumentService(documentId, reason, req.user.id);
+    res.status(200).json({
+      success: true,
+      message: "Document rejected successfully",
+      data: doc,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Document rejection failed",
     });
   }
 };

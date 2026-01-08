@@ -3,6 +3,7 @@ import { CreateLoanApplication } from "./loanApplication.types.js";
 import createLoanApplicationSchema from "./loanApplication.schema.js";
 import type { Prisma } from "../../../generated/prisma-client/client.js";
 import type * as Enums from "../../../generated/prisma-client/enums.js";
+import { fi } from "zod/locales";
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
@@ -14,6 +15,16 @@ export async function createLoanApplicationService(
 
   const parsed = createLoanApplicationSchema.parse(data);
 
+  const loanType = await prisma.loanType.findUnique({
+    where: {
+      id: parsed.loanTypeId,
+      isActive: true,
+      //deletedAt: null,
+    },
+  });
+  if (!loanType) {
+    throw new Error("Invalid loan type");
+  }
   const dob =
     parsed.dob && typeof parsed.dob === "string"
       ? new Date(parsed.dob)
@@ -101,6 +112,7 @@ export async function createLoanApplicationService(
     // 3. Create loan application
     const loanApplication = await tx.loanApplication.create({
       data: {
+        loanTypeId: parsed.loanTypeId,
         requestedAmount: parsed.requestedAmount,
         tenureMonths: parsed.tenureMonths,
         interestRate: parsed.interestRate,
@@ -162,7 +174,10 @@ export async function uploadLoanDocumentsService(
   return prisma.$transaction(async (tx) => {
     const loanApplication = await tx.loanApplication.findUnique({
       where: { id: loanApplicationId },
-      include: { kyc: true },
+      include: {
+        kyc: true,
+        loanType: true,
+      },
     });
 
     if (!loanApplication) {
@@ -236,6 +251,71 @@ export async function verifyDocumentService(
   });
 }
 
+export async function rejectDocumentService(
+  documentId: string,
+  reason: string,
+  verifierId: string
+) {
+  const existing = await prisma.document.findUnique({
+    where: { id: documentId },
+  });
+  if (!existing) {
+    const err: any = new Error("Document not found");
+    err.statusCode = 404;
+    throw err;
+  }
+  if( !existing.loanApplicationId ) {
+    const err: any = new Error("Document not linked to any loan application");
+    err.statusCode = 400;
+    throw err;
+  }
+  const loanApplication = await prisma.loanApplication.findUnique({
+    where: { id: existing.loanApplicationId },
+  });
+
+  
+  if (!loanApplication) {
+    const err: any = new Error("Associated loan application not found");
+    err.statusCode = 404;
+    throw err;
+  }
+  if( loanApplication.status !== "kyc_pending" ) {
+    const err: any = new Error("Loan application not in KYC pending status");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const document = await prisma.document.update({
+    where: { id: documentId },
+    data: {
+      verified: false,
+      verifiedBy: verifierId,
+      verifiedAt: new Date(),
+      verificationStatus: "rejected",
+      rejectionReason: reason,
+    },
+  });
+
+  if (!document.kycId) throw new Error("Document missing kycId");
+  if (!document.loanApplicationId)
+    throw new Error("Document missing loanApplicationId");
+  await prisma.kyc.update({
+    where: { id: document.kycId },
+    data: {
+      status: "REJECTED",
+      verifiedBy: verifierId,
+      verifiedAt: new Date(),
+    },
+  });
+  await prisma.loanApplication.update({
+    where: { id: document.loanApplicationId },
+    data: {
+      status: "kyc_pending",
+    },
+  });
+  return document;
+}
+
 export const getAllLoanApplicationsService = async () => {
   // Implementation for retrieving all loan applications
   try {
@@ -261,6 +341,7 @@ export const getLoanApplicationByIdService = async (id: string) => {
       where: { id },
       include: {
         customer: true,
+        loanType: true,
         kyc: {
           include: {
             documents: true,

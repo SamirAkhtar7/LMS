@@ -103,40 +103,80 @@ export const createLoanTypeService = async (loanTypeData: LoanTypeDTO) => {
     });
 
     return loanType;
-
-  } catch (error) {
-      
-    throw new Error("Error creating loan type");
+  } catch (error: any) {
+    // Preserve and rethrow the original error so the controller can
+    // return informative messages to the client.
+    if (error instanceof Error) throw error;
+    throw new Error(String(error));
   }
-  // Simulate database save with a delay
-  return new Promise<LoanTypeDTO>((resolve) => {
-    setTimeout(() => {
-      resolve(loanTypeData);
-    }, 100);
-  });
 };
 
-// export const softDeleteLoanTypeService = async (
-//   loanTypeId: string,
-//   deletedByUserId: string
-// ) => {
-//   const loanType = await prisma.loanType.findFirst({
-//     where: {
-//       id: loanTypeId,
-//       deletedAt: null,
-//     },
-//   });
+export const getAllLoanTypeService = async () => {
+  const loanTypes = await prisma.loanType.findMany({
+    where: {
+      // deletedAt: null
 
-//   if (!loanType) {
-//     throw new Error("LoanType not found or already deleted");
-//   }
+    },
+  });
+  return loanTypes;
+}
 
-//   return prisma.loanType.update({
-//     where: { id: loanTypeId },
-//     data: {
-//       deletedAt: new Date(),
-//       deletedBy: deletedByUserId,
-//       isActive: false,
-//     },
-//   });
-// };
+export const getLoanTypeByIdService = async (loanTypeId: string) => {
+  const loanType = await prisma.loanType.findFirst({
+    where: {
+      id: loanTypeId,
+//      deletedAt: null
+    },
+  });
+
+  if (!loanType) {
+    throw new Error("LoanType not found");
+  }
+  return loanType;
+}
+export const updateLoanTypeService = async(
+  loanTypeId: string,
+  updateData: Partial<LoanTypeDTO>
+) => {
+  const existingLoanType = await prisma.loanType.findFirst({
+    where: {
+      id: loanTypeId,
+//      deletedAt: null
+    },
+  });
+  if (!existingLoanType) {
+    throw new Error("LoanType not found");
+  }
+  const updatedLoanType = await prisma.loanType.update({
+    where: { id: loanTypeId },
+    data: updateData,
+  });
+  return updatedLoanType;
+}
+
+
+
+export const softDeleteLoanTypeService = async (
+  loanTypeId: string,
+  deletedByUserId: string
+) => {
+  const loanType = await prisma.loanType.findFirst({
+    where: {
+      id: loanTypeId,
+      deletedAt: null,
+    },
+  });
+
+  if (!loanType) {
+    throw new Error("LoanType not found or already deleted");
+  }
+
+  return prisma.loanType.update({
+    where: { id: loanTypeId },
+    data: {
+      deletedAt: new Date(),
+      deletedBy: deletedByUserId,
+      isActive: false,
+    },
+  });
+};

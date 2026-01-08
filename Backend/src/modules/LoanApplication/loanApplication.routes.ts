@@ -10,6 +10,7 @@ import {
   updateLoanApplicationStatusController,
   uploadLoanDocumentsController,
   verifyDocumentController,
+  rejectDocumentController,
 } from "./loanApplication.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {
@@ -77,20 +78,8 @@ loanApplicationRouter.post(
   "/:id/documents",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
-  upload.fields([
-    { name: "aadhaar_front", maxCount: 1 },
-    { name: "aadhaar_back", maxCount: 1 },
-    { name: "pan_card", maxCount: 1 },
-    // added to accept `pan` from Postman
-    { name: "voter_id", maxCount: 1 },
-    { name: "salary_slip", maxCount: 1 },
-    { name: "bank_statement", maxCount: 1 },
-    { name: "photo", maxCount: 1 },
-    { name: "signature", maxCount: 1 },
-    { name: "passport", maxCount: 1 },
-    { name: "other", maxCount: 1 },
-  ]),
-  // upload.any(),
+
+   upload.any(),
   uploadLoanDocumentsController
 );
 
@@ -100,6 +89,13 @@ loanApplicationRouter.post(
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("VERIFY_DOCUMENTS"),
   verifyDocumentController
+);
+loanApplicationRouter.post(
+  "/documents/:id/reject",
+  authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
+  checkPermissionMiddleware("VERIFY_DOCUMENTS"),
+  rejectDocumentController
 );
 
 export default loanApplicationRouter;

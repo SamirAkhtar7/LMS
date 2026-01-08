@@ -30,6 +30,7 @@ export type DocumentMinAggregateOutputType = {
   documentType: string | null
   documentPath: string | null
   verificationStatus: $Enums.VerificationStatus | null
+  rejectionReason: string | null
   kycId: string | null
   uploadedBy: string | null
   verified: boolean | null
@@ -44,6 +45,7 @@ export type DocumentMaxAggregateOutputType = {
   documentType: string | null
   documentPath: string | null
   verificationStatus: $Enums.VerificationStatus | null
+  rejectionReason: string | null
   kycId: string | null
   uploadedBy: string | null
   verified: boolean | null
@@ -58,6 +60,7 @@ export type DocumentCountAggregateOutputType = {
   documentType: number
   documentPath: number
   verificationStatus: number
+  rejectionReason: number
   kycId: number
   uploadedBy: number
   verified: number
@@ -74,6 +77,7 @@ export type DocumentMinAggregateInputType = {
   documentType?: true
   documentPath?: true
   verificationStatus?: true
+  rejectionReason?: true
   kycId?: true
   uploadedBy?: true
   verified?: true
@@ -88,6 +92,7 @@ export type DocumentMaxAggregateInputType = {
   documentType?: true
   documentPath?: true
   verificationStatus?: true
+  rejectionReason?: true
   kycId?: true
   uploadedBy?: true
   verified?: true
@@ -102,6 +107,7 @@ export type DocumentCountAggregateInputType = {
   documentType?: true
   documentPath?: true
   verificationStatus?: true
+  rejectionReason?: true
   kycId?: true
   uploadedBy?: true
   verified?: true
@@ -189,6 +195,7 @@ export type DocumentGroupByOutputType = {
   documentType: string
   documentPath: string
   verificationStatus: $Enums.VerificationStatus
+  rejectionReason: string | null
   kycId: string | null
   uploadedBy: string
   verified: boolean
@@ -224,6 +231,7 @@ export type DocumentWhereInput = {
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
+  rejectionReason?: Prisma.StringNullableFilter<"Document"> | string | null
   kycId?: Prisma.StringNullableFilter<"Document"> | string | null
   uploadedBy?: Prisma.StringFilter<"Document"> | string
   verified?: Prisma.BoolFilter<"Document"> | boolean
@@ -240,6 +248,7 @@ export type DocumentOrderByWithRelationInput = {
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   kycId?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedBy?: Prisma.SortOrder
   verified?: Prisma.SortOrder
@@ -260,6 +269,7 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
+  rejectionReason?: Prisma.StringNullableFilter<"Document"> | string | null
   kycId?: Prisma.StringNullableFilter<"Document"> | string | null
   uploadedBy?: Prisma.StringFilter<"Document"> | string
   verified?: Prisma.BoolFilter<"Document"> | boolean
@@ -276,6 +286,7 @@ export type DocumentOrderByWithAggregationInput = {
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   kycId?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedBy?: Prisma.SortOrder
   verified?: Prisma.SortOrder
@@ -296,6 +307,7 @@ export type DocumentScalarWhereWithAggregatesInput = {
   documentType?: Prisma.StringWithAggregatesFilter<"Document"> | string
   documentPath?: Prisma.StringWithAggregatesFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusWithAggregatesFilter<"Document"> | $Enums.VerificationStatus
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   kycId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   uploadedBy?: Prisma.StringWithAggregatesFilter<"Document"> | string
   verified?: Prisma.BoolWithAggregatesFilter<"Document"> | boolean
@@ -309,6 +321,7 @@ export type DocumentCreateInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   uploadedBy: string
   verified?: boolean
   verifiedBy?: string | null
@@ -324,6 +337,7 @@ export type DocumentUncheckedCreateInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   kycId?: string | null
   uploadedBy: string
   verified?: boolean
@@ -337,6 +351,7 @@ export type DocumentUpdateInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -352,6 +367,7 @@ export type DocumentUncheckedUpdateInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -366,6 +382,7 @@ export type DocumentCreateManyInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   kycId?: string | null
   uploadedBy: string
   verified?: boolean
@@ -379,6 +396,7 @@ export type DocumentUpdateManyMutationInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -392,6 +410,7 @@ export type DocumentUncheckedUpdateManyInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -422,6 +441,7 @@ export type DocumentCountOrderByAggregateInput = {
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
   uploadedBy?: Prisma.SortOrder
   verified?: Prisma.SortOrder
@@ -436,6 +456,7 @@ export type DocumentMaxOrderByAggregateInput = {
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
   uploadedBy?: Prisma.SortOrder
   verified?: Prisma.SortOrder
@@ -450,6 +471,7 @@ export type DocumentMinOrderByAggregateInput = {
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
   uploadedBy?: Prisma.SortOrder
   verified?: Prisma.SortOrder
@@ -551,6 +573,7 @@ export type DocumentCreateWithoutLoanApplicationInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   uploadedBy: string
   verified?: boolean
   verifiedBy?: string | null
@@ -564,6 +587,7 @@ export type DocumentUncheckedCreateWithoutLoanApplicationInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   kycId?: string | null
   uploadedBy: string
   verified?: boolean
@@ -607,6 +631,7 @@ export type DocumentScalarWhereInput = {
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
+  rejectionReason?: Prisma.StringNullableFilter<"Document"> | string | null
   kycId?: Prisma.StringNullableFilter<"Document"> | string | null
   uploadedBy?: Prisma.StringFilter<"Document"> | string
   verified?: Prisma.BoolFilter<"Document"> | boolean
@@ -620,6 +645,7 @@ export type DocumentCreateWithoutKycInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   uploadedBy: string
   verified?: boolean
   verifiedBy?: string | null
@@ -634,6 +660,7 @@ export type DocumentUncheckedCreateWithoutKycInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   uploadedBy: string
   verified?: boolean
   verifiedBy?: string | null
@@ -672,6 +699,7 @@ export type DocumentCreateManyLoanApplicationInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   kycId?: string | null
   uploadedBy: string
   verified?: boolean
@@ -685,6 +713,7 @@ export type DocumentUpdateWithoutLoanApplicationInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -698,6 +727,7 @@ export type DocumentUncheckedUpdateWithoutLoanApplicationInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -711,6 +741,7 @@ export type DocumentUncheckedUpdateManyWithoutLoanApplicationInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -725,6 +756,7 @@ export type DocumentCreateManyKycInput = {
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
   uploadedBy: string
   verified?: boolean
   verifiedBy?: string | null
@@ -737,6 +769,7 @@ export type DocumentUpdateWithoutKycInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -751,6 +784,7 @@ export type DocumentUncheckedUpdateWithoutKycInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -764,6 +798,7 @@ export type DocumentUncheckedUpdateManyWithoutKycInput = {
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -779,6 +814,7 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   documentType?: boolean
   documentPath?: boolean
   verificationStatus?: boolean
+  rejectionReason?: boolean
   kycId?: boolean
   uploadedBy?: boolean
   verified?: boolean
@@ -797,6 +833,7 @@ export type DocumentSelectScalar = {
   documentType?: boolean
   documentPath?: boolean
   verificationStatus?: boolean
+  rejectionReason?: boolean
   kycId?: boolean
   uploadedBy?: boolean
   verified?: boolean
@@ -805,7 +842,7 @@ export type DocumentSelectScalar = {
   createdAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "documentType" | "documentPath" | "verificationStatus" | "kycId" | "uploadedBy" | "verified" | "verifiedBy" | "verifiedAt" | "createdAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "documentType" | "documentPath" | "verificationStatus" | "rejectionReason" | "kycId" | "uploadedBy" | "verified" | "verifiedBy" | "verifiedAt" | "createdAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
   kyc?: boolean | Prisma.Document$kycArgs<ExtArgs>
@@ -823,6 +860,7 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     documentType: string
     documentPath: string
     verificationStatus: $Enums.VerificationStatus
+    rejectionReason: string | null
     kycId: string | null
     uploadedBy: string
     verified: boolean
@@ -1205,6 +1243,7 @@ export interface DocumentFieldRefs {
   readonly documentType: Prisma.FieldRef<"Document", 'String'>
   readonly documentPath: Prisma.FieldRef<"Document", 'String'>
   readonly verificationStatus: Prisma.FieldRef<"Document", 'VerificationStatus'>
+  readonly rejectionReason: Prisma.FieldRef<"Document", 'String'>
   readonly kycId: Prisma.FieldRef<"Document", 'String'>
   readonly uploadedBy: Prisma.FieldRef<"Document", 'String'>
   readonly verified: Prisma.FieldRef<"Document", 'Boolean'>

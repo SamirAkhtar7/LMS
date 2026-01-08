@@ -111,6 +111,7 @@ export const createLoanApplicationSchema = z.object({
   accountType: z.string().trim().min(1).optional(),
 
   // Loan fields
+  loanTypeId: z.string().trim().min(1),
   requestedAmount: z.coerce.number().positive(),
   tenureMonths: z.coerce.number().int().optional(),
 
