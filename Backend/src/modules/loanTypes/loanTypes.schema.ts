@@ -50,8 +50,19 @@ export const createLoanTypeSchema = z.object({
 
   estimatedProcessingTimeDays: z.number().int().positive().optional(),
   documentsRequired: z.string().optional(),
-});
-
+}).refine((data) => data.maxInterestRate >= data.minInterestRate, {
+  message: "maxInterestRate must be greater than or equal to minInterestRate",
+  path: ["maxInterestRate"],
+}).refine(
+  (data) =>
+    data.defaultInterestRate >= data.minInterestRate &&
+    data.defaultInterestRate <= data.maxInterestRate,
+  {
+    message:
+      "defaultInterestRate must be within minInterestRate and maxInterestRate",
+    path: ["defaultInterestRate"],
+  }
+);
 
 export const updateLoanTypeSchema = createLoanTypeSchema.partial();
 

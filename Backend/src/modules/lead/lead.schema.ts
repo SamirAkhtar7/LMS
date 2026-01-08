@@ -25,7 +25,7 @@ export const createLeadSchema = z
     dob: z.coerce.date(),
     gender: genderEnum,
     loanAmount: z.coerce.number().nonnegative(),
-    loanType: string().trim().min(1, "loanType is required")  ,
+    loanTypeId: z.string().trim().min(1, "loanTypeId is required"),
     city: z.string().trim().nullable(),
     state: z.string().trim().nullable(),
     pinCode: z.string().trim().nullable(),

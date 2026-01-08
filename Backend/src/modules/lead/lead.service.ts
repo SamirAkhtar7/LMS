@@ -4,8 +4,23 @@ import { CreateLead, UpdateLead } from "./lead.types.js";
 export const createLeadService = async (leadData: CreateLead) => {
   const dob =
     typeof leadData.dob === "string" ? new Date(leadData.dob) : leadData.dob;
-
-  return prisma.leads.create({
+  try {
+    const typecheck = await prisma.loanType.findFirst
+      ({
+        where: {
+          id: leadData.loanTypeId,
+          isActive: true,
+          //deletedAt: null,
+        },
+        select:{ id: true}
+        
+      })
+    if (!typecheck) {
+      const e: any = new Error("Invalid loan type ID");
+      e.statusCode = 400;
+      throw e;
+    }
+const result = await prisma.leads.create({
     data: {
       fullName: leadData.fullName,
       contactNumber: leadData.contactNumber,
@@ -20,17 +35,26 @@ export const createLeadService = async (leadData: CreateLead) => {
       address: leadData.address,
       status: (leadData.status ?? "PENDING") as any,
     },
-  });
+});
+  
+  return result;
+ 
+} catch (error: any) {
+  throw new Error(error.message);
+}
 };
 
 export const getAllLeadsService = async () => {
-  const leads = await prisma.leads.findMany();
+  const leads = await prisma.leads.findMany({include: { loanType: true }});
   return leads;
 };
 
 export const getLeadByIdService = async (id: string) => {
   const lead = await prisma.leads.findUnique({
     where: { id },
+    include: {
+      loanType: true,
+    },
   });
   if (lead) {
     return lead;
@@ -66,6 +90,7 @@ export const updateLeadStatusService = async (id: string, status: string) => {
     const updatedLead = await prisma.leads.update({
       where: { id },
       data: { status: normalized as any },
+      include: { loanType: true },
     });
     return updatedLead;
   } catch (error: unknown) {
@@ -89,7 +114,7 @@ export const assignLeadService = async (
     const updated = await prisma.leads.update({
       where: { id },
       data: { assignedTo, assignedBy },
-      include: { assignedToUser: true, assignedByUser: true },
+      include: { assignedToUser: true, assignedByUser: true ,include: { loanType: true }},
     });
     return updated;
   } catch (error: unknown) {

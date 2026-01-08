@@ -101,12 +101,11 @@ export const createLoanTypeService = async (loanTypeData: LoanTypeDTO) => {
         documentsRequired: data.documentsRequired,
       },
     });
-      
-      if(!loanType){
-        throw new Error("Failed to create loan type");
-      }
+
     return loanType;
+
   } catch (error) {
+      
     throw new Error("Error creating loan type");
   }
   // Simulate database save with a delay
@@ -116,9 +115,6 @@ export const createLoanTypeService = async (loanTypeData: LoanTypeDTO) => {
     }, 100);
   });
 };
-
-
-
 
 // export const softDeleteLoanTypeService = async (
 //   loanTypeId: string,
