@@ -1,4 +1,8 @@
-import type { EmploymentType as PrismaEmploymentType, EmiStatus as PrismaEmiStatus } from "../../../generated/prisma-client/enums.js";
+import type {
+  EmploymentType as PrismaEmploymentType,
+  EmiStatus as PrismaEmiStatus,
+  CommissionType,
+} from "../../../generated/prisma-client/enums.js";
 
 export type InterestType = "FLAT" | "REDUCING";
 export type LoanStatus =
@@ -204,6 +208,7 @@ export interface CreateLoanApplication {
 
 export interface EmiScheduleInput {
   loanId: string;
+  emiStartDate: Date;
   principal: number;
   annualRate: number;
   tenureMonths: number;
@@ -212,6 +217,7 @@ export interface EmiScheduleInput {
 }
 
 export interface EmiScheduleItem {
+  emiStartDate: Date;
   loanApplicationId: string;
   emiNo: number;
   dueDate: Date;
@@ -222,4 +228,26 @@ export interface EmiScheduleItem {
   closingBalance: number;
   status?: EmiStatus;
   paidDate?: Date | null;
+}
+
+export interface apperoveLoanInput {
+  latePaymentFeeType: CommissionType;
+  latePaymentFee: number;
+  bounceCharges: number;
+  prepaymentChargeType: CommissionType;
+  prepaymentAllowed: boolean;
+  prepaymentDate: Date;
+  prepaymentCharges: number;
+  foreclosureChargesType: CommissionType;
+  foreclosureAllowed: boolean;
+  foreclosureDate: Date;
+  foreclosureCharges: number;
+  // Added approval-related fields used by approveLoanService
+  approvedAmount?: number;
+  tenureMonths?: number;
+  interestType?: InterestType;
+  interestRate?: number;
+  emiStartDate?: Date;
+  emiPaymentAmount?: number;
+  emiAmount?: number;
 }

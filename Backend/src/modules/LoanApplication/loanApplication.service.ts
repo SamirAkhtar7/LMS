@@ -1,5 +1,8 @@
 import { prisma } from "../../db/prismaService.js";
-import { CreateLoanApplication } from "./loanApplication.types.js";
+import {
+  apperoveLoanInput,
+  CreateLoanApplication,
+} from "./loanApplication.types.js";
 import createLoanApplicationSchema from "./loanApplication.schema.js";
 import type { Prisma } from "../../../generated/prisma-client/client.js";
 import type * as Enums from "../../../generated/prisma-client/enums.js";
@@ -264,7 +267,7 @@ export async function rejectDocumentService(
     err.statusCode = 404;
     throw err;
   }
-  if( !existing.loanApplicationId ) {
+  if (!existing.loanApplicationId) {
     const err: any = new Error("Document not linked to any loan application");
     err.statusCode = 400;
     throw err;
@@ -273,13 +276,12 @@ export async function rejectDocumentService(
     where: { id: existing.loanApplicationId },
   });
 
-  
   if (!loanApplication) {
     const err: any = new Error("Associated loan application not found");
     err.statusCode = 404;
     throw err;
   }
-  if( loanApplication.status !== "kyc_pending" ) {
+  if (loanApplication.status !== "kyc_pending") {
     const err: any = new Error("Loan application not in KYC pending status");
     err.statusCode = 400;
     throw err;
@@ -407,7 +409,11 @@ export const reviewLoanService = async (loanId: string) => {
   });
 };
 
-export const approveLoanService = async (loanId: string, userId: string) => {
+export const approveLoanService = async (
+  loanId: string,
+  userId: string,
+  data: apperoveLoanInput
+) => {
   const result = await prisma.loanApplication.updateMany({
     where: {
       id: loanId,
@@ -415,9 +421,38 @@ export const approveLoanService = async (loanId: string, userId: string) => {
     },
     data: {
       status: "approved",
+      latePaymentFeeType: data.latePaymentFeeType,
+      latePaymentFee: data.latePaymentFee,
+      bounceCharges: data.bounceCharges,
+
+      approvedAmount: data.approvedAmount,
+      tenureMonths: data.tenureMonths,
+
+      interestType: data.interestType,
+      interestRate: data.interestRate,
+
+      foreclosureAllowed: data.foreclosureAllowed ?? true,
+      foreclosureChargesType: data.foreclosureChargesType,
+      foreclosureCharges: data.foreclosureCharges,
+
+      prepaymentAllowed: data.prepaymentAllowed ?? true,
+      prepaymentChargeType: data.prepaymentChargeType,
+      prepaymentCharges: data.prepaymentCharges,
+
+      emiStartDate: data.emiStartDate,
+      emiPaymentAmount: data.emiPaymentAmount,
+      emiAmount: data.emiAmount,
+
       approvalDate: new Date(),
       approvedBy: userId,
+      approvedAt: new Date(),
     },
+  });
+
+  console.log("APPROVE DATA", {
+    latePaymentFeeType: data.latePaymentFeeType,
+    latePaymentFee: data.latePaymentFee,
+    bounceCharges: data.bounceCharges,
   });
 
   if (result.count === 0) {
