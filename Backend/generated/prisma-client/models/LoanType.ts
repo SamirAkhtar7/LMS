@@ -44,6 +44,8 @@ export type LoanTypeAvgAggregateOutputType = {
   maxLoanToValueRatio: number | null
   prepaymentCharges: number | null
   foreclosureCharges: number | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
   estimatedProcessingTimeDays: number | null
 }
 
@@ -65,6 +67,8 @@ export type LoanTypeSumAggregateOutputType = {
   maxLoanToValueRatio: number | null
   prepaymentCharges: number | null
   foreclosureCharges: number | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
   estimatedProcessingTimeDays: number | null
 }
 
@@ -98,6 +102,9 @@ export type LoanTypeMinAggregateOutputType = {
   foreclosureAllowed: boolean | null
   prepaymentCharges: number | null
   foreclosureCharges: number | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
   isActive: boolean | null
   isPublic: boolean | null
   approvalRequired: boolean | null
@@ -137,6 +144,9 @@ export type LoanTypeMaxAggregateOutputType = {
   foreclosureAllowed: boolean | null
   prepaymentCharges: number | null
   foreclosureCharges: number | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
   isActive: boolean | null
   isPublic: boolean | null
   approvalRequired: boolean | null
@@ -176,6 +186,9 @@ export type LoanTypeCountAggregateOutputType = {
   foreclosureAllowed: number
   prepaymentCharges: number
   foreclosureCharges: number
+  latePaymentFeeType: number
+  latePaymentFee: number
+  bounceCharges: number
   isActive: number
   isPublic: number
   approvalRequired: number
@@ -205,6 +218,8 @@ export type LoanTypeAvgAggregateInputType = {
   maxLoanToValueRatio?: true
   prepaymentCharges?: true
   foreclosureCharges?: true
+  latePaymentFee?: true
+  bounceCharges?: true
   estimatedProcessingTimeDays?: true
 }
 
@@ -226,6 +241,8 @@ export type LoanTypeSumAggregateInputType = {
   maxLoanToValueRatio?: true
   prepaymentCharges?: true
   foreclosureCharges?: true
+  latePaymentFee?: true
+  bounceCharges?: true
   estimatedProcessingTimeDays?: true
 }
 
@@ -259,6 +276,9 @@ export type LoanTypeMinAggregateInputType = {
   foreclosureAllowed?: true
   prepaymentCharges?: true
   foreclosureCharges?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
   isActive?: true
   isPublic?: true
   approvalRequired?: true
@@ -298,6 +318,9 @@ export type LoanTypeMaxAggregateInputType = {
   foreclosureAllowed?: true
   prepaymentCharges?: true
   foreclosureCharges?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
   isActive?: true
   isPublic?: true
   approvalRequired?: true
@@ -337,6 +360,9 @@ export type LoanTypeCountAggregateInputType = {
   foreclosureAllowed?: true
   prepaymentCharges?: true
   foreclosureCharges?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
   isActive?: true
   isPublic?: true
   approvalRequired?: true
@@ -463,6 +489,9 @@ export type LoanTypeGroupByOutputType = {
   foreclosureAllowed: boolean
   prepaymentCharges: number | null
   foreclosureCharges: number | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
   isActive: boolean
   isPublic: boolean
   approvalRequired: boolean
@@ -525,6 +554,9 @@ export type LoanTypeWhereInput = {
   foreclosureAllowed?: Prisma.BoolFilter<"LoanType"> | boolean
   prepaymentCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
   foreclosureCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanType"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableFilter<"LoanType"> | number | null
+  bounceCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
   isActive?: Prisma.BoolFilter<"LoanType"> | boolean
   isPublic?: Prisma.BoolFilter<"LoanType"> | boolean
   approvalRequired?: Prisma.BoolFilter<"LoanType"> | boolean
@@ -566,6 +598,9 @@ export type LoanTypeOrderByWithRelationInput = {
   foreclosureAllowed?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
@@ -611,6 +646,9 @@ export type LoanTypeWhereUniqueInput = Prisma.AtLeast<{
   foreclosureAllowed?: Prisma.BoolFilter<"LoanType"> | boolean
   prepaymentCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
   foreclosureCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanType"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableFilter<"LoanType"> | number | null
+  bounceCharges?: Prisma.FloatNullableFilter<"LoanType"> | number | null
   isActive?: Prisma.BoolFilter<"LoanType"> | boolean
   isPublic?: Prisma.BoolFilter<"LoanType"> | boolean
   approvalRequired?: Prisma.BoolFilter<"LoanType"> | boolean
@@ -652,6 +690,9 @@ export type LoanTypeOrderByWithAggregationInput = {
   foreclosureAllowed?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
@@ -699,6 +740,9 @@ export type LoanTypeScalarWhereWithAggregatesInput = {
   foreclosureAllowed?: Prisma.BoolWithAggregatesFilter<"LoanType"> | boolean
   prepaymentCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanType"> | number | null
   foreclosureCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanType"> | number | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableWithAggregatesFilter<"LoanType"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableWithAggregatesFilter<"LoanType"> | number | null
+  bounceCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanType"> | number | null
   isActive?: Prisma.BoolWithAggregatesFilter<"LoanType"> | boolean
   isPublic?: Prisma.BoolWithAggregatesFilter<"LoanType"> | boolean
   approvalRequired?: Prisma.BoolWithAggregatesFilter<"LoanType"> | boolean
@@ -738,6 +782,9 @@ export type LoanTypeCreateInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -779,6 +826,9 @@ export type LoanTypeUncheckedCreateInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -820,6 +870,9 @@ export type LoanTypeUpdateInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -861,6 +914,9 @@ export type LoanTypeUncheckedUpdateInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -902,6 +958,9 @@ export type LoanTypeCreateManyInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -941,6 +1000,9 @@ export type LoanTypeUpdateManyMutationInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -980,6 +1042,9 @@ export type LoanTypeUncheckedUpdateManyInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1035,6 +1100,9 @@ export type LoanTypeCountOrderByAggregateInput = {
   foreclosureAllowed?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
@@ -1062,6 +1130,8 @@ export type LoanTypeAvgOrderByAggregateInput = {
   maxLoanToValueRatio?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
   estimatedProcessingTimeDays?: Prisma.SortOrder
 }
 
@@ -1095,6 +1165,9 @@ export type LoanTypeMaxOrderByAggregateInput = {
   foreclosureAllowed?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
@@ -1134,6 +1207,9 @@ export type LoanTypeMinOrderByAggregateInput = {
   foreclosureAllowed?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isPublic?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
@@ -1161,6 +1237,8 @@ export type LoanTypeSumOrderByAggregateInput = {
   maxLoanToValueRatio?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
   estimatedProcessingTimeDays?: Prisma.SortOrder
 }
 
@@ -1232,6 +1310,9 @@ export type LoanTypeCreateWithoutLeadsInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1272,6 +1353,9 @@ export type LoanTypeUncheckedCreateWithoutLeadsInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1328,6 +1412,9 @@ export type LoanTypeUpdateWithoutLeadsInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1368,6 +1455,9 @@ export type LoanTypeUncheckedUpdateWithoutLeadsInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1408,6 +1498,9 @@ export type LoanTypeCreateWithoutLoanApplicationsInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1448,6 +1541,9 @@ export type LoanTypeUncheckedCreateWithoutLoanApplicationsInput = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: number | null
   foreclosureCharges?: number | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1504,6 +1600,9 @@ export type LoanTypeUpdateWithoutLoanApplicationsInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1544,6 +1643,9 @@ export type LoanTypeUncheckedUpdateWithoutLoanApplicationsInput = {
   foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1624,6 +1726,9 @@ export type LoanTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   foreclosureAllowed?: boolean
   prepaymentCharges?: boolean
   foreclosureCharges?: boolean
+  latePaymentFeeType?: boolean
+  latePaymentFee?: boolean
+  bounceCharges?: boolean
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1668,6 +1773,9 @@ export type LoanTypeSelectScalar = {
   foreclosureAllowed?: boolean
   prepaymentCharges?: boolean
   foreclosureCharges?: boolean
+  latePaymentFeeType?: boolean
+  latePaymentFee?: boolean
+  bounceCharges?: boolean
   isActive?: boolean
   isPublic?: boolean
   approvalRequired?: boolean
@@ -1677,7 +1785,7 @@ export type LoanTypeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LoanTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "category" | "secured" | "minAmount" | "maxAmount" | "minTenureMonths" | "maxTenureMonths" | "interestType" | "minInterestRate" | "maxInterestRate" | "defaultInterestRate" | "processingFeeType" | "processingFee" | "gstApplicable" | "gstPercentage" | "minAge" | "maxAge" | "minIncome" | "employmentType" | "minCibilScore" | "maxCibilScore" | "maxLoanToValueRatio" | "prepaymentAllowed" | "foreclosureAllowed" | "prepaymentCharges" | "foreclosureCharges" | "isActive" | "isPublic" | "approvalRequired" | "estimatedProcessingTimeDays" | "documentsRequired" | "createdAt" | "updatedAt", ExtArgs["result"]["loanType"]>
+export type LoanTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "category" | "secured" | "minAmount" | "maxAmount" | "minTenureMonths" | "maxTenureMonths" | "interestType" | "minInterestRate" | "maxInterestRate" | "defaultInterestRate" | "processingFeeType" | "processingFee" | "gstApplicable" | "gstPercentage" | "minAge" | "maxAge" | "minIncome" | "employmentType" | "minCibilScore" | "maxCibilScore" | "maxLoanToValueRatio" | "prepaymentAllowed" | "foreclosureAllowed" | "prepaymentCharges" | "foreclosureCharges" | "latePaymentFeeType" | "latePaymentFee" | "bounceCharges" | "isActive" | "isPublic" | "approvalRequired" | "estimatedProcessingTimeDays" | "documentsRequired" | "createdAt" | "updatedAt", ExtArgs["result"]["loanType"]>
 export type LoanTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | Prisma.LoanType$leadsArgs<ExtArgs>
   loanApplications?: boolean | Prisma.LoanType$loanApplicationsArgs<ExtArgs>
@@ -1720,6 +1828,9 @@ export type $LoanTypePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     foreclosureAllowed: boolean
     prepaymentCharges: number | null
     foreclosureCharges: number | null
+    latePaymentFeeType: $Enums.CommissionType | null
+    latePaymentFee: number | null
+    bounceCharges: number | null
     isActive: boolean
     isPublic: boolean
     approvalRequired: boolean
@@ -2127,6 +2238,9 @@ export interface LoanTypeFieldRefs {
   readonly foreclosureAllowed: Prisma.FieldRef<"LoanType", 'Boolean'>
   readonly prepaymentCharges: Prisma.FieldRef<"LoanType", 'Float'>
   readonly foreclosureCharges: Prisma.FieldRef<"LoanType", 'Float'>
+  readonly latePaymentFeeType: Prisma.FieldRef<"LoanType", 'CommissionType'>
+  readonly latePaymentFee: Prisma.FieldRef<"LoanType", 'Float'>
+  readonly bounceCharges: Prisma.FieldRef<"LoanType", 'Float'>
   readonly isActive: Prisma.FieldRef<"LoanType", 'Boolean'>
   readonly isPublic: Prisma.FieldRef<"LoanType", 'Boolean'>
   readonly approvalRequired: Prisma.FieldRef<"LoanType", 'Boolean'>

@@ -35,6 +35,11 @@ export type LoanApplicationAvgAggregateOutputType = {
   coApplicantIncome: number | null
   totalPayable: number | null
   cibilScore: number | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
+  emiPaymentAmount: number | null
+  foreclosureCharges: number | null
+  prepaymentCharges: number | null
 }
 
 export type LoanApplicationSumAggregateOutputType = {
@@ -46,6 +51,11 @@ export type LoanApplicationSumAggregateOutputType = {
   coApplicantIncome: number | null
   totalPayable: number | null
   cibilScore: number | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
+  emiPaymentAmount: number | null
+  foreclosureCharges: number | null
+  prepaymentCharges: number | null
 }
 
 export type LoanApplicationMinAggregateOutputType = {
@@ -79,6 +89,19 @@ export type LoanApplicationMinAggregateOutputType = {
   rejectedBy: string | null
   rejectedAt: Date | null
   kycId: string | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
+  emiStartDate: Date | null
+  emiPaymentAmount: number | null
+  foreclosureDate: Date | null
+  foreclosureChargesType: $Enums.CommissionType | null
+  foreclosureAllowed: boolean | null
+  foreclosureCharges: number | null
+  prepaymentChargeType: $Enums.CommissionType | null
+  prepaymentAllowed: boolean | null
+  prepaymentDate: Date | null
+  prepaymentCharges: number | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -115,6 +138,19 @@ export type LoanApplicationMaxAggregateOutputType = {
   rejectedBy: string | null
   rejectedAt: Date | null
   kycId: string | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
+  emiStartDate: Date | null
+  emiPaymentAmount: number | null
+  foreclosureDate: Date | null
+  foreclosureChargesType: $Enums.CommissionType | null
+  foreclosureAllowed: boolean | null
+  foreclosureCharges: number | null
+  prepaymentChargeType: $Enums.CommissionType | null
+  prepaymentAllowed: boolean | null
+  prepaymentDate: Date | null
+  prepaymentCharges: number | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -151,6 +187,19 @@ export type LoanApplicationCountAggregateOutputType = {
   rejectedBy: number
   rejectedAt: number
   kycId: number
+  latePaymentFeeType: number
+  latePaymentFee: number
+  bounceCharges: number
+  emiStartDate: number
+  emiPaymentAmount: number
+  foreclosureDate: number
+  foreclosureChargesType: number
+  foreclosureAllowed: number
+  foreclosureCharges: number
+  prepaymentChargeType: number
+  prepaymentAllowed: number
+  prepaymentDate: number
+  prepaymentCharges: number
   createdById: number
   createdAt: number
   updatedAt: number
@@ -167,6 +216,11 @@ export type LoanApplicationAvgAggregateInputType = {
   coApplicantIncome?: true
   totalPayable?: true
   cibilScore?: true
+  latePaymentFee?: true
+  bounceCharges?: true
+  emiPaymentAmount?: true
+  foreclosureCharges?: true
+  prepaymentCharges?: true
 }
 
 export type LoanApplicationSumAggregateInputType = {
@@ -178,6 +232,11 @@ export type LoanApplicationSumAggregateInputType = {
   coApplicantIncome?: true
   totalPayable?: true
   cibilScore?: true
+  latePaymentFee?: true
+  bounceCharges?: true
+  emiPaymentAmount?: true
+  foreclosureCharges?: true
+  prepaymentCharges?: true
 }
 
 export type LoanApplicationMinAggregateInputType = {
@@ -211,6 +270,19 @@ export type LoanApplicationMinAggregateInputType = {
   rejectedBy?: true
   rejectedAt?: true
   kycId?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
+  emiStartDate?: true
+  emiPaymentAmount?: true
+  foreclosureDate?: true
+  foreclosureChargesType?: true
+  foreclosureAllowed?: true
+  foreclosureCharges?: true
+  prepaymentChargeType?: true
+  prepaymentAllowed?: true
+  prepaymentDate?: true
+  prepaymentCharges?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -247,6 +319,19 @@ export type LoanApplicationMaxAggregateInputType = {
   rejectedBy?: true
   rejectedAt?: true
   kycId?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
+  emiStartDate?: true
+  emiPaymentAmount?: true
+  foreclosureDate?: true
+  foreclosureChargesType?: true
+  foreclosureAllowed?: true
+  foreclosureCharges?: true
+  prepaymentChargeType?: true
+  prepaymentAllowed?: true
+  prepaymentDate?: true
+  prepaymentCharges?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -283,6 +368,19 @@ export type LoanApplicationCountAggregateInputType = {
   rejectedBy?: true
   rejectedAt?: true
   kycId?: true
+  latePaymentFeeType?: true
+  latePaymentFee?: true
+  bounceCharges?: true
+  emiStartDate?: true
+  emiPaymentAmount?: true
+  foreclosureDate?: true
+  foreclosureChargesType?: true
+  foreclosureAllowed?: true
+  foreclosureCharges?: true
+  prepaymentChargeType?: true
+  prepaymentAllowed?: true
+  prepaymentDate?: true
+  prepaymentCharges?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -406,6 +504,19 @@ export type LoanApplicationGroupByOutputType = {
   rejectedBy: string | null
   rejectedAt: Date | null
   kycId: string | null
+  latePaymentFeeType: $Enums.CommissionType | null
+  latePaymentFee: number | null
+  bounceCharges: number | null
+  emiStartDate: Date | null
+  emiPaymentAmount: number | null
+  foreclosureDate: Date | null
+  foreclosureChargesType: $Enums.CommissionType | null
+  foreclosureAllowed: boolean
+  foreclosureCharges: number | null
+  prepaymentChargeType: $Enums.CommissionType | null
+  prepaymentAllowed: boolean
+  prepaymentDate: Date | null
+  prepaymentCharges: number | null
   createdById: string | null
   createdAt: Date
   updatedAt: Date
@@ -465,6 +576,19 @@ export type LoanApplicationWhereInput = {
   rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   kycId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  bounceCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  emiStartDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  emiPaymentAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  foreclosureDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  foreclosureChargesType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  foreclosureCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  prepaymentChargeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -508,6 +632,19 @@ export type LoanApplicationOrderByWithRelationInput = {
   rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   kycId?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  emiStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureChargesType?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureAllowed?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentChargeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentAllowed?: Prisma.SortOrder
+  prepaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -555,6 +692,19 @@ export type LoanApplicationWhereUniqueInput = Prisma.AtLeast<{
   approvedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  bounceCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  emiStartDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  emiPaymentAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  foreclosureDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  foreclosureChargesType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  foreclosureCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  prepaymentChargeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -598,6 +748,19 @@ export type LoanApplicationOrderByWithAggregationInput = {
   rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   kycId?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  emiStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureChargesType?: Prisma.SortOrderInput | Prisma.SortOrder
+  foreclosureAllowed?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentChargeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentAllowed?: Prisma.SortOrder
+  prepaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -642,6 +805,19 @@ export type LoanApplicationScalarWhereWithAggregatesInput = {
   rejectedBy?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
   rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
   kycId?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableWithAggregatesFilter<"LoanApplication"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
+  bounceCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
+  emiStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  emiPaymentAmount?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
+  foreclosureDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  foreclosureChargesType?: Prisma.EnumCommissionTypeNullableWithAggregatesFilter<"LoanApplication"> | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolWithAggregatesFilter<"LoanApplication"> | boolean
+  foreclosureCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
+  prepaymentChargeType?: Prisma.EnumCommissionTypeNullableWithAggregatesFilter<"LoanApplication"> | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolWithAggregatesFilter<"LoanApplication"> | boolean
+  prepaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  prepaymentCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
@@ -674,6 +850,19 @@ export type LoanApplicationCreateInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -716,6 +905,19 @@ export type LoanApplicationUncheckedCreateInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -750,6 +952,19 @@ export type LoanApplicationUpdateInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -792,6 +1007,19 @@ export type LoanApplicationUncheckedUpdateInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -830,6 +1058,19 @@ export type LoanApplicationCreateManyInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -862,6 +1103,19 @@ export type LoanApplicationUpdateManyMutationInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -897,6 +1151,19 @@ export type LoanApplicationUncheckedUpdateManyInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -949,6 +1216,19 @@ export type LoanApplicationCountOrderByAggregateInput = {
   rejectedBy?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
+  emiStartDate?: Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrder
+  foreclosureDate?: Prisma.SortOrder
+  foreclosureChargesType?: Prisma.SortOrder
+  foreclosureAllowed?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrder
+  prepaymentChargeType?: Prisma.SortOrder
+  prepaymentAllowed?: Prisma.SortOrder
+  prepaymentDate?: Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -963,6 +1243,11 @@ export type LoanApplicationAvgOrderByAggregateInput = {
   coApplicantIncome?: Prisma.SortOrder
   totalPayable?: Prisma.SortOrder
   cibilScore?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrder
 }
 
 export type LoanApplicationMaxOrderByAggregateInput = {
@@ -996,6 +1281,19 @@ export type LoanApplicationMaxOrderByAggregateInput = {
   rejectedBy?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
+  emiStartDate?: Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrder
+  foreclosureDate?: Prisma.SortOrder
+  foreclosureChargesType?: Prisma.SortOrder
+  foreclosureAllowed?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrder
+  prepaymentChargeType?: Prisma.SortOrder
+  prepaymentAllowed?: Prisma.SortOrder
+  prepaymentDate?: Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1032,6 +1330,19 @@ export type LoanApplicationMinOrderByAggregateInput = {
   rejectedBy?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   kycId?: Prisma.SortOrder
+  latePaymentFeeType?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
+  emiStartDate?: Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrder
+  foreclosureDate?: Prisma.SortOrder
+  foreclosureChargesType?: Prisma.SortOrder
+  foreclosureAllowed?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrder
+  prepaymentChargeType?: Prisma.SortOrder
+  prepaymentAllowed?: Prisma.SortOrder
+  prepaymentDate?: Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1046,6 +1357,11 @@ export type LoanApplicationSumOrderByAggregateInput = {
   coApplicantIncome?: Prisma.SortOrder
   totalPayable?: Prisma.SortOrder
   cibilScore?: Prisma.SortOrder
+  latePaymentFee?: Prisma.SortOrder
+  bounceCharges?: Prisma.SortOrder
+  emiPaymentAmount?: Prisma.SortOrder
+  foreclosureCharges?: Prisma.SortOrder
+  prepaymentCharges?: Prisma.SortOrder
 }
 
 export type LoanApplicationNullableScalarRelationFilter = {
@@ -1156,6 +1472,10 @@ export type EnumLoanStatusFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type NullableEnumCommissionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.CommissionType | null
 }
 
 export type LoanApplicationCreateNestedOneWithoutDocumentsInput = {
@@ -1331,6 +1651,19 @@ export type LoanApplicationCreateWithoutCreatedByInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1372,6 +1705,19 @@ export type LoanApplicationUncheckedCreateWithoutCreatedByInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
@@ -1438,6 +1784,19 @@ export type LoanApplicationScalarWhereInput = {
   rejectedBy?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   kycId?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
+  latePaymentFeeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  bounceCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  emiStartDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  emiPaymentAmount?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  foreclosureDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  foreclosureChargesType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  foreclosureCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  prepaymentChargeType?: Prisma.EnumCommissionTypeNullableFilter<"LoanApplication"> | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
+  prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -1470,6 +1829,19 @@ export type LoanApplicationCreateWithoutLeadInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1510,6 +1882,19 @@ export type LoanApplicationUncheckedCreateWithoutLeadInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1570,6 +1955,19 @@ export type LoanApplicationCreateWithoutDocumentsInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1611,6 +2009,19 @@ export type LoanApplicationUncheckedCreateWithoutDocumentsInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1660,6 +2071,19 @@ export type LoanApplicationUpdateWithoutDocumentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -1701,6 +2125,19 @@ export type LoanApplicationUncheckedUpdateWithoutDocumentsInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1734,6 +2171,19 @@ export type LoanApplicationCreateWithoutKycInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1774,6 +2224,19 @@ export type LoanApplicationUncheckedCreateWithoutKycInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1824,6 +2287,19 @@ export type LoanApplicationUpdateWithoutKycInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -1864,6 +2340,19 @@ export type LoanApplicationUncheckedUpdateWithoutKycInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1898,6 +2387,19 @@ export type LoanApplicationCreateWithoutEmisInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1939,6 +2441,19 @@ export type LoanApplicationUncheckedCreateWithoutEmisInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1988,6 +2503,19 @@ export type LoanApplicationUpdateWithoutEmisInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2029,6 +2557,19 @@ export type LoanApplicationUncheckedUpdateWithoutEmisInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2062,6 +2603,19 @@ export type LoanApplicationCreateWithoutLoanTypeInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -2102,6 +2656,19 @@ export type LoanApplicationUncheckedCreateWithoutLoanTypeInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2162,6 +2729,19 @@ export type LoanApplicationCreateWithoutCustomerInput = {
   approvedAt?: Date | string | null
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
@@ -2202,6 +2782,19 @@ export type LoanApplicationUncheckedCreateWithoutCustomerInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2266,6 +2859,19 @@ export type LoanApplicationCreateManyCreatedByInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2297,6 +2903,19 @@ export type LoanApplicationUpdateWithoutCreatedByInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2338,6 +2957,19 @@ export type LoanApplicationUncheckedUpdateWithoutCreatedByInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
@@ -2375,6 +3007,19 @@ export type LoanApplicationUncheckedUpdateManyWithoutCreatedByInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2409,6 +3054,19 @@ export type LoanApplicationCreateManyLeadInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2441,6 +3099,19 @@ export type LoanApplicationUpdateWithoutLeadInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2481,6 +3152,19 @@ export type LoanApplicationUncheckedUpdateWithoutLeadInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2518,6 +3202,19 @@ export type LoanApplicationUncheckedUpdateManyWithoutLeadInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2553,6 +3250,19 @@ export type LoanApplicationCreateManyLoanTypeInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2585,6 +3295,19 @@ export type LoanApplicationUpdateWithoutLoanTypeInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2625,6 +3348,19 @@ export type LoanApplicationUncheckedUpdateWithoutLoanTypeInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2662,6 +3398,19 @@ export type LoanApplicationUncheckedUpdateManyWithoutLoanTypeInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2697,6 +3446,19 @@ export type LoanApplicationCreateManyCustomerInput = {
   rejectedBy?: string | null
   rejectedAt?: Date | string | null
   kycId?: string | null
+  latePaymentFeeType?: $Enums.CommissionType | null
+  latePaymentFee?: number | null
+  bounceCharges?: number | null
+  emiStartDate?: Date | string | null
+  emiPaymentAmount?: number | null
+  foreclosureDate?: Date | string | null
+  foreclosureChargesType?: $Enums.CommissionType | null
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: number | null
+  prepaymentChargeType?: $Enums.CommissionType | null
+  prepaymentAllowed?: boolean
+  prepaymentDate?: Date | string | null
+  prepaymentCharges?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2729,6 +3491,19 @@ export type LoanApplicationUpdateWithoutCustomerInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
@@ -2769,6 +3544,19 @@ export type LoanApplicationUncheckedUpdateWithoutCustomerInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2806,6 +3594,19 @@ export type LoanApplicationUncheckedUpdateManyWithoutCustomerInput = {
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latePaymentFeeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  latePaymentFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bounceCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  emiStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emiPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  foreclosureDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  foreclosureChargesType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  foreclosureAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foreclosureCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  prepaymentChargeType?: Prisma.NullableEnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType | null
+  prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2882,6 +3683,19 @@ export type LoanApplicationSelect<ExtArgs extends runtime.Types.Extensions.Inter
   rejectedBy?: boolean
   rejectedAt?: boolean
   kycId?: boolean
+  latePaymentFeeType?: boolean
+  latePaymentFee?: boolean
+  bounceCharges?: boolean
+  emiStartDate?: boolean
+  emiPaymentAmount?: boolean
+  foreclosureDate?: boolean
+  foreclosureChargesType?: boolean
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: boolean
+  prepaymentChargeType?: boolean
+  prepaymentAllowed?: boolean
+  prepaymentDate?: boolean
+  prepaymentCharges?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2928,12 +3742,25 @@ export type LoanApplicationSelectScalar = {
   rejectedBy?: boolean
   rejectedAt?: boolean
   kycId?: boolean
+  latePaymentFeeType?: boolean
+  latePaymentFee?: boolean
+  bounceCharges?: boolean
+  emiStartDate?: boolean
+  emiPaymentAmount?: boolean
+  foreclosureDate?: boolean
+  foreclosureChargesType?: boolean
+  foreclosureAllowed?: boolean
+  foreclosureCharges?: boolean
+  prepaymentChargeType?: boolean
+  prepaymentAllowed?: boolean
+  prepaymentDate?: boolean
+  prepaymentCharges?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "leadId" | "loanTypeId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "purposeDetails" | "coApplicantName" | "coApplicantRelation" | "coApplicantContact" | "coApplicantIncome" | "coApplicantPan" | "coApplicantAadhaar" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "kycId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
+export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "leadId" | "loanTypeId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "purposeDetails" | "coApplicantName" | "coApplicantRelation" | "coApplicantContact" | "coApplicantIncome" | "coApplicantPan" | "coApplicantAadhaar" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "kycId" | "latePaymentFeeType" | "latePaymentFee" | "bounceCharges" | "emiStartDate" | "emiPaymentAmount" | "foreclosureDate" | "foreclosureChargesType" | "foreclosureAllowed" | "foreclosureCharges" | "prepaymentChargeType" | "prepaymentAllowed" | "prepaymentDate" | "prepaymentCharges" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
 export type LoanApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LoanApplication$leadArgs<ExtArgs>
@@ -2987,6 +3814,19 @@ export type $LoanApplicationPayload<ExtArgs extends runtime.Types.Extensions.Int
     rejectedBy: string | null
     rejectedAt: Date | null
     kycId: string | null
+    latePaymentFeeType: $Enums.CommissionType | null
+    latePaymentFee: number | null
+    bounceCharges: number | null
+    emiStartDate: Date | null
+    emiPaymentAmount: number | null
+    foreclosureDate: Date | null
+    foreclosureChargesType: $Enums.CommissionType | null
+    foreclosureAllowed: boolean
+    foreclosureCharges: number | null
+    prepaymentChargeType: $Enums.CommissionType | null
+    prepaymentAllowed: boolean
+    prepaymentDate: Date | null
+    prepaymentCharges: number | null
     createdById: string | null
     createdAt: Date
     updatedAt: Date
@@ -3396,6 +4236,19 @@ export interface LoanApplicationFieldRefs {
   readonly rejectedBy: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly rejectedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly kycId: Prisma.FieldRef<"LoanApplication", 'String'>
+  readonly latePaymentFeeType: Prisma.FieldRef<"LoanApplication", 'CommissionType'>
+  readonly latePaymentFee: Prisma.FieldRef<"LoanApplication", 'Float'>
+  readonly bounceCharges: Prisma.FieldRef<"LoanApplication", 'Float'>
+  readonly emiStartDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly emiPaymentAmount: Prisma.FieldRef<"LoanApplication", 'Float'>
+  readonly foreclosureDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly foreclosureChargesType: Prisma.FieldRef<"LoanApplication", 'CommissionType'>
+  readonly foreclosureAllowed: Prisma.FieldRef<"LoanApplication", 'Boolean'>
+  readonly foreclosureCharges: Prisma.FieldRef<"LoanApplication", 'Float'>
+  readonly prepaymentChargeType: Prisma.FieldRef<"LoanApplication", 'CommissionType'>
+  readonly prepaymentAllowed: Prisma.FieldRef<"LoanApplication", 'Boolean'>
+  readonly prepaymentDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly prepaymentCharges: Prisma.FieldRef<"LoanApplication", 'Float'>
   readonly createdById: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly createdAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>

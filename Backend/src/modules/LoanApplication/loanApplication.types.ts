@@ -236,7 +236,7 @@ export interface apperoveLoanInput {
   bounceCharges: number;
   prepaymentChargeType: CommissionType;
   prepaymentAllowed: boolean;
-  prepaymentDate: Date;
+  prepaymentDate?: Date;
   prepaymentCharges: number;
   foreclosureChargesType: CommissionType;
   foreclosureAllowed: boolean;
