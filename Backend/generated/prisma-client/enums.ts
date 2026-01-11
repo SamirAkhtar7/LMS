@@ -28,6 +28,22 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const MoratoriumStatus = {
+  active: 'active',
+  completed: 'completed'
+} as const
+
+export type MoratoriumStatus = (typeof MoratoriumStatus)[keyof typeof MoratoriumStatus]
+
+
+export const MoratoriumType = {
+  FULL: 'FULL',
+  INTEREST_ONLY: 'INTEREST_ONLY'
+} as const
+
+export type MoratoriumType = (typeof MoratoriumType)[keyof typeof MoratoriumType]
+
+
 export const Category = {
   GENERAL: 'GENERAL',
   SC: 'SC',
@@ -51,6 +67,14 @@ export const CoApplicantRelation = {
 } as const
 
 export type CoApplicantRelation = (typeof CoApplicantRelation)[keyof typeof CoApplicantRelation]
+
+
+export const LateFeeType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+} as const
+
+export type LateFeeType = (typeof LateFeeType)[keyof typeof LateFeeType]
 
 
 export const Gender = {

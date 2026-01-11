@@ -396,6 +396,8 @@ export const ModelName = {
   Document: 'Document',
   Kyc: 'Kyc',
   LoanEmiSchedule: 'LoanEmiSchedule',
+  EmiPayment: 'EmiPayment',
+  EmiMoratorium: 'EmiMoratorium',
   LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
@@ -413,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "loanType" | "customer"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1209,6 +1211,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmiPayment: {
+      payload: Prisma.$EmiPaymentPayload<ExtArgs>
+      fields: Prisma.EmiPaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmiPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmiPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.EmiPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmiPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        findMany: {
+          args: Prisma.EmiPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>[]
+        }
+        create: {
+          args: Prisma.EmiPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        createMany: {
+          args: Prisma.EmiPaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EmiPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        update: {
+          args: Prisma.EmiPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmiPaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmiPaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EmiPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiPaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.EmiPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmiPayment>
+        }
+        groupBy: {
+          args: Prisma.EmiPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmiPaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmiPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmiPaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    EmiMoratorium: {
+      payload: Prisma.$EmiMoratoriumPayload<ExtArgs>
+      fields: Prisma.EmiMoratoriumFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmiMoratoriumFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmiMoratoriumFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        findFirst: {
+          args: Prisma.EmiMoratoriumFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmiMoratoriumFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        findMany: {
+          args: Prisma.EmiMoratoriumFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>[]
+        }
+        create: {
+          args: Prisma.EmiMoratoriumCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        createMany: {
+          args: Prisma.EmiMoratoriumCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EmiMoratoriumDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        update: {
+          args: Prisma.EmiMoratoriumUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmiMoratoriumDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmiMoratoriumUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EmiMoratoriumUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmiMoratoriumPayload>
+        }
+        aggregate: {
+          args: Prisma.EmiMoratoriumAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmiMoratorium>
+        }
+        groupBy: {
+          args: Prisma.EmiMoratoriumGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmiMoratoriumGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmiMoratoriumCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmiMoratoriumCountAggregateOutputType> | number
+        }
+      }
+    }
     LoanType: {
       payload: Prisma.$LoanTypePayload<ExtArgs>
       fields: Prisma.LoanTypeFieldRefs
@@ -1543,6 +1677,19 @@ export const LoanApplicationScalarFieldEnum = {
   rejectedBy: 'rejectedBy',
   rejectedAt: 'rejectedAt',
   kycId: 'kycId',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
+  emiStartDate: 'emiStartDate',
+  emiPaymentAmount: 'emiPaymentAmount',
+  foreclosureDate: 'foreclosureDate',
+  foreclosureChargesType: 'foreclosureChargesType',
+  foreclosureAllowed: 'foreclosureAllowed',
+  foreclosureCharges: 'foreclosureCharges',
+  prepaymentChargeType: 'prepaymentChargeType',
+  prepaymentAllowed: 'prepaymentAllowed',
+  prepaymentDate: 'prepaymentDate',
+  prepaymentCharges: 'prepaymentCharges',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1609,17 +1756,49 @@ export const LoanEmiScheduleScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   emiNo: 'emiNo',
+  emiStartDate: 'emiStartDate',
   dueDate: 'dueDate',
+  openingBalance: 'openingBalance',
   principalAmount: 'principalAmount',
   interestAmount: 'interestAmount',
   emiAmount: 'emiAmount',
-  openingBalance: 'openingBalance',
+  emiPaymentAmount: 'emiPaymentAmount',
   closingBalance: 'closingBalance',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
   status: 'status',
-  paidDate: 'paidDate'
+  paidDate: 'paidDate',
+  isDeferred: 'isDeferred'
 } as const
 
 export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
+export const EmiPaymentScalarFieldEnum = {
+  id: 'id',
+  emiScheduleId: 'emiScheduleId',
+  amount: 'amount',
+  paymentDate: 'paymentDate',
+  paymentMode: 'paymentMode'
+} as const
+
+export type EmiPaymentScalarFieldEnum = (typeof EmiPaymentScalarFieldEnum)[keyof typeof EmiPaymentScalarFieldEnum]
+
+
+export const EmiMoratoriumScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  interestAccrued: 'interestAccrued',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmiMoratoriumScalarFieldEnum = (typeof EmiMoratoriumScalarFieldEnum)[keyof typeof EmiMoratoriumScalarFieldEnum]
 
 
 export const LoanTypeScalarFieldEnum = {
@@ -1652,6 +1831,9 @@ export const LoanTypeScalarFieldEnum = {
   foreclosureAllowed: 'foreclosureAllowed',
   prepaymentCharges: 'prepaymentCharges',
   foreclosureCharges: 'foreclosureCharges',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
   isActive: 'isActive',
   isPublic: 'isPublic',
   approvalRequired: 'approvalRequired',
@@ -1884,6 +2066,22 @@ export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
 export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
 
 
+export const EmiPaymentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  emiScheduleId: 'emiScheduleId'
+} as const
+
+export type EmiPaymentOrderByRelevanceFieldEnum = (typeof EmiPaymentOrderByRelevanceFieldEnum)[keyof typeof EmiPaymentOrderByRelevanceFieldEnum]
+
+
+export const EmiMoratoriumOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId'
+} as const
+
+export type EmiMoratoriumOrderByRelevanceFieldEnum = (typeof EmiMoratoriumOrderByRelevanceFieldEnum)[keyof typeof EmiMoratoriumOrderByRelevanceFieldEnum]
+
+
 export const LoanTypeOrderByRelevanceFieldEnum = {
   id: 'id',
   code: 'code',
@@ -2062,9 +2260,37 @@ export type EnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'LateFeeType'
+ */
+export type EnumLateFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LateFeeType'>
+    
+
+
+/**
  * Reference to a field of type 'EmiStatus'
  */
 export type EnumEmiStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmiStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMode'
+ */
+export type EnumPaymentModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMode'>
+    
+
+
+/**
+ * Reference to a field of type 'MoratoriumType'
+ */
+export type EnumMoratoriumTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoratoriumType'>
+    
+
+
+/**
+ * Reference to a field of type 'MoratoriumStatus'
+ */
+export type EnumMoratoriumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoratoriumStatus'>
     
 
 
@@ -2209,6 +2435,8 @@ export type GlobalOmitConfig = {
   document?: Prisma.DocumentOmit
   kyc?: Prisma.KycOmit
   loanEmiSchedule?: Prisma.LoanEmiScheduleOmit
+  emiPayment?: Prisma.EmiPaymentOmit
+  emiMoratorium?: Prisma.EmiMoratoriumOmit
   loanType?: Prisma.LoanTypeOmit
   customer?: Prisma.CustomerOmit
 }

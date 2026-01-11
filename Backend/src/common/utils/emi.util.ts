@@ -35,7 +35,7 @@ export function calculateEmi({
   };
 }
 
-export const generateEmiScheduleService = async ({
+export const generateEmiSchedule = async ({
   loanId,
   principal,
   annualRate,
@@ -55,6 +55,7 @@ export const generateEmiScheduleService = async ({
 
     schedule.push({
       loanApplicationId: loanId,
+      emiStartDate: startDate,
       emiNo: i,
       dueDate: new Date(
         startDate.getFullYear(),

@@ -78,6 +78,16 @@ export type Kyc = Prisma.KycModel
  */
 export type LoanEmiSchedule = Prisma.LoanEmiScheduleModel
 /**
+ * Model EmiPayment
+ * 
+ */
+export type EmiPayment = Prisma.EmiPaymentModel
+/**
+ * Model EmiMoratorium
+ * 
+ */
+export type EmiMoratorium = Prisma.EmiMoratoriumModel
+/**
  * Model LoanType
  * 
  */

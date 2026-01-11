@@ -213,6 +213,26 @@ model LoanApplication {
   kycId               String?              @unique
   kyc                 Kyc?                 @relation(fields: [kycId], references: [id])
 
+  //Emi charges
+
+  //Disbursement Rules
+  latePaymentFeeType CommissionType?
+  latePaymentFee     Float? // amount or %
+  bounceCharges      Float? // amount or %
+  emiStartDate       DateTime?
+  emiPaymentAmount   Float?
+
+  foreclosureDate        DateTime?
+  foreclosureChargesType CommissionType?
+  foreclosureAllowed     Boolean         @default(true)
+  foreclosureCharges     Float? // amount or %
+
+  prepaymentChargeType CommissionType?
+  prepaymentAllowed    Boolean         @default(true)
+  prepaymentDate       DateTime?
+  prepaymentCharges    Float? // amount or %
+
+  // Relations
   documents Document[]
 
   // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
@@ -345,19 +365,53 @@ enum KycStatus {
 //////////////////////////////////
 
 model LoanEmiSchedule {
-  id                String          @id @default(cuid())
+  id                String @id @default(cuid())
   loanApplicationId String
-  emiNo             Int
-  dueDate           DateTime
-  principalAmount   Float
-  interestAmount    Float
-  emiAmount         Float
-  openingBalance    Float
-  closingBalance    Float
-  status            EmiStatus       @default(pending)
-  paidDate          DateTime?
-  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
-  // payments LoanPayment[] 
+
+  emiNo        Int
+  emiStartDate DateTime? // EMI cycle start date
+  dueDate      DateTime // EMI due date
+
+  openingBalance   Float
+  principalAmount  Float
+  interestAmount   Float
+  emiAmount        Float // Scheduled EMI amount
+  emiPaymentAmount Float? // Actual amount paid (can be partial / excess)
+
+  closingBalance Float
+
+  // Late & penalty
+  latePaymentFeeType LateFeeType @default(FIXED)
+  latePaymentFee     Float       @default(0)
+  bounceCharges      Float       @default(0) // NACH / cheque bounce charge
+
+  status          EmiStatus       @default(pending)
+  paidDate        DateTime?
+  isDeferred      Boolean         @default(false)
+  loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  @@index([loanApplicationId, emiNo])
+  @@index([dueDate, status])
+}
+
+model EmiPayment {
+  id            String      @id @default(cuid())
+  emiScheduleId String
+  amount        Float
+  paymentDate   DateTime
+  paymentMode   PaymentMode
+}
+
+model EmiMoratorium {
+  id                String           @id @default(cuid())
+  loanApplicationId String
+  type              MoratoriumType
+  startDate         DateTime
+  endDate           DateTime
+  interestAccrued   Float            @default(0)
+  status            MoratoriumStatus @default(active)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
 
 // PAYMENTS
@@ -473,6 +527,11 @@ model LoanType {
   prepaymentCharges  Float? // amount or %
   foreclosureCharges Float? // amount or %
 
+  //Emi charges
+  latePaymentFeeType CommissionType?
+  latePaymentFee     Float? // amount or %
+  bounceCharges      Float? // amount or %
+
   //visibility & Control 
 
   isActive         Boolean @default(true)
@@ -561,6 +620,16 @@ enum Role {
   PARTNER
 }
 
+enum MoratoriumStatus {
+  active
+  completed
+}
+
+enum MoratoriumType {
+  FULL
+  INTEREST_ONLY
+}
+
 enum Category {
   GENERAL
   SC
@@ -579,6 +648,11 @@ enum CoApplicantRelation {
   SIBLING
   FRIEND
   OTHER
+}
+
+enum LateFeeType {
+  FIXED
+  PERCENTAGE
 }
 
 enum Gender {

@@ -63,6 +63,8 @@ export const ModelName = {
   Document: 'Document',
   Kyc: 'Kyc',
   LoanEmiSchedule: 'LoanEmiSchedule',
+  EmiPayment: 'EmiPayment',
+  EmiMoratorium: 'EmiMoratorium',
   LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
@@ -246,6 +248,19 @@ export const LoanApplicationScalarFieldEnum = {
   rejectedBy: 'rejectedBy',
   rejectedAt: 'rejectedAt',
   kycId: 'kycId',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
+  emiStartDate: 'emiStartDate',
+  emiPaymentAmount: 'emiPaymentAmount',
+  foreclosureDate: 'foreclosureDate',
+  foreclosureChargesType: 'foreclosureChargesType',
+  foreclosureAllowed: 'foreclosureAllowed',
+  foreclosureCharges: 'foreclosureCharges',
+  prepaymentChargeType: 'prepaymentChargeType',
+  prepaymentAllowed: 'prepaymentAllowed',
+  prepaymentDate: 'prepaymentDate',
+  prepaymentCharges: 'prepaymentCharges',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -312,17 +327,49 @@ export const LoanEmiScheduleScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   emiNo: 'emiNo',
+  emiStartDate: 'emiStartDate',
   dueDate: 'dueDate',
+  openingBalance: 'openingBalance',
   principalAmount: 'principalAmount',
   interestAmount: 'interestAmount',
   emiAmount: 'emiAmount',
-  openingBalance: 'openingBalance',
+  emiPaymentAmount: 'emiPaymentAmount',
   closingBalance: 'closingBalance',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
   status: 'status',
-  paidDate: 'paidDate'
+  paidDate: 'paidDate',
+  isDeferred: 'isDeferred'
 } as const
 
 export type LoanEmiScheduleScalarFieldEnum = (typeof LoanEmiScheduleScalarFieldEnum)[keyof typeof LoanEmiScheduleScalarFieldEnum]
+
+
+export const EmiPaymentScalarFieldEnum = {
+  id: 'id',
+  emiScheduleId: 'emiScheduleId',
+  amount: 'amount',
+  paymentDate: 'paymentDate',
+  paymentMode: 'paymentMode'
+} as const
+
+export type EmiPaymentScalarFieldEnum = (typeof EmiPaymentScalarFieldEnum)[keyof typeof EmiPaymentScalarFieldEnum]
+
+
+export const EmiMoratoriumScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  interestAccrued: 'interestAccrued',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmiMoratoriumScalarFieldEnum = (typeof EmiMoratoriumScalarFieldEnum)[keyof typeof EmiMoratoriumScalarFieldEnum]
 
 
 export const LoanTypeScalarFieldEnum = {
@@ -355,6 +402,9 @@ export const LoanTypeScalarFieldEnum = {
   foreclosureAllowed: 'foreclosureAllowed',
   prepaymentCharges: 'prepaymentCharges',
   foreclosureCharges: 'foreclosureCharges',
+  latePaymentFeeType: 'latePaymentFeeType',
+  latePaymentFee: 'latePaymentFee',
+  bounceCharges: 'bounceCharges',
   isActive: 'isActive',
   isPublic: 'isPublic',
   approvalRequired: 'approvalRequired',
@@ -585,6 +635,22 @@ export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
 } as const
 
 export type LoanEmiScheduleOrderByRelevanceFieldEnum = (typeof LoanEmiScheduleOrderByRelevanceFieldEnum)[keyof typeof LoanEmiScheduleOrderByRelevanceFieldEnum]
+
+
+export const EmiPaymentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  emiScheduleId: 'emiScheduleId'
+} as const
+
+export type EmiPaymentOrderByRelevanceFieldEnum = (typeof EmiPaymentOrderByRelevanceFieldEnum)[keyof typeof EmiPaymentOrderByRelevanceFieldEnum]
+
+
+export const EmiMoratoriumOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId'
+} as const
+
+export type EmiMoratoriumOrderByRelevanceFieldEnum = (typeof EmiMoratoriumOrderByRelevanceFieldEnum)[keyof typeof EmiMoratoriumOrderByRelevanceFieldEnum]
 
 
 export const LoanTypeOrderByRelevanceFieldEnum = {

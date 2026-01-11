@@ -2,9 +2,12 @@ import express from "express";
 import routes from "./routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { startEmiOverdueJob } from "./jobs/emiOverdue.job.js";
 
 const app = express();
 
+// Start the EMI overdue job scheduler
+startEmiOverdueJob();
 
 app.use(
   cors({

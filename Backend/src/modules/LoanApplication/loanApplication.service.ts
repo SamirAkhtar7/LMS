@@ -414,6 +414,22 @@ export const approveLoanService = async (
   userId: string,
   data: apperoveLoanInput
 ) => {
+  // normalize emiStartDate to a full ISO Date if provided as yyyy-mm-dd string
+  let emiStartDateNormalized: Date | undefined = undefined;
+  if (data.emiStartDate !== undefined && data.emiStartDate !== null) {
+    if (typeof data.emiStartDate === "string") {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(data.emiStartDate)) {
+        emiStartDateNormalized = new Date(data.emiStartDate + "T00:00:00.000Z");
+      } else {
+        const parsed = new Date(data.emiStartDate);
+        if (isNaN(parsed.getTime())) throw new Error("Invalid emiStartDate");
+        emiStartDateNormalized = parsed;
+      }
+    } else {
+      emiStartDateNormalized = new Date(data.emiStartDate as any);
+    }
+  }
+
   const result = await prisma.loanApplication.updateMany({
     where: {
       id: loanId,
@@ -439,9 +455,11 @@ export const approveLoanService = async (
       prepaymentChargeType: data.prepaymentChargeType,
       prepaymentCharges: data.prepaymentCharges,
 
-      emiStartDate: data.emiStartDate,
+      emiStartDate: emiStartDateNormalized,
       emiPaymentAmount: data.emiPaymentAmount,
       emiAmount: data.emiAmount,
+
+
 
       approvalDate: new Date(),
       approvedBy: userId,
