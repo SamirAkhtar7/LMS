@@ -356,10 +356,6 @@ export type EmiPaymentSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
-export type EnumPaymentModeFieldUpdateOperationsInput = {
-  set?: $Enums.PaymentMode
-}
-
 
 
 export type EmiPaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{

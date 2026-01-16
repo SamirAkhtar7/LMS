@@ -40,6 +40,7 @@ export type LoanApplicationAvgAggregateOutputType = {
   emiPaymentAmount: number | null
   foreclosureCharges: number | null
   prepaymentCharges: number | null
+  dpd: number | null
 }
 
 export type LoanApplicationSumAggregateOutputType = {
@@ -56,6 +57,7 @@ export type LoanApplicationSumAggregateOutputType = {
   emiPaymentAmount: number | null
   foreclosureCharges: number | null
   prepaymentCharges: number | null
+  dpd: number | null
 }
 
 export type LoanApplicationMinAggregateOutputType = {
@@ -102,6 +104,8 @@ export type LoanApplicationMinAggregateOutputType = {
   prepaymentAllowed: boolean | null
   prepaymentDate: Date | null
   prepaymentCharges: number | null
+  defaultedAt: Date | null
+  dpd: number | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -151,6 +155,8 @@ export type LoanApplicationMaxAggregateOutputType = {
   prepaymentAllowed: boolean | null
   prepaymentDate: Date | null
   prepaymentCharges: number | null
+  defaultedAt: Date | null
+  dpd: number | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -200,6 +206,8 @@ export type LoanApplicationCountAggregateOutputType = {
   prepaymentAllowed: number
   prepaymentDate: number
   prepaymentCharges: number
+  defaultedAt: number
+  dpd: number
   createdById: number
   createdAt: number
   updatedAt: number
@@ -221,6 +229,7 @@ export type LoanApplicationAvgAggregateInputType = {
   emiPaymentAmount?: true
   foreclosureCharges?: true
   prepaymentCharges?: true
+  dpd?: true
 }
 
 export type LoanApplicationSumAggregateInputType = {
@@ -237,6 +246,7 @@ export type LoanApplicationSumAggregateInputType = {
   emiPaymentAmount?: true
   foreclosureCharges?: true
   prepaymentCharges?: true
+  dpd?: true
 }
 
 export type LoanApplicationMinAggregateInputType = {
@@ -283,6 +293,8 @@ export type LoanApplicationMinAggregateInputType = {
   prepaymentAllowed?: true
   prepaymentDate?: true
   prepaymentCharges?: true
+  defaultedAt?: true
+  dpd?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -332,6 +344,8 @@ export type LoanApplicationMaxAggregateInputType = {
   prepaymentAllowed?: true
   prepaymentDate?: true
   prepaymentCharges?: true
+  defaultedAt?: true
+  dpd?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -381,6 +395,8 @@ export type LoanApplicationCountAggregateInputType = {
   prepaymentAllowed?: true
   prepaymentDate?: true
   prepaymentCharges?: true
+  defaultedAt?: true
+  dpd?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -517,6 +533,8 @@ export type LoanApplicationGroupByOutputType = {
   prepaymentAllowed: boolean
   prepaymentDate: Date | null
   prepaymentCharges: number | null
+  defaultedAt: Date | null
+  dpd: number | null
   createdById: string | null
   createdAt: Date
   updatedAt: Date
@@ -589,6 +607,8 @@ export type LoanApplicationWhereInput = {
   prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
   prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  defaultedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  dpd?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -645,6 +665,8 @@ export type LoanApplicationOrderByWithRelationInput = {
   prepaymentAllowed?: Prisma.SortOrder
   prepaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  dpd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -705,6 +727,8 @@ export type LoanApplicationWhereUniqueInput = Prisma.AtLeast<{
   prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
   prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  defaultedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  dpd?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -761,6 +785,8 @@ export type LoanApplicationOrderByWithAggregationInput = {
   prepaymentAllowed?: Prisma.SortOrder
   prepaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  dpd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -818,6 +844,8 @@ export type LoanApplicationScalarWhereWithAggregatesInput = {
   prepaymentAllowed?: Prisma.BoolWithAggregatesFilter<"LoanApplication"> | boolean
   prepaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
   prepaymentCharges?: Prisma.FloatNullableWithAggregatesFilter<"LoanApplication"> | number | null
+  defaultedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanApplication"> | Date | string | null
+  dpd?: Prisma.IntNullableWithAggregatesFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LoanApplication"> | Date | string
@@ -863,6 +891,8 @@ export type LoanApplicationCreateInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -918,6 +948,8 @@ export type LoanApplicationUncheckedCreateInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -965,6 +997,8 @@ export type LoanApplicationUpdateInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -1020,6 +1054,8 @@ export type LoanApplicationUncheckedUpdateInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1071,6 +1107,8 @@ export type LoanApplicationCreateManyInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1116,6 +1154,8 @@ export type LoanApplicationUpdateManyMutationInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1164,6 +1204,8 @@ export type LoanApplicationUncheckedUpdateManyInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1229,6 +1271,8 @@ export type LoanApplicationCountOrderByAggregateInput = {
   prepaymentAllowed?: Prisma.SortOrder
   prepaymentDate?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
+  defaultedAt?: Prisma.SortOrder
+  dpd?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1248,6 +1292,7 @@ export type LoanApplicationAvgOrderByAggregateInput = {
   emiPaymentAmount?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
+  dpd?: Prisma.SortOrder
 }
 
 export type LoanApplicationMaxOrderByAggregateInput = {
@@ -1294,6 +1339,8 @@ export type LoanApplicationMaxOrderByAggregateInput = {
   prepaymentAllowed?: Prisma.SortOrder
   prepaymentDate?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
+  defaultedAt?: Prisma.SortOrder
+  dpd?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1343,6 +1390,8 @@ export type LoanApplicationMinOrderByAggregateInput = {
   prepaymentAllowed?: Prisma.SortOrder
   prepaymentDate?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
+  defaultedAt?: Prisma.SortOrder
+  dpd?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1362,6 +1411,7 @@ export type LoanApplicationSumOrderByAggregateInput = {
   emiPaymentAmount?: Prisma.SortOrder
   foreclosureCharges?: Prisma.SortOrder
   prepaymentCharges?: Prisma.SortOrder
+  dpd?: Prisma.SortOrder
 }
 
 export type LoanApplicationNullableScalarRelationFilter = {
@@ -1664,6 +1714,8 @@ export type LoanApplicationCreateWithoutCreatedByInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1718,6 +1770,8 @@ export type LoanApplicationUncheckedCreateWithoutCreatedByInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutLoanApplicationInput
@@ -1797,6 +1851,8 @@ export type LoanApplicationScalarWhereInput = {
   prepaymentAllowed?: Prisma.BoolFilter<"LoanApplication"> | boolean
   prepaymentDate?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
   prepaymentCharges?: Prisma.FloatNullableFilter<"LoanApplication"> | number | null
+  defaultedAt?: Prisma.DateTimeNullableFilter<"LoanApplication"> | Date | string | null
+  dpd?: Prisma.IntNullableFilter<"LoanApplication"> | number | null
   createdById?: Prisma.StringNullableFilter<"LoanApplication"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LoanApplication"> | Date | string
@@ -1842,6 +1898,8 @@ export type LoanApplicationCreateWithoutLeadInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -1895,6 +1953,8 @@ export type LoanApplicationUncheckedCreateWithoutLeadInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1968,6 +2028,8 @@ export type LoanApplicationCreateWithoutDocumentsInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -2022,6 +2084,8 @@ export type LoanApplicationUncheckedCreateWithoutDocumentsInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2084,6 +2148,8 @@ export type LoanApplicationUpdateWithoutDocumentsInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2138,6 +2204,8 @@ export type LoanApplicationUncheckedUpdateWithoutDocumentsInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2184,6 +2252,8 @@ export type LoanApplicationCreateWithoutKycInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -2237,6 +2307,8 @@ export type LoanApplicationUncheckedCreateWithoutKycInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2300,6 +2372,8 @@ export type LoanApplicationUpdateWithoutKycInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2353,6 +2427,8 @@ export type LoanApplicationUncheckedUpdateWithoutKycInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2400,6 +2476,8 @@ export type LoanApplicationCreateWithoutEmisInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -2454,6 +2532,8 @@ export type LoanApplicationUncheckedCreateWithoutEmisInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2516,6 +2596,8 @@ export type LoanApplicationUpdateWithoutEmisInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2570,6 +2652,8 @@ export type LoanApplicationUncheckedUpdateWithoutEmisInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2616,6 +2700,8 @@ export type LoanApplicationCreateWithoutLoanTypeInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutLoanApplicationsInput
@@ -2669,6 +2755,8 @@ export type LoanApplicationUncheckedCreateWithoutLoanTypeInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2742,6 +2830,8 @@ export type LoanApplicationCreateWithoutCustomerInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   lead?: Prisma.LeadsCreateNestedOneWithoutLoanApplicationsInput
@@ -2795,6 +2885,8 @@ export type LoanApplicationUncheckedCreateWithoutCustomerInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2872,6 +2964,8 @@ export type LoanApplicationCreateManyCreatedByInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2916,6 +3010,8 @@ export type LoanApplicationUpdateWithoutCreatedByInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -2970,6 +3066,8 @@ export type LoanApplicationUncheckedUpdateWithoutCreatedByInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutLoanApplicationNestedInput
@@ -3020,6 +3118,8 @@ export type LoanApplicationUncheckedUpdateManyWithoutCreatedByInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3067,6 +3167,8 @@ export type LoanApplicationCreateManyLeadInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3112,6 +3214,8 @@ export type LoanApplicationUpdateWithoutLeadInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -3165,6 +3269,8 @@ export type LoanApplicationUncheckedUpdateWithoutLeadInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3215,6 +3321,8 @@ export type LoanApplicationUncheckedUpdateManyWithoutLeadInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3263,6 +3371,8 @@ export type LoanApplicationCreateManyLoanTypeInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3308,6 +3418,8 @@ export type LoanApplicationUpdateWithoutLoanTypeInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutLoanApplicationsNestedInput
@@ -3361,6 +3473,8 @@ export type LoanApplicationUncheckedUpdateWithoutLoanTypeInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3411,6 +3525,8 @@ export type LoanApplicationUncheckedUpdateManyWithoutLoanTypeInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3459,6 +3575,8 @@ export type LoanApplicationCreateManyCustomerInput = {
   prepaymentAllowed?: boolean
   prepaymentDate?: Date | string | null
   prepaymentCharges?: number | null
+  defaultedAt?: Date | string | null
+  dpd?: number | null
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3504,6 +3622,8 @@ export type LoanApplicationUpdateWithoutCustomerInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lead?: Prisma.LeadsUpdateOneWithoutLoanApplicationsNestedInput
@@ -3557,6 +3677,8 @@ export type LoanApplicationUncheckedUpdateWithoutCustomerInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3607,6 +3729,8 @@ export type LoanApplicationUncheckedUpdateManyWithoutCustomerInput = {
   prepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prepaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   prepaymentCharges?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dpd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3696,6 +3820,8 @@ export type LoanApplicationSelect<ExtArgs extends runtime.Types.Extensions.Inter
   prepaymentAllowed?: boolean
   prepaymentDate?: boolean
   prepaymentCharges?: boolean
+  defaultedAt?: boolean
+  dpd?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3755,12 +3881,14 @@ export type LoanApplicationSelectScalar = {
   prepaymentAllowed?: boolean
   prepaymentDate?: boolean
   prepaymentCharges?: boolean
+  defaultedAt?: boolean
+  dpd?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "leadId" | "loanTypeId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "purposeDetails" | "coApplicantName" | "coApplicantRelation" | "coApplicantContact" | "coApplicantIncome" | "coApplicantPan" | "coApplicantAadhaar" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "kycId" | "latePaymentFeeType" | "latePaymentFee" | "bounceCharges" | "emiStartDate" | "emiPaymentAmount" | "foreclosureDate" | "foreclosureChargesType" | "foreclosureAllowed" | "foreclosureCharges" | "prepaymentChargeType" | "prepaymentAllowed" | "prepaymentDate" | "prepaymentCharges" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
+export type LoanApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationDate" | "customerId" | "leadId" | "loanTypeId" | "requestedAmount" | "approvedAmount" | "tenureMonths" | "interestRate" | "interestType" | "emiAmount" | "purposeDetails" | "coApplicantName" | "coApplicantRelation" | "coApplicantContact" | "coApplicantIncome" | "coApplicantPan" | "coApplicantAadhaar" | "totalPayable" | "loanPurpose" | "cibilScore" | "status" | "approvalDate" | "activationDate" | "rejectionReason" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "kycId" | "latePaymentFeeType" | "latePaymentFee" | "bounceCharges" | "emiStartDate" | "emiPaymentAmount" | "foreclosureDate" | "foreclosureChargesType" | "foreclosureAllowed" | "foreclosureCharges" | "prepaymentChargeType" | "prepaymentAllowed" | "prepaymentDate" | "prepaymentCharges" | "defaultedAt" | "dpd" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["loanApplication"]>
 export type LoanApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   lead?: boolean | Prisma.LoanApplication$leadArgs<ExtArgs>
@@ -3827,6 +3955,8 @@ export type $LoanApplicationPayload<ExtArgs extends runtime.Types.Extensions.Int
     prepaymentAllowed: boolean
     prepaymentDate: Date | null
     prepaymentCharges: number | null
+    defaultedAt: Date | null
+    dpd: number | null
     createdById: string | null
     createdAt: Date
     updatedAt: Date
@@ -4249,6 +4379,8 @@ export interface LoanApplicationFieldRefs {
   readonly prepaymentAllowed: Prisma.FieldRef<"LoanApplication", 'Boolean'>
   readonly prepaymentDate: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly prepaymentCharges: Prisma.FieldRef<"LoanApplication", 'Float'>
+  readonly defaultedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
+  readonly dpd: Prisma.FieldRef<"LoanApplication", 'Int'>
   readonly createdById: Prisma.FieldRef<"LoanApplication", 'String'>
   readonly createdAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LoanApplication", 'DateTime'>

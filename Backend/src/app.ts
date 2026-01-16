@@ -3,11 +3,13 @@ import routes from "./routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { startEmiOverdueJob } from "./jobs/emiOverdue.job.js";
-
+import { runLoanDefaultCron } from "./jobs/jobs.controller.js";
 const app = express();
 
 // Start the EMI overdue job scheduler
 startEmiOverdueJob();
+// Start the Loan Default cron job (you might want to schedule this as well)
+runLoanDefaultCron();
 
 app.use(
   cors({

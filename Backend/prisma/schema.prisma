@@ -231,6 +231,8 @@ model LoanApplication {
   prepaymentAllowed    Boolean         @default(true)
   prepaymentDate       DateTime?
   prepaymentCharges    Float? // amount or %
+  defaultedAt          DateTime?
+  dpd                  Int?
 
   // Relations
   documents Document[]
@@ -250,6 +252,38 @@ model LoanApplication {
 
   // Relations
   loanType LoanType? @relation(fields: [loanTypeId], references: [id])
+}
+
+model loanRecoveries {
+  id                String @id @default(cuid())
+  loanApplicationId String
+  customerId        String
+
+  recoveryStage  recovery_stage
+  recoveryStatus recovery_status
+
+  tolalOutstandingAmount Float
+  recoveredAmount        Float
+  balanceAmount          Float
+
+  dpd         Int
+  defaultedAt DateTime?
+  assigedTo   String?
+  remarks     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model recoveryPayments {
+  id             String      @id @default(cuid())
+  loanRecoveryId String
+  amount         Float
+  paymentDate    DateTime
+  paymentMode    PaymentMode
+  referenceNo    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Permission {
@@ -625,6 +659,22 @@ enum MoratoriumStatus {
   completed
 }
 
+enum recovery_stage {
+  INITIAL_CONTACT
+  NEGOTIATION
+  LEGAL_ACTION
+  SETTLEMENT
+  CLOSED
+}
+
+enum recovery_status {
+  ONGOING
+  IN_PROGRESS
+  RESOLVED
+  WRITE_OFF
+  COMPLETED
+}
+
 enum MoratoriumType {
   FULL
   INTEREST_ONLY
@@ -786,6 +836,7 @@ enum LoanStatus {
   disbursed
   active
   closed
+  delinquent
   written_off
   defaulted
   application_in_progress

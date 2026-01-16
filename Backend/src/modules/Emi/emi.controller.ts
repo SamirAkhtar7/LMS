@@ -149,11 +149,37 @@ export const payEmiServiceController = async (req: Request, res: Response) => {
 
     res.status(200).json({ success: true, data: emi });
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to pay EMI",
-      error: error.message,
-    });
+
+    if (error.message === "EMI already paid") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if (error.message === "Insufficient payment amount") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if(error.message === "EMI not found") {
+      return res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if (error.message === "Loan is not active") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+      
+    }
+      res.status(500).json({
+        success: false,
+        message: "Failed to pay EMI",
+        error: error.message,
+      });
   }
 };
 
@@ -190,6 +216,31 @@ export const payforecloseLoanController = async (req: Request, res: Response) =>
     });
   }
   catch (error: any) {
+    if (error.message === "Insufficient payment amount to foreclose the loan") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if(error.message === "Payment amount must be greater than zero") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if (error.message === "Loan not found or already foreclosed") {
+      return res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if(error.message === "At least 6 EMIs must be paid before foreclosing the loan") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to foreclose loan",

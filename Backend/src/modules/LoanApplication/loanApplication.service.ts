@@ -467,11 +467,11 @@ export const approveLoanService = async (
     },
   });
 
-  console.log("APPROVE DATA", {
-    latePaymentFeeType: data.latePaymentFeeType,
-    latePaymentFee: data.latePaymentFee,
-    bounceCharges: data.bounceCharges,
-  });
+  // console.log("APPROVE DATA", {
+  //   latePaymentFeeType: data.latePaymentFeeType,
+  //   latePaymentFee: data.latePaymentFee,
+  //   bounceCharges: data.bounceCharges,
+  // });
 
   if (result.count === 0) {
     throw new Error("Loan not ready for approval");

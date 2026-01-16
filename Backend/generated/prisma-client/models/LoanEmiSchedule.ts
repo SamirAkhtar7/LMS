@@ -722,14 +722,6 @@ export type LoanEmiScheduleUncheckedUpdateManyWithoutLoanApplicationNestedInput 
   deleteMany?: Prisma.LoanEmiScheduleScalarWhereInput | Prisma.LoanEmiScheduleScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumLateFeeTypeFieldUpdateOperationsInput = {
   set?: $Enums.LateFeeType
 }

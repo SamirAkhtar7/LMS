@@ -107,6 +107,11 @@ export const generateEmiScheduleService = async (loanId: string) => {
     data: emi,
   });
 
+  await prisma.loanApplication.update({
+    where: { id: loanId },
+    data: { status: "active" },
+  });
+
   return emi;
 };
 
@@ -263,6 +268,7 @@ export const payEmiService = async (
   paymentMode: string
 ) => {
   try {
+
     return await prisma.$transaction(async (tx) => {
       const emi = await tx.loanEmiSchedule.findUnique({
         where: { id: emiId },
@@ -270,6 +276,15 @@ export const payEmiService = async (
       if (!emi) {
         throw new Error("EMI not found");
       }
+
+      const loan = await tx.loanApplication.findUnique({
+        where: { id: emi.loanApplicationId },
+      });
+
+      if(loan?.status !== "active" && loan?.status !== "defaulted") {
+        throw new Error("Loan is not active");
+      }
+      
       const totalDue =
         emi.emiAmount + (emi.latePaymentFee ?? 0) + (emi.bounceCharges ?? 0);
 
@@ -404,6 +419,25 @@ export const payforecloseLoanService = async (
     if (!loan) {
       throw new Error("Loan application not found");
     }
+    
+        if (loan.status !== "active" && loan.status !== "defaulted") {
+          throw new Error("Loan is not active");
+    }
+
+        //count PAID EMIs
+        const paidEmisCount = await prisma.loanEmiSchedule.count({
+          where: {
+            loanApplicationId: loanApplicationId,
+            status: "paid",
+          },
+        });
+
+        // minimum 6 emis should be paid before foreclosing
+        if (paidEmisCount < 6) {
+          throw new Error(
+            "At least 6 EMIs must be paid before foreclosing the loan"
+          );
+        }
 
     const emis = await prisma.loanEmiSchedule.findMany({
       where: {

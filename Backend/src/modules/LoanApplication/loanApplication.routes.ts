@@ -21,6 +21,7 @@ import {
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import upload from "../../common/middlewares/multer.middleware.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
+import { markLoanDefaultController } from "../loanDefault/loanDefault.controller.js";
 // Define your loan application routes here
 loanApplicationRouter.post(
   "/",
@@ -98,4 +99,12 @@ loanApplicationRouter.post(
   rejectDocumentController
 );
 
+
+
+loanApplicationRouter.post(
+  "/loans/:loanId/check-default",
+  authMiddleware,
+  checkPermissionMiddleware("CHECK_LOAN_DEFAULT"),
+  markLoanDefaultController
+)
 export default loanApplicationRouter;

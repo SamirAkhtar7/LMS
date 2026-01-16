@@ -36,6 +36,28 @@ export const MoratoriumStatus = {
 export type MoratoriumStatus = (typeof MoratoriumStatus)[keyof typeof MoratoriumStatus]
 
 
+export const recovery_stage = {
+  INITIAL_CONTACT: 'INITIAL_CONTACT',
+  NEGOTIATION: 'NEGOTIATION',
+  LEGAL_ACTION: 'LEGAL_ACTION',
+  SETTLEMENT: 'SETTLEMENT',
+  CLOSED: 'CLOSED'
+} as const
+
+export type recovery_stage = (typeof recovery_stage)[keyof typeof recovery_stage]
+
+
+export const recovery_status = {
+  ONGOING: 'ONGOING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  WRITE_OFF: 'WRITE_OFF',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type recovery_status = (typeof recovery_status)[keyof typeof recovery_status]
+
+
 export const MoratoriumType = {
   FULL: 'FULL',
   INTEREST_ONLY: 'INTEREST_ONLY'
@@ -256,6 +278,7 @@ export const LoanStatus = {
   disbursed: 'disbursed',
   active: 'active',
   closed: 'closed',
+  delinquent: 'delinquent',
   written_off: 'written_off',
   defaulted: 'defaulted',
   application_in_progress: 'application_in_progress'
