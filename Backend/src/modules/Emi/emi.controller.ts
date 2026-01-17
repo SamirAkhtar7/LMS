@@ -115,12 +115,12 @@ export const getEmiPayableAmountController = async (req: Request, res: Response)
     res.status(400).json({
       success: false,
       message: error.message,
-    
     });
   }
 };
 export const genrateEmiAmount = async (req: Request, res: Response) => {
-  try {
+  try
+  {
     const { principal, annualInterestRate, tenureMonths, interestType } =
       req.body;
     const { emiAmount, totalPayable } = await getEmiAmountService({
@@ -130,8 +130,8 @@ export const genrateEmiAmount = async (req: Request, res: Response) => {
       interestType,
     });
     res.status(200).json({ success: true, data: { emiAmount, totalPayable } });
-  } catch (error: any) {
-    res.status(500).json({
+    } catch (error: any) {
+     res.status(500).json({
       success: false,
       message: "Failed to calculate EMI amount",
       error: error.message,

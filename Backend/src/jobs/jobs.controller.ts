@@ -4,7 +4,6 @@ import { processOverdueEmis } from "../modules/Emi/emi.service.js";
 import { checkAndMarkLoanDefault } from "../modules/loanDefault/loanDefault.service.js";
 import { prisma } from "../db/prismaService.js";
 
-
 export const processOverdueEmisController = async (
   req: Request,
   res: Response
@@ -24,23 +23,24 @@ export const processOverdueEmisController = async (
   }
 };
 
-
 export const runLoanDefaultCron = async () => {
   const activeLoans = await prisma.loanApplication.findMany({
     where: { status: "active" },
     select: { id: true },
   });
   let processedCount = 0;
-  let faildCount = 0;
+  let failedCount = 0;
   for (const loan of activeLoans) {
     try {
       await checkAndMarkLoanDefault(loan.id);
       processedCount++;
     } catch (error) {
-
-      faildCount++;
+      failedCount++;
       console.error(`Error processing loan ${loan.id}:`, error);
-    
     }
-   }
+  }
+  console.log(
+    `Loan default cron completed: ${processedCount} processed, ${failedCount} failed`
+  );
+  return { processedCount, failedCount };
 };

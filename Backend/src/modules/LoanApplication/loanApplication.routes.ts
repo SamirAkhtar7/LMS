@@ -17,7 +17,6 @@ import {
   createLoanApplicationSchema,
   updateLoanApplicationSchema,
   loanApplicationIdParamSchema,
-  ApperoveLoanInput,
   apperoveLoanInputSchema,
 } from "./loanApplication.schema.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
@@ -82,11 +81,10 @@ loanApplicationRouter.post(
   "/:id/documents",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
-
-   upload.any(),
+  checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
+  upload.array("documents"),
   uploadLoanDocumentsController
 );
-
 loanApplicationRouter.post(
   "/documents/:id/verify",
   authMiddleware,
@@ -103,11 +101,13 @@ loanApplicationRouter.post(
 );
 
 
-
 loanApplicationRouter.post(
   "/loans/:loanId/check-default",
   authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("CHECK_LOAN_DEFAULT"),
   markLoanDefaultController
-)
+);
+
+
 export default loanApplicationRouter;

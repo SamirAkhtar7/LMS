@@ -41,9 +41,10 @@ export const generateEmiScheduleService = async (loanId: string) => {
     if (loan && loan.status == "active") {
       throw new Error("EMI schedule already generated");
     }
-    throw new Error("Invalid loan data for EMI schedule can be generated only for approved loans");
+    throw new Error(
+      "Invalid loan data for EMI schedule can be generated only for approved loans"
+    );
   }
-
 
   const principal = loan.approvedAmount ?? loan.requestedAmount;
   const tenureMonths = loan.tenureMonths!;
@@ -202,13 +203,12 @@ export const markEmiPaidService = async ({
     await tx.emiPayment.create({
       data: {
         emiScheduleId: emi.id,
-        amount: amountPaid,
+        amount: effectivePayment,
         paymentDate,
         paymentMode,
         chequeStatus,
       },
     });
-
     // EMI update
     return tx.loanEmiSchedule.update({
       where: { id: emiId },
@@ -520,7 +520,7 @@ export const getThisMonthEmiAmountService = async (
     let bounceCharge = 0;
     if (
       emi.bounceChargeApplied &&
-      (emi.lastPaymentMode === "CHEQUE") &&
+      emi.lastPaymentMode === "CHEQUE" &&
       emi.chequeStatus === "BOUNCED"
     ) {
       bounceCharge = emi.bounceCharges ?? 0;
@@ -570,7 +570,6 @@ export const getThisMonthEmiAmountService = async (
   };
 };
 
-
 export const payforecloseLoanService = async (
   loanApplicationId: string,
   data: any
@@ -615,7 +614,8 @@ export const payforecloseLoanService = async (
     const foreclosureCharge =
       outstandingPrincipal * ((loan.foreclosureCharges ?? 0) / 100);
 
-    const totalPayable = (outstandingPrincipal + foreclosureCharge).toFixed(2);
+    const totalPayable = outstandingPrincipal + foreclosureCharge;
+    const totalPayableFormatted = totalPayable.toFixed(2);
 
     if (data.amountPaid <= 0) {
       throw new Error("Payment amount must be greater than zero");
@@ -624,7 +624,7 @@ export const payforecloseLoanService = async (
       throw new Error("Insufficient amount to foreclose the loan");
     }
 
-    if (data.amountPaid == totalPayable) {
+    if (data.amountPaid >= totalPayable) {
       // Mark all pending EMIs as paid
       await prisma.$transaction(async (tx) => {
         for (const emi of emis) {
@@ -675,8 +675,8 @@ export const applyMoratoriumService = async ({
     throw new Error("Loan application not found");
   }
 
-  if (loan.status !== "approved") {
-    throw new Error("Moratorium can be applied only on approved loans");
+  if (loan.status !== "active") {
+    throw new Error("Moratorium can be applied only on active loans");
   }
 
   const overlapping = await prisma.emiMoratorium.findFirst({
@@ -710,7 +710,6 @@ export const applyMoratoriumService = async ({
   if (futureEmis.length === 0) {
     throw new Error("No pending EMIs found for moratorium application");
   }
-
   const moratorium = await prisma.emiMoratorium.create({
     data: {
       loanApplicationId: loanId,

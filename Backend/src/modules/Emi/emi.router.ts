@@ -11,7 +11,6 @@ import {
   getThisMonthEmiAmountController,
   markEmiPaidController,
   payforecloseLoanController,
-  getpayableEmiAmountController,
   getEmiPayableAmountController,
   // processOverdueEmisController,
 } from "./emi.controller.js";

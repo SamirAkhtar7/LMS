@@ -24,11 +24,11 @@ export async function createLoanApplicationService(
 
   const parsed = createLoanApplicationSchema.parse(data);
 
-  const loanType = await prisma.loanType.findUnique({
-    where: { id: parsed.loanTypeId, isActive: true },
+  const loanType = await prisma.loanType.findFirst({
+    where: { id: parsed.loanTypeId},
   });
 
-  if (!loanType) {
+  if (!loanType||!loanType.isActive) {
     throw new Error("Invalid loan type");
   }
 
@@ -112,8 +112,7 @@ export async function createLoanApplicationService(
 
     /* -------- 3. Generate Loan Number -------- */
     const loanNumber = await generateLoanNumber(tx);
-    console.log("Generated Loan Number:", loanNumber);
-
+   
     /* -------- 4. Create Loan Application -------- */
     const loanApplication = await tx.loanApplication.create({
       data: {
