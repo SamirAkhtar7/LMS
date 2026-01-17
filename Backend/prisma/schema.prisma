@@ -178,6 +178,7 @@ model LoanApplication {
   id              String   @id @default(cuid())
   // leadId          String              @unique
   applicationDate DateTime @default(now())
+  loanNumber      String   @unique
   customerId      String
   customer        Customer @relation(fields: [customerId], references: [id])
   // loanProductId   String
@@ -235,55 +236,72 @@ model LoanApplication {
   dpd                  Int?
 
   // Relations
-  documents Document[]
-
+  documents      Document[]
+  loanRecoveries LoanRecovery[]
   // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
   // approvals       LoanApproval[]
   // disbursements   LoanDisbursement[]
-  emis        LoanEmiSchedule[]
+  emis           LoanEmiSchedule[]
   // payments        LoanPayment[]
   // charges         LoanCharge[]
   // statusHistory   LoanStatusHistory[]
   // nachMandates    LoanNachMandate[]
-  createdById String?
-  createdBy   User?             @relation(fields: [createdById], references: [id])
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  createdById    String?
+  createdBy      User?             @relation(fields: [createdById], references: [id])
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
   // Relations
   loanType LoanType? @relation(fields: [loanTypeId], references: [id])
+
+  @@index([loanNumber])
+
 }
 
-model loanRecoveries {
-  id                String @id @default(cuid())
+model LoanRecovery {
+  id String @id @default(cuid())
+
   loanApplicationId String
-  customerId        String
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  customerId String
 
   recoveryStage  recovery_stage
   recoveryStatus recovery_status
 
-  tolalOutstandingAmount Float
+  totalOutstandingAmount Float
   recoveredAmount        Float
   balanceAmount          Float
 
   dpd         Int
   defaultedAt DateTime?
-  assigedTo   String?
-  remarks     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
 
-model recoveryPayments {
-  id             String      @id @default(cuid())
-  loanRecoveryId String
-  amount         Float
-  paymentDate    DateTime
-  paymentMode    PaymentMode
-  referenceNo    String?
+  assignedTo String?
+  remarks    String?
+
+  recoveryPayments RecoveryPayment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([loanApplicationId])
+}
+
+model RecoveryPayment {
+  id String @id @default(cuid())
+
+  loanRecoveryId String
+  loanRecovery   LoanRecovery @relation(fields: [loanRecoveryId], references: [id])
+
+  amount      Float
+  paymentDate DateTime
+  paymentMode PaymentMode
+  referenceNo String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([loanRecoveryId])
 }
 
 model Permission {
@@ -311,19 +329,23 @@ model UserPermission {
 model Document {
   id                 String             @id @default(cuid())
   loanApplicationId  String?
-  loanApplication    LoanApplication?   @relation(fields: [loanApplicationId], references: [id])
   documentType       String
   documentPath       String
   verificationStatus VerificationStatus @default(pending)
   rejectionReason    String?
   kycId              String?
-  kyc                Kyc?               @relation("KycDocuments", fields: [kycId], references: [id])
   uploadedBy         String
   verified           Boolean            @default(false)
   verifiedBy         String?
   verifiedAt         DateTime?
   createdAt          DateTime           @default(now())
+
+  kyc             Kyc?             @relation("KycDocuments", fields: [kycId], references: [id])
+  loanApplication LoanApplication? @relation(fields: [loanApplicationId], references: [id])
+
+  @@unique([loanApplicationId, documentType]) // ✅ prevents duplicate uploads
 }
+
 
 model Kyc {
   id              String           @id @default(cuid())
@@ -406,18 +428,24 @@ model LoanEmiSchedule {
   emiStartDate DateTime? // EMI cycle start date
   dueDate      DateTime // EMI due date
 
-  openingBalance   Float
-  principalAmount  Float
-  interestAmount   Float
-  emiAmount        Float // Scheduled EMI amount
-  emiPaymentAmount Float? // Actual amount paid (can be partial / excess)
-
-  closingBalance Float
+  openingBalance     Float
+  principalAmount    Float
+  interestAmount     Float
+  emiAmount          Float // Scheduled EMI amount
+  emiPaymentAmount   Float? // Actual amount paid (can be partial / excess)
+  closingBalance     Float
+  totalPayableAmount Float // principal + interest + late fees + bounce charges etc. 
 
   // Late & penalty
-  latePaymentFeeType LateFeeType @default(FIXED)
-  latePaymentFee     Float       @default(0)
-  bounceCharges      Float       @default(0) // NACH / cheque bounce charge
+  latePaymentFeeType  LateFeeType @default(FIXED)
+  latePaymentFee      Float       @default(0)
+  bounceCharges       Float       @default(0) // NACH / cheque bounce charge
+  bounceChargeApplied Boolean     @default(false)
+
+  // -------- Payment Audit --------
+  lastPaymentMode PaymentMode?
+  chequeStatus    ChequeStatus?
+  lastPaymentDate DateTime?
 
   status          EmiStatus       @default(pending)
   paidDate        DateTime?
@@ -719,6 +747,19 @@ enum MaritalStatus {
   OTHER
 }
 
+enum PaymentMode {
+  CASH
+  UPI
+  BANK
+  CHEQUE
+}
+
+enum ChequeStatus {
+  PENDING
+  CLEARED
+  BOUNCED
+}
+
 enum Relationship {
   FATHER
   MOTHER
@@ -846,14 +887,6 @@ enum ApprovalLevel {
   l1
   l2
   l3
-}
-
-enum PaymentMode {
-  upi
-  nach
-  net_banking
-  cash
-  cheque
 }
 
 enum EmiStatus {

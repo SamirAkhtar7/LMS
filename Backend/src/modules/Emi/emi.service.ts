@@ -38,8 +38,12 @@ export const generateEmiScheduleService = async (loanId: string) => {
     !loan.tenureMonths ||
     loan.status !== "approved"
   ) {
-    throw new Error("Invalid loan data for EMI schedule generation");
+    if (loan && loan.status == "active") {
+      throw new Error("EMI schedule already generated");
+    }
+    throw new Error("Invalid loan data for EMI schedule can be generated only for approved loans");
   }
+
 
   const principal = loan.approvedAmount ?? loan.requestedAmount;
   const tenureMonths = loan.tenureMonths!;
@@ -90,6 +94,7 @@ export const generateEmiScheduleService = async (loanId: string) => {
       emiAmount: Number(emiAmount.toFixed(2)),
       closingBalance:
         closingBalance < 0 ? 0 : Number(closingBalance.toFixed(2)),
+      totalPayableAmount: Number(emiAmount.toFixed(2)), // Add this field
       latePaymentFeeType,
       latePaymentFee,
       bounceCharges,
@@ -131,19 +136,26 @@ export const markEmiPaidService = async ({
   emiId,
   amountPaid,
   paymentMode,
-  isBounce = false,
+  chequeStatus,
 }: {
   emiId: string;
   amountPaid: number;
-  paymentMode: string;
-  isBounce?: boolean;
+  paymentMode: "CASH" | "UPI" | "BANK" | "CHEQUE";
+  chequeStatus?: "PENDING" | "CLEARED" | "BOUNCED";
 }) => {
   const emi = await prisma.loanEmiSchedule.findUnique({
     where: { id: emiId },
   });
 
-  if (!emi) {
-    throw new Error("Invalid EMI ID");
+  if (!emi) throw new Error("Invalid EMI ID");
+
+  const loan = await prisma.loanApplication.findUnique({
+    where: { id: emi.loanApplicationId },
+  });
+  if (!loan) throw new Error("Associated loan application not found");
+
+  if (loan.status !== "active" && loan.status == "defaulted") {
+    throw new Error("Loan is not active or defaulted");
   }
 
   if (emi.status === "paid") {
@@ -152,49 +164,120 @@ export const markEmiPaidService = async ({
 
   const paymentDate = new Date();
 
-  /* ---------------- Late Fee ---------------- */
+  /* ---------------- 1️⃣ Calculate Late Fee (READ ONLY) ---------------- */
   let lateFee = 0;
-
   if (paymentDate > emi.dueDate) {
-    if (emi.latePaymentFeeType === "FIXED") {
-      lateFee = emi.latePaymentFee;
-    } else {
-      lateFee = (emi.emiAmount * emi.latePaymentFee) / 100;
-    }
+    lateFee =
+      emi.latePaymentFeeType === "FIXED"
+        ? emi.latePaymentFee
+        : (emi.emiAmount * emi.latePaymentFee) / 100;
   }
 
-  /* ---------------- Bounce Charges ---------------- */
-  const bounceCharge = isBounce ? emi.bounceCharges : 0;
+  /* ---------------- 2️⃣ Bounce Charge (ONLY ONCE) ---------------- */
+  let bounceCharge = 0;
+  const isChequeBounced =
+    paymentMode === "CHEQUE" && chequeStatus === "BOUNCED";
 
-  /* ---------------- Final Payable ---------------- */
+  if (isChequeBounced && !emi.bounceChargeApplied) {
+    bounceCharge = emi.bounceCharges;
+  }
+
+  /* ---------------- 3️⃣ Payable & Payment ---------------- */
+  const alreadyPaid = emi.emiPaymentAmount ?? 0;
+
   const totalPayable = emi.emiAmount + lateFee + bounceCharge;
 
-  const newPaidAmount = (emi.emiPaymentAmount ?? 0) + amountPaid;
+  // ✅ remaining amount for THIS EMI
+  const remainingPayable = Math.max(totalPayable - alreadyPaid, 0);
 
-  const status = newPaidAmount >= totalPayable ? "paid" : emi.status;
+  // ✅ do not allow overpayment
+  const effectivePayment = Math.min(amountPaid, remainingPayable);
 
-  /* ---------------- DB Transaction ---------------- */
+  const newPaidAmount = alreadyPaid + effectivePayment;
+
+  const newStatus = newPaidAmount >= totalPayable ? "paid" : emi.status;
+  /* ---------------- 4️⃣ DB Transaction ---------------- */
   return await prisma.$transaction(async (tx) => {
+    // Payment history
     await tx.emiPayment.create({
       data: {
         emiScheduleId: emi.id,
         amount: amountPaid,
         paymentDate,
-        paymentMode: String(paymentMode).toLowerCase() as any,
+        paymentMode,
+        chequeStatus,
       },
     });
 
+    // EMI update
     return tx.loanEmiSchedule.update({
       where: { id: emiId },
       data: {
         emiPaymentAmount: newPaidAmount,
-        latePaymentFee: lateFee,
-        bounceCharges: bounceCharge,
-        status,
-        paidDate: status === "paid" ? paymentDate : null,
+        status: newStatus,
+        paidDate: newStatus === "paid" ? paymentDate : null,
+
+        // audit fields
+        lastPaymentMode: paymentMode,
+        chequeStatus,
+        lastPaymentDate: paymentDate,
+
+        // bounce protection
+        bounceChargeApplied: emi.bounceChargeApplied || isChequeBounced,
       },
     });
   });
+};
+
+export const getEmisPayableAmountbyId = async (emiId: string) => {
+  try {
+    const emi = await prisma.loanEmiSchedule.findUnique({
+      where: { id: emiId },
+    });
+
+    if (!emi) {
+      throw new Error("EMI not found");
+    }
+    const today = new Date();
+
+    /* ---------------- 1️⃣ Late Fee Logic ---------------- */
+    let lateFee = 0;
+    if (today > emi.dueDate) {
+      if (emi.latePaymentFeeType === "FIXED") {
+        lateFee = emi.latePaymentFee ?? 0;
+      } else if (emi.latePaymentFeeType === "PERCENTAGE") {
+        lateFee = (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
+      }
+    }
+
+    /* ---------------- 2️⃣ Bounce Charge Logic ---------------- */
+    let bounceCharge = 0;
+    const isChequeBounced =
+      emi.lastPaymentMode === "CHEQUE" && emi.chequeStatus === "BOUNCED";
+
+    if (isChequeBounced && !emi.bounceChargeApplied) {
+      bounceCharge = emi.bounceCharges;
+    }
+
+    /* ---------------- 3️⃣ Amount Calculation ---------------- */
+    const alreadyPaid = emi.emiPaymentAmount ?? 0;
+    const totalPayable = emi.emiAmount + lateFee + bounceCharge;
+    const totalDue = totalPayable - alreadyPaid;
+
+    return {
+      emiId: emi.id,
+      emiNo: emi.emiNo,
+      dueDate: emi.dueDate,
+      emiAmount: Number(emi.emiAmount.toFixed(2)),
+      lateFee: Number(lateFee.toFixed(2)),
+      bounceCharge: Number(bounceCharge.toFixed(2)),
+      alreadyPaid: Number(alreadyPaid.toFixed(2)),
+      totalPayable: Number(Math.max(totalDue, 0).toFixed(2)),
+      isOverdue: today > emi.dueDate,
+    };
+  } catch (error: any) {
+    throw new Error(error.message || "Failed to fetch payable EMI amount");
+  }
 };
 
 export const getEmiAmountService = async ({
@@ -262,13 +345,56 @@ export const processOverdueEmis = async (): Promise<number> => {
   return overdueEmis.length;
 };
 
+export const getPayableEmiAmountService = async (emiId: string) => {
+  const emi = await prisma.loanEmiSchedule.findUnique({
+    where: { id: emiId },
+  });
+
+  if (!emi) {
+    throw new Error("EMI not found");
+  }
+
+  const today = new Date();
+
+  /* ---------------- 1️⃣ Late Fee Logic ---------------- */
+  let lateFee = 0;
+
+  if (today > emi.dueDate) {
+    if (emi.latePaymentFeeType === "FIXED") {
+      lateFee = emi.latePaymentFee ?? 0;
+    } else if (emi.latePaymentFeeType === "PERCENTAGE") {
+      lateFee = (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
+    }
+  }
+
+  /* ---------------- 2️⃣ Bounce Charge Logic ---------------- */
+  let bounceCharge = 0;
+
+  /* ---------------- 3️⃣ Amount Calculation ---------------- */
+  const alreadyPaid = emi.emiPaymentAmount ?? 0;
+
+  const totalPayable = emi.emiAmount + lateFee + bounceCharge - alreadyPaid;
+
+  /* ---------------- 4️⃣ Response ---------------- */
+  return {
+    emiId: emi.id,
+    emiNo: emi.emiNo,
+    dueDate: emi.dueDate,
+    emiAmount: Number(emi.emiAmount.toFixed(2)),
+    lateFee: Number(lateFee.toFixed(2)),
+    bounceCharge: Number(bounceCharge.toFixed(2)),
+    alreadyPaid: Number(alreadyPaid.toFixed(2)),
+    totalPayable: Number(Math.max(totalPayable, 0).toFixed(2)),
+    isOverdue: today > emi.dueDate,
+  };
+};
+
 export const payEmiService = async (
   emiId: string,
   amount: number,
   paymentMode: string
 ) => {
   try {
-
     return await prisma.$transaction(async (tx) => {
       const emi = await tx.loanEmiSchedule.findUnique({
         where: { id: emiId },
@@ -281,10 +407,10 @@ export const payEmiService = async (
         where: { id: emi.loanApplicationId },
       });
 
-      if(loan?.status !== "active" && loan?.status !== "defaulted") {
+      if (loan?.status !== "active" && loan?.status !== "defaulted") {
         throw new Error("Loan is not active");
       }
-      
+
       const totalDue =
         emi.emiAmount + (emi.latePaymentFee ?? 0) + (emi.bounceCharges ?? 0);
 
@@ -346,7 +472,7 @@ export const forecloseLoanService = async (loanId: string) => {
 export const getThisMonthEmiAmountService = async (
   loanApplicationId: string
 ) => {
-  /* 1️⃣ Get current month range */
+  /* 1️⃣ Current month range */
   const startOfMonth = new Date();
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
@@ -356,57 +482,94 @@ export const getThisMonthEmiAmountService = async (
   endOfMonth.setDate(0);
   endOfMonth.setHours(23, 59, 59, 999);
 
-  /* 2️⃣ Find EMI strictly in current month */
-  const emi = await prisma.loanEmiSchedule.findFirst({
+  /* 2️⃣ Fetch ALL pending & overdue EMIs till this month */
+  const emis = await prisma.loanEmiSchedule.findMany({
     where: {
       loanApplicationId,
-      status: {
-        in: ["pending", "overdue"],
-      },
-      dueDate: {
-        gte: startOfMonth,
-        lte: endOfMonth,
-      },
+      status: { in: ["pending", "overdue"] },
+      dueDate: { lte: endOfMonth },
     },
-    orderBy: {
-      dueDate: "asc",
-    },
+    orderBy: { dueDate: "asc" },
   });
 
-  if (!emi) {
-    throw new Error("No EMI due for this month");
+  if (emis.length === 0) {
+    throw new Error("No EMI due till this month");
   }
 
   const today = new Date();
-  const isOverdue = today > emi.dueDate;
 
-  /* 3️⃣ Late fee */
-  let lateFee = 0;
-  if (isOverdue) {
-    lateFee =
-      emi.latePaymentFeeType === "FIXED"
-        ? emi.latePaymentFee ?? 0
-        : (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
-  }
+  let totalEmiAmount = 0;
+  let totalLateFee = 0;
+  let totalBounceCharge = 0;
+  let totalAlreadyPaid = 0;
 
-  const bounceCharge = emi.bounceCharges ?? 0;
-  const alreadyPaid = emi.emiPaymentAmount ?? 0;
+  /* 3️⃣ Calculate EMI-wise charges */
+  const emiBreakup = emis.map((emi) => {
+    const isOverdue = today > emi.dueDate;
 
-  const totalPayable = emi.emiAmount + lateFee + bounceCharge - alreadyPaid;
+    /* ---- Late Fee ---- */
+    let lateFee = 0;
+    if (isOverdue) {
+      lateFee =
+        emi.latePaymentFeeType === "FIXED"
+          ? emi.latePaymentFee ?? 0
+          : (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
+    }
+
+    /* ---- Bounce Charge (ONLY IF BOUNCED) ---- */
+    let bounceCharge = 0;
+    if (
+      emi.bounceChargeApplied &&
+      (emi.lastPaymentMode === "CHEQUE") &&
+      emi.chequeStatus === "BOUNCED"
+    ) {
+      bounceCharge = emi.bounceCharges ?? 0;
+    }
+
+    const alreadyPaid = emi.emiPaymentAmount ?? 0;
+
+    totalEmiAmount += emi.emiAmount;
+    totalLateFee += lateFee;
+    totalBounceCharge += bounceCharge;
+    totalAlreadyPaid += alreadyPaid;
+
+    return {
+      emiId: emi.id,
+      emiNo: emi.emiNo,
+      dueDate: emi.dueDate,
+      emiAmount: Number(emi.emiAmount.toFixed(2)),
+      lateFee: Number(lateFee.toFixed(2)),
+      bounceCharge: Number(bounceCharge.toFixed(2)),
+      alreadyPaid: Number(alreadyPaid.toFixed(2)),
+      totalPayable: Number(
+        Math.max(
+          emi.emiAmount + lateFee + bounceCharge - alreadyPaid,
+          0
+        ).toFixed(2)
+      ),
+      status: emi.status,
+      isOverdue,
+    };
+  });
+
+  /* 4️⃣ Grand total */
+  const grandTotal =
+    totalEmiAmount + totalLateFee + totalBounceCharge - totalAlreadyPaid;
 
   return {
-    emiId: emi.id,
-    emiNo: emi.emiNo,
-    dueDate: emi.dueDate,
-    emiAmount: Number(emi.emiAmount.toFixed(2)),
-    lateFee: Number(lateFee.toFixed(2)),
-    bounceCharge: Number(bounceCharge.toFixed(2)),
-    alreadyPaid: Number(alreadyPaid.toFixed(2)),
-    totalPayable: Number(Math.max(totalPayable, 0).toFixed(2)),
-    status: emi.status,
-    isOverdue,
+    loanApplicationId,
+    totalEmisDue: emis.length,
+    breakdown: emiBreakup,
+    summary: {
+      totalEmiAmount: Number(totalEmiAmount.toFixed(2)),
+      totalLateFee: Number(totalLateFee.toFixed(2)),
+      totalBounceCharge: Number(totalBounceCharge.toFixed(2)),
+      totalAlreadyPaid: Number(totalAlreadyPaid.toFixed(2)),
+      totalPayable: Number(Math.max(grandTotal, 0).toFixed(2)),
+    },
   };
 };
+
 
 export const payforecloseLoanService = async (
   loanApplicationId: string,
@@ -419,25 +582,25 @@ export const payforecloseLoanService = async (
     if (!loan) {
       throw new Error("Loan application not found");
     }
-    
-        if (loan.status !== "active" && loan.status !== "defaulted") {
-          throw new Error("Loan is not active");
+
+    if (loan.status !== "active" && loan.status !== "defaulted") {
+      throw new Error("Loan is not active");
     }
 
-        //count PAID EMIs
-        const paidEmisCount = await prisma.loanEmiSchedule.count({
-          where: {
-            loanApplicationId: loanApplicationId,
-            status: "paid",
-          },
-        });
+    //count PAID EMIs
+    const paidEmisCount = await prisma.loanEmiSchedule.count({
+      where: {
+        loanApplicationId: loanApplicationId,
+        status: "paid",
+      },
+    });
 
-        // minimum 6 emis should be paid before foreclosing
-        if (paidEmisCount < 6) {
-          throw new Error(
-            "At least 6 EMIs must be paid before foreclosing the loan"
-          );
-        }
+    // minimum 6 emis should be paid before foreclosing
+    if (paidEmisCount < 6) {
+      throw new Error(
+        "At least 6 EMIs must be paid before foreclosing the loan"
+      );
+    }
 
     const emis = await prisma.loanEmiSchedule.findMany({
       where: {
@@ -558,4 +721,21 @@ export const applyMoratoriumService = async ({
     },
   });
   return { message: "Moratorium applied successfully", moratorium };
+};
+
+export const editEmiService = async (emiId: string, newDueDate: Date) => {
+  const emi = await prisma.loanEmiSchedule.findUnique({
+    where: { id: emiId },
+  });
+
+  if (!emi) {
+    throw new Error("EMI not found");
+  }
+
+  return prisma.loanEmiSchedule.update({
+    where: { id: emiId },
+    data: {
+      dueDate: newDueDate, // ✅ only Date
+    },
+  });
 };

@@ -391,8 +391,8 @@ export const ModelName = {
   Partner: 'Partner',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
-  loanRecoveries: 'loanRecoveries',
-  recoveryPayments: 'recoveryPayments',
+  LoanRecovery: 'LoanRecovery',
+  RecoveryPayment: 'RecoveryPayment',
   Permission: 'Permission',
   UserPermission: 'UserPermission',
   Document: 'Document',
@@ -417,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecoveries" | "recoveryPayments" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
+    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -883,135 +883,135 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    loanRecoveries: {
-      payload: Prisma.$loanRecoveriesPayload<ExtArgs>
-      fields: Prisma.loanRecoveriesFieldRefs
+    LoanRecovery: {
+      payload: Prisma.$LoanRecoveryPayload<ExtArgs>
+      fields: Prisma.LoanRecoveryFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.loanRecoveriesFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload> | null
+          args: Prisma.LoanRecoveryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.loanRecoveriesFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         findFirst: {
-          args: Prisma.loanRecoveriesFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload> | null
+          args: Prisma.LoanRecoveryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.loanRecoveriesFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         findMany: {
-          args: Prisma.loanRecoveriesFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>[]
+          args: Prisma.LoanRecoveryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>[]
         }
         create: {
-          args: Prisma.loanRecoveriesCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         createMany: {
-          args: Prisma.loanRecoveriesCreateManyArgs<ExtArgs>
+          args: Prisma.LoanRecoveryCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.loanRecoveriesDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         update: {
-          args: Prisma.loanRecoveriesUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         deleteMany: {
-          args: Prisma.loanRecoveriesDeleteManyArgs<ExtArgs>
+          args: Prisma.LoanRecoveryDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.loanRecoveriesUpdateManyArgs<ExtArgs>
+          args: Prisma.LoanRecoveryUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.loanRecoveriesUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$loanRecoveriesPayload>
+          args: Prisma.LoanRecoveryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanRecoveryPayload>
         }
         aggregate: {
-          args: Prisma.LoanRecoveriesAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanRecoveries>
+          args: Prisma.LoanRecoveryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanRecovery>
         }
         groupBy: {
-          args: Prisma.loanRecoveriesGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LoanRecoveriesGroupByOutputType>[]
+          args: Prisma.LoanRecoveryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanRecoveryGroupByOutputType>[]
         }
         count: {
-          args: Prisma.loanRecoveriesCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LoanRecoveriesCountAggregateOutputType> | number
+          args: Prisma.LoanRecoveryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanRecoveryCountAggregateOutputType> | number
         }
       }
     }
-    recoveryPayments: {
-      payload: Prisma.$recoveryPaymentsPayload<ExtArgs>
-      fields: Prisma.recoveryPaymentsFieldRefs
+    RecoveryPayment: {
+      payload: Prisma.$RecoveryPaymentPayload<ExtArgs>
+      fields: Prisma.RecoveryPaymentFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.recoveryPaymentsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload> | null
+          args: Prisma.RecoveryPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.recoveryPaymentsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         findFirst: {
-          args: Prisma.recoveryPaymentsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload> | null
+          args: Prisma.RecoveryPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.recoveryPaymentsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         findMany: {
-          args: Prisma.recoveryPaymentsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>[]
+          args: Prisma.RecoveryPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>[]
         }
         create: {
-          args: Prisma.recoveryPaymentsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         createMany: {
-          args: Prisma.recoveryPaymentsCreateManyArgs<ExtArgs>
+          args: Prisma.RecoveryPaymentCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.recoveryPaymentsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         update: {
-          args: Prisma.recoveryPaymentsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         deleteMany: {
-          args: Prisma.recoveryPaymentsDeleteManyArgs<ExtArgs>
+          args: Prisma.RecoveryPaymentDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.recoveryPaymentsUpdateManyArgs<ExtArgs>
+          args: Prisma.RecoveryPaymentUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.recoveryPaymentsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$recoveryPaymentsPayload>
+          args: Prisma.RecoveryPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecoveryPaymentPayload>
         }
         aggregate: {
-          args: Prisma.RecoveryPaymentsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateRecoveryPayments>
+          args: Prisma.RecoveryPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecoveryPayment>
         }
         groupBy: {
-          args: Prisma.recoveryPaymentsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.RecoveryPaymentsGroupByOutputType>[]
+          args: Prisma.RecoveryPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecoveryPaymentGroupByOutputType>[]
         }
         count: {
-          args: Prisma.recoveryPaymentsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.RecoveryPaymentsCountAggregateOutputType> | number
+          args: Prisma.RecoveryPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecoveryPaymentCountAggregateOutputType> | number
         }
       }
     }
@@ -1783,6 +1783,7 @@ export type LeadsScalarFieldEnum = (typeof LeadsScalarFieldEnum)[keyof typeof Le
 export const LoanApplicationScalarFieldEnum = {
   id: 'id',
   applicationDate: 'applicationDate',
+  loanNumber: 'loanNumber',
   customerId: 'customerId',
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
@@ -1834,27 +1835,27 @@ export const LoanApplicationScalarFieldEnum = {
 export type LoanApplicationScalarFieldEnum = (typeof LoanApplicationScalarFieldEnum)[keyof typeof LoanApplicationScalarFieldEnum]
 
 
-export const LoanRecoveriesScalarFieldEnum = {
+export const LoanRecoveryScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
   recoveryStage: 'recoveryStage',
   recoveryStatus: 'recoveryStatus',
-  tolalOutstandingAmount: 'tolalOutstandingAmount',
+  totalOutstandingAmount: 'totalOutstandingAmount',
   recoveredAmount: 'recoveredAmount',
   balanceAmount: 'balanceAmount',
   dpd: 'dpd',
   defaultedAt: 'defaultedAt',
-  assigedTo: 'assigedTo',
+  assignedTo: 'assignedTo',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type LoanRecoveriesScalarFieldEnum = (typeof LoanRecoveriesScalarFieldEnum)[keyof typeof LoanRecoveriesScalarFieldEnum]
+export type LoanRecoveryScalarFieldEnum = (typeof LoanRecoveryScalarFieldEnum)[keyof typeof LoanRecoveryScalarFieldEnum]
 
 
-export const RecoveryPaymentsScalarFieldEnum = {
+export const RecoveryPaymentScalarFieldEnum = {
   id: 'id',
   loanRecoveryId: 'loanRecoveryId',
   amount: 'amount',
@@ -1865,7 +1866,7 @@ export const RecoveryPaymentsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type RecoveryPaymentsScalarFieldEnum = (typeof RecoveryPaymentsScalarFieldEnum)[keyof typeof RecoveryPaymentsScalarFieldEnum]
+export type RecoveryPaymentScalarFieldEnum = (typeof RecoveryPaymentScalarFieldEnum)[keyof typeof RecoveryPaymentScalarFieldEnum]
 
 
 export const PermissionScalarFieldEnum = {
@@ -1934,9 +1935,14 @@ export const LoanEmiScheduleScalarFieldEnum = {
   emiAmount: 'emiAmount',
   emiPaymentAmount: 'emiPaymentAmount',
   closingBalance: 'closingBalance',
+  totalPayableAmount: 'totalPayableAmount',
   latePaymentFeeType: 'latePaymentFeeType',
   latePaymentFee: 'latePaymentFee',
   bounceCharges: 'bounceCharges',
+  bounceChargeApplied: 'bounceChargeApplied',
+  lastPaymentMode: 'lastPaymentMode',
+  chequeStatus: 'chequeStatus',
+  lastPaymentDate: 'lastPaymentDate',
   status: 'status',
   paidDate: 'paidDate',
   isDeferred: 'isDeferred'
@@ -2166,6 +2172,7 @@ export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldE
 
 export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
+  loanNumber: 'loanNumber',
   customerId: 'customerId',
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
@@ -2185,24 +2192,24 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]
 
 
-export const loanRecoveriesOrderByRelevanceFieldEnum = {
+export const LoanRecoveryOrderByRelevanceFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
-  assigedTo: 'assigedTo',
+  assignedTo: 'assignedTo',
   remarks: 'remarks'
 } as const
 
-export type loanRecoveriesOrderByRelevanceFieldEnum = (typeof loanRecoveriesOrderByRelevanceFieldEnum)[keyof typeof loanRecoveriesOrderByRelevanceFieldEnum]
+export type LoanRecoveryOrderByRelevanceFieldEnum = (typeof LoanRecoveryOrderByRelevanceFieldEnum)[keyof typeof LoanRecoveryOrderByRelevanceFieldEnum]
 
 
-export const recoveryPaymentsOrderByRelevanceFieldEnum = {
+export const RecoveryPaymentOrderByRelevanceFieldEnum = {
   id: 'id',
   loanRecoveryId: 'loanRecoveryId',
   referenceNo: 'referenceNo'
 } as const
 
-export type recoveryPaymentsOrderByRelevanceFieldEnum = (typeof recoveryPaymentsOrderByRelevanceFieldEnum)[keyof typeof recoveryPaymentsOrderByRelevanceFieldEnum]
+export type RecoveryPaymentOrderByRelevanceFieldEnum = (typeof RecoveryPaymentOrderByRelevanceFieldEnum)[keyof typeof RecoveryPaymentOrderByRelevanceFieldEnum]
 
 
 export const PermissionOrderByRelevanceFieldEnum = {
@@ -2478,6 +2485,13 @@ export type EnumLateFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 
 
 /**
+ * Reference to a field of type 'ChequeStatus'
+ */
+export type EnumChequeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChequeStatus'>
+    
+
+
+/**
  * Reference to a field of type 'EmiStatus'
  */
 export type EnumEmiStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmiStatus'>
@@ -2634,8 +2648,8 @@ export type GlobalOmitConfig = {
   partner?: Prisma.PartnerOmit
   leads?: Prisma.LeadsOmit
   loanApplication?: Prisma.LoanApplicationOmit
-  loanRecoveries?: Prisma.loanRecoveriesOmit
-  recoveryPayments?: Prisma.recoveryPaymentsOmit
+  loanRecovery?: Prisma.LoanRecoveryOmit
+  recoveryPayment?: Prisma.RecoveryPaymentOmit
   permission?: Prisma.PermissionOmit
   userPermission?: Prisma.UserPermissionOmit
   document?: Prisma.DocumentOmit

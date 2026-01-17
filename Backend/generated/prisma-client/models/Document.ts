@@ -238,8 +238,8 @@ export type DocumentWhereInput = {
   verifiedBy?: Prisma.StringNullableFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
-  loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
   kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
+  loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
 }
 
 export type DocumentOrderByWithRelationInput = {
@@ -255,13 +255,14 @@ export type DocumentOrderByWithRelationInput = {
   verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
   kyc?: Prisma.KycOrderByWithRelationInput
+  loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
   _relevance?: Prisma.DocumentOrderByRelevanceInput
 }
 
 export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  loanApplicationId_documentType?: Prisma.DocumentLoanApplicationIdDocumentTypeCompoundUniqueInput
   AND?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
   OR?: Prisma.DocumentWhereInput[]
   NOT?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
@@ -276,9 +277,9 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   verifiedBy?: Prisma.StringNullableFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
-  loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
   kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
-}, "id">
+  loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
+}, "id" | "loanApplicationId_documentType">
 
 export type DocumentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -327,8 +328,8 @@ export type DocumentCreateInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
-  loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutDocumentsInput
   kyc?: Prisma.KycCreateNestedOneWithoutDocumentsInput
+  loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutDocumentsInput
 }
 
 export type DocumentUncheckedCreateInput = {
@@ -357,8 +358,8 @@ export type DocumentUpdateInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  loanApplication?: Prisma.LoanApplicationUpdateOneWithoutDocumentsNestedInput
   kyc?: Prisma.KycUpdateOneWithoutDocumentsNestedInput
+  loanApplication?: Prisma.LoanApplicationUpdateOneWithoutDocumentsNestedInput
 }
 
 export type DocumentUncheckedUpdateInput = {
@@ -433,6 +434,11 @@ export type DocumentOrderByRelevanceInput = {
   fields: Prisma.DocumentOrderByRelevanceFieldEnum | Prisma.DocumentOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
   search: string
+}
+
+export type DocumentLoanApplicationIdDocumentTypeCompoundUniqueInput = {
+  loanApplicationId: string
+  documentType: string
 }
 
 export type DocumentCountOrderByAggregateInput = {
@@ -821,8 +827,8 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   verifiedBy?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
-  loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
   kyc?: boolean | Prisma.Document$kycArgs<ExtArgs>
+  loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
 
 
@@ -844,15 +850,15 @@ export type DocumentSelectScalar = {
 
 export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "documentType" | "documentPath" | "verificationStatus" | "rejectionReason" | "kycId" | "uploadedBy" | "verified" | "verifiedBy" | "verifiedAt" | "createdAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
   kyc?: boolean | Prisma.Document$kycArgs<ExtArgs>
+  loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
 }
 
 export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Document"
   objects: {
-    loanApplication: Prisma.$LoanApplicationPayload<ExtArgs> | null
     kyc: Prisma.$KycPayload<ExtArgs> | null
+    loanApplication: Prisma.$LoanApplicationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1207,8 +1213,8 @@ readonly fields: DocumentFieldRefs;
  */
 export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  loanApplication<T extends Prisma.Document$loanApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$loanApplicationArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   kyc<T extends Prisma.Document$kycArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$kycArgs<ExtArgs>>): Prisma.Prisma__KycClient<runtime.Types.Result.GetResult<Prisma.$KycPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  loanApplication<T extends Prisma.Document$loanApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$loanApplicationArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1593,25 +1599,6 @@ export type DocumentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Document.loanApplication
- */
-export type Document$loanApplicationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LoanApplication
-   */
-  select?: Prisma.LoanApplicationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LoanApplication
-   */
-  omit?: Prisma.LoanApplicationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LoanApplicationInclude<ExtArgs> | null
-  where?: Prisma.LoanApplicationWhereInput
-}
-
-/**
  * Document.kyc
  */
 export type Document$kycArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1628,6 +1615,25 @@ export type Document$kycArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   include?: Prisma.KycInclude<ExtArgs> | null
   where?: Prisma.KycWhereInput
+}
+
+/**
+ * Document.loanApplication
+ */
+export type Document$loanApplicationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LoanApplication
+   */
+  select?: Prisma.LoanApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LoanApplication
+   */
+  omit?: Prisma.LoanApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LoanApplicationInclude<ExtArgs> | null
+  where?: Prisma.LoanApplicationWhereInput
 }
 
 /**

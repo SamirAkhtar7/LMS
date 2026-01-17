@@ -63,11 +63,11 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
       },
     });
 
-    await tx.loanRecoveries.create({
+    await tx.loanRecovery.create({
       data: {
         loanApplicationId: loanId,
         customerId: loan.customerId,
-        tolalOutstandingAmount: outstanding,
+        totalOutstandingAmount: outstanding, // Fixed typo: tolalOutstandingAmount -> totalOutstandingAmount
         recoveredAmount: 0,
         balanceAmount: outstanding,
         dpd,

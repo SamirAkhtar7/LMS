@@ -13,6 +13,8 @@ import {
 } from "./loanApplication.service.js";
 import { prisma } from "../../db/prismaService.js";
 
+import { cleanupFiles } from "../../common/utils/cleanup.js";
+
 export const createLoanApplicationController = async (
   req: Request,
   res: Response
@@ -102,17 +104,37 @@ export const updateLoanApplicationStatusController = async (
   }
 };
 
+
+
+
+
+
+
 export const uploadLoanDocumentsController = async (
   req: Request,
   res: Response
 ) => {
   if (!req.user) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
   }
-  try {
-    const loanApplicationId = req.params.id;
-    const userId = req.user.id;
 
+  const loanApplicationId = req.params.id;
+  const userId = req.user.id;
+  const files = req.files as Express.Multer.File[];
+
+  try {
+    /* ---------------- 1️⃣ Validate files ---------------- */
+    if (!files || files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No documents uploaded",
+      });
+    }
+
+    /* ---------------- 2️⃣ Fetch loan ---------------- */
     const loanApplication = await prisma.loanApplication.findUnique({
       where: { id: loanApplicationId },
       include: {
@@ -122,31 +144,34 @@ export const uploadLoanDocumentsController = async (
     });
 
     if (!loanApplication) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Loan application not found" });
+      cleanupFiles(files);
+      return res.status(404).json({
+        success: false,
+        message: "Loan application not found",
+      });
     }
 
     if (!loanApplication.kyc) {
+      cleanupFiles(files);
       return res.status(400).json({
         success: false,
         message: "KYC not found for this application",
       });
     }
 
+    /* ---------------- 3️⃣ Required documents check ---------------- */
     const requiredDocuments =
       loanApplication.loanType?.documentsRequired
         ?.split(",")
         .map((d) => d.trim()) || [];
 
-    if (!requiredDocuments || requiredDocuments.length === 0) {
+    if (requiredDocuments.length === 0) {
+      cleanupFiles(files);
       return res.status(400).json({
         success: false,
         message: "No documents required for this loan type",
       });
     }
-
-    const files = req.files as Express.Multer.File[];
 
     const uploadedDocTypes = files.map((file) => file.fieldname);
 
@@ -155,36 +180,72 @@ export const uploadLoanDocumentsController = async (
     );
 
     if (missingDocs.length > 0) {
+      cleanupFiles(files);
       return res.status(400).json({
         success: false,
         message: `Missing required documents: ${missingDocs.join(", ")}`,
       });
     }
 
+    /* ---------------- 4️⃣ Prevent duplicate uploads ---------------- */
+    const existingDocs = await prisma.document.findMany({
+      where: {
+        loanApplicationId,
+        documentType: {
+          in: uploadedDocTypes,
+        },
+      },
+      select: {
+        documentType: true,
+      },
+    });
+
+    if (existingDocs.length > 0) {
+      cleanupFiles(files);
+      return res.status(400).json({
+        success: false,
+        message: `Document(s) already uploaded: ${existingDocs
+          .map((d) => d.documentType)
+          .join(", ")}`,
+      });
+    }
+
+    /* ---------------- 5️⃣ Build payload ---------------- */
     const documentsPayload = files.map((file) => ({
       documentType: file.fieldname,
       documentPath: file.path,
       uploadedBy: userId,
     }));
 
+    /* ---------------- 6️⃣ Save documents ---------------- */
     const documents = await uploadLoanDocumentsService(
       loanApplicationId,
       documentsPayload,
-      userId
+    
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Documents uploaded successfully",
       data: documents,
     });
   } catch (error: any) {
-    res.status(error.statusCode || 500).json({
+    cleanupFiles(files);
+
+    return res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Document upload failed",
     });
   }
 };
+
+
+
+
+
+
+
+
 
 export const verifyDocumentController = async (req: Request, res: Response) => {
   try {
@@ -264,7 +325,7 @@ export const approveLoanController = async (req: any, res: Response) => {
     const data = req.body;
 
     const loan = await approveLoanService(id, approvedBy, data);
-
+ 
     res.status(200).json({
       success: true,
       message: "Loan approved successfully",

@@ -8,7 +8,6 @@ jobsRouter.post(
     "/emis/process-overdue",
     authMiddleware,
     adminMiddleware,
-    
   processOverdueEmisController
 );
 

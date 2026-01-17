@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { prisma } from "../../db/prismaService.js";
-import { generateEmiSchedule } from "../../common/utils/emi.util.js";
 import {
   getEmiAmountService,
   getLoanEmiService,
@@ -9,14 +7,14 @@ import {
   getThisMonthEmiAmountService,
   payforecloseLoanService,
   applyMoratoriumService,
+  getPayableEmiAmountService,
+  editEmiService,
 } from "./emi.service.js";
 import {
   processOverdueEmis,
   payEmiService,
-  forecloseLoanService,
+  forecloseLoanService, 
 } from "./emi.service.js";
-import app from "../../app.js";
-import { en } from "zod/locales";
 
 export const generateEmiScheduleController = async (
   req: Request,
@@ -27,6 +25,18 @@ export const generateEmiScheduleController = async (
     const schedule = await generateEmiScheduleService(loanId);
     res.status(200).json({ success: true, data: schedule });
   } catch (error: any) {
+    if(error.message === "EMI schedule already generated") {
+      return  res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+    if(error.message === "Invalid loan data for EMI schedule can be generated only for approved loans") {
+      return  res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to generate EMI schedule",
@@ -83,7 +93,7 @@ export const markEmiPaidController = async (req: Request, res: Response) => {
       emiId,
       amountPaid,
       paymentMode,
-      isBounce,
+      // isBounce,
     });
 
     res.status(200).json({ success: true, data: emi });
@@ -95,6 +105,20 @@ export const markEmiPaidController = async (req: Request, res: Response) => {
   }
 };
 
+
+export const getEmiPayableAmountController = async (req: Request, res: Response) => {
+  try {
+    const emiId = req.params.emiId;
+    const emi = await getPayableEmiAmountService(emiId);
+    res.status(200).json({ success: true, data: emi });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    
+    });
+  }
+};
 export const genrateEmiAmount = async (req: Request, res: Response) => {
   try {
     const { principal, annualInterestRate, tenureMonths, interestType } =
@@ -173,7 +197,7 @@ export const payEmiServiceController = async (req: Request, res: Response) => {
         success: false,
         message: error.message,
       });
-      
+
     }
       res.status(500).json({
         success: false,
@@ -275,3 +299,46 @@ export const applyMorationtoriumController = async (req: Request, res: Response)
     });
   }
 }
+
+export const getpayableEmiAmountController = async (req: Request, res: Response) => {
+  try {
+    const emiId = req.params.emiId;
+    const emi = await getPayableEmiAmountService(emiId);
+    res.status(200).json({ success: true, data: emi });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+export const editEmiController = async (req: Request, res: Response) => {
+  try {
+    const emiId = req.params.emiId;
+
+    const { dueDate } = req.body;
+
+    if (!dueDate) {
+      return res.status(400).json({
+        success: false,
+        message: "dueDate is required",
+      });
+    }
+
+    const updatedEmi = await editEmiService(emiId, new Date(dueDate));
+
+    res.status(200).json({
+      success: true,
+      message: "EMI updated successfully",
+      data: updatedEmi,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update EMI",
+      error: error.message,
+    });
+  }
+};

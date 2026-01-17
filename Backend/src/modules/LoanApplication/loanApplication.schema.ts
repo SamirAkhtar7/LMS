@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CoApplicantRelation } from "../../../generated/prisma-client/enums.js";
+import { CoApplicantRelation, CommissionType, InterestType } from "../../../generated/prisma-client/enums.js";
 
 export const titleEnum = z.enum(["MR", "MRS", "MS", "DR", "PROF"]);
 export const genderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
@@ -58,7 +58,7 @@ export const customerInlineSchema = z.object({
   gender: genderEnum.optional(),
   dob: z
     .preprocess((v) => (v ? new Date(v as string) : v), z.date())
-    .optional(),
+    ,
   aadhaarNumber: z.string().trim(),
   panNumber: z.string().trim(),
   voterId: z.string().trim().optional(),
@@ -81,34 +81,34 @@ export const createLoanApplicationSchema = z.object({
   firstName: z.string().trim().min(1),
   lastName: z.string().trim().min(1).optional(),
   middleName: z.string().trim().min(1).optional(),
-  gender: genderEnum.optional(),
-  dob: z.coerce.date().optional(),
-  aadhaarNumber: z.string().trim().min(1).optional(),
-  panNumber: z.string().trim().min(1).optional(),
+  gender: genderEnum,
+  dob: z.coerce.date(),
+  aadhaarNumber: z.string().trim().min(1),
+  panNumber: z.string().trim().min(1),
   voterId: z.string().trim().min(1).optional(),
   contactNumber: z.string().trim().min(1),
   alternateNumber: z.string().trim().min(1).optional(),
   employmentType: employmentTypeEnum,
-  maritalStatus: maritalStatusEnum.optional(),
-  nationality: z.string().trim().min(1).optional(),
-  category: CategoryEnum.optional(),
+  maritalStatus: maritalStatusEnum,
+  nationality: z.string().trim().min(1),
+  category: CategoryEnum,
   spouseName: z.string().trim().min(1).optional(),
   passportNumber: z.string().trim().min(1).optional(),
-  monthlyIncome: z.coerce.number().optional(),
-  annualIncome: z.coerce.number().optional(),
+  monthlyIncome: z.coerce.number(),
+  annualIncome: z.coerce.number(),
   otherIncome: z.coerce.number().optional(),
 
   email: z.string().trim().email().optional(),
-  address: z.string().trim().min(1).optional(),
-  city: z.string().trim().min(1).optional(),
-  state: z.string().trim().min(1).optional(),
-  pinCode: z.string().trim().min(1).optional(),
+  address: z.string().trim().min(1),
+  city: z.string().trim().min(1),
+  state: z.string().trim().min(1),
+  pinCode: z.string().trim().min(1),
 
   // Bank (optional – stored later if needed)
-  bankName: z.string().trim().min(1).optional(),
-  bankAccountNumber: z.string().trim().min(1).optional(),
-  ifscCode: z.string().trim().min(1).optional(),
-  accountType: z.string().trim().min(1).optional(),
+  bankName: z.string().trim().min(1),
+  bankAccountNumber: z.string().trim().min(1),
+  ifscCode: z.string().trim().min(1),
+  accountType: z.string().trim().min(1),
 
   // Loan fields
   loanTypeId: z.string().trim().min(1),
@@ -157,3 +157,32 @@ export type UpdateLoanApplicationBody = z.infer<
 >;
 
 export default createLoanApplicationSchema;
+
+
+
+export const apperoveLoanInputSchema = z.object({
+  latePaymentFeeType: z.nativeEnum(CommissionType),
+  latePaymentFee: z.number().min(0),
+  bounceCharges: z.number().min(0),
+
+  prepaymentChargeType: z.nativeEnum(CommissionType),
+  prepaymentAllowed: z.boolean().optional(),
+  prepaymentDate: z.coerce.date().optional(),
+  prepaymentCharges: z.number().min(0),
+
+  foreclosureChargesType: z.nativeEnum(CommissionType),
+  foreclosureAllowed: z.boolean().optional(),
+  foreclosureDate: z.coerce.date().optional(),
+  foreclosureCharges: z.number().min(0),
+
+  // Approval-related fields
+  approvedAmount: z.number().positive(),
+  tenureMonths: z.number().int().positive(),
+  interestType: z.nativeEnum(InterestType),
+  interestRate: z.number().min(0).max(100),
+  emiStartDate: z.coerce.date().optional(),
+  emiPaymentAmount: z.number().min(0).optional(),
+  emiAmount: z.number().min(0).optional(),
+});
+
+export type ApperoveLoanInput = z.infer<typeof apperoveLoanInputSchema>;

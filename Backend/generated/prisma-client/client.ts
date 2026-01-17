@@ -75,15 +75,15 @@ export type Leads = Prisma.LeadsModel
  */
 export type LoanApplication = Prisma.LoanApplicationModel
 /**
- * Model loanRecoveries
+ * Model LoanRecovery
  * 
  */
-export type loanRecoveries = Prisma.loanRecoveriesModel
+export type LoanRecovery = Prisma.LoanRecoveryModel
 /**
- * Model recoveryPayments
+ * Model RecoveryPayment
  * 
  */
-export type recoveryPayments = Prisma.recoveryPaymentsModel
+export type RecoveryPayment = Prisma.RecoveryPaymentModel
 /**
  * Model Permission
  * 

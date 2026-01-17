@@ -56,6 +56,7 @@ coverage/
 # npx prisma generate
 
 #npx prisma migrate reset --force
+# npx prisma migrate dev --name fix_recovery_relations
 
 
 # npx prisma format

@@ -119,6 +119,25 @@ export const MaritalStatus = {
 export type MaritalStatus = (typeof MaritalStatus)[keyof typeof MaritalStatus]
 
 
+export const PaymentMode = {
+  CASH: 'CASH',
+  UPI: 'UPI',
+  BANK: 'BANK',
+  CHEQUE: 'CHEQUE'
+} as const
+
+export type PaymentMode = (typeof PaymentMode)[keyof typeof PaymentMode]
+
+
+export const ChequeStatus = {
+  PENDING: 'PENDING',
+  CLEARED: 'CLEARED',
+  BOUNCED: 'BOUNCED'
+} as const
+
+export type ChequeStatus = (typeof ChequeStatus)[keyof typeof ChequeStatus]
+
+
 export const Relationship = {
   FATHER: 'FATHER',
   MOTHER: 'MOTHER',
@@ -294,17 +313,6 @@ export const ApprovalLevel = {
 } as const
 
 export type ApprovalLevel = (typeof ApprovalLevel)[keyof typeof ApprovalLevel]
-
-
-export const PaymentMode = {
-  upi: 'upi',
-  nach: 'nach',
-  net_banking: 'net_banking',
-  cash: 'cash',
-  cheque: 'cheque'
-} as const
-
-export type PaymentMode = (typeof PaymentMode)[keyof typeof PaymentMode]
 
 
 export const EmiStatus = {

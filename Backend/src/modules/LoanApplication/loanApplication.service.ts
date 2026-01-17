@@ -3,10 +3,16 @@ import {
   apperoveLoanInput,
   CreateLoanApplication,
 } from "./loanApplication.types.js";
-import createLoanApplicationSchema from "./loanApplication.schema.js";
-import type { Prisma } from "../../../generated/prisma-client/client.js";
+import createLoanApplicationSchema, { ApperoveLoanInput } from "./loanApplication.schema.js";
 import type * as Enums from "../../../generated/prisma-client/enums.js";
-import { fi } from "zod/locales";
+import { generateLoanNumber } from "../../common/utils/generateLoanNumber.js";
+
+
+
+
+
+
+
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
@@ -19,22 +25,19 @@ export async function createLoanApplicationService(
   const parsed = createLoanApplicationSchema.parse(data);
 
   const loanType = await prisma.loanType.findUnique({
-    where: {
-      id: parsed.loanTypeId,
-      isActive: true,
-      //deletedAt: null,
-    },
+    where: { id: parsed.loanTypeId, isActive: true },
   });
+
   if (!loanType) {
     throw new Error("Invalid loan type");
   }
-  const dob =
+
+  const dobValue =
     parsed.dob && typeof parsed.dob === "string"
       ? new Date(parsed.dob)
       : parsed.dob;
-
   return prisma.$transaction(async (tx) => {
-    // 1. Find or create customer
+    /* -------- 1. Find or create customer -------- */
     let customer = await tx.customer.findFirst({
       where: {
         OR: [
@@ -52,43 +55,38 @@ export async function createLoanApplicationService(
     if (!customer) {
       customer = await tx.customer.create({
         data: {
-          title: parsed.title as Enums.Title,
+          title: parsed.title,
           firstName: parsed.firstName,
-          lastName: parsed.lastName ?? "",
-          middleName: parsed.middleName ?? undefined,
+          lastName: parsed.lastName??"" ,
+          middleName: parsed.middleName ,
           gender: parsed.gender as Enums.Gender,
-          dob: dob as Date,
-          aadhaarNumber: parsed.aadhaarNumber ?? undefined,
-          panNumber: parsed.panNumber ?? undefined,
-          voterId: parsed.voterId ?? undefined,
-          maritalStatus: parsed.maritalStatus as Enums.MaritalStatus,
+          dob: dobValue ,
+          aadhaarNumber: parsed.aadhaarNumber ,
+          panNumber: parsed.panNumber ,
+          voterId: parsed.voterId,
+          maritalStatus: parsed.maritalStatus,
           nationality: parsed.nationality,
-          category: parsed.category as Enums.Category,
-          spouseName: parsed.spouseName,
-          passportNumber: parsed.passportNumber,
+          category: parsed.category,
           contactNumber: parsed.contactNumber,
-          alternateNumber: parsed.alternateNumber ?? undefined,
-          employmentType: parsed.employmentType as Enums.EmploymentType,
-          monthlyIncome: parsed.monthlyIncome ?? undefined,
-          annualIncome: parsed.annualIncome ?? undefined,
-
+          alternateNumber: parsed.alternateNumber ,
+          employmentType: parsed.employmentType,
+          monthlyIncome: parsed.monthlyIncome ,
+          annualIncome: parsed.annualIncome ,
           bankName: parsed.bankName,
           bankAccountNumber: parsed.bankAccountNumber,
           ifscCode: parsed.ifscCode,
           accountType: parsed.accountType,
-          otherIncome: parsed.otherIncome,
-
-          email: parsed.email ?? undefined,
-          address: parsed.address ?? "",
-          city: parsed.city ?? "",
-          state: parsed.state ?? "",
-          pinCode: parsed.pinCode ?? "",
+          email: parsed.email ,
+          address: parsed.address,
+          city: parsed.city,
+          state: parsed.state,
+          pinCode: parsed.pinCode,
           status: "ACTIVE",
         },
       });
     }
 
-    // 2. Prevent duplicate active loans
+    /* -------- 2. Prevent duplicate active loan -------- */
     const existingLoan = await tx.loanApplication.findFirst({
       where: {
         customerId: customer.id,
@@ -112,46 +110,42 @@ export async function createLoanApplicationService(
       throw err;
     }
 
-    // 3. Create loan application
+    /* -------- 3. Generate Loan Number -------- */
+    const loanNumber = await generateLoanNumber(tx);
+    console.log("Generated Loan Number:", loanNumber);
+
+    /* -------- 4. Create Loan Application -------- */
     const loanApplication = await tx.loanApplication.create({
       data: {
+        loanNumber,
+        customerId: customer.id,
         loanTypeId: parsed.loanTypeId,
         requestedAmount: parsed.requestedAmount,
         tenureMonths: parsed.tenureMonths,
         interestRate: parsed.interestRate,
         emiAmount: parsed.emiAmount,
-        purposeDetails: parsed.purposeDetails,
-
-        coApplicantName: parsed.coApplicantName,
-        coApplicantContact: parsed.coApplicantContact,
-        coApplicantIncome: parsed.coApplicantIncome,
-        coApplicantRelation:
-          parsed.coApplicantRelation as Enums.CoApplicantRelation,
-        coApplicantPan: parsed.coApplicantPan,
-        coApplicantAadhaar: parsed.coApplicantAadhaar,
-
         interestType: parsed.interestType ?? "FLAT",
+        purposeDetails: parsed.purposeDetails,
         loanPurpose: parsed.loanPurpose,
         cibilScore: parsed.cibilScore,
         status: "kyc_pending",
         createdById: loggedInUser.id,
-        customerId: customer.id,
       },
     });
 
-    // 4. Create KYC record (auto-init)
-    const kyc = await tx.kyc.create({
-      data: {
-        loanApplication: { connect: { id: loanApplication.id } },
-        // `Kyc.userId` references `User`, not `Customer` — use the creating
-        // user's id to satisfy the foreign key. To link KYC to the customer,
-        // the `loanApplication` relation is used above.
-        userId: loggedInUser.id,
-        status: "PENDING",
-      },
-    });
+    /* -------- 5. Create KYC -------- */
+const kyc = await tx.kyc.create({
+  data: {
+    loanApplication: {
+      connect: { id: loanApplication.id },
+    },
+    userId: loggedInUser.id,
+    status: "PENDING",
+  },
+});
 
-    // 5. Link KYC to loan
+
+    /* -------- 6. Link KYC -------- */
     await tx.loanApplication.update({
       where: { id: loanApplication.id },
       data: { kycId: kyc.id },
@@ -165,46 +159,57 @@ export async function createLoanApplicationService(
   });
 }
 
+
+
+
+
+
+
+
+
 export async function uploadLoanDocumentsService(
   loanApplicationId: string,
   documents: {
     documentType: string;
     documentPath: string;
     uploadedBy: string;
-  }[],
-  userId: string
+  }[]
 ) {
   return prisma.$transaction(async (tx) => {
+    /* 1️⃣ Validate loan & KYC */
     const loanApplication = await tx.loanApplication.findUnique({
       where: { id: loanApplicationId },
-      include: {
-        kyc: true,
-        loanType: true,
+      select: {
+        id: true,
+        kyc: { select: { id: true } },
       },
     });
 
     if (!loanApplication) {
       throw new Error("Loan application not found");
     }
+
     if (!loanApplication.kyc) {
       throw new Error("KYC record not found for loan application");
     }
 
-    const createdDocuments = await Promise.all(
-      documents.map((doc) =>
-        tx.document.create({
-          data: {
-            loanApplicationId: loanApplication.id,
-            kycId: loanApplication.kyc!.id,
-            documentType: doc.documentType,
-            documentPath: doc.documentPath,
-            uploadedBy: doc.uploadedBy,
-          },
-        })
-      )
-    );
+    /* 2️⃣ Bulk insert documents (safe) */
+    await tx.document.createMany({
+      data: documents.map((doc) => ({
+        loanApplicationId,
+        kycId: loanApplication.kyc!.id,
+        documentType: doc.documentType,
+        documentPath: doc.documentPath,
+        uploadedBy: doc.uploadedBy,
+      })),
+      skipDuplicates: true, // 🔒 protects against race conditions
+    });
 
-    return createdDocuments;
+    /* 3️⃣ Return uploaded documents */
+    return tx.document.findMany({
+      where: { loanApplicationId },
+      orderBy: { createdAt: "asc" },
+    });
   });
 }
 
@@ -344,11 +349,17 @@ export const getLoanApplicationByIdService = async (id: string) => {
       include: {
         customer: true,
         loanType: true,
+        emis: true,
         kyc: {
           include: {
             documents: true,
           },
         },
+        loanRecoveries: {
+          include: {
+          recoveryPayments: true,
+          },
+        }
       },
     });
     return loanApplication;
@@ -412,7 +423,7 @@ export const reviewLoanService = async (loanId: string) => {
 export const approveLoanService = async (
   loanId: string,
   userId: string,
-  data: apperoveLoanInput
+  data: ApperoveLoanInput
 ) => {
   // normalize emiStartDate to a full ISO Date if provided as yyyy-mm-dd string
   let emiStartDateNormalized: Date | undefined = undefined;
@@ -458,8 +469,6 @@ export const approveLoanService = async (
       emiStartDate: emiStartDateNormalized,
       emiPaymentAmount: data.emiPaymentAmount,
       emiAmount: data.emiAmount,
-
-
 
       approvalDate: new Date(),
       approvedBy: userId,

@@ -30,8 +30,17 @@ export const runLoanDefaultCron = async () => {
     where: { status: "active" },
     select: { id: true },
   });
-
+  let processedCount = 0;
+  let faildCount = 0;
   for (const loan of activeLoans) {
-    await checkAndMarkLoanDefault(loan.id);
-  }
+    try {
+      await checkAndMarkLoanDefault(loan.id);
+      processedCount++;
+    } catch (error) {
+
+      faildCount++;
+      console.error(`Error processing loan ${loan.id}:`, error);
+    
+    }
+   }
 };

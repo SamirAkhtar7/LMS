@@ -17,6 +17,8 @@ import {
   createLoanApplicationSchema,
   updateLoanApplicationSchema,
   loanApplicationIdParamSchema,
+  ApperoveLoanInput,
+  apperoveLoanInputSchema,
 } from "./loanApplication.schema.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import upload from "../../common/middlewares/multer.middleware.js";
@@ -65,6 +67,7 @@ loanApplicationRouter.put(
   authMiddleware,
   checkPermissionMiddleware("APPROVE_LOAN"),
   validate(loanApplicationIdParamSchema, "params"),
+  validate(apperoveLoanInputSchema, "body"),
   approveLoanController
 );
 loanApplicationRouter.put(

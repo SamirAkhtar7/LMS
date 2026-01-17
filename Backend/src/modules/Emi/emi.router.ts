@@ -3,6 +3,7 @@ import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 
 import {
   applyMorationtoriumController,
+  editEmiController,
   forecloseLoanController,
   generateEmiScheduleController,
   genrateEmiAmount,
@@ -10,6 +11,8 @@ import {
   getThisMonthEmiAmountController,
   markEmiPaidController,
   payforecloseLoanController,
+  getpayableEmiAmountController,
+  getEmiPayableAmountController,
   // processOverdueEmisController,
 } from "./emi.controller.js";
 
@@ -49,9 +52,11 @@ emiRouter.get(
   authMiddleware,
   getThisMonthEmiAmountController
 );
-emiRouter.post("/:emiId/pay", authMiddleware, markEmiPaidController);
+emiRouter.post("/:emiId/pay",
+  authMiddleware, markEmiPaidController);
 
-emiRouter.get("/loans/:loanId/foreclose", authMiddleware, forecloseLoanController);
+emiRouter.get("/loans/:loanId/foreclose",
+  authMiddleware, forecloseLoanController);
 emiRouter.post(
   "/loans/:loanId/foreclose",
   authMiddleware,
@@ -59,17 +64,26 @@ payforecloseLoanController
 );
 
 
-emiRouter.post("/loans/:loanId/moratorium", authMiddleware, applyMorationtoriumController);
+emiRouter.post("/loans/:loanId/moratorium",
+  authMiddleware,
+  applyMorationtoriumController);
 
-emiRouter.post("/get-emi-amount", authMiddleware, genrateEmiAmount);
+emiRouter.post("/get-emi-amount",
+  authMiddleware, genrateEmiAmount);
 
-emiRouter.post("/loan-emis/:emiId/pay", authMiddleware, markEmiPaidController);
+emiRouter.post("/loan-emis/:emiId/pay",
+  authMiddleware, markEmiPaidController);
 
+emiRouter.post("/loan-emis/:emiId/edit",
+  authMiddleware, editEmiController);
+emiRouter.get("/loan-emis/:emiId/payable-amount",
+  authMiddleware, getEmiPayableAmountController);
 
 // emiRouter.post(
 //   "/emis/process-overdue",
 //   authMiddleware, // optional if cron
 //   processOverdueEmisController
 // );
+
 
 export default emiRouter;

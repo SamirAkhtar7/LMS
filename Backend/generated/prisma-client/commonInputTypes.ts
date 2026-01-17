@@ -569,6 +569,20 @@ export type EnumLateFeeTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel> | $Enums.LateFeeType
 }
 
+export type EnumPaymentModeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PaymentMode | Prisma.EnumPaymentModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PaymentMode[] | null
+  notIn?: $Enums.PaymentMode[] | null
+  not?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel> | $Enums.PaymentMode | null
+}
+
+export type EnumChequeStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChequeStatus | Prisma.EnumChequeStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChequeStatus[] | null
+  notIn?: $Enums.ChequeStatus[] | null
+  not?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel> | $Enums.ChequeStatus | null
+}
+
 export type EnumEmiStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.EmiStatus | Prisma.EnumEmiStatusFieldRefInput<$PrismaModel>
   in?: $Enums.EmiStatus[]
@@ -584,6 +598,26 @@ export type EnumLateFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel>
+}
+
+export type EnumPaymentModeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PaymentMode | Prisma.EnumPaymentModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PaymentMode[] | null
+  notIn?: $Enums.PaymentMode[] | null
+  not?: Prisma.NestedEnumPaymentModeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PaymentMode | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel>
+}
+
+export type EnumChequeStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChequeStatus | Prisma.EnumChequeStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChequeStatus[] | null
+  notIn?: $Enums.ChequeStatus[] | null
+  not?: Prisma.NestedEnumChequeStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ChequeStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel>
 }
 
 export type EnumEmiStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1299,6 +1333,20 @@ export type NestedEnumLateFeeTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel> | $Enums.LateFeeType
 }
 
+export type NestedEnumPaymentModeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PaymentMode | Prisma.EnumPaymentModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PaymentMode[] | null
+  notIn?: $Enums.PaymentMode[] | null
+  not?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel> | $Enums.PaymentMode | null
+}
+
+export type NestedEnumChequeStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChequeStatus | Prisma.EnumChequeStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChequeStatus[] | null
+  notIn?: $Enums.ChequeStatus[] | null
+  not?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel> | $Enums.ChequeStatus | null
+}
+
 export type NestedEnumEmiStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.EmiStatus | Prisma.EnumEmiStatusFieldRefInput<$PrismaModel>
   in?: $Enums.EmiStatus[]
@@ -1314,6 +1362,26 @@ export type NestedEnumLateFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLateFeeTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumPaymentModeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PaymentMode | Prisma.EnumPaymentModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PaymentMode[] | null
+  notIn?: $Enums.PaymentMode[] | null
+  not?: Prisma.NestedEnumPaymentModeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PaymentMode | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPaymentModeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumChequeStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChequeStatus | Prisma.EnumChequeStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChequeStatus[] | null
+  notIn?: $Enums.ChequeStatus[] | null
+  not?: Prisma.NestedEnumChequeStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ChequeStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChequeStatusNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumEmiStatusWithAggregatesFilter<$PrismaModel = never> = {

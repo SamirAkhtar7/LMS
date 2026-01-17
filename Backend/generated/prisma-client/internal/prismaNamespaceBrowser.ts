@@ -58,8 +58,8 @@ export const ModelName = {
   Partner: 'Partner',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
-  loanRecoveries: 'loanRecoveries',
-  recoveryPayments: 'recoveryPayments',
+  LoanRecovery: 'LoanRecovery',
+  RecoveryPayment: 'RecoveryPayment',
   Permission: 'Permission',
   UserPermission: 'UserPermission',
   Document: 'Document',
@@ -222,6 +222,7 @@ export type LeadsScalarFieldEnum = (typeof LeadsScalarFieldEnum)[keyof typeof Le
 export const LoanApplicationScalarFieldEnum = {
   id: 'id',
   applicationDate: 'applicationDate',
+  loanNumber: 'loanNumber',
   customerId: 'customerId',
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
@@ -273,27 +274,27 @@ export const LoanApplicationScalarFieldEnum = {
 export type LoanApplicationScalarFieldEnum = (typeof LoanApplicationScalarFieldEnum)[keyof typeof LoanApplicationScalarFieldEnum]
 
 
-export const LoanRecoveriesScalarFieldEnum = {
+export const LoanRecoveryScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
   recoveryStage: 'recoveryStage',
   recoveryStatus: 'recoveryStatus',
-  tolalOutstandingAmount: 'tolalOutstandingAmount',
+  totalOutstandingAmount: 'totalOutstandingAmount',
   recoveredAmount: 'recoveredAmount',
   balanceAmount: 'balanceAmount',
   dpd: 'dpd',
   defaultedAt: 'defaultedAt',
-  assigedTo: 'assigedTo',
+  assignedTo: 'assignedTo',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type LoanRecoveriesScalarFieldEnum = (typeof LoanRecoveriesScalarFieldEnum)[keyof typeof LoanRecoveriesScalarFieldEnum]
+export type LoanRecoveryScalarFieldEnum = (typeof LoanRecoveryScalarFieldEnum)[keyof typeof LoanRecoveryScalarFieldEnum]
 
 
-export const RecoveryPaymentsScalarFieldEnum = {
+export const RecoveryPaymentScalarFieldEnum = {
   id: 'id',
   loanRecoveryId: 'loanRecoveryId',
   amount: 'amount',
@@ -304,7 +305,7 @@ export const RecoveryPaymentsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type RecoveryPaymentsScalarFieldEnum = (typeof RecoveryPaymentsScalarFieldEnum)[keyof typeof RecoveryPaymentsScalarFieldEnum]
+export type RecoveryPaymentScalarFieldEnum = (typeof RecoveryPaymentScalarFieldEnum)[keyof typeof RecoveryPaymentScalarFieldEnum]
 
 
 export const PermissionScalarFieldEnum = {
@@ -373,9 +374,14 @@ export const LoanEmiScheduleScalarFieldEnum = {
   emiAmount: 'emiAmount',
   emiPaymentAmount: 'emiPaymentAmount',
   closingBalance: 'closingBalance',
+  totalPayableAmount: 'totalPayableAmount',
   latePaymentFeeType: 'latePaymentFeeType',
   latePaymentFee: 'latePaymentFee',
   bounceCharges: 'bounceCharges',
+  bounceChargeApplied: 'bounceChargeApplied',
+  lastPaymentMode: 'lastPaymentMode',
+  chequeStatus: 'chequeStatus',
+  lastPaymentDate: 'lastPaymentDate',
   status: 'status',
   paidDate: 'paidDate',
   isDeferred: 'isDeferred'
@@ -605,6 +611,7 @@ export type LeadsOrderByRelevanceFieldEnum = (typeof LeadsOrderByRelevanceFieldE
 
 export const LoanApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
+  loanNumber: 'loanNumber',
   customerId: 'customerId',
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
@@ -624,24 +631,24 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]
 
 
-export const loanRecoveriesOrderByRelevanceFieldEnum = {
+export const LoanRecoveryOrderByRelevanceFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
-  assigedTo: 'assigedTo',
+  assignedTo: 'assignedTo',
   remarks: 'remarks'
 } as const
 
-export type loanRecoveriesOrderByRelevanceFieldEnum = (typeof loanRecoveriesOrderByRelevanceFieldEnum)[keyof typeof loanRecoveriesOrderByRelevanceFieldEnum]
+export type LoanRecoveryOrderByRelevanceFieldEnum = (typeof LoanRecoveryOrderByRelevanceFieldEnum)[keyof typeof LoanRecoveryOrderByRelevanceFieldEnum]
 
 
-export const recoveryPaymentsOrderByRelevanceFieldEnum = {
+export const RecoveryPaymentOrderByRelevanceFieldEnum = {
   id: 'id',
   loanRecoveryId: 'loanRecoveryId',
   referenceNo: 'referenceNo'
 } as const
 
-export type recoveryPaymentsOrderByRelevanceFieldEnum = (typeof recoveryPaymentsOrderByRelevanceFieldEnum)[keyof typeof recoveryPaymentsOrderByRelevanceFieldEnum]
+export type RecoveryPaymentOrderByRelevanceFieldEnum = (typeof RecoveryPaymentOrderByRelevanceFieldEnum)[keyof typeof RecoveryPaymentOrderByRelevanceFieldEnum]
 
 
 export const PermissionOrderByRelevanceFieldEnum = {
