@@ -1,7 +1,7 @@
 import { prisma } from "../../db/prismaService.js";
 import { PaymentMode as PrismaPaymentMode } from "../../../generated/prisma-client/enums.js";
 import { recovery_stage } from "../../../generated/prisma-client/enums.js";
-import { create } from "node:domain";
+
 export const getRecoveryByLoanIdService = async (loanId: string) => {
   const recovery = await prisma.loanRecovery.findFirst({
     where: {
@@ -27,7 +27,7 @@ export const payRecoveryAmountService = async (
       throw new Error("Invalid recovery record");
     }
 
-    if (amount > recovery.totalOutstandingAmount) {
+    if (amount > recovery.balanceAmount) {
       throw new Error("Payment exceeds outstanding amount");
     }
     await tx.recoveryPayment.create({
@@ -44,7 +44,7 @@ export const payRecoveryAmountService = async (
       recovery.totalOutstandingAmount - recoveredAmount,
       0
     );
-    const updatatedRecovery = await tx.loanRecovery.update({
+    const updatedRecovery = await tx.loanRecovery.update({
       where: { id: recoveryId },
       data: {
         recoveredAmount: recoveredAmount,
@@ -66,7 +66,7 @@ export const payRecoveryAmountService = async (
       });
     }
 
-    return updatatedRecovery;
+    return updatedRecovery;
   });
 };
 
@@ -80,7 +80,7 @@ export const assignRecoveryAgentService = async (
   });
 };
 
-export const updatateRecoveryStageService = async (
+export const updateRecoveryStageService = async (
   recoveryId: string,
   recoveryStage: recovery_stage,
   remarks?: string
@@ -88,12 +88,11 @@ export const updatateRecoveryStageService = async (
   return prisma.loanRecovery.update({
     where: { id: recoveryId },
     data: {
-      recoveryStage: recoveryStage as recovery_stage,
+      recoveryStage,
       remarks,
     },
   });
 };
-
 export const getLoanWithRecoveryService = async () => {
   const loanWithRecovery = await prisma.loanApplication.findMany({
     where: {
@@ -211,6 +210,9 @@ export const getRecoveryDashboardService = async () => {
         },
       },
       recoveryPayments: {
+        orderBy: {
+          paymentDate: "desc",
+        },
         select: {
           id: true,
           amount: true,
@@ -233,10 +235,7 @@ export const getRecoveryDashboardService = async () => {
     recoveryStatus: r.recoveryStatus,
     assignedTo: r.assignedTo,
 
-    lastPayment:
-      r.recoveryPayments.length > 0
-        ? r.recoveryPayments[r.recoveryPayments.length - 1]
-        : null,
+    lastPayment: r.recoveryPayments.length > 0 ? r.recoveryPayments[0] : null,
     createdAt: r.createdAt,
   }));
 };

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   getRecoveryByLoanIdController,
-  payRecoveryAmountConstroller,
+  payRecoveryAmountController,
   assignRecoveryAgentController,
   updateRecoveryStageController,
   getLoanWithRecoveryController,
@@ -34,7 +34,7 @@ recoveryRouter.post(
   "/recoveries/:recoveryId/pay",
   authMiddleware,
   validate(recoveryPaymentSchema),
-  payRecoveryAmountConstroller
+  payRecoveryAmountController
 );
 
 recoveryRouter.post(

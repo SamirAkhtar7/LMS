@@ -7,7 +7,7 @@ export const recoveryPaymentSchema = z.object({
     referenceNo: z.string().optional(),
 });
 
-/*  Assiged to a particular loan recovery record  */
+/* Assigned to a particular loan recovery record  */
 
 
 export const assignRecoverySchema = z.object({
@@ -17,10 +17,9 @@ export const assignRecoverySchema = z.object({
 export const updateRecoveryStageSchema = z.object({
     recoveryStage: z.enum([
     "INITIAL_CONTACT",
-        "FIELD_VISIT",
+    "FIELD_VISIT",
     "NEGOTIATION",
-  "LEGAL_ACTION",
-    
+    "LEGAL_ACTION",
     "SETTLEMENT",
     "CLOSED",
     ]),
