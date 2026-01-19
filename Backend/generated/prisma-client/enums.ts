@@ -38,6 +38,7 @@ export type MoratoriumStatus = (typeof MoratoriumStatus)[keyof typeof Moratorium
 
 export const recovery_stage = {
   INITIAL_CONTACT: 'INITIAL_CONTACT',
+  FIELD_VISIT: 'FIELD_VISIT',
   NEGOTIATION: 'NEGOTIATION',
   LEGAL_ACTION: 'LEGAL_ACTION',
   SETTLEMENT: 'SETTLEMENT',

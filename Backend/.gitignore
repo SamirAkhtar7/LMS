@@ -41,6 +41,7 @@ desktop.ini
 dist/
 build/
 *.tgz
+lms ToDo notes.md 
 
 # Testing
 coverage/
