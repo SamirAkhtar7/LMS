@@ -80,9 +80,10 @@ loanApplicationRouter.put(
 loanApplicationRouter.post(
   "/:id/documents",
   authMiddleware,
+
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
-  upload.array("documents"),
+  upload.any(),
   uploadLoanDocumentsController
 );
 loanApplicationRouter.post(

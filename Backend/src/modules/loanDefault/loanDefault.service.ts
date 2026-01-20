@@ -44,7 +44,7 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
         },
       });
 
-      return { status: "Delinquent", dpd: dpd };
+     return { status: "Delinquent", dpd: dpd };
     }
 
     const outstanding = overdueEmis.reduce(

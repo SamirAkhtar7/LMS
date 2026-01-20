@@ -3,13 +3,89 @@ import { PaymentMode as PrismaPaymentMode } from "../../../generated/prisma-clie
 import { recovery_stage } from "../../../generated/prisma-client/enums.js";
 
 export const getRecoveryByLoanIdService = async (loanId: string) => {
-  const recovery = await prisma.loanRecovery.findFirst({
-    where: {
-      loanApplicationId: loanId,
-    },
-  });
+  return prisma.$transaction(async (tx) => {
+    /* 1️⃣ Fetch loan */
+    const loan = await tx.loanApplication.findUnique({
+      where: { id: loanId },
+      select: {
+        id: true,
+        status: true,
+        approvedAmount: true,
+        customerId: true,
+        defaultedAt: true,
+        dpd: true,
+      },
+    });
 
-  return recovery;
+    if (!loan) {
+      throw new Error("Loan application not found");
+    }
+
+    if (loan.status !== "defaulted") {
+      return null;
+    }
+
+    /* 2️⃣ Calculate principal paid */
+    const paidEmis = await tx.loanEmiSchedule.findMany({
+      where: {
+        loanApplicationId: loanId,
+        status: "paid",
+      },
+      select: { principalAmount: true },
+    });
+
+    const totalPrincipalPaid = paidEmis.reduce(
+      (sum, emi) => sum + emi.principalAmount,
+      0
+    );
+
+    const correctOutstanding = (loan.approvedAmount ?? 0) - totalPrincipalPaid;
+
+    if (correctOutstanding <= 0) {
+      throw new Error("Outstanding amount is zero");
+    }
+
+    /* 3️⃣ Check existing recovery */
+    const existingRecovery = await tx.loanRecovery.findFirst({
+      where: { loanApplicationId: loanId },
+      include: { recoveryPayments: true },
+    });
+
+    /* 4️⃣ FIX OLD RECOVERY (🔥 THIS IS THE KEY) */
+    if (existingRecovery) {
+      if (
+        Number(existingRecovery.totalOutstandingAmount.toFixed(2)) !==
+        Number(correctOutstanding.toFixed(2))
+      ) {
+        return tx.loanRecovery.update({
+          where: { id: existingRecovery.id },
+          data: {
+            totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
+            balanceAmount: Number(correctOutstanding.toFixed(2)),
+            recoveredAmount: 0,
+          },
+          include: { recoveryPayments: true },
+        });
+      }
+
+      return existingRecovery;
+    }
+
+    /* 5️⃣ Create new recovery */
+    return tx.loanRecovery.create({
+      data: {
+        loanApplicationId: loan.id,
+        customerId: loan.customerId,
+        totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
+        recoveredAmount: 0,
+        balanceAmount: Number(correctOutstanding.toFixed(2)),
+        dpd: loan.dpd ?? 0,
+        defaultedAt: loan.defaultedAt ?? new Date(),
+        recoveryStage: "INITIAL_CONTACT",
+        recoveryStatus: "ONGOING",
+      },
+    });
+  });
 };
 
 export const payRecoveryAmountService = async (
@@ -29,7 +105,7 @@ export const payRecoveryAmountService = async (
 
     if (amount > recovery.balanceAmount) {
       throw new Error("Payment exceeds outstanding amount");
-    }
+    } 
     await tx.recoveryPayment.create({
       data: {
         loanRecoveryId: recoveryId,
@@ -38,7 +114,7 @@ export const payRecoveryAmountService = async (
         paymentDate: new Date(),
         referenceNo,
       },
-    });
+    });        
     const recoveredAmount = recovery.recoveredAmount + amount;
     const balanceAmount = Math.max(
       recovery.totalOutstandingAmount - recoveredAmount,

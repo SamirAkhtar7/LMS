@@ -273,6 +273,11 @@ model LoanRecovery {
   recoveredAmount        Float
   balanceAmount          Float
 
+  // Settlement fields 
+  settlementAmount     Float?
+  settlementDate       DateTime?
+  settlementApprovedBy String?
+
   dpd         Int
   defaultedAt DateTime?
 
@@ -701,6 +706,7 @@ enum recovery_status {
   IN_PROGRESS
   RESOLVED
   WRITE_OFF
+  SETTLED
   COMPLETED
 }
 

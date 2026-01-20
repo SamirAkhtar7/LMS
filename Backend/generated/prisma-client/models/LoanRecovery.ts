@@ -30,6 +30,7 @@ export type LoanRecoveryAvgAggregateOutputType = {
   totalOutstandingAmount: number | null
   recoveredAmount: number | null
   balanceAmount: number | null
+  settlementAmount: number | null
   dpd: number | null
 }
 
@@ -37,6 +38,7 @@ export type LoanRecoverySumAggregateOutputType = {
   totalOutstandingAmount: number | null
   recoveredAmount: number | null
   balanceAmount: number | null
+  settlementAmount: number | null
   dpd: number | null
 }
 
@@ -49,6 +51,9 @@ export type LoanRecoveryMinAggregateOutputType = {
   totalOutstandingAmount: number | null
   recoveredAmount: number | null
   balanceAmount: number | null
+  settlementAmount: number | null
+  settlementDate: Date | null
+  settlementApprovedBy: string | null
   dpd: number | null
   defaultedAt: Date | null
   assignedTo: string | null
@@ -66,6 +71,9 @@ export type LoanRecoveryMaxAggregateOutputType = {
   totalOutstandingAmount: number | null
   recoveredAmount: number | null
   balanceAmount: number | null
+  settlementAmount: number | null
+  settlementDate: Date | null
+  settlementApprovedBy: string | null
   dpd: number | null
   defaultedAt: Date | null
   assignedTo: string | null
@@ -83,6 +91,9 @@ export type LoanRecoveryCountAggregateOutputType = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount: number
+  settlementDate: number
+  settlementApprovedBy: number
   dpd: number
   defaultedAt: number
   assignedTo: number
@@ -97,6 +108,7 @@ export type LoanRecoveryAvgAggregateInputType = {
   totalOutstandingAmount?: true
   recoveredAmount?: true
   balanceAmount?: true
+  settlementAmount?: true
   dpd?: true
 }
 
@@ -104,6 +116,7 @@ export type LoanRecoverySumAggregateInputType = {
   totalOutstandingAmount?: true
   recoveredAmount?: true
   balanceAmount?: true
+  settlementAmount?: true
   dpd?: true
 }
 
@@ -116,6 +129,9 @@ export type LoanRecoveryMinAggregateInputType = {
   totalOutstandingAmount?: true
   recoveredAmount?: true
   balanceAmount?: true
+  settlementAmount?: true
+  settlementDate?: true
+  settlementApprovedBy?: true
   dpd?: true
   defaultedAt?: true
   assignedTo?: true
@@ -133,6 +149,9 @@ export type LoanRecoveryMaxAggregateInputType = {
   totalOutstandingAmount?: true
   recoveredAmount?: true
   balanceAmount?: true
+  settlementAmount?: true
+  settlementDate?: true
+  settlementApprovedBy?: true
   dpd?: true
   defaultedAt?: true
   assignedTo?: true
@@ -150,6 +169,9 @@ export type LoanRecoveryCountAggregateInputType = {
   totalOutstandingAmount?: true
   recoveredAmount?: true
   balanceAmount?: true
+  settlementAmount?: true
+  settlementDate?: true
+  settlementApprovedBy?: true
   dpd?: true
   defaultedAt?: true
   assignedTo?: true
@@ -254,6 +276,9 @@ export type LoanRecoveryGroupByOutputType = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount: number | null
+  settlementDate: Date | null
+  settlementApprovedBy: string | null
   dpd: number
   defaultedAt: Date | null
   assignedTo: string | null
@@ -294,6 +319,9 @@ export type LoanRecoveryWhereInput = {
   totalOutstandingAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   recoveredAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   balanceAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
+  settlementAmount?: Prisma.FloatNullableFilter<"LoanRecovery"> | number | null
+  settlementDate?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
+  settlementApprovedBy?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
   dpd?: Prisma.IntFilter<"LoanRecovery"> | number
   defaultedAt?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
   assignedTo?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
@@ -314,6 +342,9 @@ export type LoanRecoveryOrderByWithRelationInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementApprovedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   dpd?: Prisma.SortOrder
   defaultedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedTo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -338,6 +369,9 @@ export type LoanRecoveryWhereUniqueInput = Prisma.AtLeast<{
   totalOutstandingAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   recoveredAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   balanceAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
+  settlementAmount?: Prisma.FloatNullableFilter<"LoanRecovery"> | number | null
+  settlementDate?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
+  settlementApprovedBy?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
   dpd?: Prisma.IntFilter<"LoanRecovery"> | number
   defaultedAt?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
   assignedTo?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
@@ -358,6 +392,9 @@ export type LoanRecoveryOrderByWithAggregationInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementApprovedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   dpd?: Prisma.SortOrder
   defaultedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedTo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -383,6 +420,9 @@ export type LoanRecoveryScalarWhereWithAggregatesInput = {
   totalOutstandingAmount?: Prisma.FloatWithAggregatesFilter<"LoanRecovery"> | number
   recoveredAmount?: Prisma.FloatWithAggregatesFilter<"LoanRecovery"> | number
   balanceAmount?: Prisma.FloatWithAggregatesFilter<"LoanRecovery"> | number
+  settlementAmount?: Prisma.FloatNullableWithAggregatesFilter<"LoanRecovery"> | number | null
+  settlementDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanRecovery"> | Date | string | null
+  settlementApprovedBy?: Prisma.StringNullableWithAggregatesFilter<"LoanRecovery"> | string | null
   dpd?: Prisma.IntWithAggregatesFilter<"LoanRecovery"> | number
   defaultedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LoanRecovery"> | Date | string | null
   assignedTo?: Prisma.StringNullableWithAggregatesFilter<"LoanRecovery"> | string | null
@@ -398,6 +438,9 @@ export type LoanRecoveryCreateInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -418,6 +461,9 @@ export type LoanRecoveryUncheckedCreateInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -434,6 +480,9 @@ export type LoanRecoveryUpdateInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -454,6 +503,9 @@ export type LoanRecoveryUncheckedUpdateInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -472,6 +524,9 @@ export type LoanRecoveryCreateManyInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -487,6 +542,9 @@ export type LoanRecoveryUpdateManyMutationInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -504,6 +562,9 @@ export type LoanRecoveryUncheckedUpdateManyInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -537,6 +598,9 @@ export type LoanRecoveryCountOrderByAggregateInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrder
+  settlementDate?: Prisma.SortOrder
+  settlementApprovedBy?: Prisma.SortOrder
   dpd?: Prisma.SortOrder
   defaultedAt?: Prisma.SortOrder
   assignedTo?: Prisma.SortOrder
@@ -549,6 +613,7 @@ export type LoanRecoveryAvgOrderByAggregateInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrder
   dpd?: Prisma.SortOrder
 }
 
@@ -561,6 +626,9 @@ export type LoanRecoveryMaxOrderByAggregateInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrder
+  settlementDate?: Prisma.SortOrder
+  settlementApprovedBy?: Prisma.SortOrder
   dpd?: Prisma.SortOrder
   defaultedAt?: Prisma.SortOrder
   assignedTo?: Prisma.SortOrder
@@ -578,6 +646,9 @@ export type LoanRecoveryMinOrderByAggregateInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrder
+  settlementDate?: Prisma.SortOrder
+  settlementApprovedBy?: Prisma.SortOrder
   dpd?: Prisma.SortOrder
   defaultedAt?: Prisma.SortOrder
   assignedTo?: Prisma.SortOrder
@@ -590,6 +661,7 @@ export type LoanRecoverySumOrderByAggregateInput = {
   totalOutstandingAmount?: Prisma.SortOrder
   recoveredAmount?: Prisma.SortOrder
   balanceAmount?: Prisma.SortOrder
+  settlementAmount?: Prisma.SortOrder
   dpd?: Prisma.SortOrder
 }
 
@@ -719,6 +791,9 @@ export type LoanRecoveryCreateWithoutLoanApplicationInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -737,6 +812,9 @@ export type LoanRecoveryUncheckedCreateWithoutLoanApplicationInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -784,6 +862,9 @@ export type LoanRecoveryScalarWhereInput = {
   totalOutstandingAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   recoveredAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
   balanceAmount?: Prisma.FloatFilter<"LoanRecovery"> | number
+  settlementAmount?: Prisma.FloatNullableFilter<"LoanRecovery"> | number | null
+  settlementDate?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
+  settlementApprovedBy?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
   dpd?: Prisma.IntFilter<"LoanRecovery"> | number
   defaultedAt?: Prisma.DateTimeNullableFilter<"LoanRecovery"> | Date | string | null
   assignedTo?: Prisma.StringNullableFilter<"LoanRecovery"> | string | null
@@ -799,6 +880,9 @@ export type LoanRecoveryCreateWithoutRecoveryPaymentsInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -818,6 +902,9 @@ export type LoanRecoveryUncheckedCreateWithoutRecoveryPaymentsInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -849,6 +936,9 @@ export type LoanRecoveryUpdateWithoutRecoveryPaymentsInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -868,6 +958,9 @@ export type LoanRecoveryUncheckedUpdateWithoutRecoveryPaymentsInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -883,6 +976,9 @@ export type LoanRecoveryCreateWithoutCustomerInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -901,6 +997,9 @@ export type LoanRecoveryUncheckedCreateWithoutCustomerInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -944,6 +1043,9 @@ export type LoanRecoveryCreateManyLoanApplicationInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -959,6 +1061,9 @@ export type LoanRecoveryUpdateWithoutLoanApplicationInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -977,6 +1082,9 @@ export type LoanRecoveryUncheckedUpdateWithoutLoanApplicationInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -994,6 +1102,9 @@ export type LoanRecoveryUncheckedUpdateManyWithoutLoanApplicationInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1010,6 +1121,9 @@ export type LoanRecoveryCreateManyCustomerInput = {
   totalOutstandingAmount: number
   recoveredAmount: number
   balanceAmount: number
+  settlementAmount?: number | null
+  settlementDate?: Date | string | null
+  settlementApprovedBy?: string | null
   dpd: number
   defaultedAt?: Date | string | null
   assignedTo?: string | null
@@ -1025,6 +1139,9 @@ export type LoanRecoveryUpdateWithoutCustomerInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1043,6 +1160,9 @@ export type LoanRecoveryUncheckedUpdateWithoutCustomerInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1060,6 +1180,9 @@ export type LoanRecoveryUncheckedUpdateManyWithoutCustomerInput = {
   totalOutstandingAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   recoveredAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   balanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  settlementAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settlementApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dpd?: Prisma.IntFieldUpdateOperationsInput | number
   defaultedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedTo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1108,6 +1231,9 @@ export type LoanRecoverySelect<ExtArgs extends runtime.Types.Extensions.Internal
   totalOutstandingAmount?: boolean
   recoveredAmount?: boolean
   balanceAmount?: boolean
+  settlementAmount?: boolean
+  settlementDate?: boolean
+  settlementApprovedBy?: boolean
   dpd?: boolean
   defaultedAt?: boolean
   assignedTo?: boolean
@@ -1131,6 +1257,9 @@ export type LoanRecoverySelectScalar = {
   totalOutstandingAmount?: boolean
   recoveredAmount?: boolean
   balanceAmount?: boolean
+  settlementAmount?: boolean
+  settlementDate?: boolean
+  settlementApprovedBy?: boolean
   dpd?: boolean
   defaultedAt?: boolean
   assignedTo?: boolean
@@ -1139,7 +1268,7 @@ export type LoanRecoverySelectScalar = {
   updatedAt?: boolean
 }
 
-export type LoanRecoveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "customerId" | "recoveryStage" | "recoveryStatus" | "totalOutstandingAmount" | "recoveredAmount" | "balanceAmount" | "dpd" | "defaultedAt" | "assignedTo" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["loanRecovery"]>
+export type LoanRecoveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "customerId" | "recoveryStage" | "recoveryStatus" | "totalOutstandingAmount" | "recoveredAmount" | "balanceAmount" | "settlementAmount" | "settlementDate" | "settlementApprovedBy" | "dpd" | "defaultedAt" | "assignedTo" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["loanRecovery"]>
 export type LoanRecoveryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplication?: boolean | Prisma.LoanApplicationDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -1163,6 +1292,9 @@ export type $LoanRecoveryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     totalOutstandingAmount: number
     recoveredAmount: number
     balanceAmount: number
+    settlementAmount: number | null
+    settlementDate: Date | null
+    settlementApprovedBy: string | null
     dpd: number
     defaultedAt: Date | null
     assignedTo: string | null
@@ -1549,6 +1681,9 @@ export interface LoanRecoveryFieldRefs {
   readonly totalOutstandingAmount: Prisma.FieldRef<"LoanRecovery", 'Float'>
   readonly recoveredAmount: Prisma.FieldRef<"LoanRecovery", 'Float'>
   readonly balanceAmount: Prisma.FieldRef<"LoanRecovery", 'Float'>
+  readonly settlementAmount: Prisma.FieldRef<"LoanRecovery", 'Float'>
+  readonly settlementDate: Prisma.FieldRef<"LoanRecovery", 'DateTime'>
+  readonly settlementApprovedBy: Prisma.FieldRef<"LoanRecovery", 'String'>
   readonly dpd: Prisma.FieldRef<"LoanRecovery", 'Int'>
   readonly defaultedAt: Prisma.FieldRef<"LoanRecovery", 'DateTime'>
   readonly assignedTo: Prisma.FieldRef<"LoanRecovery", 'String'>

@@ -53,6 +53,7 @@ export const recovery_status = {
   IN_PROGRESS: 'IN_PROGRESS',
   RESOLVED: 'RESOLVED',
   WRITE_OFF: 'WRITE_OFF',
+  SETTLED: 'SETTLED',
   COMPLETED: 'COMPLETED'
 } as const
 
