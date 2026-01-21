@@ -42,14 +42,20 @@ export const createLoanApplicationController = async (
 
 export const getAllLoanApplicationsController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
-    const loanApplications = await getAllLoanApplicationsService();
+    const result = await getAllLoanApplicationsService({
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+      q: req.query.q?.toString(),
+    });
+
     res.status(200).json({
       success: true,
       message: "Loan applications retrieved successfully",
-      data: loanApplications, // return array of loan applications
+      data: result.data,
+      meta: result.meta,
     });
   } catch (error: any) {
     res.status(error.statusCode || 500).json({
@@ -58,6 +64,7 @@ export const getAllLoanApplicationsController = async (
     });
   }
 };
+
 
 export const getLoanApplicationByIdController = async (
   req: Request,
@@ -103,11 +110,6 @@ export const updateLoanApplicationStatusController = async (
     });
   }
 };
-
-
-
-
-
 
 
 export const uploadLoanDocumentsController = async (
@@ -238,13 +240,6 @@ export const uploadLoanDocumentsController = async (
     });
   }
 };
-
-
-
-
-
-
-
 
 
 export const verifyDocumentController = async (req: Request, res: Response) => {

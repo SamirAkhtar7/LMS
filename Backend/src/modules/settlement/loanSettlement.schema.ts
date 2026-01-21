@@ -7,7 +7,12 @@ export const loanSettlementSchema = z.object({
 })
 
 
-export const applyForSettlementSchema = z.object({
-    proposedAmount: z.number().positive(),
-    reason: z.string()
+export const applySettlementSchema = z.object({
+  remarks: z.string().min(3).optional(),
+});
+
+
+export const approveSettlementSchema = z.object({
+    settlementAmount: z.number().positive(),
+    approvedBy: z.string().min(3),
 })

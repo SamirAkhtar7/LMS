@@ -81,3 +81,48 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
 
   return data;
 };
+
+
+
+export const getAllDefaultedLoansService = async () => {
+
+    const loans = await prisma.loanApplication.findMany({
+        where: { status: "defaulted" },
+        orderBy: {
+            defaultedAt: "desc"
+        }, 
+        include: {
+            customer: true,
+            loanRecoveries: {
+                include: {
+                    recoveryPayments: true
+                }
+            }
+        }
+    });
+
+    return loans;
+
+
+}
+
+
+
+export const getDefaultLoanByIdService = async (loanId: string) => {
+    const loan = await prisma.loanApplication.findUnique({
+        where: { id: loanId },
+        include: {
+            customer: true,
+            loanRecoveries: {
+                include: {
+                    recoveryPayments: true
+                }
+            }
+        }
+    })
+    if (!loan || loan.status !== "defaulted") {
+        throw new Error("Defaulted loan not found");
+    }
+    return loan;
+}
+

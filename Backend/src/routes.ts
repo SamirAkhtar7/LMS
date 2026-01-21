@@ -12,6 +12,7 @@ import loanTypeRouter from "./modules/loanTypes/loanTypes.routes.js";
 import jobsRouter from "./jobs/jobs.routes.js";
 import recoveryRouter from "./modules/recovery/recovery.routes.js";
 import loanSettlementRouter from "./modules/settlement/loanSettlement.routes.js";
+import loanDefaultRouter from "./modules/loanDefault/loanDefault.route.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -30,5 +31,7 @@ router.use("/emi", emiRouter);
 router.use("/loantypes", loanTypeRouter);
 router.use("/recovery", recoveryRouter);
 router.use("/settlement", loanSettlementRouter);
+
+router.use("/loan-default", loanDefaultRouter);
 
 export default router;

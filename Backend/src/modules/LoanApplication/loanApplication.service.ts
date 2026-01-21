@@ -3,20 +3,19 @@ import {
   apperoveLoanInput,
   CreateLoanApplication,
 } from "./loanApplication.types.js";
-import createLoanApplicationSchema, { ApperoveLoanInput } from "./loanApplication.schema.js";
+import createLoanApplicationSchema, {
+  ApperoveLoanInput,
+} from "./loanApplication.schema.js";
 import type * as Enums from "../../../generated/prisma-client/enums.js";
 import { generateLoanNumber } from "../../common/utils/generateLoanNumber.js";
-
-
-
-
-
+import { getPagination ,buildPaginationMeta } from "../../common/utils/pagination.js";
+import { buildLoanApplicationSearch } from "../../common/utils/search.js";
 
 
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
-  loggedInUser: { id: string; role: Enums.Role }
+  loggedInUser: { id: string; role: Enums.Role },
 ) {
   if (!["EMPLOYEE", "ADMIN"].includes(loggedInUser.role)) {
     throw new Error("Not authorized to create loan application");
@@ -25,10 +24,10 @@ export async function createLoanApplicationService(
   const parsed = createLoanApplicationSchema.parse(data);
 
   const loanType = await prisma.loanType.findFirst({
-    where: { id: parsed.loanTypeId},
+    where: { id: parsed.loanTypeId },
   });
 
-  if (!loanType||!loanType.isActive) {
+  if (!loanType || !loanType.isActive) {
     throw new Error("Invalid loan type");
   }
 
@@ -57,26 +56,26 @@ export async function createLoanApplicationService(
         data: {
           title: parsed.title,
           firstName: parsed.firstName,
-          lastName: parsed.lastName??"" ,
-          middleName: parsed.middleName ,
+          lastName: parsed.lastName ?? "",
+          middleName: parsed.middleName,
           gender: parsed.gender as Enums.Gender,
-          dob: dobValue ,
-          aadhaarNumber: parsed.aadhaarNumber ,
-          panNumber: parsed.panNumber ,
+          dob: dobValue,
+          aadhaarNumber: parsed.aadhaarNumber,
+          panNumber: parsed.panNumber,
           voterId: parsed.voterId,
           maritalStatus: parsed.maritalStatus,
           nationality: parsed.nationality,
           category: parsed.category,
           contactNumber: parsed.contactNumber,
-          alternateNumber: parsed.alternateNumber ,
+          alternateNumber: parsed.alternateNumber,
           employmentType: parsed.employmentType,
-          monthlyIncome: parsed.monthlyIncome ,
-          annualIncome: parsed.annualIncome ,
+          monthlyIncome: parsed.monthlyIncome,
+          annualIncome: parsed.annualIncome,
           bankName: parsed.bankName,
           bankAccountNumber: parsed.bankAccountNumber,
           ifscCode: parsed.ifscCode,
           accountType: parsed.accountType,
-          email: parsed.email ,
+          email: parsed.email,
           address: parsed.address,
           city: parsed.city,
           state: parsed.state,
@@ -104,7 +103,7 @@ export async function createLoanApplicationService(
 
     if (existingLoan) {
       const err: any = new Error(
-        "Customer already has an active loan application"
+        "Customer already has an active loan application",
       );
       err.statusCode = 409;
       throw err;
@@ -112,7 +111,7 @@ export async function createLoanApplicationService(
 
     /* -------- 3. Generate Loan Number -------- */
     const loanNumber = await generateLoanNumber(tx);
-   
+
     /* -------- 4. Create Loan Application -------- */
     const loanApplication = await tx.loanApplication.create({
       data: {
@@ -133,16 +132,15 @@ export async function createLoanApplicationService(
     });
 
     /* -------- 5. Create KYC -------- */
-const kyc = await tx.kyc.create({
-  data: {
-    loanApplication: {
-      connect: { id: loanApplication.id },
-    },
-    userId: loggedInUser.id,
-    status: "PENDING",
-  },
-});
-
+    const kyc = await tx.kyc.create({
+      data: {
+        loanApplication: {
+          connect: { id: loanApplication.id },
+        },
+        userId: loggedInUser.id,
+        status: "PENDING",
+      },
+    });
 
     /* -------- 6. Link KYC -------- */
     await tx.loanApplication.update({
@@ -158,21 +156,13 @@ const kyc = await tx.kyc.create({
   });
 }
 
-
-
-
-
-
-
-
-
 export async function uploadLoanDocumentsService(
   loanApplicationId: string,
   documents: {
     documentType: string;
     documentPath: string;
     uploadedBy: string;
-  }[]
+  }[],
 ) {
   return prisma.$transaction(async (tx) => {
     /* 1️⃣ Validate loan & KYC */
@@ -214,7 +204,7 @@ export async function uploadLoanDocumentsService(
 
 export async function verifyDocumentService(
   documentId: string,
-  verifierId: string
+  verifierId: string,
 ) {
   return prisma.$transaction(async (tx) => {
     const document = await tx.document.update({
@@ -261,7 +251,7 @@ export async function verifyDocumentService(
 export async function rejectDocumentService(
   documentId: string,
   reason: string,
-  verifierId: string
+  verifierId: string,
 ) {
   const existing = await prisma.document.findUnique({
     where: { id: documentId },
@@ -322,24 +312,37 @@ export async function rejectDocumentService(
   return document;
 }
 
-export const getAllLoanApplicationsService = async () => {
-  // Implementation for retrieving all loan applications
-  try {
-    const loanApplications = await prisma.loanApplication.findMany({
+export const getAllLoanApplicationsService = async (params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+}) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
+
+  const where = {
+    ...buildLoanApplicationSearch(params.q),
+  };
+
+  const [data, total] = await Promise.all([
+    prisma.loanApplication.findMany({
+      where,
       include: {
         customer: true,
-        kyc: {
-          include: {
-            documents: true,
-          },
-        },
+        kyc: { include: { documents: true } },
       },
-    });
-    return loanApplications;
-  } catch (error) {
-    throw error;
-  }
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+    }),
+    prisma.loanApplication.count({ where }),
+  ]);
+
+  return {
+    data,
+    meta: buildPaginationMeta(total, page, limit),
+  };
 };
+
 export const getLoanApplicationByIdService = async (id: string) => {
   // Implementation for retrieving a loan application by ID
   try {
@@ -356,9 +359,9 @@ export const getLoanApplicationByIdService = async (id: string) => {
         },
         loanRecoveries: {
           include: {
-          recoveryPayments: true,
+            recoveryPayments: true,
           },
-        }
+        },
       },
     });
     return loanApplication;
@@ -372,7 +375,7 @@ type StatusUpdate = {
 };
 export const updateLoanApplicationStatusService = async (
   id: string,
-  statusData: StatusUpdate
+  statusData: StatusUpdate,
 ) => {
   // Implementation for updating loan application status
   try {
@@ -422,7 +425,7 @@ export const reviewLoanService = async (loanId: string) => {
 export const approveLoanService = async (
   loanId: string,
   userId: string,
-  data: ApperoveLoanInput
+  data: ApperoveLoanInput,
 ) => {
   // normalize emiStartDate to a full ISO Date if provided as yyyy-mm-dd string
   let emiStartDateNormalized: Date | undefined = undefined;
@@ -491,7 +494,7 @@ export const approveLoanService = async (
 export const rejectLoanService = async (
   loanId: string,
   reason: string,
-  userId: string
+  userId: string,
 ) => {
   const loan = await prisma.loanApplication.findUnique({
     where: { id: loanId },
