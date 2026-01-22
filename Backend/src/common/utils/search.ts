@@ -141,8 +141,6 @@ export const buildEmployeeSearch = (q?: string) => {
   };
 };
 
-
-
 // lead.search.ts
 export const buildLeadSearch = (q?: string) => {
   if (!q) return {};
@@ -163,6 +161,49 @@ export const buildLeadSearch = (q?: string) => {
       {
         contactNumber: {
           contains: q,
+        },
+      },
+    ],
+  };
+};
+
+
+export const buildEmiSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        loanApplication: {
+          loanNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            aadhaarNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            panNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            contactNumber: {
+              contains: q,
+            },
+          },
         },
       },
     ],

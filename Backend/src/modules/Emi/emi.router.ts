@@ -12,6 +12,7 @@ import {
   markEmiPaidController,
   payforecloseLoanController,
   getEmiPayableAmountController,
+  getAllEmisController
   // processOverdueEmisController,
 } from "./emi.controller.js";
 
@@ -27,6 +28,10 @@ const emiRouter = Router();
 // ✔ Penalty caps
 // ✔ Loan rescheduling
 // ✔ Statement generation (PDF)
+
+
+emiRouter.get("/", authMiddleware, getAllEmisController);
+
 
 emiRouter.post(
   "/loan-applications/:id/emis",

@@ -6,6 +6,7 @@ import {
   markEmiPaidService,
   getThisMonthEmiAmountService,
   payforecloseLoanService,
+  getAllEmisService,
   applyMoratoriumService,
   getPayableEmiAmountService,
   editEmiService,
@@ -15,6 +16,30 @@ import {
   payEmiService,
   forecloseLoanService, 
 } from "./emi.service.js";
+
+export const getAllEmisController = async (req: Request, res: Response) => {
+  try {
+    const result = await getAllEmisService({
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+      q: req.query.q?.toString(),
+      status: req.query.status?.toString(),
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "EMIs retrieved successfully",
+      data: result.data,
+      meta: result.meta,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve EMIs",
+      error: error.message,
+    });
+  }
+};
 
 export const generateEmiScheduleController = async (
   req: Request,
@@ -104,7 +129,6 @@ export const markEmiPaidController = async (req: Request, res: Response) => {
     });
   }
 };
-
 
 export const getEmiPayableAmountController = async (req: Request, res: Response) => {
   try {
@@ -272,7 +296,6 @@ export const payforecloseLoanController = async (req: Request, res: Response) =>
     });
   }
 }
-
 export const applyMorationtoriumController = async (req: Request, res: Response) => {
   try {
     const { loanId } = req.params;
@@ -299,7 +322,6 @@ export const applyMorationtoriumController = async (req: Request, res: Response)
     });
   }
 }
-
 export const getpayableEmiAmountController = async (req: Request, res: Response) => {
   try {
     const emiId = req.params.emiId;
@@ -312,8 +334,6 @@ export const getpayableEmiAmountController = async (req: Request, res: Response)
     });
   }
 };
-
-
 export const editEmiController = async (req: Request, res: Response) => {
   try {
     const emiId = req.params.emiId;

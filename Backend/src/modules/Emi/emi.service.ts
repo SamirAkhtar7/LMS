@@ -4,7 +4,9 @@ import {
   EmiScheduleItem,
   EmiScheduleInput,
 } from "../LoanApplication/loanApplication.types.js";
-import { lte } from "zod";
+import { getPagination } from "../../common/utils/pagination.js";
+import { Prisma } from "../../../generated/prisma-client/client.js";
+import { buildEmiSearch } from "../../common/utils/search.js";
 
 export const generateEmiScheduleService = async (loanId: string) => {
   const loan = await prisma.loanApplication.findUnique({
@@ -42,7 +44,7 @@ export const generateEmiScheduleService = async (loanId: string) => {
       throw new Error("EMI schedule already generated");
     }
     throw new Error(
-      "Invalid loan data for EMI schedule can be generated only for approved loans"
+      "Invalid loan data for EMI schedule can be generated only for approved loans",
     );
   }
 
@@ -87,7 +89,7 @@ export const generateEmiScheduleService = async (loanId: string) => {
       dueDate: new Date(
         startDate.getFullYear(),
         startDate.getMonth() + i,
-        startDate.getDate()
+        startDate.getDate(),
       ),
       openingBalance: Number(balance.toFixed(2)),
       principalAmount: Number(principalAmount.toFixed(2)),
@@ -132,6 +134,64 @@ export const getLoanEmiService = async (loanId: string) => {
     throw new Error(error.message || "Failed to fetch EMI schedule");
   }
 };
+
+export const getAllEmisService = async (params: {
+  loanId?: string;
+  page?: number;
+  limit?: number;
+  q?: string;
+  status?: string;
+}) => {
+  const { page, limit, skip,} = getPagination(params.page, params.limit);
+
+  const where: Prisma.LoanEmiScheduleWhereInput = {
+    ...(params.loanId && { loanApplicationId: params.loanId }),
+    ...(params.status && { status: params.status as any }),
+    ...buildEmiSearch(params.q),
+  };
+
+  const [data, total] = await Promise.all([
+    prisma.loanEmiSchedule.findMany({
+      where,
+      orderBy: { emiNo: "asc" },
+      skip,
+      take: limit,
+      include: {
+        loanApplication: {
+          select: {
+            id: true,
+            loanNumber: true,
+            approvedAmount: true,
+            interestRate: true,
+            tenureMonths: true,
+            interestType: true,
+            status: true,
+            customer: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                contactNumber: true,
+              },
+            },
+          },
+        },
+      },
+    }),
+    prisma.loanEmiSchedule.count({ where }),
+  ]);
+
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
+    },
+  };
+};
+
 
 export const markEmiPaidService = async ({
   emiId,
@@ -326,7 +386,7 @@ export const processOverdueEmis = async (): Promise<number> => {
     overdueEmis.map((emi) => {
       const lateFee =
         emi.latePaymentFeeType === "FIXED"
-          ? emi.latePaymentFee ?? 0
+          ? (emi.latePaymentFee ?? 0)
           : (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
 
       return prisma.loanEmiSchedule.update({
@@ -339,7 +399,7 @@ export const processOverdueEmis = async (): Promise<number> => {
           latePaymentFee: lateFee,
         },
       });
-    })
+    }),
   );
 
   return overdueEmis.length;
@@ -392,7 +452,7 @@ export const getPayableEmiAmountService = async (emiId: string) => {
 export const payEmiService = async (
   emiId: string,
   amount: number,
-  paymentMode: string
+  paymentMode: string,
 ) => {
   try {
     return await prisma.$transaction(async (tx) => {
@@ -456,7 +516,7 @@ export const forecloseLoanService = async (loanId: string) => {
     });
     const outstandingPrincipal = emis.reduce(
       (sum, e) => sum + e.principalAmount,
-      0
+      0,
     );
     const foreclosureCharge =
       outstandingPrincipal * ((loan.foreclosureCharges ?? 0) / 100);
@@ -470,7 +530,7 @@ export const forecloseLoanService = async (loanId: string) => {
 };
 
 export const getThisMonthEmiAmountService = async (
-  loanApplicationId: string
+  loanApplicationId: string,
 ) => {
   /* 1️⃣ Current month range */
   const startOfMonth = new Date();
@@ -512,7 +572,7 @@ export const getThisMonthEmiAmountService = async (
     if (isOverdue) {
       lateFee =
         emi.latePaymentFeeType === "FIXED"
-          ? emi.latePaymentFee ?? 0
+          ? (emi.latePaymentFee ?? 0)
           : (emi.emiAmount * (emi.latePaymentFee ?? 0)) / 100;
     }
 
@@ -544,8 +604,8 @@ export const getThisMonthEmiAmountService = async (
       totalPayable: Number(
         Math.max(
           emi.emiAmount + lateFee + bounceCharge - alreadyPaid,
-          0
-        ).toFixed(2)
+          0,
+        ).toFixed(2),
       ),
       status: emi.status,
       isOverdue,
@@ -572,7 +632,7 @@ export const getThisMonthEmiAmountService = async (
 
 export const payforecloseLoanService = async (
   loanApplicationId: string,
-  data: any
+  data: any,
 ) => {
   try {
     const loan = await prisma.loanApplication.findUnique({
@@ -597,7 +657,7 @@ export const payforecloseLoanService = async (
     // minimum 6 emis should be paid before foreclosing
     if (paidEmisCount < 6) {
       throw new Error(
-        "At least 6 EMIs must be paid before foreclosing the loan"
+        "At least 6 EMIs must be paid before foreclosing the loan",
       );
     }
 
@@ -609,7 +669,7 @@ export const payforecloseLoanService = async (
     });
     const outstandingPrincipal = emis.reduce(
       (sum, e) => sum + e.principalAmount,
-      0
+      0,
     );
     const foreclosureCharge =
       outstandingPrincipal * ((loan.foreclosureCharges ?? 0) / 100);
@@ -694,7 +754,7 @@ export const applyMoratoriumService = async ({
 
   if (overlapping) {
     throw new Error(
-      "An active moratorium already exists for this loan in the specified period"
+      "An active moratorium already exists for this loan in the specified period",
     );
   }
 
