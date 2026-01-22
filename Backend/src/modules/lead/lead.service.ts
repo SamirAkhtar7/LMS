@@ -1,8 +1,10 @@
 import { prisma } from "../../db/prismaService.js";
 import { CreateLead, UpdateLead } from "./lead.types.js";
-import { generateUniqueLeadNumber }  from "../../common/utils/generateLeadNumber.js";
-import * as crypto from "crypto";
-import { generateLoanNumber } from "../../common/utils/generateLoanNumber.js";
+import { generateUniqueLeadNumber } from "../../common/generateId/generateLeadNumber.js";
+
+import { generateLoanNumber } from "../../common/generateId/generateLoanNumber.js";
+import { buildLeadSearch } from "../../common/utils/search.js";
+import { getPagination } from "../../common/utils/pagination.js";
 
 export const createLeadService = async (leadData: CreateLead) => {
   const dob =
@@ -43,10 +45,31 @@ export const createLeadService = async (leadData: CreateLead) => {
   });
 };
 
+export const getAllLeadsService = async (params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+}) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
+  const where = { ...buildLeadSearch(params.q) };
 
-export const getAllLeadsService = async () => {
-  const leads = await prisma.leads.findMany({ include: { loanType: true } });
-  return leads;
+  const [data, total] = await Promise.all([
+    prisma.leads.findMany({
+      where,
+      include: { loanType: true },
+      skip,
+      take: limit,
+    }),
+    prisma.leads.count({ where }),
+  ]);
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
+    },
+  };
 };
 
 export const getLeadByIdService = async (id: string) => {

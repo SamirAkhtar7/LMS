@@ -18,8 +18,6 @@ export const createLeadController = async (req: Request, res: Response) => {
       data: lead,
     });
   } catch (error: any) {
-    console.error("CREATE LEAD ERROR:", error); // 👈 log it
-
     // Prisma unique constraint
     if (error.code === "P2002") {
       return res.status(409).json({
@@ -64,7 +62,11 @@ export const convertLeadToLoanController = async (req: Request, res: Response) =
 
 export const getAllLeadsController = async (req: Request, res: Response) => {
   try {
-    const leads = await getAllLeadsService();
+    const leads = await getAllLeadsService({
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+      q: req.query.q?.toString(),
+    });
     res.status(200).json({
       success: true,
       message: "Leads retrieved successfully",

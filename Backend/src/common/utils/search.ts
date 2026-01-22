@@ -159,9 +159,9 @@ export const buildLeadSearch = (q?: string) => {
           contains: q,
         },
       },
-     
+
       {
-        mobile: {
+        contactNumber: {
           contains: q,
         },
       },

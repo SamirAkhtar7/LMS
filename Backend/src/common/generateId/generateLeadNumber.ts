@@ -4,7 +4,7 @@ const generateUniqueLeadNumber = async (): Promise<string> => {
   let attempts = 0;
 
   while (attempts < 5) {
-    const number = Math.floor(1000 + Math.random() * 9000); // 4-digit
+    const number = Math.floor(100000 + Math.random() * 9000); // 4-digit
     const leadNumber = `LEAD-${number}`;
 
     const exists = await prisma.leads.findUnique({

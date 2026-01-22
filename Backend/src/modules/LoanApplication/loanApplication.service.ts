@@ -7,11 +7,12 @@ import createLoanApplicationSchema, {
   ApperoveLoanInput,
 } from "./loanApplication.schema.js";
 import type * as Enums from "../../../generated/prisma-client/enums.js";
-import { generateLoanNumber } from "../../common/utils/generateLoanNumber.js";
-import { getPagination ,buildPaginationMeta } from "../../common/utils/pagination.js";
+import { generateLoanNumber } from "../../common/generateId/generateLoanNumber.js";
+import {
+  getPagination,
+  buildPaginationMeta,
+} from "../../common/utils/pagination.js";
 import { buildLoanApplicationSearch } from "../../common/utils/search.js";
-
-
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,

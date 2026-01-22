@@ -4,6 +4,7 @@ import { CreateEmployee } from "./employee.types.js";
 import * as crypto from "crypto";
 import { getPagination ,buildPaginationMeta } from "../../common/utils/pagination.js";
 import { buildEmployeeSearch } from "../../common/utils/search.js";
+import { generateUniqueEmployeeId } from "../../common/generateId/generateEmployeeId.js";
 //Todo: add permission checks where necessary
 
 export async function createEmployeeService(data: CreateEmployee) {
@@ -34,7 +35,7 @@ export async function createEmployeeService(data: CreateEmployee) {
     });
 
     // generate a simple unique employee id
-    const employeeId = `EMP-${crypto.randomInt(1000, 10000)}`;
+    const employeeId = await generateUniqueEmployeeId();
 
     // derive a userName for the employee record if not provided
 
