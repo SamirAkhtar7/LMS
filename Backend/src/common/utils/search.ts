@@ -209,3 +209,21 @@ export const buildEmiSearch = (q?: string) => {
     ],
   };
 };
+
+export const buildLoanTypeSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        name: {
+          contains: q,
+        },
+      },
+      {
+        code: {
+          contains: q,
+        }
+      },
+    ]
+  }
+};;

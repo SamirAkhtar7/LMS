@@ -25,7 +25,22 @@ export const createLoanTypeController = async (req: Request, res: Response) => {
 
 export const getAllLoanTypesController = async (req: Request, res: Response) => {
     try {
-        const loanTypes = await getAllLoanTypeService();
+        const loanTypes = await getAllLoanTypeService(
+            {
+                page: Number(req.query.page),
+                limit: Number(req.query.limit),
+                q: req.query.q?.toString(),
+                isActive:
+                req.query.isActive !== undefined
+                    ? req.query.isActive === "true"
+                        : undefined,
+                isPublic:
+                req.query.isPublic !== undefined
+                    ? req.query.isPublic === "true"
+                        : undefined,
+                
+            }
+        );
         res.status(200).json({
             success: true,
             message: "Loan types retrieved successfully",

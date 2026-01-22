@@ -2,6 +2,8 @@ import { prisma } from "../../db/prismaService.js";
 import { LoanTypeDTO } from "./loanTypes.types.js";
 import { z } from "zod";
 import { createLoanTypeSchema } from "./loanTypes.schema.js";
+import { getPagination } from "../../common/utils/pagination.js";
+import { buildLoanTypeSearch } from "../../common/utils/search.js";
 
 //type CreateLoanTypeInput = z.infer<typeof createLoanTypeSchema>;
 export const createLoanTypeService = async (loanTypeData: LoanTypeDTO) => {
@@ -111,14 +113,40 @@ export const createLoanTypeService = async (loanTypeData: LoanTypeDTO) => {
   }
 };
 
-export const getAllLoanTypeService = async () => {
-  const loanTypes = await prisma.loanType.findMany({
-    where: {
-      // deletedAt: null
+export const getAllLoanTypeService = async (params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+  isActive?: boolean;
+  isPublic?: boolean;
+}) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
 
+  const where = {
+    ...(params.isActive !== undefined && { isActive: params.isActive }),
+    ...(params.isPublic !== undefined && { isPublic: params.isPublic }),
+    ...buildLoanTypeSearch(params.q),
+  }
+  
+  const [data, total] = await Promise.all([
+    prisma.loanType.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.loanType.count({ where }),
+  ]);
+
+  
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
     },
-  });
-  return loanTypes;
+  };
 }
 
 export const getLoanTypeByIdService = async (loanTypeId: string) => {
