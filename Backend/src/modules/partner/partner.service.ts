@@ -1,6 +1,9 @@
 import { prisma } from "../../db/prismaService.js";
 import { hashPassword } from "../../common/utils/utils.js";
 import { CreatePartner } from "./partner.types.js";
+import { generateUniquePartnerNumber } from "../../common/generateId/generatePartnerId.js";
+import { getPagination } from "../../common/utils/pagination.js";
+import { buildPartnerSearch } from "../../common/utils/search.js";
 
 export async function createPartnerService(partnerData: CreatePartner) {
   const existing = await prisma.user.findUnique({
@@ -23,9 +26,8 @@ export async function createPartnerService(partnerData: CreatePartner) {
       },
     });
     // derive partner/user names and partnerId if not provided
-    const derivedPartnerId =
-      partnerData.partnerId ?? `PRT-${crypto.randomUUID()}`;
-
+    const derivedPartnerId = await generateUniquePartnerNumber();
+     
     const partner = await prisma.partner.create({
       data: {
         userId: user.id,
@@ -73,21 +75,42 @@ export async function createPartnerService(partnerData: CreatePartner) {
   }
 }
 
-export const getAllPartnerService = async () => {
-  // Implementation for retrieving all partners
-  const partners = await prisma.partner.findMany({
-    include: {
-      user: true,
+export const getAllPartnerService = async (params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+}) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
+  
+  const where = {
+    ...buildPartnerSearch(params.q),
+  };
+  const [data, total] = await Promise.all([
+    prisma.partner.findMany({
+      where,
+      include: {
+        user: true,
+      },
+      skip,
+      take: limit,
+    }),
+    prisma.partner.count({ where }),
+  ]);
+  return {
+    data: data.map((partner) => {
+      const { password, ...safeUser } = partner.user;
+      return {
+        ...partner,
+        user: safeUser,
+      };
+    }
+    ),
+    meta: {
+      total,
+      page,
+      limit,
     },
-  });
-  const safePartners = partners.map((partner) => {
-    const { password, ...safeUser } = partner.user;
-    return {
-      ...partner,
-      user: safeUser,
-    };
-  });
-  return safePartners;
+  };
 };
 
 export const getPartnerByIdService = async (id: string) => {

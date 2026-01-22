@@ -170,7 +170,12 @@ export const getAllRecoveriesController = async (
   res: Response
 ) => {
   try {
-    const recoveries = await getAllRecoveriesService();
+    const recoveries = await getAllRecoveriesService({
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+      q: req.query.q?.toString(),
+      
+    });
     res.status(200).json({
       success: true,
       message: "All recoveries retrieved successfully",

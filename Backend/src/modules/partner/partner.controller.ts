@@ -42,7 +42,13 @@ export const createPartnerController = async (req: Request, res: Response) => {
 
 export const getAllPartnersController = async (req: Request, res: Response) => {
   try {
-    const partners = await getAllPartnerService();
+    const partners = await getAllPartnerService(
+      {
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+        q: req.query.q?.toString(),
+      }
+    );
     res.status(200).json({
       success: true,
       message: "Partners retrieved successfully",

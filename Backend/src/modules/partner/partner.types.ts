@@ -29,7 +29,6 @@ export interface CreatePartner {
   isActive?: boolean;
 
   // partner-specific
-  partnerId?: string;
   companyName?: string;
   contactPerson?: string;
   website?: string;

@@ -1,6 +1,11 @@
 import { prisma } from "../../db/prismaService.js";
 import { PaymentMode as PrismaPaymentMode } from "../../../generated/prisma-client/enums.js";
 import { recovery_stage } from "../../../generated/prisma-client/enums.js";
+import {
+  buildRecoverySearch,
+  RECOVERY_STATUSES,
+} from "../../common/utils/search.js";
+import { getPagination } from "../../common/utils/pagination.js";
 
 export const getRecoveryByLoanIdService = async (loanId: string) => {
   return prisma.$transaction(async (tx) => {
@@ -36,7 +41,7 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
 
     const totalPrincipalPaid = paidEmis.reduce(
       (sum, emi) => sum + emi.principalAmount,
-      0
+      0,
     );
 
     const correctOutstanding = (loan.approvedAmount ?? 0) - totalPrincipalPaid;
@@ -92,7 +97,7 @@ export const payRecoveryAmountService = async (
   recoveryId: string,
   amount: number,
   paymentMode: PrismaPaymentMode,
-  referenceNo?: string
+  referenceNo?: string,
 ) => {
   return prisma.$transaction(async (tx) => {
     const recovery = await tx.loanRecovery.findUnique({
@@ -105,7 +110,7 @@ export const payRecoveryAmountService = async (
 
     if (amount > recovery.balanceAmount) {
       throw new Error("Payment exceeds outstanding amount");
-    } 
+    }
     await tx.recoveryPayment.create({
       data: {
         loanRecoveryId: recoveryId,
@@ -114,11 +119,11 @@ export const payRecoveryAmountService = async (
         paymentDate: new Date(),
         referenceNo,
       },
-    });        
+    });
     const recoveredAmount = recovery.recoveredAmount + amount;
     const balanceAmount = Math.max(
       recovery.totalOutstandingAmount - recoveredAmount,
-      0
+      0,
     );
     const updatedRecovery = await tx.loanRecovery.update({
       where: { id: recoveryId },
@@ -148,7 +153,7 @@ export const payRecoveryAmountService = async (
 
 export const assignRecoveryAgentService = async (
   recoveryId: string,
-  assignedTo: string
+  assignedTo: string,
 ) => {
   return prisma.loanRecovery.update({
     where: { id: recoveryId },
@@ -159,7 +164,7 @@ export const assignRecoveryAgentService = async (
 export const updateRecoveryStageService = async (
   recoveryId: string,
   recoveryStage: recovery_stage,
-  remarks?: string
+  remarks?: string,
 ) => {
   return prisma.loanRecovery.update({
     where: { id: recoveryId },
@@ -188,19 +193,48 @@ export const getLoanWithRecoveryService = async () => {
   return loanWithRecovery;
 };
 
-export const getAllRecoveriesService = async () => {
-  const recoveries = await prisma.loanRecovery.findMany({
-    include: {
-      loanApplication: {
-        include: {
-          customer: true,
+export const getAllRecoveriesService = async (params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+  status?: string;
+}) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
+  const where: any = {
+    ...buildRecoverySearch(params.q),
+  };
+
+  // ✅ SAFE enum filter
+  if (params.status && RECOVERY_STATUSES.includes(params.status as any)) {
+    where.recoveryStatus = params.status;
+  }
+  const [data, total] = await Promise.all([
+    prisma.loanRecovery.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+      include: {
+        loanApplication: {
+          include: {
+            customer: true,
+          },
         },
+        recoveryPayments: true,
       },
-      recoveryPayments: true,
+    }),
+    prisma.loanRecovery.count({ where }),
+  ]);
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
     },
-  });
-  return recoveries;
+  };
 };
+
 export const getRecoveryDetailsService = async (recoveryId: string) => {
   const recovery = await prisma.loanRecovery.findUnique({
     where: { id: recoveryId },
