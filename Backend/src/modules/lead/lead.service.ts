@@ -1,51 +1,51 @@
 import { prisma } from "../../db/prismaService.js";
 import { CreateLead, UpdateLead } from "./lead.types.js";
+import { generateUniqueLeadNumber }  from "../../common/utils/generateLeadNumber.js";
+import * as crypto from "crypto";
+import { generateLoanNumber } from "../../common/utils/generateLoanNumber.js";
 
 export const createLeadService = async (leadData: CreateLead) => {
   const dob =
     typeof leadData.dob === "string" ? new Date(leadData.dob) : leadData.dob;
-  try {
-    const typecheck = await prisma.loanType.findFirst
-      ({
-        where: {
-          id: leadData.loanTypeId,
-          isActive: true,
-          //deletedAt: null,
-        },
-        select:{ id: true}
-        
-      })
-    if (!typecheck) {
-      const e: any = new Error("Invalid loan type ID");
-      e.statusCode = 400;
-      throw e;
-    }
-const result = await prisma.leads.create({
+
+  const typecheck = await prisma.loanType.findFirst({
+    where: {
+      id: leadData.loanTypeId,
+      isActive: true,
+    },
+    select: { id: true },
+  });
+
+  if (!typecheck) {
+    const err: any = new Error("Invalid loan type ID");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const leadNumber = await generateUniqueLeadNumber(); // ✅ 4-digit only
+
+  return await prisma.leads.create({
     data: {
       fullName: leadData.fullName,
       contactNumber: leadData.contactNumber,
       email: leadData.email,
+      leadNumber,
       dob,
       gender: leadData.gender,
       loanAmount: leadData.loanAmount,
       loanTypeId: leadData.loanTypeId,
-      city: leadData.city,
-      state: leadData.state,
-      pinCode: leadData.pinCode,
-      address: leadData.address,
-      status: (leadData.status ?? "PENDING") as any,
+      city: leadData.city ?? null,
+      state: leadData.state ?? null,
+      pinCode: leadData.pinCode ?? null,
+      address: leadData.address ?? null,
+      status: "PENDING",
     },
-});
-  
-  return result;
- 
-} catch (error: any) {
-  throw new Error(error.message);
-}
+  });
 };
 
+
 export const getAllLeadsService = async () => {
-  const leads = await prisma.leads.findMany({include: { loanType: true }});
+  const leads = await prisma.leads.findMany({ include: { loanType: true } });
   return leads;
 };
 
@@ -80,7 +80,7 @@ export const updateLeadStatusService = async (id: string, status: string) => {
     typeof status === "string" ? status.toUpperCase().trim() : status;
   if (!allowed.includes(normalized)) {
     const e: any = new Error(
-      `Invalid status. Expected one of: ${allowed.join("|")}`
+      `Invalid status. Expected one of: ${allowed.join("|")}`,
     );
     e.statusCode = 400;
     throw e;
@@ -108,13 +108,17 @@ export const updateLeadStatusService = async (id: string, status: string) => {
 export const assignLeadService = async (
   id: string,
   assignedTo: string,
-  assignedBy: string
+  assignedBy: string,
 ) => {
   try {
     const updated = await prisma.leads.update({
       where: { id },
       data: { assignedTo, assignedBy },
-      include: { assignedToUser: true, assignedByUser: true ,include: { loanType: true }},
+      include: {
+        assignedToUser: true,
+        assignedByUser: true,
+        include: { loanType: true },
+      },
     });
     return updated;
   } catch (error: unknown) {
@@ -145,7 +149,7 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
 
     if (
       !["APPLICATION_IN_PROGRESS", "INTERESTED", "APPROVED"].includes(
-        lead.status
+        lead.status,
       )
     ) {
       const e: any = new Error("Lead status not eligible for conversion");
@@ -161,7 +165,7 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
 
     if (orConditions.length === 0) {
       const e: any = new Error(
-        "Lead must have email or contact number to convert"
+        "Lead must have email or contact number to convert",
       );
       e.statusCode = 400;
       throw e;
@@ -223,13 +227,17 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
     }
 
     // 3. Create the loan application and associate it with the customer and lead
+    const loanNumber = await generateLoanNumber(tx);
+
     const loanApplication = await tx.loanApplication.create({
       data: {
+        loanNumber,
+        loanTypeId: lead.loanTypeId,
         requestedAmount: lead.loanAmount,
         interestType: "FLAT",
         status: "application_in_progress",
-        customer: { connect: { id: customer.id } },
-        lead: { connect: { id: lead.id } },
+        customerId: customer.id,
+        leadId: lead.id,
       },
       include: { customer: true },
     });

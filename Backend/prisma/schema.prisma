@@ -152,6 +152,7 @@ model Leads {
   id                         String            @id @default(cuid())
   fullName                   String
   contactNumber              String
+  leadNumber                 String            @unique
   email                      String
   dob                        DateTime
   gender                     Gender
@@ -172,6 +173,8 @@ model Leads {
   assignedByUser             User?             @relation("LeadAssignedBy", fields: [assignedBy], references: [id])
   loanApplications           LoanApplication[]
   loanType                   LoanType          @relation(fields: [loanTypeId], references: [id])
+
+  @@index([leadNumber])
 }
 
 model LoanApplication {

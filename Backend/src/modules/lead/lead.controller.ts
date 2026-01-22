@@ -10,30 +10,32 @@ import {
 
 export const createLeadController = async (req: Request, res: Response) => {
   try {
-    const leadData = req.body;
-    const lead = await createLeadService(leadData);
+    const lead = await createLeadService(req.body);
+
     res.status(201).json({
       success: true,
       message: "Lead created successfully",
-      data: lead, // return created lead data
+      data: lead,
     });
   } catch (error: any) {
-      if(error.name === "ValidationError"){
-          return res.status(400).json({
-              success: false,
-              message: "Invalid lead data",
-              error: error.message,
-          });
-      }
-      
-          
-    res.status(500).json({
+    console.error("CREATE LEAD ERROR:", error); // 👈 log it
+
+    // Prisma unique constraint
+    if (error.code === "P2002") {
+      return res.status(409).json({
+        success: false,
+        message: "Duplicate lead detected",
+        error: error.meta?.target,
+      });
+    }
+
+    res.status(error.statusCode || 500).json({
       success: false,
-      message: "Lead creation failed",
-      error: "INTERNAL_SERVER_ERROR",
+      message: error.message || "Lead creation failed",
     });
   }
 };
+
 
 export const convertLeadToLoanController = async (req: Request, res: Response) => {
   try {

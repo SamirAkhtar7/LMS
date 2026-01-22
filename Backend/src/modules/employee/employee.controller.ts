@@ -33,7 +33,12 @@ export const getAllEmployeesController = async (
   res: Response
 ) => {
   try {
-  const employees = await getAllEmployeesService();
+    const employees = await getAllEmployeesService({
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+      q: req.query.q?.toString(),
+    
+  });
   res.status(200).json({
     success: true,
     message: "Employees retrieved successfully",

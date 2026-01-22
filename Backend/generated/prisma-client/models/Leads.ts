@@ -38,6 +38,7 @@ export type LeadsMinAggregateOutputType = {
   id: string | null
   fullName: string | null
   contactNumber: string | null
+  leadNumber: string | null
   email: string | null
   dob: Date | null
   gender: $Enums.Gender | null
@@ -59,6 +60,7 @@ export type LeadsMaxAggregateOutputType = {
   id: string | null
   fullName: string | null
   contactNumber: string | null
+  leadNumber: string | null
   email: string | null
   dob: Date | null
   gender: $Enums.Gender | null
@@ -80,6 +82,7 @@ export type LeadsCountAggregateOutputType = {
   id: number
   fullName: number
   contactNumber: number
+  leadNumber: number
   email: number
   dob: number
   gender: number
@@ -111,6 +114,7 @@ export type LeadsMinAggregateInputType = {
   id?: true
   fullName?: true
   contactNumber?: true
+  leadNumber?: true
   email?: true
   dob?: true
   gender?: true
@@ -132,6 +136,7 @@ export type LeadsMaxAggregateInputType = {
   id?: true
   fullName?: true
   contactNumber?: true
+  leadNumber?: true
   email?: true
   dob?: true
   gender?: true
@@ -153,6 +158,7 @@ export type LeadsCountAggregateInputType = {
   id?: true
   fullName?: true
   contactNumber?: true
+  leadNumber?: true
   email?: true
   dob?: true
   gender?: true
@@ -261,6 +267,7 @@ export type LeadsGroupByOutputType = {
   id: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date
   gender: $Enums.Gender
@@ -305,6 +312,7 @@ export type LeadsWhereInput = {
   id?: Prisma.StringFilter<"Leads"> | string
   fullName?: Prisma.StringFilter<"Leads"> | string
   contactNumber?: Prisma.StringFilter<"Leads"> | string
+  leadNumber?: Prisma.StringFilter<"Leads"> | string
   email?: Prisma.StringFilter<"Leads"> | string
   dob?: Prisma.DateTimeFilter<"Leads"> | Date | string
   gender?: Prisma.EnumGenderFilter<"Leads"> | $Enums.Gender
@@ -330,6 +338,7 @@ export type LeadsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  leadNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
@@ -354,6 +363,7 @@ export type LeadsOrderByWithRelationInput = {
 
 export type LeadsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  leadNumber?: string
   AND?: Prisma.LeadsWhereInput | Prisma.LeadsWhereInput[]
   OR?: Prisma.LeadsWhereInput[]
   NOT?: Prisma.LeadsWhereInput | Prisma.LeadsWhereInput[]
@@ -378,12 +388,13 @@ export type LeadsWhereUniqueInput = Prisma.AtLeast<{
   assignedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   loanApplications?: Prisma.LoanApplicationListRelationFilter
   loanType?: Prisma.XOR<Prisma.LoanTypeScalarRelationFilter, Prisma.LoanTypeWhereInput>
-}, "id">
+}, "id" | "leadNumber">
 
 export type LeadsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  leadNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
@@ -413,6 +424,7 @@ export type LeadsScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Leads"> | string
   fullName?: Prisma.StringWithAggregatesFilter<"Leads"> | string
   contactNumber?: Prisma.StringWithAggregatesFilter<"Leads"> | string
+  leadNumber?: Prisma.StringWithAggregatesFilter<"Leads"> | string
   email?: Prisma.StringWithAggregatesFilter<"Leads"> | string
   dob?: Prisma.DateTimeWithAggregatesFilter<"Leads"> | Date | string
   gender?: Prisma.EnumGenderWithAggregatesFilter<"Leads"> | $Enums.Gender
@@ -434,6 +446,7 @@ export type LeadsCreateInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -456,6 +469,7 @@ export type LeadsUncheckedCreateInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -478,6 +492,7 @@ export type LeadsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -500,6 +515,7 @@ export type LeadsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -522,6 +538,7 @@ export type LeadsCreateManyInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -543,6 +560,7 @@ export type LeadsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -561,6 +579,7 @@ export type LeadsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -598,6 +617,7 @@ export type LeadsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  leadNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
@@ -623,6 +643,7 @@ export type LeadsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  leadNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
@@ -644,6 +665,7 @@ export type LeadsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  leadNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
@@ -820,6 +842,7 @@ export type LeadsCreateWithoutAssignedToUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -841,6 +864,7 @@ export type LeadsUncheckedCreateWithoutAssignedToUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -872,6 +896,7 @@ export type LeadsCreateWithoutAssignedByUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -893,6 +918,7 @@ export type LeadsUncheckedCreateWithoutAssignedByUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -943,6 +969,7 @@ export type LeadsScalarWhereInput = {
   id?: Prisma.StringFilter<"Leads"> | string
   fullName?: Prisma.StringFilter<"Leads"> | string
   contactNumber?: Prisma.StringFilter<"Leads"> | string
+  leadNumber?: Prisma.StringFilter<"Leads"> | string
   email?: Prisma.StringFilter<"Leads"> | string
   dob?: Prisma.DateTimeFilter<"Leads"> | Date | string
   gender?: Prisma.EnumGenderFilter<"Leads"> | $Enums.Gender
@@ -980,6 +1007,7 @@ export type LeadsCreateWithoutLoanApplicationsInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1001,6 +1029,7 @@ export type LeadsUncheckedCreateWithoutLoanApplicationsInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1038,6 +1067,7 @@ export type LeadsUpdateWithoutLoanApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1059,6 +1089,7 @@ export type LeadsUncheckedUpdateWithoutLoanApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1080,6 +1111,7 @@ export type LeadsCreateWithoutLoanTypeInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1101,6 +1133,7 @@ export type LeadsUncheckedCreateWithoutLoanTypeInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1148,6 +1181,7 @@ export type LeadsCreateManyAssignedToUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1168,6 +1202,7 @@ export type LeadsCreateManyAssignedByUserInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1188,6 +1223,7 @@ export type LeadsUpdateWithoutAssignedToUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1209,6 +1245,7 @@ export type LeadsUncheckedUpdateWithoutAssignedToUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1230,6 +1267,7 @@ export type LeadsUncheckedUpdateManyWithoutAssignedToUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1250,6 +1288,7 @@ export type LeadsUpdateWithoutAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1271,6 +1310,7 @@ export type LeadsUncheckedUpdateWithoutAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1292,6 +1332,7 @@ export type LeadsUncheckedUpdateManyWithoutAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1312,6 +1353,7 @@ export type LeadsCreateManyLoanTypeInput = {
   id?: string
   fullName: string
   contactNumber: string
+  leadNumber: string
   email: string
   dob: Date | string
   gender: $Enums.Gender
@@ -1332,6 +1374,7 @@ export type LeadsUpdateWithoutLoanTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1353,6 +1396,7 @@ export type LeadsUncheckedUpdateWithoutLoanTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1374,6 +1418,7 @@ export type LeadsUncheckedUpdateManyWithoutLoanTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  leadNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
@@ -1425,6 +1470,7 @@ export type LeadsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   fullName?: boolean
   contactNumber?: boolean
+  leadNumber?: boolean
   email?: boolean
   dob?: boolean
   gender?: boolean
@@ -1453,6 +1499,7 @@ export type LeadsSelectScalar = {
   id?: boolean
   fullName?: boolean
   contactNumber?: boolean
+  leadNumber?: boolean
   email?: boolean
   dob?: boolean
   gender?: boolean
@@ -1470,7 +1517,7 @@ export type LeadsSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LeadsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "contactNumber" | "email" | "dob" | "gender" | "loanAmount" | "loanTypeId" | "city" | "state" | "pinCode" | "address" | "assignedTo" | "assignedBy" | "convertedLoanApplicationId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["leads"]>
+export type LeadsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "contactNumber" | "leadNumber" | "email" | "dob" | "gender" | "loanAmount" | "loanTypeId" | "city" | "state" | "pinCode" | "address" | "assignedTo" | "assignedBy" | "convertedLoanApplicationId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["leads"]>
 export type LeadsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assignedToUser?: boolean | Prisma.Leads$assignedToUserArgs<ExtArgs>
   assignedByUser?: boolean | Prisma.Leads$assignedByUserArgs<ExtArgs>
@@ -1491,6 +1538,7 @@ export type $LeadsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     fullName: string
     contactNumber: string
+    leadNumber: string
     email: string
     dob: Date
     gender: $Enums.Gender
@@ -1882,6 +1930,7 @@ export interface LeadsFieldRefs {
   readonly id: Prisma.FieldRef<"Leads", 'String'>
   readonly fullName: Prisma.FieldRef<"Leads", 'String'>
   readonly contactNumber: Prisma.FieldRef<"Leads", 'String'>
+  readonly leadNumber: Prisma.FieldRef<"Leads", 'String'>
   readonly email: Prisma.FieldRef<"Leads", 'String'>
   readonly dob: Prisma.FieldRef<"Leads", 'DateTime'>
   readonly gender: Prisma.FieldRef<"Leads", 'Gender'>

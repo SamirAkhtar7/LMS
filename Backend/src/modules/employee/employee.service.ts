@@ -1,7 +1,9 @@
 import { prisma } from "../../db/prismaService.js";
 import { hashPassword } from "../../common/utils/utils.js";
 import { CreateEmployee } from "./employee.types.js";
-
+import * as crypto from "crypto";
+import { getPagination ,buildPaginationMeta } from "../../common/utils/pagination.js";
+import { buildEmployeeSearch } from "../../common/utils/search.js";
 //Todo: add permission checks where necessary
 
 export async function createEmployeeService(data: CreateEmployee) {
@@ -32,7 +34,7 @@ export async function createEmployeeService(data: CreateEmployee) {
     });
 
     // generate a simple unique employee id
-    const employeeId = `EMP-${Date.now()}`;
+    const employeeId = `EMP-${crypto.randomInt(1000, 10000)}`;
 
     // derive a userName for the employee record if not provided
 
@@ -87,11 +89,31 @@ export async function createEmployeeService(data: CreateEmployee) {
     throw error;
   }
 }
+export async function getAllEmployeesService(params: {
+  page?: number;
+  limit?: number;
+  q?: string;
+}) {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
 
-export async function getAllEmployeesService() {
-  const employees = await prisma.employee.findMany();
-  return employees;
+  const where = buildEmployeeSearch(params.q);
+
+  const [data, total] = await Promise.all([
+    prisma.employee.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+    }),
+    prisma.employee.count({ where }),
+  ]);
+
+  return {
+    data,
+    meta: buildPaginationMeta(total, page, limit),
+  };
 }
+
 
 export async function getEmployeeByIdService(id: string) {
   const employee = await prisma.employee.findUnique({
@@ -127,7 +149,7 @@ export async function getEmployeeByIdService(id: string) {
 
 export async function updateEmployeeService(
   id: string,
-  updateData: Partial<CreateEmployee> & Record<string, any>
+  updateData: Partial<CreateEmployee> & Record<string, any>,
 ) {
   try {
     const existing = await prisma.employee.findUnique({ where: { id } });

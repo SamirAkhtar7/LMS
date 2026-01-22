@@ -96,3 +96,75 @@ export const buildDocumentSearch = (q?: string) => {
     ],
   };
 };
+
+// helpers/buildEmployeeSearch.ts
+export const buildEmployeeSearch = (q?: string) => {
+  if (!q) return {};
+
+  return {
+    OR: [
+      {
+        employeeId: { contains: q },
+      },
+      {
+        mobileNumber: { contains: q },
+      },
+      {
+        user: {
+          is: {
+            fullName: { contains: q },
+          },
+        },
+      },
+      {
+        user: {
+          is: {
+            email: { contains: q },
+          },
+        },
+      },
+      {
+        user: {
+          is: {
+            userName: { contains: q },
+          },
+        },
+      },
+      {
+        user: {
+          is: {
+            contactNumber: { contains: q },
+          },
+        },
+      },
+    ],
+  };
+};
+
+
+
+// lead.search.ts
+export const buildLeadSearch = (q?: string) => {
+  if (!q) return {};
+
+  return {
+    OR: [
+      {
+        leadNumber: {
+          contains: q,
+        },
+      },
+      {
+        fullName: {
+          contains: q,
+        },
+      },
+     
+      {
+        mobile: {
+          contains: q,
+        },
+      },
+    ],
+  };
+};
