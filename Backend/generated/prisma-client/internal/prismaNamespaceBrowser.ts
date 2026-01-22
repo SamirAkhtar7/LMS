@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  LoanNumberCounter: 'LoanNumberCounter',
   User: 'User',
   UserProfile: 'UserProfile',
   Admin: 'Admin',
@@ -85,6 +86,15 @@ export const TransactionIsolationLevel = {
 } as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const LoanNumberCounterScalarFieldEnum = {
+  year: 'year',
+  sequence: 'sequence',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanNumberCounterScalarFieldEnum = (typeof LoanNumberCounterScalarFieldEnum)[keyof typeof LoanNumberCounterScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

@@ -17,7 +17,7 @@ const generateUniqueEmployeeId = async (): Promise<string> => {
     attempts++;
   }
 
-  const err: any = new Error("Failed to generate unique lead number");
+  const err: any = new Error("Failed to generate unique employee ID");
   err.statusCode = 500;
   throw err;
 };

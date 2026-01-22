@@ -6,6 +6,13 @@ generator client {
   output   = "../generated/prisma-client"
 }
 
+// Counter table used to generate unique loan numbers per year
+model LoanNumberCounter {
+  year     Int     @id
+  sequence Int     @default(0)
+  updatedAt DateTime @updatedAt
+}
+
 datasource db {
   provider = "mysql"
   // Connection URL moved to prisma.config.ts per Prisma 7+ requirements

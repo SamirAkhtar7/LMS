@@ -720,14 +720,6 @@ export type Enumrecovery_statusFieldUpdateOperationsInput = {
   set?: $Enums.recovery_status
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type LoanRecoveryCreateNestedOneWithoutRecoveryPaymentsInput = {
   create?: Prisma.XOR<Prisma.LoanRecoveryCreateWithoutRecoveryPaymentsInput, Prisma.LoanRecoveryUncheckedCreateWithoutRecoveryPaymentsInput>
   connectOrCreate?: Prisma.LoanRecoveryCreateOrConnectWithoutRecoveryPaymentsInput

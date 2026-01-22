@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  LoanNumberCounter: 'LoanNumberCounter',
   User: 'User',
   UserProfile: 'UserProfile',
   Admin: 'Admin',
@@ -417,10 +418,76 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    LoanNumberCounter: {
+      payload: Prisma.$LoanNumberCounterPayload<ExtArgs>
+      fields: Prisma.LoanNumberCounterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoanNumberCounterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoanNumberCounterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        findFirst: {
+          args: Prisma.LoanNumberCounterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoanNumberCounterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        findMany: {
+          args: Prisma.LoanNumberCounterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>[]
+        }
+        create: {
+          args: Prisma.LoanNumberCounterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        createMany: {
+          args: Prisma.LoanNumberCounterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoanNumberCounterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        update: {
+          args: Prisma.LoanNumberCounterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoanNumberCounterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoanNumberCounterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoanNumberCounterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanNumberCounterPayload>
+        }
+        aggregate: {
+          args: Prisma.LoanNumberCounterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanNumberCounter>
+        }
+        groupBy: {
+          args: Prisma.LoanNumberCounterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanNumberCounterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoanNumberCounterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanNumberCounterCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -1648,6 +1715,15 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const LoanNumberCounterScalarFieldEnum = {
+  year: 'year',
+  sequence: 'sequence',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanNumberCounterScalarFieldEnum = (typeof LoanNumberCounterScalarFieldEnum)[keyof typeof LoanNumberCounterScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   fullName: 'fullName',
@@ -2330,6 +2406,20 @@ export type CustomerOrderByRelevanceFieldEnum = (typeof CustomerOrderByRelevance
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -2347,13 +2437,6 @@ export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
@@ -2396,13 +2479,6 @@ export type EnumWorkLocationFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
@@ -2647,6 +2723,7 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
+  loanNumberCounter?: Prisma.LoanNumberCounterOmit
   user?: Prisma.UserOmit
   userProfile?: Prisma.UserProfileOmit
   admin?: Prisma.AdminOmit

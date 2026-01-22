@@ -18,143 +18,152 @@ export async function createLoanApplicationService(
   data: CreateLoanApplication,
   loggedInUser: { id: string; role: Enums.Role },
 ) {
-  if (!["EMPLOYEE", "ADMIN"].includes(loggedInUser.role)) {
-    throw new Error("Not authorized to create loan application");
-  }
 
-  const parsed = createLoanApplicationSchema.parse(data);
+  try {
+    const parsed = createLoanApplicationSchema.parse(data);
 
-  const loanType = await prisma.loanType.findFirst({
-    where: { id: parsed.loanTypeId },
-  });
-
-  if (!loanType || !loanType.isActive) {
-    throw new Error("Invalid loan type");
-  }
-
-  const dobValue =
-    parsed.dob && typeof parsed.dob === "string"
-      ? new Date(parsed.dob)
-      : parsed.dob;
-  return prisma.$transaction(async (tx) => {
-    /* -------- 1. Find or create customer -------- */
-    let customer = await tx.customer.findFirst({
-      where: {
-        OR: [
-          parsed.panNumber ? { panNumber: parsed.panNumber } : undefined,
-          parsed.aadhaarNumber
-            ? { aadhaarNumber: parsed.aadhaarNumber }
-            : undefined,
-          parsed.contactNumber
-            ? { contactNumber: parsed.contactNumber }
-            : undefined,
-        ].filter(Boolean) as object[],
-      },
+    const loanType = await prisma.loanType.findFirst({
+      where: { id: parsed.loanTypeId },
     });
 
-    if (!customer) {
-      customer = await tx.customer.create({
-        data: {
-          title: parsed.title,
-          firstName: parsed.firstName,
-          lastName: parsed.lastName ?? "",
-          middleName: parsed.middleName,
-          gender: parsed.gender as Enums.Gender,
-          dob: dobValue,
-          aadhaarNumber: parsed.aadhaarNumber,
-          panNumber: parsed.panNumber,
-          voterId: parsed.voterId,
-          maritalStatus: parsed.maritalStatus,
-          nationality: parsed.nationality,
-          category: parsed.category,
-          contactNumber: parsed.contactNumber,
-          alternateNumber: parsed.alternateNumber,
-          employmentType: parsed.employmentType,
-          monthlyIncome: parsed.monthlyIncome,
-          annualIncome: parsed.annualIncome,
-          bankName: parsed.bankName,
-          bankAccountNumber: parsed.bankAccountNumber,
-          ifscCode: parsed.ifscCode,
-          accountType: parsed.accountType,
-          email: parsed.email,
-          address: parsed.address,
-          city: parsed.city,
-          state: parsed.state,
-          pinCode: parsed.pinCode,
-          status: "ACTIVE",
+    if (!loanType || !loanType.isActive) {
+      throw new Error("Invalid loan type");
+    }
+
+    const dobValue =
+      parsed.dob && typeof parsed.dob === "string"
+        ? new Date(parsed.dob)
+        : parsed.dob;
+    return prisma.$transaction(async (tx) => {
+      /* -------- 1. Find or create customer -------- */
+      let customer = await tx.customer.findFirst({
+        where: {
+          OR: [
+            parsed.panNumber ? { panNumber: parsed.panNumber } : undefined,
+            parsed.aadhaarNumber
+              ? { aadhaarNumber: parsed.aadhaarNumber }
+              : undefined,
+            parsed.contactNumber
+              ? { contactNumber: parsed.contactNumber }
+              : undefined,
+          ].filter(Boolean) as object[],
         },
       });
-    }
 
-    /* -------- 2. Prevent duplicate active loan -------- */
-    const existingLoan = await tx.loanApplication.findFirst({
-      where: {
-        customerId: customer.id,
-        status: {
-          in: [
-            "application_in_progress",
-            "kyc_pending",
-            "under_review",
-            "approved",
-            "active",
-          ],
+      if (!customer) {
+        customer = await tx.customer.create({
+          data: {
+            title: parsed.title,
+            firstName: parsed.firstName,
+            lastName: parsed.lastName ?? "",
+            middleName: parsed.middleName,
+            gender: parsed.gender as Enums.Gender,
+            dob: dobValue,
+            aadhaarNumber: parsed.aadhaarNumber,
+            panNumber: parsed.panNumber,
+            voterId: parsed.voterId,
+            maritalStatus: parsed.maritalStatus,
+            nationality: parsed.nationality,
+            category: parsed.category,
+            contactNumber: parsed.contactNumber,
+            alternateNumber: parsed.alternateNumber,
+            employmentType: parsed.employmentType,
+            monthlyIncome: parsed.monthlyIncome,
+            annualIncome: parsed.annualIncome,
+            bankName: parsed.bankName,
+            bankAccountNumber: parsed.bankAccountNumber,
+            ifscCode: parsed.ifscCode,
+            accountType: parsed.accountType,
+            email: parsed.email,
+            address: parsed.address,
+            city: parsed.city,
+            state: parsed.state,
+            pinCode: parsed.pinCode,
+            status: "ACTIVE",
+          },
+        });
+      }
+
+
+      /* -------- 2. Prevent duplicate active loan -------- */
+      const existingLoan = await tx.loanApplication.findFirst({
+        where: {
+          customerId: customer.id,
+          status: {
+            in: [
+              "application_in_progress",
+              "kyc_pending",
+              "under_review",
+              "approved",
+              "active",
+            ],
+          },
         },
-      },
-    });
+      });
 
-    if (existingLoan) {
-      const err: any = new Error(
-        "Customer already has an active loan application",
-      );
-      err.statusCode = 409;
-      throw err;
-    }
+      if (existingLoan) {
+        const err: any = new Error(
+          "Customer already has an active loan application",
+        );
+        err.statusCode = 409;
+        throw err;
+      }
 
-    /* -------- 3. Generate Loan Number -------- */
-    const loanNumber = await generateLoanNumber(tx);
+      /* -------- 3. Generate Loan Number -------- */
+      const loanNumber = await generateLoanNumber(tx);
 
-    /* -------- 4. Create Loan Application -------- */
-    const loanApplication = await tx.loanApplication.create({
-      data: {
-        loanNumber,
-        customerId: customer.id,
-        loanTypeId: parsed.loanTypeId,
-        requestedAmount: parsed.requestedAmount,
-        tenureMonths: parsed.tenureMonths,
-        interestRate: parsed.interestRate,
-        emiAmount: parsed.emiAmount,
-        interestType: parsed.interestType ?? "FLAT",
-        purposeDetails: parsed.purposeDetails,
-        loanPurpose: parsed.loanPurpose,
-        cibilScore: parsed.cibilScore,
-        status: "kyc_pending",
-        createdById: loggedInUser.id,
-      },
-    });
-
-    /* -------- 5. Create KYC -------- */
-    const kyc = await tx.kyc.create({
-      data: {
-        loanApplication: {
-          connect: { id: loanApplication.id },
+      /* -------- 4. Create Loan Application -------- */
+      const loanApplication = await tx.loanApplication.create({
+        data: {
+          loanNumber,
+          customerId: customer.id,
+          loanTypeId: parsed.loanTypeId,
+          requestedAmount: parsed.requestedAmount,
+          tenureMonths: parsed.tenureMonths,
+          interestRate: parsed.interestRate,
+          emiAmount: parsed.emiAmount,
+          interestType: parsed.interestType ?? "FLAT",
+          purposeDetails: parsed.purposeDetails,
+          loanPurpose: parsed.loanPurpose,
+          cibilScore: parsed.cibilScore,
+          status: "kyc_pending",
+          createdById: loggedInUser.id,
         },
-        userId: loggedInUser.id,
-        status: "PENDING",
-      },
-    });
+      });
 
-    /* -------- 6. Link KYC -------- */
-    await tx.loanApplication.update({
-      where: { id: loanApplication.id },
-      data: { kycId: kyc.id },
-    });
+      /* -------- 5. Create KYC -------- */
+      const kyc = await tx.kyc.create({
+        data: {
+          loanApplication: {
+            connect: { id: loanApplication.id },
+          },
+          userId: loggedInUser.id,
+          status: "PENDING",
+        },
+      });
 
-    return {
-      loanApplication,
-      customer,
-      kyc,
-    };
-  });
+      /* -------- 6. Link KYC -------- */
+      await tx.loanApplication.update({
+        where: { id: loanApplication.id },
+        data: { kycId: kyc.id },
+      });
+
+      return {
+        loanApplication,
+        customer,
+        kyc,
+      };
+    });
+  }
+  
+ catch (error: any) {
+  if (error.code === "P2002") {
+    const err: any = new Error("Loan number collision, retry request");
+    err.statusCode = 409;
+    throw err;
+  }
+  throw error;
+}
 }
 
 export async function uploadLoanDocumentsService(

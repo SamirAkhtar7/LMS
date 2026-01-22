@@ -536,10 +536,6 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type EnumKycStatusFieldUpdateOperationsInput = {
   set?: $Enums.KycStatus
 }
