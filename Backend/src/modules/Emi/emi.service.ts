@@ -142,7 +142,7 @@ export const getAllEmisService = async (params: {
   q?: string;
   status?: string;
 }) => {
-  const { page, limit, skip,} = getPagination(params.page, params.limit);
+  const { page, limit, skip } = getPagination(params.page, params.limit);
 
   const where: Prisma.LoanEmiScheduleWhereInput = {
     ...(params.loanId && { loanApplicationId: params.loanId }),
@@ -191,7 +191,6 @@ export const getAllEmisService = async (params: {
     },
   };
 };
-
 
 export const markEmiPaidService = async ({
   emiId,

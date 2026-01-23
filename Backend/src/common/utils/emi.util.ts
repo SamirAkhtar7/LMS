@@ -60,7 +60,7 @@ export const generateEmiSchedule = async ({
       dueDate: new Date(
         startDate.getFullYear(),
         startDate.getMonth() + i,
-        startDate.getDate()
+        startDate.getDate(),
       ),
       openingBalance: Number(balance.toFixed(2)),
       interestAmount: Number(interestAmount.toFixed(2)),
