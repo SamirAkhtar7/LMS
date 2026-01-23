@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { CoApplicantRelation, CommissionType, InterestType } from "../../../generated/prisma-client/enums.js";
+import {
+  CoApplicantRelation,
+  CommissionType,
+  InterestType,
+} from "../../../generated/prisma-client/enums.js";
 
 export const titleEnum = z.enum(["MR", "MRS", "MS", "DR", "PROF"]);
 export const genderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
@@ -56,9 +60,7 @@ export const customerInlineSchema = z.object({
   lastName: z.string().trim().optional(),
   middleName: z.string().trim().optional(),
   gender: genderEnum.optional(),
-  dob: z
-    .preprocess((v) => (v ? new Date(v as string) : v), z.date())
-    ,
+  dob: z.preprocess((v) => (v ? new Date(v as string) : v), z.date()),
   aadhaarNumber: z.string().trim(),
   panNumber: z.string().trim(),
   voterId: z.string().trim().optional(),
@@ -157,8 +159,6 @@ export type UpdateLoanApplicationBody = z.infer<
 >;
 
 export default createLoanApplicationSchema;
-
-
 
 export const apperoveLoanInputSchema = z.object({
   latePaymentFeeType: z.nativeEnum(CommissionType),

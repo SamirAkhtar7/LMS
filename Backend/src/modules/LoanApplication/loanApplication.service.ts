@@ -18,7 +18,6 @@ export async function createLoanApplicationService(
   data: CreateLoanApplication,
   loggedInUser: { id: string; role: Enums.Role },
 ) {
-
   try {
     const parsed = createLoanApplicationSchema.parse(data);
 
@@ -83,7 +82,6 @@ export async function createLoanApplicationService(
           },
         });
       }
-
 
       /* -------- 2. Prevent duplicate active loan -------- */
       const existingLoan = await tx.loanApplication.findFirst({
@@ -154,16 +152,14 @@ export async function createLoanApplicationService(
         kyc,
       };
     });
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      const err: any = new Error("Loan number collision, retry request");
+      err.statusCode = 409;
+      throw err;
+    }
+    throw error;
   }
-  
- catch (error: any) {
-  if (error.code === "P2002") {
-    const err: any = new Error("Loan number collision, retry request");
-    err.statusCode = 409;
-    throw err;
-  }
-  throw error;
-}
 }
 
 export async function uploadLoanDocumentsService(

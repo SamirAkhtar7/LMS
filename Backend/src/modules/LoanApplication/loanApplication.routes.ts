@@ -29,13 +29,13 @@ loanApplicationRouter.post(
   authMiddleware,
   validate(createLoanApplicationSchema),
   checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
-  createLoanApplicationController
+  createLoanApplicationController,
 );
 loanApplicationRouter.get(
   "/",
   authMiddleware,
   checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
-  getAllLoanApplicationsController
+  getAllLoanApplicationsController,
 );
 
 loanApplicationRouter.get(
@@ -43,7 +43,7 @@ loanApplicationRouter.get(
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("VIEW_LOAN_APPLICATION"),
-  getLoanApplicationByIdController
+  getLoanApplicationByIdController,
 );
 loanApplicationRouter.put(
   "/:id/status",
@@ -51,14 +51,14 @@ loanApplicationRouter.put(
   checkPermissionMiddleware("UPDATE_LOAN_STATUS"),
   validate(updateLoanApplicationSchema, "body"),
   validate(loanApplicationIdParamSchema, "params"),
-  updateLoanApplicationStatusController
+  updateLoanApplicationStatusController,
 );
 loanApplicationRouter.put(
   "/:id/review",
   authMiddleware,
   checkPermissionMiddleware("REVIEW_LOAN"),
   validate(loanApplicationIdParamSchema, "params"),
-  reviewLoanController
+  reviewLoanController,
 );
 
 loanApplicationRouter.put(
@@ -67,14 +67,14 @@ loanApplicationRouter.put(
   checkPermissionMiddleware("APPROVE_LOAN"),
   validate(loanApplicationIdParamSchema, "params"),
   validate(apperoveLoanInputSchema, "body"),
-  approveLoanController
+  approveLoanController,
 );
 loanApplicationRouter.put(
   "/:id/reject",
   authMiddleware,
   checkPermissionMiddleware("REJECT_LOAN"),
   validate(loanApplicationIdParamSchema, "params"),
-  rejectLoanController
+  rejectLoanController,
 );
 
 loanApplicationRouter.post(
@@ -84,31 +84,29 @@ loanApplicationRouter.post(
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
   upload.any(),
-  uploadLoanDocumentsController
+  uploadLoanDocumentsController,
 );
 loanApplicationRouter.post(
   "/documents/:id/verify",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("VERIFY_DOCUMENTS"),
-  verifyDocumentController
+  verifyDocumentController,
 );
 loanApplicationRouter.post(
   "/documents/:id/reject",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("VERIFY_DOCUMENTS"),
-  rejectDocumentController
+  rejectDocumentController,
 );
-
 
 loanApplicationRouter.post(
   "/loans/:loanId/check-default",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
   checkPermissionMiddleware("CHECK_LOAN_DEFAULT"),
-  markLoanDefaultController
+  markLoanDefaultController,
 );
-
 
 export default loanApplicationRouter;

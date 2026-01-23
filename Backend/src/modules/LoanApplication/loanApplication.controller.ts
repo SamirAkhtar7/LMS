@@ -17,7 +17,7 @@ import { cleanupFiles } from "../../common/utils/cleanup.js";
 
 export const createLoanApplicationController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     if (!req.user)
@@ -65,10 +65,9 @@ export const getAllLoanApplicationsController = async (
   }
 };
 
-
 export const getLoanApplicationByIdController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     const loanApplication = await getLoanApplicationByIdService(req.params.id);
@@ -86,7 +85,7 @@ export const getLoanApplicationByIdController = async (
 };
 export const updateLoanApplicationStatusController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     if (!req.user) {
@@ -96,7 +95,7 @@ export const updateLoanApplicationStatusController = async (
     const { status } = req.body;
     const updatedLoanApplication = await updateLoanApplicationStatusService(
       id,
-      { status }
+      { status },
     );
     res.status(200).json({
       success: true,
@@ -111,10 +110,9 @@ export const updateLoanApplicationStatusController = async (
   }
 };
 
-
 export const uploadLoanDocumentsController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   if (!req.user) {
     return res.status(401).json({
@@ -178,7 +176,7 @@ export const uploadLoanDocumentsController = async (
     const uploadedDocTypes = files.map((file) => file.fieldname);
 
     const missingDocs = requiredDocuments.filter(
-      (doc) => !uploadedDocTypes.includes(doc)
+      (doc) => !uploadedDocTypes.includes(doc),
     );
 
     if (missingDocs.length > 0) {
@@ -223,7 +221,6 @@ export const uploadLoanDocumentsController = async (
     const documents = await uploadLoanDocumentsService(
       loanApplicationId,
       documentsPayload,
-    
     );
 
     return res.status(201).json({
@@ -240,7 +237,6 @@ export const uploadLoanDocumentsController = async (
     });
   }
 };
-
 
 export const verifyDocumentController = async (req: Request, res: Response) => {
   try {
@@ -320,7 +316,7 @@ export const approveLoanController = async (req: any, res: Response) => {
     const data = req.body;
 
     const loan = await approveLoanService(id, approvedBy, data);
- 
+
     res.status(200).json({
       success: true,
       message: "Loan approved successfully",
