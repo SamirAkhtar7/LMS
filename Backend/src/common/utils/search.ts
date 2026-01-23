@@ -299,3 +299,36 @@ export const buildRecoverySearch = (q?: string) => {
 
   return { OR };
 };
+
+
+export const buildSettlementSearch = (q?: string) => {
+  if (!q) return {};
+
+  const OR: any[] = [];
+
+  // Loan
+  OR.push({
+    loanApplication: {
+      loanNumber: { contains: q },
+    },
+  });
+
+  // Customer
+  OR.push(
+    { loanApplication: { customer: { firstName: { contains: q } } } },
+    { loanApplication: { customer: { lastName: { contains: q } } } },
+    { loanApplication: { customer: { contactNumber: { contains: q } } } },
+    { loanApplication: { customer: { panNumber: { contains: q } } } },
+  );
+
+  // Enum-safe filters
+  if (RECOVERY_STATUSES.includes(q as any)) {
+    OR.push({ recoveryStatus: q });
+  }
+
+  if (RECOVERY_STAGES.includes(q as any)) {
+    OR.push({ recoveryStage: q });
+  }
+
+  return { OR };
+};

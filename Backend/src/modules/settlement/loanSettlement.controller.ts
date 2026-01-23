@@ -148,7 +148,11 @@ export const rejectSettlementController = async (req: Request, res: Response) =>
 
 export const getAllSettlementsController = async (req: Request, res: Response) => {
     try {
-        const settlements = await getAllSettlementsService();
+        const settlements = await getAllSettlementsService({
+            page: Number(req.query.page),
+            limit: Number(req.query.limit),
+            q: req.query.q?.toString(),
+        });
         res.status(200).json({
             success: true,
             message: "Settlements retrieved successfully",
