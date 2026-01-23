@@ -1,4 +1,4 @@
-import { CreditProvider } from "./createdProvider.interface.js";
+import { CreditProvider } from "./creditProvider.interface.js";
 
 export class CibilCreditProvider implements CreditProvider {
   async fetchCreditReport(customerId: string) {
@@ -16,7 +16,7 @@ export class CibilCreditProvider implements CreditProvider {
     // 🔄 Map CIBIL response → internal format
     return {
       score: data.score,
-      accounts: data.accounts.map((a: any) => ({
+      accounts: (data.accounts ?? []).map((a: any) => ({
         lenderName: a.memberName,
         accountType: a.accountType,
         emiAmount: a.emiAmount,

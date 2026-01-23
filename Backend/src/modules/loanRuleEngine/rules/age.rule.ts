@@ -2,11 +2,24 @@
 import { RuleResult } from "./types.js";
 
 export const ageRule = (
-  dob: Date,
+  dob: Date | null | undefined,
   minAge: number,
   maxAge: number,
 ): RuleResult => {
-  const age = new Date().getFullYear() - new Date(dob).getFullYear();
+  if (!dob) {
+    return {
+      rule: "AGE_ELIGIBILITY",
+      passed: false,
+      reason: `Customer DOB missing`,
+    };
+  }
+
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDiff = today.getMonth() - dob.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+    age -= 1;
+  }
 
   if (age < minAge || age > maxAge) {
     return {

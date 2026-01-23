@@ -8,7 +8,7 @@ import {
 } from "./rules/index.js";
 import { EligibilityResult } from "./ruleEngine.types.js";
 import { calculateRiskScore } from "./risk/riskScoring.service.js";
-import { MockCreditProvider } from "../creditReport/providers/mockCreateProvider.js";
+import { MockCreditProvider } from "../creditReport/providers/mockCreditProvider.js";
 import { calculateExistingEmi } from "./helpers/existingEmi.helper.js";
 
 export const evaluateEligibilityService = async (
@@ -45,21 +45,21 @@ export const evaluateEligibilityService = async (
     monthlyIncome > 0
       ? (loan.loanType.maxAmount ?? 0) / monthlyIncome
       : Infinity;
-  const dob = loan.customer.dob ? new Date(loan.customer.dob) : null;
+  const dob = loan.customer.dob ? new Date(loan.customer.dob) : undefined;
+  const dobMissing = !loan.customer.dob;
   const age = dob
     ? Math.floor((Date.now() - dob.getTime()) / (1000 * 60 * 60 * 24 * 365.25))
-    : 0;
+    : undefined;
   const risk = calculateRiskScore({
     cibilScore: loan.cibilScore ?? 0,
     foir,
     monthlyIncome,
-    age,
+    age: age ?? 0,
     loanToIncomeRatio,
   });
   /* ------------------- Run Rules ------------------- */
-  ruleResults.push(
-    ageRule(loan.customer.dob, loan.loanType.minAge, loan.loanType.maxAge),
-  );
+  // If DOB is missing, `ageRule` will treat it as an ineligible/failing condition.
+  ruleResults.push(ageRule(dob, loan.loanType.minAge, loan.loanType.maxAge));
 
   ruleResults.push(
     incomeRule(loan.customer.monthlyIncome ?? 0, loan.loanType.minIncome ?? 0),

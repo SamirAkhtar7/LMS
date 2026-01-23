@@ -53,15 +53,25 @@ export const generateEmiSchedule = async ({
     const principalAmount: number = emiAmount - interestAmount;
     const closingBalance: number = balance - principalAmount;
 
+    // compute due date: preserve day of month where possible; if the target month
+    // has fewer days (e.g., Feb), clamp to the last day of that month
+    const targetMonthIndex = startDate.getMonth() + i; // 0-based month index
+    const targetYear =
+      startDate.getFullYear() + Math.floor(targetMonthIndex / 12);
+    const targetMonth = targetMonthIndex % 12;
+    const lastDayOfTargetMonth = new Date(
+      targetYear,
+      targetMonth + 1,
+      0,
+    ).getDate();
+    const day = Math.min(startDate.getDate(), lastDayOfTargetMonth);
+    const dueDate = new Date(targetYear, targetMonth, day);
+
     schedule.push({
       loanApplicationId: loanId,
       emiStartDate: startDate,
       emiNo: i,
-      dueDate: new Date(
-        startDate.getFullYear(),
-        startDate.getMonth() + i,
-        startDate.getDate(),
-      ),
+      dueDate,
       openingBalance: Number(balance.toFixed(2)),
       interestAmount: Number(interestAmount.toFixed(2)),
       principalAmount: Number(principalAmount.toFixed(2)),
