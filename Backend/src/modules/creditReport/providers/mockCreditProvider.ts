@@ -1,28 +1,48 @@
 import {
   CreditProvider,
   CreditReportResult,
+  CreditAccount,
 } from "./creditProvider.interface.js";
 
 export class MockCreditProvider implements CreditProvider {
-  async fetchCreditReport(customerId: string): Promise<CreditReportResult> {
+  async fetchCreditReport(input: {
+    customerId: string;
+    pan?: string;
+    aadhar?: string;
+  }): Promise<CreditReportResult> {
+    const accounts: CreditAccount[] = [
+      {
+        lenderName: "HDFC Bank",
+        accountType: "PERSONAL_LOAN",
+        emiAmount: 4000,
+        sanctionedAmount: 500000,
+        outstandingAmount: 82000,
+        accountStatus: "ACTIVE",
+        dpd: 0,
+      },
+      {
+        lenderName: "ICICI Credit Card",
+        accountType: "CREDIT_CARD",
+        emiAmount: 15000,
+        sanctionedAmount: 200000,
+        outstandingAmount: 24000,
+        accountStatus: "ACTIVE",
+        dpd: 12,
+      },
+    ];
+
     return {
-      score: 742,
-      accounts: [
-        {
-          lenderName: "HDFC Bank",
-          accountType: "PERSONAL_LOAN",
-          emiAmount: 4500,
-          outstanding: 82000,
-          status: "ACTIVE",
-        },
-        {
-          lenderName: "ICICI Credit Card",
-          accountType: "CREDIT_CARD",
-          emiAmount: 3000,
-          outstanding: 24000,
-          status: "ACTIVE",
-        },
-      ],
+      creditScore: 500,
+      accounts,
+      totalActiveLoans: 2,
+      totalClosedLoans: 1,
+      totalOutstanding: 106000,
+      totalMonthlyEmi: 19000,
+      maxDPD: 12,
+      overdueAccounts: 1,
+      writtenOffCount: 0,
+      settledCount: 0,
+      rawReport: { mock: true },
     };
   }
 }

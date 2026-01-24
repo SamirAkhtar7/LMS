@@ -386,53 +386,6 @@ enum KycStatus {
   REJECTED
 }
 
-// Loan products offered by the system
-// model LoanProduct {
-//   id           String        @id @default(cuid())
-//   name         String
-//   code         String?       @unique
-//   description  String?
-//   interestRate Float?
-//   category     LoanCategory?
-//   createdAt    DateTime      @default(now())
-//   updatedAt    DateTime      @updatedAt
-
-//   applications LoanApplication[]
-// }
-
-// APPROVAL
-
-// model LoanApproval {
-//   id                String        @id @default(cuid())
-//   loanApplicationId String
-//   approvalLevel     ApprovalLevel
-//   approvedAmount    Float
-//   approvedInterest  Float
-//   remarks           String?
-
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-
-//   approvedAt DateTime @default(now())
-// }
-
-// DISBURSEMENT
-
-// model LoanDisbursement {
-//   id                String @id @default(cuid())
-//   loanApplicationId String
-
-//   disbursedAmount Decimal @db.Decimal(15, 2)
-//   bankAccount     String
-//   ifscCode        String
-//   transactionRef  String
-
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-
-//   disbursedAt DateTime @default(now())
-// }
-
-// EMI SCHEDULE
-//////////////////////////////////
 
 model LoanEmiSchedule {
   id                String @id @default(cuid())
@@ -490,54 +443,71 @@ model EmiMoratorium {
   updatedAt         DateTime         @updatedAt
 }
 
-// PAYMENTS
-//////////////////////////////////
 
-// model LoanPayment {
-//   id                String           @id @default(cuid())
-//   loanApplicationId String
-//   emiId             String?
-//   emi               LoanEmiSchedule? @relation(fields: [emiId], references: [id])
+model CreditReport {
+  id          String   @id @default(cuid())
+  customerId  String   @unique
+  customer    Customer @relation(fields: [customerId], references: [id])
+  provider     CreditProvider     //CIBIL | EXPERIAN | MOCK
+  bureauReferenceId String?           // CIBIL control number
+  fetchedAt   DateTime @default(now())
 
-//   paymentAmount  Decimal     @db.Decimal(15, 2)
-//   paymentMode    PaymentMode
-//   transactionRef String
-//   paymentDate    DateTime
+ // Core Score 
+ creditScore Int?
+ scoreBand   String?       // e.g., Excellent, Good, Fair, Poor
 
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-// }
+ //loan Summary 
+ totalAtiveLoans      Int?
+ totalClosedLoans     Int?
+ totalOutstandingLoans Float?
+ totalMonthlyEmi      Float?
 
-// NACH
-//////////////////////////////////
+ //Risk Metrics 
+  maxDPD         Int? //maximum days past due
+  overdueAccounts Int?
+  wittenOffCounts Int?
+  settledCounts  Int?
 
-// model LoanNachMandate {
-//   id                String @id @default(cuid())
-//   loanApplicationId String @unique
+  // Flags
 
-//   mandateReference String
-//   bankName         String
-//   accountNumber    String
-//   ifscCode         String
-//   status           VerificationStatus
+  isThinFile Boolean @default(false)
+  isNTC      Boolean @default(false) // New to Credit
+  isValid    Boolean @default(true)
+  isExpired Boolean @default(false)
+  pulledFor String?  // purpose of pulling the report 
 
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
+  //Row Api Payload
+  rowRawData Json
+  creditAccount CreditAccount[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   registeredAt DateTime @default(now())
-// }
+  @@index([customerId])
+  @@index([provider])
 
-// CHARGES
-//////////////////////////////////
 
-// model LoanCharge {
-//   id                String     @id @default(cuid())
-//   loanApplicationId String
-//   chargeType        ChargeType
-//   chargeAmount      Decimal    @db.Decimal(15, 2)
-//   chargeDate        DateTime
-//   status            String
+}
 
-//   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-// }
+
+model CreditAccount {
+  id               String         @id @default(cuid())
+  creditReportId   String
+  creditReport  CreditReport @relation(fields: [creditReportId], references: [id])
+  lenderName      String
+  accountType    String // PERSONAL_LOAN, CREDIT_CARD, HOME_LOAN etc.
+  accountStatus  String // ACTIVE, CLOSED, SETTLED etc.
+  sanctionedAmount Float?
+  outstanding    Float?
+  emiAmount      Float?
+  dpd            Int? // days past due
+  openedDate     DateTime?
+  closedDate     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([creditReportId])
+}
+
 
 // STATUS HISTORY
 
@@ -667,27 +637,13 @@ model Customer {
   status           CustomerStatus    @default(ACTIVE)
   loanApplications LoanApplication[]
   loanRecoveries   LoanRecovery[]
+  creditReport    CreditReport?
   // kycs             CustomerKYC[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
 }
 
-// ================================CUSTOMER KYC=====================================
 
-// model CustomerKYC {
-//   id               String    @id @default(cuid())
-//   customerId       String
-//   documentType     KycType
-//   documentNumber   String
-//   documentFilePath String
-//   issuedBy         String?
-//   issueDate        DateTime?
-//   expiryDate       DateTime?
-//   createdAt        DateTime  @default(now())
-//   updatedAt        DateTime  @updatedAt
-
-//   customer Customer @relation(fields: [customerId], references: [id])
-// }
 
 // =================================ENUMS=====================================
 
@@ -734,6 +690,14 @@ enum Category {
   OBC
   OTHER
 }
+enum CreditProvider {
+  CIBIL
+  EXPERIAN
+  EQUIFAX
+  MOCK
+}
+
+
 
 enum CoApplicantRelation {
   SPOUSE

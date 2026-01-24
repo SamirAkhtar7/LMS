@@ -14,6 +14,7 @@ const ENV = {
   REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY as
     | `${number}${"s" | "m" | "h" | "d"}`
     | number,
+  CREDIT_PROVIDER: process.env.CREDIT_PROVIDER,
 };
 
 export default ENV;

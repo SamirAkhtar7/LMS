@@ -401,6 +401,8 @@ export const ModelName = {
   LoanEmiSchedule: 'LoanEmiSchedule',
   EmiPayment: 'EmiPayment',
   EmiMoratorium: 'EmiMoratorium',
+  CreditReport: 'CreditReport',
+  CreditAccount: 'CreditAccount',
   LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
@@ -418,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "loanType" | "customer"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1544,6 +1546,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CreditReport: {
+      payload: Prisma.$CreditReportPayload<ExtArgs>
+      fields: Prisma.CreditReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CreditReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CreditReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        findFirst: {
+          args: Prisma.CreditReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CreditReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        findMany: {
+          args: Prisma.CreditReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>[]
+        }
+        create: {
+          args: Prisma.CreditReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        createMany: {
+          args: Prisma.CreditReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CreditReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        update: {
+          args: Prisma.CreditReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.CreditReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CreditReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CreditReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditReportPayload>
+        }
+        aggregate: {
+          args: Prisma.CreditReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCreditReport>
+        }
+        groupBy: {
+          args: Prisma.CreditReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CreditReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CreditReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CreditReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    CreditAccount: {
+      payload: Prisma.$CreditAccountPayload<ExtArgs>
+      fields: Prisma.CreditAccountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CreditAccountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CreditAccountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        findFirst: {
+          args: Prisma.CreditAccountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CreditAccountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        findMany: {
+          args: Prisma.CreditAccountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>[]
+        }
+        create: {
+          args: Prisma.CreditAccountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        createMany: {
+          args: Prisma.CreditAccountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CreditAccountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        update: {
+          args: Prisma.CreditAccountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        deleteMany: {
+          args: Prisma.CreditAccountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CreditAccountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CreditAccountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CreditAccountPayload>
+        }
+        aggregate: {
+          args: Prisma.CreditAccountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCreditAccount>
+        }
+        groupBy: {
+          args: Prisma.CreditAccountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CreditAccountGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CreditAccountCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CreditAccountCountAggregateOutputType> | number
+        }
+      }
+    }
     LoanType: {
       payload: Prisma.$LoanTypePayload<ExtArgs>
       fields: Prisma.LoanTypeFieldRefs
@@ -2057,6 +2191,54 @@ export const EmiMoratoriumScalarFieldEnum = {
 export type EmiMoratoriumScalarFieldEnum = (typeof EmiMoratoriumScalarFieldEnum)[keyof typeof EmiMoratoriumScalarFieldEnum]
 
 
+export const CreditReportScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  provider: 'provider',
+  bureauReferenceId: 'bureauReferenceId',
+  fetchedAt: 'fetchedAt',
+  creditScore: 'creditScore',
+  scoreBand: 'scoreBand',
+  totalAtiveLoans: 'totalAtiveLoans',
+  totalClosedLoans: 'totalClosedLoans',
+  totalOutstandingLoans: 'totalOutstandingLoans',
+  totalMonthlyEmi: 'totalMonthlyEmi',
+  maxDPD: 'maxDPD',
+  overdueAccounts: 'overdueAccounts',
+  wittenOffCounts: 'wittenOffCounts',
+  settledCounts: 'settledCounts',
+  isThinFile: 'isThinFile',
+  isNTC: 'isNTC',
+  isValid: 'isValid',
+  isExpired: 'isExpired',
+  pulledFor: 'pulledFor',
+  rowRawData: 'rowRawData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CreditReportScalarFieldEnum = (typeof CreditReportScalarFieldEnum)[keyof typeof CreditReportScalarFieldEnum]
+
+
+export const CreditAccountScalarFieldEnum = {
+  id: 'id',
+  creditReportId: 'creditReportId',
+  lenderName: 'lenderName',
+  accountType: 'accountType',
+  accountStatus: 'accountStatus',
+  sanctionedAmount: 'sanctionedAmount',
+  outstanding: 'outstanding',
+  emiAmount: 'emiAmount',
+  dpd: 'dpd',
+  openedDate: 'openedDate',
+  closedDate: 'closedDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CreditAccountScalarFieldEnum = (typeof CreditAccountScalarFieldEnum)[keyof typeof CreditAccountScalarFieldEnum]
+
+
 export const LoanTypeScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -2147,6 +2329,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -2359,6 +2548,45 @@ export const EmiMoratoriumOrderByRelevanceFieldEnum = {
 } as const
 
 export type EmiMoratoriumOrderByRelevanceFieldEnum = (typeof EmiMoratoriumOrderByRelevanceFieldEnum)[keyof typeof EmiMoratoriumOrderByRelevanceFieldEnum]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const CreditReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  bureauReferenceId: 'bureauReferenceId',
+  scoreBand: 'scoreBand',
+  pulledFor: 'pulledFor'
+} as const
+
+export type CreditReportOrderByRelevanceFieldEnum = (typeof CreditReportOrderByRelevanceFieldEnum)[keyof typeof CreditReportOrderByRelevanceFieldEnum]
+
+
+export const CreditAccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  creditReportId: 'creditReportId',
+  lenderName: 'lenderName',
+  accountType: 'accountType',
+  accountStatus: 'accountStatus'
+} as const
+
+export type CreditAccountOrderByRelevanceFieldEnum = (typeof CreditAccountOrderByRelevanceFieldEnum)[keyof typeof CreditAccountOrderByRelevanceFieldEnum]
 
 
 export const LoanTypeOrderByRelevanceFieldEnum = {
@@ -2595,6 +2823,27 @@ export type EnumMoratoriumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'CreditProvider'
+ */
+export type EnumCreditProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CreditProvider'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'LoanTypes'
  */
 export type EnumLoanTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanTypes'>
@@ -2740,6 +2989,8 @@ export type GlobalOmitConfig = {
   loanEmiSchedule?: Prisma.LoanEmiScheduleOmit
   emiPayment?: Prisma.EmiPaymentOmit
   emiMoratorium?: Prisma.EmiMoratoriumOmit
+  creditReport?: Prisma.CreditReportOmit
+  creditAccount?: Prisma.CreditAccountOmit
   loanType?: Prisma.LoanTypeOmit
   customer?: Prisma.CustomerOmit
 }

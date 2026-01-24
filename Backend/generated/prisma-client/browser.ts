@@ -103,6 +103,16 @@ export type EmiPayment = Prisma.EmiPaymentModel
  */
 export type EmiMoratorium = Prisma.EmiMoratoriumModel
 /**
+ * Model CreditReport
+ * 
+ */
+export type CreditReport = Prisma.CreditReportModel
+/**
+ * Model CreditAccount
+ * 
+ */
+export type CreditAccount = Prisma.CreditAccountModel
+/**
  * Model LoanType
  * 
  */

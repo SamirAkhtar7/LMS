@@ -81,6 +81,16 @@ export const Category = {
 export type Category = (typeof Category)[keyof typeof Category]
 
 
+export const CreditProvider = {
+  CIBIL: 'CIBIL',
+  EXPERIAN: 'EXPERIAN',
+  EQUIFAX: 'EQUIFAX',
+  MOCK: 'MOCK'
+} as const
+
+export type CreditProvider = (typeof CreditProvider)[keyof typeof CreditProvider]
+
+
 export const CoApplicantRelation = {
   SPOUSE: 'SPOUSE',
   PARTNER: 'PARTNER',

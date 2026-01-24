@@ -68,6 +68,8 @@ export const ModelName = {
   LoanEmiSchedule: 'LoanEmiSchedule',
   EmiPayment: 'EmiPayment',
   EmiMoratorium: 'EmiMoratorium',
+  CreditReport: 'CreditReport',
+  CreditAccount: 'CreditAccount',
   LoanType: 'LoanType',
   Customer: 'Customer'
 } as const
@@ -430,6 +432,54 @@ export const EmiMoratoriumScalarFieldEnum = {
 export type EmiMoratoriumScalarFieldEnum = (typeof EmiMoratoriumScalarFieldEnum)[keyof typeof EmiMoratoriumScalarFieldEnum]
 
 
+export const CreditReportScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  provider: 'provider',
+  bureauReferenceId: 'bureauReferenceId',
+  fetchedAt: 'fetchedAt',
+  creditScore: 'creditScore',
+  scoreBand: 'scoreBand',
+  totalAtiveLoans: 'totalAtiveLoans',
+  totalClosedLoans: 'totalClosedLoans',
+  totalOutstandingLoans: 'totalOutstandingLoans',
+  totalMonthlyEmi: 'totalMonthlyEmi',
+  maxDPD: 'maxDPD',
+  overdueAccounts: 'overdueAccounts',
+  wittenOffCounts: 'wittenOffCounts',
+  settledCounts: 'settledCounts',
+  isThinFile: 'isThinFile',
+  isNTC: 'isNTC',
+  isValid: 'isValid',
+  isExpired: 'isExpired',
+  pulledFor: 'pulledFor',
+  rowRawData: 'rowRawData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CreditReportScalarFieldEnum = (typeof CreditReportScalarFieldEnum)[keyof typeof CreditReportScalarFieldEnum]
+
+
+export const CreditAccountScalarFieldEnum = {
+  id: 'id',
+  creditReportId: 'creditReportId',
+  lenderName: 'lenderName',
+  accountType: 'accountType',
+  accountStatus: 'accountStatus',
+  sanctionedAmount: 'sanctionedAmount',
+  outstanding: 'outstanding',
+  emiAmount: 'emiAmount',
+  dpd: 'dpd',
+  openedDate: 'openedDate',
+  closedDate: 'closedDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CreditAccountScalarFieldEnum = (typeof CreditAccountScalarFieldEnum)[keyof typeof CreditAccountScalarFieldEnum]
+
+
 export const LoanTypeScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -520,6 +570,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -732,6 +789,45 @@ export const EmiMoratoriumOrderByRelevanceFieldEnum = {
 } as const
 
 export type EmiMoratoriumOrderByRelevanceFieldEnum = (typeof EmiMoratoriumOrderByRelevanceFieldEnum)[keyof typeof EmiMoratoriumOrderByRelevanceFieldEnum]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const CreditReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  bureauReferenceId: 'bureauReferenceId',
+  scoreBand: 'scoreBand',
+  pulledFor: 'pulledFor'
+} as const
+
+export type CreditReportOrderByRelevanceFieldEnum = (typeof CreditReportOrderByRelevanceFieldEnum)[keyof typeof CreditReportOrderByRelevanceFieldEnum]
+
+
+export const CreditAccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  creditReportId: 'creditReportId',
+  lenderName: 'lenderName',
+  accountType: 'accountType',
+  accountStatus: 'accountStatus'
+} as const
+
+export type CreditAccountOrderByRelevanceFieldEnum = (typeof CreditAccountOrderByRelevanceFieldEnum)[keyof typeof CreditAccountOrderByRelevanceFieldEnum]
 
 
 export const LoanTypeOrderByRelevanceFieldEnum = {
