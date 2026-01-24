@@ -35,7 +35,8 @@ export class MockCreditProvider implements CreditProvider {
       creditScore: 500,
       accounts,
       totalActiveLoans: 2,
-      totalClosedLoans: 1,
+      totalClosedLoans: 0,
+     
       totalOutstanding: 106000,
       totalMonthlyEmi: 19000,
       maxDPD: 12,

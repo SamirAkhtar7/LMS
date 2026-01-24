@@ -6,7 +6,9 @@ export function getCreditProvider(): CreditProvider {
   switch (ENV.CREDIT_PROVIDER) {
     case "CIBIL":
       return new CibilCreditProvider();
-    default:
+    case "MOCK":
       return new MockCreditProvider();
+    default:
+      throw new Error(`Unknown CREDIT_PROVIDER: ${ENV.CREDIT_PROVIDER}`);
   }
 }

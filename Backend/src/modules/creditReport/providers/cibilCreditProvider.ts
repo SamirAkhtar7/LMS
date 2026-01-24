@@ -1,4 +1,7 @@
-import { CreditProvider, CreditReportResult } from "./creditProvider.interface.js";
+import {
+  CreditProvider,
+  CreditReportResult,
+} from "./creditProvider.interface.js";
 
 export class CibilCreditProvider implements CreditProvider {
   async fetchCreditReport(input: {
@@ -11,12 +14,22 @@ export class CibilCreditProvider implements CreditProvider {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.CIBIL_API_KEY}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ customerId: input.customerId, pan: input.pan, aadhar: input.aadhar }),
+      body: JSON.stringify({
+        customerId: input.customerId,
+        pan: input.pan,
+        aadhar: input.aadhar,
+      }),
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        `CIBIL API request failed with status ${response.status}`,
+      );
+    }
 
+    const data = await response.json();
 
     const accounts = (data.accounts ?? []).map((a: any) => ({
       lenderName: a.memberName,

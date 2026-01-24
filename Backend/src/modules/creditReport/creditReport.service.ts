@@ -4,7 +4,6 @@ import { getCreditProvider } from "./creditProvider.factory.js";
 
 const creditProvider = getCreditProvider();
 
-
 //TODO : Move to config
 // Credit report validity duration in days
 const CREDIT_REPORT_TTL_DAYS = 30;
@@ -71,7 +70,6 @@ export const getOrCreateCreditReport = async (
             outstanding: a.outstandingAmount,
             emiAmount: a.emiAmount,
             dpd: a.dpd,
-           
           })),
         },
       },
@@ -98,7 +96,6 @@ export const getOrCreateCreditReport = async (
             outstanding: a.outstandingAmount,
             emiAmount: a.emiAmount,
             dpd: a.dpd,
-           
           })),
         },
       },
@@ -171,7 +168,6 @@ export const refreshCreditReportService = async (
             outstanding: a.outstandingAmount,
             emiAmount: a.emiAmount,
             dpd: a.dpd,
-         
           })),
         },
       },
@@ -198,7 +194,6 @@ export const refreshCreditReportService = async (
             outstanding: a.outstandingAmount,
             emiAmount: a.emiAmount,
             dpd: a.dpd,
-  
           })),
         },
       },
