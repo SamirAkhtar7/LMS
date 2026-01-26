@@ -332,3 +332,99 @@ export const buildSettlementSearch = (q?: string) => {
 
   return { OR };
 };
+
+
+export const buildlegalReportSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        loanApplication: {
+          loanNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            aadhaarNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            panNumber: {
+              contains: q,
+
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            contactNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+    ],
+  };
+}
+export const buildTechnicalReportSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        loanApplication: {
+          loanNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            firstName: {
+              contains: q,
+            },
+
+          },
+        },
+      },  
+      {
+        loanApplication: {
+          customer: {
+            aadhaarNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            panNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        loanApplication: {
+          customer: {
+            contactNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+    ],
+  };
+}
+

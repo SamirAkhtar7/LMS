@@ -404,7 +404,10 @@ export const ModelName = {
   CreditReport: 'CreditReport',
   CreditAccount: 'CreditAccount',
   LoanType: 'LoanType',
-  Customer: 'Customer'
+  Customer: 'Customer',
+  TechnicalReport: 'TechnicalReport',
+  LegalReport: 'LegalReport',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1810,6 +1813,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TechnicalReport: {
+      payload: Prisma.$TechnicalReportPayload<ExtArgs>
+      fields: Prisma.TechnicalReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TechnicalReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TechnicalReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        findFirst: {
+          args: Prisma.TechnicalReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TechnicalReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        findMany: {
+          args: Prisma.TechnicalReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>[]
+        }
+        create: {
+          args: Prisma.TechnicalReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        createMany: {
+          args: Prisma.TechnicalReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.TechnicalReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        update: {
+          args: Prisma.TechnicalReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.TechnicalReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TechnicalReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.TechnicalReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TechnicalReportPayload>
+        }
+        aggregate: {
+          args: Prisma.TechnicalReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTechnicalReport>
+        }
+        groupBy: {
+          args: Prisma.TechnicalReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TechnicalReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TechnicalReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TechnicalReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    LegalReport: {
+      payload: Prisma.$LegalReportPayload<ExtArgs>
+      fields: Prisma.LegalReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LegalReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LegalReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        findFirst: {
+          args: Prisma.LegalReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LegalReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        findMany: {
+          args: Prisma.LegalReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>[]
+        }
+        create: {
+          args: Prisma.LegalReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        createMany: {
+          args: Prisma.LegalReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LegalReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        update: {
+          args: Prisma.LegalReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.LegalReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LegalReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LegalReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LegalReportPayload>
+        }
+        aggregate: {
+          args: Prisma.LegalReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLegalReport>
+        }
+        groupBy: {
+          args: Prisma.LegalReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LegalReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LegalReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LegalReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    AuditLog: {
+      payload: Prisma.$AuditLogPayload<ExtArgs>
+      fields: Prisma.AuditLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuditLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuditLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        findFirst: {
+          args: Prisma.AuditLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuditLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        findMany: {
+          args: Prisma.AuditLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+        }
+        create: {
+          args: Prisma.AuditLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        createMany: {
+          args: Prisma.AuditLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.AuditLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        update: {
+          args: Prisma.AuditLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuditLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuditLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.AuditLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        aggregate: {
+          args: Prisma.AuditLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuditLog>
+        }
+        groupBy: {
+          args: Prisma.AuditLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuditLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2323,6 +2524,80 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
+export const TechnicalReportScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  engineerId: 'engineerId',
+  engineerName: 'engineerName',
+  agencyName: 'agencyName',
+  propertyType: 'propertyType',
+  propertyAddress: 'propertyAddress',
+  city: 'city',
+  state: 'state',
+  pincode: 'pincode',
+  marketValue: 'marketValue',
+  discussionValue: 'discussionValue',
+  forcesdSaleValue: 'forcesdSaleValue',
+  recommendedLtv: 'recommendedLtv',
+  constructionStatus: 'constructionStatus',
+  propertyAge: 'propertyAge',
+  residualLife: 'residualLife',
+  qualityOfConstruction: 'qualityOfConstruction',
+  status: 'status',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  sitePhotographs: 'sitePhotographs',
+  submittedAt: 'submittedAt',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TechnicalReportScalarFieldEnum = (typeof TechnicalReportScalarFieldEnum)[keyof typeof TechnicalReportScalarFieldEnum]
+
+
+export const LegalReportScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  advocateId: 'advocateId',
+  advocateName: 'advocateName',
+  lawFirmName: 'lawFirmName',
+  ownerName: 'ownerName',
+  ownershipType: 'ownershipType',
+  titleClear: 'titleClear',
+  titleChainYears: 'titleChainYears',
+  encumbranceFound: 'encumbranceFound',
+  encumbranceDetails: 'encumbranceDetails',
+  reraRegistered: 'reraRegistered',
+  landUserClear: 'landUserClear',
+  buildingApproval: 'buildingApproval',
+  status: 'status',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  submittedAt: 'submittedAt',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LegalReportScalarFieldEnum = (typeof LegalReportScalarFieldEnum)[keyof typeof LegalReportScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  action: 'action',
+  performedBy: 'performedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2627,6 +2902,57 @@ export const CustomerOrderByRelevanceFieldEnum = {
 export type CustomerOrderByRelevanceFieldEnum = (typeof CustomerOrderByRelevanceFieldEnum)[keyof typeof CustomerOrderByRelevanceFieldEnum]
 
 
+export const TechnicalReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  engineerId: 'engineerId',
+  engineerName: 'engineerName',
+  agencyName: 'agencyName',
+  propertyType: 'propertyType',
+  propertyAddress: 'propertyAddress',
+  city: 'city',
+  state: 'state',
+  pincode: 'pincode',
+  constructionStatus: 'constructionStatus',
+  qualityOfConstruction: 'qualityOfConstruction',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  sitePhotographs: 'sitePhotographs',
+  approvedBy: 'approvedBy'
+} as const
+
+export type TechnicalReportOrderByRelevanceFieldEnum = (typeof TechnicalReportOrderByRelevanceFieldEnum)[keyof typeof TechnicalReportOrderByRelevanceFieldEnum]
+
+
+export const LegalReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  advocateId: 'advocateId',
+  advocateName: 'advocateName',
+  lawFirmName: 'lawFirmName',
+  ownerName: 'ownerName',
+  ownershipType: 'ownershipType',
+  encumbranceDetails: 'encumbranceDetails',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  approvedBy: 'approvedBy'
+} as const
+
+export type LegalReportOrderByRelevanceFieldEnum = (typeof LegalReportOrderByRelevanceFieldEnum)[keyof typeof LegalReportOrderByRelevanceFieldEnum]
+
+
+export const AuditLogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  action: 'action',
+  performedBy: 'performedBy',
+  remarks: 'remarks'
+} as const
+
+export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -2877,6 +3203,13 @@ export type EnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 export type EnumCustomerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomerStatus'>
     
 
+
+/**
+ * Reference to a field of type 'ReportStatus'
+ */
+export type EnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportStatus'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2993,6 +3326,9 @@ export type GlobalOmitConfig = {
   creditAccount?: Prisma.CreditAccountOmit
   loanType?: Prisma.LoanTypeOmit
   customer?: Prisma.CustomerOmit
+  technicalReport?: Prisma.TechnicalReportOmit
+  legalReport?: Prisma.LegalReportOmit
+  auditLog?: Prisma.AuditLogOmit
 }
 
 /* Types for Logging */

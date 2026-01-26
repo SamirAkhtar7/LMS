@@ -248,6 +248,8 @@ model LoanApplication {
   // Relations
   documents      Document[]
   loanRecoveries LoanRecovery[]
+  technicalReports TechnicalReport[]
+  legalReports     LegalReport[]
   // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
   // approvals       LoanApproval[]
   // disbursements   LoanDisbursement[]
@@ -295,6 +297,7 @@ model LoanRecovery {
   remarks    String?
 
   recoveryPayments RecoveryPayment[]
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -644,8 +647,131 @@ model Customer {
 }
 
 
+model TechnicalReport {
+  id               String               @id @default(cuid())
+  loanApplicationId String
+  loanApplication  LoanApplication      @relation(fields: [loanApplicationId], references: [id])
+  
+    // Engineer / Valuer
+  engineerId        String?
+  engineerName      String
+  agencyName        String?
+
+  //property details
+  propertyType      String // Residential, Commercial, Land Flat Villa etc.
+  propertyAddress   String
+  city              String
+  state             String
+  pincode          String
+
+  //Valuation details
+  marketValue       Float
+  discussionValue   Float
+  forcesdSaleValue  Float?
+  recommendedLtv    Float // % recommended by valuer
+
+
+  // Construction
+
+  constructionStatus String   // Completed, Under Construction, New Project 
+  propertyAge        Int?     // in years
+  residualLife      Int?     // in years
+  qualityOfConstruction String? // Good, Average, Poor
+
+  //Decidion
+  status            ReportStatus @default(PENDING)
+  remarks           String?
+
+  // Documents
+  reportUrl        String? // link to technical report document
+  sitePhotographs  String? // link to site photographs document
+
+
+// Audit
+  submittedAt       DateTime?
+  approvedBy        String?
+  approvedAt        DateTime?
+
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+}
+
+
+model LegalReport {
+  id               String               @id @default(cuid())
+  loanApplicationId String
+  loanApplication  LoanApplication      @relation(fields: [loanApplicationId], references: [id])
+  
+  //Advocate 
+  advocateId        String?
+  advocateName      String
+  lawFirmName       String?
+
+  //Title details
+  ownerName        String
+    ownershipType     String // SELF | JOINT | INHERITED
+  titleClear        Boolean
+  titleChainYears   Int
+
+
+  // Encumbrance details
+  encumbranceFound  Boolean
+  encumbranceDetails String?
+
+  //Regulatory
+  reraRegistered   Boolean?
+  landUserClear     Boolean?
+  buildingApproval   Boolean?
+
+
+  //Decidion
+  status            ReportStatus @default(PENDING)
+  remarks           String?
+
+  // Documents
+  reportUrl        String? // link to legal report document
+
+// Audit
+submittedAt       DateTime?
+approvedBy        String?
+approvedAt        DateTime?
+
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+
+  @@index([loanApplicationId])
+
+}
+
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  entityType   String   // LOAN | TECHNICAL_REPORT | LEGAL_REPORT
+  entityId     String
+  action       String   // CREATED | SUBMITTED | APPROVED | REJECTED
+  performedBy  String
+  remarks      String?
+  createdAt    DateTime @default(now())
+
+  @@index([entityType, entityId])
+
+}
+
 
 // =================================ENUMS=====================================
+
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  APPROVED
+  REJECTED
+  REWORK_REQUIRED
+}
+
+
 
 enum Role {
   ADMIN
@@ -855,6 +981,10 @@ enum LoanStatus {
   kyc_pending
   credit_check
   under_review
+  LEGAL_PENDING
+  TECHNICAL_PENDING
+  LEGAL_APPROVED
+  TECHNICAL_APPROVED
   approved
   rejected
   disbursed

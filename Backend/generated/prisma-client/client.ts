@@ -144,3 +144,18 @@ export type LoanType = Prisma.LoanTypeModel
  * 
  */
 export type Customer = Prisma.CustomerModel
+/**
+ * Model TechnicalReport
+ * 
+ */
+export type TechnicalReport = Prisma.TechnicalReportModel
+/**
+ * Model LegalReport
+ * 
+ */
+export type LegalReport = Prisma.LegalReportModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

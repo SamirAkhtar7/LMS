@@ -19,6 +19,18 @@ export const KycStatus = {
 export type KycStatus = (typeof KycStatus)[keyof typeof KycStatus]
 
 
+export const ReportStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUBMITTED: 'SUBMITTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  REWORK_REQUIRED: 'REWORK_REQUIRED'
+} as const
+
+export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
+
+
 export const Role = {
   ADMIN: 'ADMIN',
   EMPLOYEE: 'EMPLOYEE',
@@ -306,6 +318,10 @@ export const LoanStatus = {
   kyc_pending: 'kyc_pending',
   credit_check: 'credit_check',
   under_review: 'under_review',
+  LEGAL_PENDING: 'LEGAL_PENDING',
+  TECHNICAL_PENDING: 'TECHNICAL_PENDING',
+  LEGAL_APPROVED: 'LEGAL_APPROVED',
+  TECHNICAL_APPROVED: 'TECHNICAL_APPROVED',
   approved: 'approved',
   rejected: 'rejected',
   disbursed: 'disbursed',

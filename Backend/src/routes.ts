@@ -15,6 +15,9 @@ import loanSettlementRouter from "./modules/settlement/loanSettlement.routes.js"
 import loanDefaultRouter from "./modules/loanDefault/loanDefault.route.js";
 import eligibilityRouter from "./modules/loanRuleEngine/ruleEngine.routes.js";
 import creditReportRouter from "./modules/creditReport/creditReport.router.js";
+import technicalReportRouter from "./modules/reports/technicalReport/technical.routes.js";
+import legalReportRouter from "./modules/reports/legalReport/legal.routes.js";
+
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -36,4 +39,7 @@ router.use("/settlement", loanSettlementRouter);
 router.use("/risk", eligibilityRouter);
 router.use("/loan-default", loanDefaultRouter);
 router.use("/credit", creditReportRouter);
+router.use("/reports/technical", technicalReportRouter);
+router.use("/reports/legal", legalReportRouter);
+
 export default router;

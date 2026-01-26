@@ -71,7 +71,10 @@ export const ModelName = {
   CreditReport: 'CreditReport',
   CreditAccount: 'CreditAccount',
   LoanType: 'LoanType',
-  Customer: 'Customer'
+  Customer: 'Customer',
+  TechnicalReport: 'TechnicalReport',
+  LegalReport: 'LegalReport',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -564,6 +567,80 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
+export const TechnicalReportScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  engineerId: 'engineerId',
+  engineerName: 'engineerName',
+  agencyName: 'agencyName',
+  propertyType: 'propertyType',
+  propertyAddress: 'propertyAddress',
+  city: 'city',
+  state: 'state',
+  pincode: 'pincode',
+  marketValue: 'marketValue',
+  discussionValue: 'discussionValue',
+  forcesdSaleValue: 'forcesdSaleValue',
+  recommendedLtv: 'recommendedLtv',
+  constructionStatus: 'constructionStatus',
+  propertyAge: 'propertyAge',
+  residualLife: 'residualLife',
+  qualityOfConstruction: 'qualityOfConstruction',
+  status: 'status',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  sitePhotographs: 'sitePhotographs',
+  submittedAt: 'submittedAt',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TechnicalReportScalarFieldEnum = (typeof TechnicalReportScalarFieldEnum)[keyof typeof TechnicalReportScalarFieldEnum]
+
+
+export const LegalReportScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  advocateId: 'advocateId',
+  advocateName: 'advocateName',
+  lawFirmName: 'lawFirmName',
+  ownerName: 'ownerName',
+  ownershipType: 'ownershipType',
+  titleClear: 'titleClear',
+  titleChainYears: 'titleChainYears',
+  encumbranceFound: 'encumbranceFound',
+  encumbranceDetails: 'encumbranceDetails',
+  reraRegistered: 'reraRegistered',
+  landUserClear: 'landUserClear',
+  buildingApproval: 'buildingApproval',
+  status: 'status',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  submittedAt: 'submittedAt',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LegalReportScalarFieldEnum = (typeof LegalReportScalarFieldEnum)[keyof typeof LegalReportScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  action: 'action',
+  performedBy: 'performedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -866,4 +943,55 @@ export const CustomerOrderByRelevanceFieldEnum = {
 } as const
 
 export type CustomerOrderByRelevanceFieldEnum = (typeof CustomerOrderByRelevanceFieldEnum)[keyof typeof CustomerOrderByRelevanceFieldEnum]
+
+
+export const TechnicalReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  engineerId: 'engineerId',
+  engineerName: 'engineerName',
+  agencyName: 'agencyName',
+  propertyType: 'propertyType',
+  propertyAddress: 'propertyAddress',
+  city: 'city',
+  state: 'state',
+  pincode: 'pincode',
+  constructionStatus: 'constructionStatus',
+  qualityOfConstruction: 'qualityOfConstruction',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  sitePhotographs: 'sitePhotographs',
+  approvedBy: 'approvedBy'
+} as const
+
+export type TechnicalReportOrderByRelevanceFieldEnum = (typeof TechnicalReportOrderByRelevanceFieldEnum)[keyof typeof TechnicalReportOrderByRelevanceFieldEnum]
+
+
+export const LegalReportOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  advocateId: 'advocateId',
+  advocateName: 'advocateName',
+  lawFirmName: 'lawFirmName',
+  ownerName: 'ownerName',
+  ownershipType: 'ownershipType',
+  encumbranceDetails: 'encumbranceDetails',
+  remarks: 'remarks',
+  reportUrl: 'reportUrl',
+  approvedBy: 'approvedBy'
+} as const
+
+export type LegalReportOrderByRelevanceFieldEnum = (typeof LegalReportOrderByRelevanceFieldEnum)[keyof typeof LegalReportOrderByRelevanceFieldEnum]
+
+
+export const AuditLogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  action: 'action',
+  performedBy: 'performedBy',
+  remarks: 'remarks'
+} as const
+
+export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
 
