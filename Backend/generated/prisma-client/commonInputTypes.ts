@@ -408,13 +408,6 @@ export type EnumInterestTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel> | $Enums.InterestType
 }
 
-export type EnumCoApplicantRelationNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel> | null
-  in?: $Enums.CoApplicantRelation[] | null
-  notIn?: $Enums.CoApplicantRelation[] | null
-  not?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel> | $Enums.CoApplicantRelation | null
-}
-
 export type EnumLoanStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LoanStatus | Prisma.EnumLoanStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LoanStatus[]
@@ -448,16 +441,6 @@ export type EnumInterestTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel>
-}
-
-export type EnumCoApplicantRelationNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel> | null
-  in?: $Enums.CoApplicantRelation[] | null
-  notIn?: $Enums.CoApplicantRelation[] | null
-  not?: Prisma.NestedEnumCoApplicantRelationNullableWithAggregatesFilter<$PrismaModel> | $Enums.CoApplicantRelation | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel>
 }
 
 export type EnumLoanStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -560,6 +543,40 @@ export type EnumVerificationStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumVerificationStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumVerificationStatusFilter<$PrismaModel>
+}
+
+export type EnumCoApplicantRelationFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel>
+  in?: $Enums.CoApplicantRelation[]
+  notIn?: $Enums.CoApplicantRelation[]
+  not?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel> | $Enums.CoApplicantRelation
+}
+
+export type EnumEmploymentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmploymentType[]
+  notIn?: $Enums.EmploymentType[]
+  not?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
+}
+
+export type EnumCoApplicantRelationWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel>
+  in?: $Enums.CoApplicantRelation[]
+  notIn?: $Enums.CoApplicantRelation[]
+  not?: Prisma.NestedEnumCoApplicantRelationWithAggregatesFilter<$PrismaModel> | $Enums.CoApplicantRelation
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel>
+}
+
+export type EnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmploymentType[]
+  notIn?: $Enums.EmploymentType[]
+  not?: Prisma.NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
 }
 
 export type EnumLateFeeTypeFilter<$PrismaModel = never> = {
@@ -787,13 +804,6 @@ export type EnumCategoryNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel> | $Enums.Category | null
 }
 
-export type EnumEmploymentTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.EmploymentType[]
-  notIn?: $Enums.EmploymentType[]
-  not?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-}
-
 export type EnumCustomerStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
   in?: $Enums.CustomerStatus[]
@@ -829,16 +839,6 @@ export type EnumCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel>
-}
-
-export type EnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.EmploymentType[]
-  notIn?: $Enums.EmploymentType[]
-  not?: Prisma.NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
 }
 
 export type EnumCustomerStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1270,13 +1270,6 @@ export type NestedEnumInterestTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel> | $Enums.InterestType
 }
 
-export type NestedEnumCoApplicantRelationNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel> | null
-  in?: $Enums.CoApplicantRelation[] | null
-  notIn?: $Enums.CoApplicantRelation[] | null
-  not?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel> | $Enums.CoApplicantRelation | null
-}
-
 export type NestedEnumLoanStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LoanStatus | Prisma.EnumLoanStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LoanStatus[]
@@ -1310,16 +1303,6 @@ export type NestedEnumInterestTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumInterestTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumCoApplicantRelationNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel> | null
-  in?: $Enums.CoApplicantRelation[] | null
-  notIn?: $Enums.CoApplicantRelation[] | null
-  not?: Prisma.NestedEnumCoApplicantRelationNullableWithAggregatesFilter<$PrismaModel> | $Enums.CoApplicantRelation | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCoApplicantRelationNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumLoanStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1422,6 +1405,40 @@ export type NestedEnumVerificationStatusWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumVerificationStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumVerificationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumCoApplicantRelationFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel>
+  in?: $Enums.CoApplicantRelation[]
+  notIn?: $Enums.CoApplicantRelation[]
+  not?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel> | $Enums.CoApplicantRelation
+}
+
+export type NestedEnumEmploymentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmploymentType[]
+  notIn?: $Enums.EmploymentType[]
+  not?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
+}
+
+export type NestedEnumCoApplicantRelationWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoApplicantRelation | Prisma.EnumCoApplicantRelationFieldRefInput<$PrismaModel>
+  in?: $Enums.CoApplicantRelation[]
+  notIn?: $Enums.CoApplicantRelation[]
+  not?: Prisma.NestedEnumCoApplicantRelationWithAggregatesFilter<$PrismaModel> | $Enums.CoApplicantRelation
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoApplicantRelationFilter<$PrismaModel>
+}
+
+export type NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmploymentType[]
+  notIn?: $Enums.EmploymentType[]
+  not?: Prisma.NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumLateFeeTypeFilter<$PrismaModel = never> = {
@@ -1622,13 +1639,6 @@ export type NestedEnumCategoryNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel> | $Enums.Category | null
 }
 
-export type NestedEnumEmploymentTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.EmploymentType[]
-  notIn?: $Enums.EmploymentType[]
-  not?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-}
-
 export type NestedEnumCustomerStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
   in?: $Enums.CustomerStatus[]
@@ -1664,16 +1674,6 @@ export type NestedEnumCategoryNullableWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCategoryNullableFilter<$PrismaModel>
-}
-
-export type NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.EmploymentType | Prisma.EnumEmploymentTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.EmploymentType[]
-  notIn?: $Enums.EmploymentType[]
-  not?: Prisma.NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumEmploymentTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumCustomerStatusWithAggregatesFilter<$PrismaModel = never> = {

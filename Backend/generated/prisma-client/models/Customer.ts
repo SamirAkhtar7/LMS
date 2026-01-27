@@ -1064,10 +1064,6 @@ export type NullableEnumCategoryFieldUpdateOperationsInput = {
   set?: $Enums.Category | null
 }
 
-export type EnumEmploymentTypeFieldUpdateOperationsInput = {
-  set?: $Enums.EmploymentType
-}
-
 export type EnumCustomerStatusFieldUpdateOperationsInput = {
   set?: $Enums.CustomerStatus
 }

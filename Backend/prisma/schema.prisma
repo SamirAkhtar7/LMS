@@ -8,8 +8,8 @@ generator client {
 
 // Counter table used to generate unique loan numbers per year
 model LoanNumberCounter {
-  year     Int     @id
-  sequence Int     @default(0)
+  year      Int      @id
+  sequence  Int      @default(0)
   updatedAt DateTime @updatedAt
 }
 
@@ -204,25 +204,20 @@ model LoanApplication {
   emiAmount      Float?
   purposeDetails String?
 
-  coApplicantName     String?
-  coApplicantRelation CoApplicantRelation?
-  coApplicantContact  String?
-  coApplicantIncome   Float?
-  coApplicantPan      String?
-  coApplicantAadhaar  String?
-  totalPayable        Float?
-  loanPurpose         String?
-  cibilScore          Int?
-  status              LoanStatus           @default(application_in_progress)
-  approvalDate        DateTime?
-  activationDate      DateTime?
-  rejectionReason     String?
-  approvedBy          String?
-  approvedAt          DateTime?
-  rejectedBy          String?
-  rejectedAt          DateTime?
-  kycId               String?              @unique
-  kyc                 Kyc?                 @relation(fields: [kycId], references: [id])
+  coapplicants    CoApplicant[]
+  totalPayable    Float?
+  loanPurpose     String?
+  cibilScore      Int?
+  status          LoanStatus    @default(application_in_progress)
+  approvalDate    DateTime?
+  activationDate  DateTime?
+  rejectionReason String?
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectedBy      String?
+  rejectedAt      DateTime?
+  kycId           String?       @unique
+  kyc             Kyc?          @relation(fields: [kycId], references: [id])
 
   //Emi charges
 
@@ -246,22 +241,22 @@ model LoanApplication {
   dpd                  Int?
 
   // Relations
-  documents      Document[]
-  loanRecoveries LoanRecovery[]
+  documents        Document[]
+  loanRecoveries   LoanRecovery[]
   technicalReports TechnicalReport[]
   legalReports     LegalReport[]
   // product         LoanProduct         @relation(fields: [loanProductId], references: [id])
   // approvals       LoanApproval[]
   // disbursements   LoanDisbursement[]
-  emis           LoanEmiSchedule[]
+  emis             LoanEmiSchedule[]
   // payments        LoanPayment[]
   // charges         LoanCharge[]
   // statusHistory   LoanStatusHistory[]
   // nachMandates    LoanNachMandate[]
-  createdById    String?
-  createdBy      User?             @relation(fields: [createdById], references: [id])
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
+  createdById      String?
+  createdBy        User?             @relation(fields: [createdById], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   // Relations
   loanType LoanType? @relation(fields: [loanTypeId], references: [id])
@@ -297,7 +292,6 @@ model LoanRecovery {
   remarks    String?
 
   recoveryPayments RecoveryPayment[]
-
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -347,6 +341,7 @@ model UserPermission {
 model Document {
   id                 String             @id @default(cuid())
   loanApplicationId  String?
+  coApplicantId      String?
   documentType       String
   documentPath       String
   verificationStatus VerificationStatus @default(pending)
@@ -357,9 +352,10 @@ model Document {
   verifiedBy         String?
   verifiedAt         DateTime?
   createdAt          DateTime           @default(now())
-
-  kyc             Kyc?             @relation("KycDocuments", fields: [kycId], references: [id])
-  loanApplication LoanApplication? @relation(fields: [loanApplicationId], references: [id])
+  updatedAt          DateTime           @updatedAt
+  kyc                Kyc?               @relation("KycDocuments", fields: [kycId], references: [id])
+  loanApplication    LoanApplication?   @relation(fields: [loanApplicationId], references: [id])
+  coApplicant        CoApplicant?       @relation(fields: [coApplicantId], references: [id])
 
   @@unique([loanApplicationId, documentType]) // ✅ prevents duplicate uploads
 }
@@ -368,6 +364,7 @@ model Kyc {
   id              String           @id @default(cuid())
   loanApplication LoanApplication?
   documents       Document[]       @relation("KycDocuments")
+  coApplicant     CoApplicant?     @relation("CoApplicantKyc")
   userId          String
   status          KycStatus        @default(PENDING)
   remarks         String?
@@ -382,13 +379,41 @@ model Kyc {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+model CoApplicant {
+  id                String          @id @default(cuid())
+  loanApplicationId String
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  // Personal Details
+  firstName     String
+  LastName      String
+  middleName    String?
+  relation      CoApplicantRelation
+  contactNumber String
+  email         String?
+  dob           DateTime
+  panNumber     String?
+  aadhaarNumber String?
+
+  employmentType EmploymentType
+  monthlyIncome  Float?
+
+  //kyc Details
+  kycId     String?    @unique
+  kyc       Kyc?       @relation("CoApplicantKyc", fields: [kycId], references: [id])
+  documents Document[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([loanApplicationId])
+}
+
 enum KycStatus {
   NOT_STARTED
   PENDING
   VERIFIED
   REJECTED
 }
-
 
 model LoanEmiSchedule {
   id                String @id @default(cuid())
@@ -446,71 +471,67 @@ model EmiMoratorium {
   updatedAt         DateTime         @updatedAt
 }
 
-
 model CreditReport {
-  id          String   @id @default(cuid())
-  customerId  String   @unique
-  customer    Customer @relation(fields: [customerId], references: [id])
-  provider     CreditProvider     //CIBIL | EXPERIAN | MOCK
-  bureauReferenceId String?           // CIBIL control number
-  fetchedAt   DateTime @default(now())
+  id                String         @id @default(cuid())
+  customerId        String         @unique
+  customer          Customer       @relation(fields: [customerId], references: [id])
+  provider          CreditProvider //CIBIL | EXPERIAN | MOCK
+  bureauReferenceId String? // CIBIL control number
+  fetchedAt         DateTime       @default(now())
 
- // Core Score 
- creditScore Int?
- scoreBand   String?       // e.g., Excellent, Good, Fair, Poor
+  // Core Score 
+  creditScore Int?
+  scoreBand   String? // e.g., Excellent, Good, Fair, Poor
 
- //loan Summary 
- totalAtiveLoans      Int?
- totalClosedLoans     Int?
- totalOutstandingLoans Float?
- totalMonthlyEmi      Float?
+  //loan Summary 
+  totalAtiveLoans       Int?
+  totalClosedLoans      Int?
+  totalOutstandingLoans Float?
+  totalMonthlyEmi       Float?
 
- //Risk Metrics 
-  maxDPD         Int? //maximum days past due
+  //Risk Metrics 
+  maxDPD          Int? //maximum days past due
   overdueAccounts Int?
   wittenOffCounts Int?
-  settledCounts  Int?
+  settledCounts   Int?
 
   // Flags
 
   isThinFile Boolean @default(false)
   isNTC      Boolean @default(false) // New to Credit
   isValid    Boolean @default(true)
-  isExpired Boolean @default(false)
-  pulledFor String?  // purpose of pulling the report 
+  isExpired  Boolean @default(false)
+  pulledFor  String? // purpose of pulling the report 
 
   //Row Api Payload
-  rowRawData Json
+  rowRawData    Json
   creditAccount CreditAccount[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   @@index([customerId])
   @@index([provider])
-
-
 }
 
-
 model CreditAccount {
-  id               String         @id @default(cuid())
+  id               String       @id @default(cuid())
   creditReportId   String
-  creditReport  CreditReport @relation(fields: [creditReportId], references: [id])
-  lenderName      String
-  accountType    String // PERSONAL_LOAN, CREDIT_CARD, HOME_LOAN etc.
-  accountStatus  String // ACTIVE, CLOSED, SETTLED etc.
+  creditReport     CreditReport @relation(fields: [creditReportId], references: [id])
+  lenderName       String
+  accountType      String // PERSONAL_LOAN, CREDIT_CARD, HOME_LOAN etc.
+  accountStatus    String // ACTIVE, CLOSED, SETTLED etc.
   sanctionedAmount Float?
-  outstanding    Float?
-  emiAmount      Float?
-  dpd            Int? // days past due
-  openedDate     DateTime?
-  closedDate     DateTime?
+  outstanding      Float?
+  emiAmount        Float?
+  dpd              Int? // days past due
+  openedDate       DateTime?
+  closedDate       DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@index([creditReportId])
 }
-
 
 // STATUS HISTORY
 
@@ -640,127 +661,115 @@ model Customer {
   status           CustomerStatus    @default(ACTIVE)
   loanApplications LoanApplication[]
   loanRecoveries   LoanRecovery[]
-  creditReport    CreditReport?
+  creditReport     CreditReport?
   // kycs             CustomerKYC[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
 }
 
-
 model TechnicalReport {
-  id               String               @id @default(cuid())
+  id                String          @id @default(cuid())
   loanApplicationId String
-  loanApplication  LoanApplication      @relation(fields: [loanApplicationId], references: [id])
-  
-    // Engineer / Valuer
-  engineerId        String?
-  engineerName      String
-  agencyName        String?
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  // Engineer / Valuer
+  engineerId   String?
+  engineerName String
+  agencyName   String?
 
   //property details
-  propertyType      String // Residential, Commercial, Land Flat Villa etc.
-  propertyAddress   String
-  city              String
-  state             String
-  pincode          String
+  propertyType    String // Residential, Commercial, Land Flat Villa etc.
+  propertyAddress String
+  city            String
+  state           String
+  pincode         String
 
   //Valuation details
-  marketValue       Float
-  discussionValue   Float
-  forcesdSaleValue  Float?
-  recommendedLtv    Float // % recommended by valuer
-
+  marketValue      Float
+  discussionValue  Float
+  forcesdSaleValue Float?
+  recommendedLtv   Float // % recommended by valuer
 
   // Construction
 
-  constructionStatus String   // Completed, Under Construction, New Project 
-  propertyAge        Int?     // in years
-  residualLife      Int?     // in years
+  constructionStatus    String // Completed, Under Construction, New Project 
+  propertyAge           Int? // in years
+  residualLife          Int? // in years
   qualityOfConstruction String? // Good, Average, Poor
 
   //Decidion
-  status            ReportStatus @default(PENDING)
-  remarks           String?
+  status  ReportStatus @default(PENDING)
+  remarks String?
 
   // Documents
-  reportUrl        String? // link to technical report document
-  sitePhotographs  String? // link to site photographs document
+  reportUrl       String? // link to technical report document
+  sitePhotographs String? // link to site photographs document
 
+  // Audit
+  submittedAt DateTime?
+  approvedBy  String?
+  approvedAt  DateTime?
 
-// Audit
-  submittedAt       DateTime?
-  approvedBy        String?
-  approvedAt        DateTime?
-
-  createdAt       DateTime             @default(now())
-  updatedAt       DateTime             @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-
 model LegalReport {
-  id               String               @id @default(cuid())
+  id                String          @id @default(cuid())
   loanApplicationId String
-  loanApplication  LoanApplication      @relation(fields: [loanApplicationId], references: [id])
-  
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
   //Advocate 
-  advocateId        String?
-  advocateName      String
-  lawFirmName       String?
+  advocateId   String?
+  advocateName String
+  lawFirmName  String?
 
   //Title details
-  ownerName        String
-    ownershipType     String // SELF | JOINT | INHERITED
-  titleClear        Boolean
-  titleChainYears   Int
-
+  ownerName       String
+  ownershipType   String // SELF | JOINT | INHERITED
+  titleClear      Boolean
+  titleChainYears Int
 
   // Encumbrance details
-  encumbranceFound  Boolean
+  encumbranceFound   Boolean
   encumbranceDetails String?
 
   //Regulatory
   reraRegistered   Boolean?
-  landUserClear     Boolean?
-  buildingApproval   Boolean?
-
+  landUserClear    Boolean?
+  buildingApproval Boolean?
 
   //Decidion
-  status            ReportStatus @default(PENDING)
-  remarks           String?
+  status  ReportStatus @default(PENDING)
+  remarks String?
 
   // Documents
-  reportUrl        String? // link to legal report document
+  reportUrl String? // link to legal report document
 
-// Audit
-submittedAt       DateTime?
-approvedBy        String?
-approvedAt        DateTime?
+  // Audit
+  submittedAt DateTime?
+  approvedBy  String?
+  approvedAt  DateTime?
 
-  createdAt       DateTime             @default(now())
-  updatedAt       DateTime             @updatedAt
-
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([loanApplicationId])
-
 }
-
 
 model AuditLog {
-  id           String   @id @default(cuid())
-  entityType   String   // LOAN | TECHNICAL_REPORT | LEGAL_REPORT
-  entityId     String
-  action       String   // CREATED | SUBMITTED | APPROVED | REJECTED
-  performedBy  String
-  remarks      String?
-  createdAt    DateTime @default(now())
+  id          String   @id @default(cuid())
+  entityType  String // LOAN | TECHNICAL_REPORT | LEGAL_REPORT
+  entityId    String
+  action      String // CREATED | SUBMITTED | APPROVED | REJECTED
+  performedBy String
+  remarks     String?
+  createdAt   DateTime @default(now())
 
   @@index([entityType, entityId])
-
 }
 
-
 // =================================ENUMS=====================================
-
 
 enum ReportStatus {
   PENDING
@@ -770,8 +779,6 @@ enum ReportStatus {
   REJECTED
   REWORK_REQUIRED
 }
-
-
 
 enum Role {
   ADMIN
@@ -816,14 +823,13 @@ enum Category {
   OBC
   OTHER
 }
+
 enum CreditProvider {
   CIBIL
   EXPERIAN
   EQUIFAX
   MOCK
 }
-
-
 
 enum CoApplicantRelation {
   SPOUSE

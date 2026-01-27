@@ -123,13 +123,25 @@ export const createLoanApplicationSchema = z.object({
   purposeDetails: z.string().trim().min(1).optional(),
   loanPurpose: z.string().trim().min(1).optional(),
   cibilScore: z.coerce.number().int().optional(),
-
   coApplicantName: z.string().trim().min(1).optional(),
   coApplicantContact: z.string().trim().min(1).optional(),
   coApplicantIncome: z.coerce.number().optional(),
   coApplicantPan: z.string().trim().min(1).optional(),
   coApplicantAadhaar: z.string().trim().min(1).optional(),
   coApplicantRelation: CoApplicantRelationEnum.optional(),
+  coApplicants: z.array(z.object({
+    firstName: z.string().trim().min(1),
+    lastName: z.string().trim().min(1).optional(),
+    middleName: z.string().trim().min(1).optional(),
+    relation: CoApplicantRelationEnum,
+    contactNumber: z.string().trim().min(1),
+    email: z.string().trim().email().optional(),
+    dob: z.coerce.date(),
+    panNumber: z.string().trim().min(1).optional(),
+    aadhaarNumber: z.string().trim().min(1).optional(),
+    employmentType: employmentTypeEnum,
+    monthlyIncome: z.coerce.number().optional(),
+  })).optional(),
 });
 
 export const updateLoanApplicationSchema = createLoanApplicationSchema
@@ -186,3 +198,22 @@ export const apperoveLoanInputSchema = z.object({
 });
 
 export type ApperoveLoanInput = z.infer<typeof apperoveLoanInputSchema>;
+
+
+
+export const createCoApplicantSchema = z.object({
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1).optional(),
+  middleName: z.string().trim().min(1).optional(),
+  relation: CoApplicantRelationEnum,
+  contactName: z.string().trim().min(10),
+  email: z.string().trim().email().optional(),
+
+  dob: z.coerce.date().optional(),
+  panNumber: z.string().trim().min(1).optional(),
+  aadhaarNumber: z.string().trim().min(1).optional(),
+  employmentTypeEnum: employmentTypeEnum,
+  monthlyIncome: z.coerce.number().optional(),
+  
+  
+})

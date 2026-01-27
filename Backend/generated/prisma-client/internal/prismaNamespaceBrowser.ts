@@ -65,6 +65,7 @@ export const ModelName = {
   UserPermission: 'UserPermission',
   Document: 'Document',
   Kyc: 'Kyc',
+  CoApplicant: 'CoApplicant',
   LoanEmiSchedule: 'LoanEmiSchedule',
   EmiPayment: 'EmiPayment',
   EmiMoratorium: 'EmiMoratorium',
@@ -249,12 +250,6 @@ export const LoanApplicationScalarFieldEnum = {
   interestType: 'interestType',
   emiAmount: 'emiAmount',
   purposeDetails: 'purposeDetails',
-  coApplicantName: 'coApplicantName',
-  coApplicantRelation: 'coApplicantRelation',
-  coApplicantContact: 'coApplicantContact',
-  coApplicantIncome: 'coApplicantIncome',
-  coApplicantPan: 'coApplicantPan',
-  coApplicantAadhaar: 'coApplicantAadhaar',
   totalPayable: 'totalPayable',
   loanPurpose: 'loanPurpose',
   cibilScore: 'cibilScore',
@@ -352,6 +347,7 @@ export type UserPermissionScalarFieldEnum = (typeof UserPermissionScalarFieldEnu
 export const DocumentScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
+  coApplicantId: 'coApplicantId',
   documentType: 'documentType',
   documentPath: 'documentPath',
   verificationStatus: 'verificationStatus',
@@ -361,7 +357,8 @@ export const DocumentScalarFieldEnum = {
   verified: 'verified',
   verifiedBy: 'verifiedBy',
   verifiedAt: 'verifiedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
@@ -379,6 +376,28 @@ export const KycScalarFieldEnum = {
 } as const
 
 export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
+
+
+export const CoApplicantScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  firstName: 'firstName',
+  LastName: 'LastName',
+  middleName: 'middleName',
+  relation: 'relation',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  dob: 'dob',
+  panNumber: 'panNumber',
+  aadhaarNumber: 'aadhaarNumber',
+  employmentType: 'employmentType',
+  monthlyIncome: 'monthlyIncome',
+  kycId: 'kycId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoApplicantScalarFieldEnum = (typeof CoApplicantScalarFieldEnum)[keyof typeof CoApplicantScalarFieldEnum]
 
 
 export const LoanEmiScheduleScalarFieldEnum = {
@@ -765,10 +784,6 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
   purposeDetails: 'purposeDetails',
-  coApplicantName: 'coApplicantName',
-  coApplicantContact: 'coApplicantContact',
-  coApplicantPan: 'coApplicantPan',
-  coApplicantAadhaar: 'coApplicantAadhaar',
   loanPurpose: 'loanPurpose',
   rejectionReason: 'rejectionReason',
   approvedBy: 'approvedBy',
@@ -823,6 +838,7 @@ export type UserPermissionOrderByRelevanceFieldEnum = (typeof UserPermissionOrde
 export const DocumentOrderByRelevanceFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
+  coApplicantId: 'coApplicantId',
   documentType: 'documentType',
   documentPath: 'documentPath',
   rejectionReason: 'rejectionReason',
@@ -842,6 +858,22 @@ export const KycOrderByRelevanceFieldEnum = {
 } as const
 
 export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
+
+
+export const CoApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  firstName: 'firstName',
+  LastName: 'LastName',
+  middleName: 'middleName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  panNumber: 'panNumber',
+  aadhaarNumber: 'aadhaarNumber',
+  kycId: 'kycId'
+} as const
+
+export type CoApplicantOrderByRelevanceFieldEnum = (typeof CoApplicantOrderByRelevanceFieldEnum)[keyof typeof CoApplicantOrderByRelevanceFieldEnum]
 
 
 export const LoanEmiScheduleOrderByRelevanceFieldEnum = {

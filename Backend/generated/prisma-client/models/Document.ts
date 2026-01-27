@@ -27,6 +27,7 @@ export type AggregateDocument = {
 export type DocumentMinAggregateOutputType = {
   id: string | null
   loanApplicationId: string | null
+  coApplicantId: string | null
   documentType: string | null
   documentPath: string | null
   verificationStatus: $Enums.VerificationStatus | null
@@ -37,11 +38,13 @@ export type DocumentMinAggregateOutputType = {
   verifiedBy: string | null
   verifiedAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DocumentMaxAggregateOutputType = {
   id: string | null
   loanApplicationId: string | null
+  coApplicantId: string | null
   documentType: string | null
   documentPath: string | null
   verificationStatus: $Enums.VerificationStatus | null
@@ -52,11 +55,13 @@ export type DocumentMaxAggregateOutputType = {
   verifiedBy: string | null
   verifiedAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DocumentCountAggregateOutputType = {
   id: number
   loanApplicationId: number
+  coApplicantId: number
   documentType: number
   documentPath: number
   verificationStatus: number
@@ -67,6 +72,7 @@ export type DocumentCountAggregateOutputType = {
   verifiedBy: number
   verifiedAt: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -74,6 +80,7 @@ export type DocumentCountAggregateOutputType = {
 export type DocumentMinAggregateInputType = {
   id?: true
   loanApplicationId?: true
+  coApplicantId?: true
   documentType?: true
   documentPath?: true
   verificationStatus?: true
@@ -84,11 +91,13 @@ export type DocumentMinAggregateInputType = {
   verifiedBy?: true
   verifiedAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type DocumentMaxAggregateInputType = {
   id?: true
   loanApplicationId?: true
+  coApplicantId?: true
   documentType?: true
   documentPath?: true
   verificationStatus?: true
@@ -99,11 +108,13 @@ export type DocumentMaxAggregateInputType = {
   verifiedBy?: true
   verifiedAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type DocumentCountAggregateInputType = {
   id?: true
   loanApplicationId?: true
+  coApplicantId?: true
   documentType?: true
   documentPath?: true
   verificationStatus?: true
@@ -114,6 +125,7 @@ export type DocumentCountAggregateInputType = {
   verifiedBy?: true
   verifiedAt?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -192,6 +204,7 @@ export type DocumentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type DocumentGroupByOutputType = {
   id: string
   loanApplicationId: string | null
+  coApplicantId: string | null
   documentType: string
   documentPath: string
   verificationStatus: $Enums.VerificationStatus
@@ -202,6 +215,7 @@ export type DocumentGroupByOutputType = {
   verifiedBy: string | null
   verifiedAt: Date | null
   createdAt: Date
+  updatedAt: Date
   _count: DocumentCountAggregateOutputType | null
   _min: DocumentMinAggregateOutputType | null
   _max: DocumentMaxAggregateOutputType | null
@@ -228,6 +242,7 @@ export type DocumentWhereInput = {
   NOT?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
   id?: Prisma.StringFilter<"Document"> | string
   loanApplicationId?: Prisma.StringNullableFilter<"Document"> | string | null
+  coApplicantId?: Prisma.StringNullableFilter<"Document"> | string | null
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
@@ -238,13 +253,16 @@ export type DocumentWhereInput = {
   verifiedBy?: Prisma.StringNullableFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
+  coApplicant?: Prisma.XOR<Prisma.CoApplicantNullableScalarRelationFilter, Prisma.CoApplicantWhereInput> | null
 }
 
 export type DocumentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   loanApplicationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  coApplicantId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
@@ -255,8 +273,10 @@ export type DocumentOrderByWithRelationInput = {
   verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   kyc?: Prisma.KycOrderByWithRelationInput
   loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
+  coApplicant?: Prisma.CoApplicantOrderByWithRelationInput
   _relevance?: Prisma.DocumentOrderByRelevanceInput
 }
 
@@ -267,6 +287,7 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DocumentWhereInput[]
   NOT?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
   loanApplicationId?: Prisma.StringNullableFilter<"Document"> | string | null
+  coApplicantId?: Prisma.StringNullableFilter<"Document"> | string | null
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
@@ -277,13 +298,16 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   verifiedBy?: Prisma.StringNullableFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   kyc?: Prisma.XOR<Prisma.KycNullableScalarRelationFilter, Prisma.KycWhereInput> | null
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
+  coApplicant?: Prisma.XOR<Prisma.CoApplicantNullableScalarRelationFilter, Prisma.CoApplicantWhereInput> | null
 }, "id" | "loanApplicationId_documentType">
 
 export type DocumentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   loanApplicationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  coApplicantId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
@@ -294,6 +318,7 @@ export type DocumentOrderByWithAggregationInput = {
   verifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.DocumentCountOrderByAggregateInput
   _max?: Prisma.DocumentMaxOrderByAggregateInput
   _min?: Prisma.DocumentMinOrderByAggregateInput
@@ -305,6 +330,7 @@ export type DocumentScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DocumentScalarWhereWithAggregatesInput | Prisma.DocumentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Document"> | string
   loanApplicationId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
+  coApplicantId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   documentType?: Prisma.StringWithAggregatesFilter<"Document"> | string
   documentPath?: Prisma.StringWithAggregatesFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusWithAggregatesFilter<"Document"> | $Enums.VerificationStatus
@@ -315,6 +341,7 @@ export type DocumentScalarWhereWithAggregatesInput = {
   verifiedBy?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
 }
 
 export type DocumentCreateInput = {
@@ -328,13 +355,16 @@ export type DocumentCreateInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   kyc?: Prisma.KycCreateNestedOneWithoutDocumentsInput
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutDocumentsInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutDocumentsInput
 }
 
 export type DocumentUncheckedCreateInput = {
   id?: string
   loanApplicationId?: string | null
+  coApplicantId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -345,6 +375,7 @@ export type DocumentUncheckedCreateInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentUpdateInput = {
@@ -358,13 +389,16 @@ export type DocumentUpdateInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kyc?: Prisma.KycUpdateOneWithoutDocumentsNestedInput
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutDocumentsNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutDocumentsNestedInput
 }
 
 export type DocumentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
@@ -375,11 +409,13 @@ export type DocumentUncheckedUpdateInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentCreateManyInput = {
   id?: string
   loanApplicationId?: string | null
+  coApplicantId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -390,6 +426,7 @@ export type DocumentCreateManyInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentUpdateManyMutationInput = {
@@ -403,11 +440,13 @@ export type DocumentUpdateManyMutationInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
@@ -418,6 +457,7 @@ export type DocumentUncheckedUpdateManyInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentListRelationFilter = {
@@ -444,6 +484,7 @@ export type DocumentLoanApplicationIdDocumentTypeCompoundUniqueInput = {
 export type DocumentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   loanApplicationId?: Prisma.SortOrder
+  coApplicantId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
@@ -454,11 +495,13 @@ export type DocumentCountOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DocumentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   loanApplicationId?: Prisma.SortOrder
+  coApplicantId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
@@ -469,11 +512,13 @@ export type DocumentMaxOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DocumentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   loanApplicationId?: Prisma.SortOrder
+  coApplicantId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentPath?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
@@ -484,6 +529,7 @@ export type DocumentMinOrderByAggregateInput = {
   verifiedBy?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DocumentCreateNestedManyWithoutLoanApplicationInput = {
@@ -574,6 +620,48 @@ export type DocumentUncheckedUpdateManyWithoutKycNestedInput = {
   deleteMany?: Prisma.DocumentScalarWhereInput | Prisma.DocumentScalarWhereInput[]
 }
 
+export type DocumentCreateNestedManyWithoutCoApplicantInput = {
+  create?: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput> | Prisma.DocumentCreateWithoutCoApplicantInput[] | Prisma.DocumentUncheckedCreateWithoutCoApplicantInput[]
+  connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutCoApplicantInput | Prisma.DocumentCreateOrConnectWithoutCoApplicantInput[]
+  createMany?: Prisma.DocumentCreateManyCoApplicantInputEnvelope
+  connect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+}
+
+export type DocumentUncheckedCreateNestedManyWithoutCoApplicantInput = {
+  create?: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput> | Prisma.DocumentCreateWithoutCoApplicantInput[] | Prisma.DocumentUncheckedCreateWithoutCoApplicantInput[]
+  connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutCoApplicantInput | Prisma.DocumentCreateOrConnectWithoutCoApplicantInput[]
+  createMany?: Prisma.DocumentCreateManyCoApplicantInputEnvelope
+  connect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+}
+
+export type DocumentUpdateManyWithoutCoApplicantNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput> | Prisma.DocumentCreateWithoutCoApplicantInput[] | Prisma.DocumentUncheckedCreateWithoutCoApplicantInput[]
+  connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutCoApplicantInput | Prisma.DocumentCreateOrConnectWithoutCoApplicantInput[]
+  upsert?: Prisma.DocumentUpsertWithWhereUniqueWithoutCoApplicantInput | Prisma.DocumentUpsertWithWhereUniqueWithoutCoApplicantInput[]
+  createMany?: Prisma.DocumentCreateManyCoApplicantInputEnvelope
+  set?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  disconnect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  delete?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  connect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  update?: Prisma.DocumentUpdateWithWhereUniqueWithoutCoApplicantInput | Prisma.DocumentUpdateWithWhereUniqueWithoutCoApplicantInput[]
+  updateMany?: Prisma.DocumentUpdateManyWithWhereWithoutCoApplicantInput | Prisma.DocumentUpdateManyWithWhereWithoutCoApplicantInput[]
+  deleteMany?: Prisma.DocumentScalarWhereInput | Prisma.DocumentScalarWhereInput[]
+}
+
+export type DocumentUncheckedUpdateManyWithoutCoApplicantNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput> | Prisma.DocumentCreateWithoutCoApplicantInput[] | Prisma.DocumentUncheckedCreateWithoutCoApplicantInput[]
+  connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutCoApplicantInput | Prisma.DocumentCreateOrConnectWithoutCoApplicantInput[]
+  upsert?: Prisma.DocumentUpsertWithWhereUniqueWithoutCoApplicantInput | Prisma.DocumentUpsertWithWhereUniqueWithoutCoApplicantInput[]
+  createMany?: Prisma.DocumentCreateManyCoApplicantInputEnvelope
+  set?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  disconnect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  delete?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  connect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+  update?: Prisma.DocumentUpdateWithWhereUniqueWithoutCoApplicantInput | Prisma.DocumentUpdateWithWhereUniqueWithoutCoApplicantInput[]
+  updateMany?: Prisma.DocumentUpdateManyWithWhereWithoutCoApplicantInput | Prisma.DocumentUpdateManyWithWhereWithoutCoApplicantInput[]
+  deleteMany?: Prisma.DocumentScalarWhereInput | Prisma.DocumentScalarWhereInput[]
+}
+
 export type DocumentCreateWithoutLoanApplicationInput = {
   id?: string
   documentType: string
@@ -585,11 +673,14 @@ export type DocumentCreateWithoutLoanApplicationInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   kyc?: Prisma.KycCreateNestedOneWithoutDocumentsInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutDocumentsInput
 }
 
 export type DocumentUncheckedCreateWithoutLoanApplicationInput = {
   id?: string
+  coApplicantId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -600,6 +691,7 @@ export type DocumentUncheckedCreateWithoutLoanApplicationInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentCreateOrConnectWithoutLoanApplicationInput = {
@@ -634,6 +726,7 @@ export type DocumentScalarWhereInput = {
   NOT?: Prisma.DocumentScalarWhereInput | Prisma.DocumentScalarWhereInput[]
   id?: Prisma.StringFilter<"Document"> | string
   loanApplicationId?: Prisma.StringNullableFilter<"Document"> | string | null
+  coApplicantId?: Prisma.StringNullableFilter<"Document"> | string | null
   documentType?: Prisma.StringFilter<"Document"> | string
   documentPath?: Prisma.StringFilter<"Document"> | string
   verificationStatus?: Prisma.EnumVerificationStatusFilter<"Document"> | $Enums.VerificationStatus
@@ -644,6 +737,7 @@ export type DocumentScalarWhereInput = {
   verifiedBy?: Prisma.StringNullableFilter<"Document"> | string | null
   verifiedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
 }
 
 export type DocumentCreateWithoutKycInput = {
@@ -657,12 +751,15 @@ export type DocumentCreateWithoutKycInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutDocumentsInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutDocumentsInput
 }
 
 export type DocumentUncheckedCreateWithoutKycInput = {
   id?: string
   loanApplicationId?: string | null
+  coApplicantId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -672,6 +769,7 @@ export type DocumentUncheckedCreateWithoutKycInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentCreateOrConnectWithoutKycInput = {
@@ -700,8 +798,25 @@ export type DocumentUpdateManyWithWhereWithoutKycInput = {
   data: Prisma.XOR<Prisma.DocumentUpdateManyMutationInput, Prisma.DocumentUncheckedUpdateManyWithoutKycInput>
 }
 
-export type DocumentCreateManyLoanApplicationInput = {
+export type DocumentCreateWithoutCoApplicantInput = {
   id?: string
+  documentType: string
+  documentPath: string
+  verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
+  uploadedBy: string
+  verified?: boolean
+  verifiedBy?: string | null
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kyc?: Prisma.KycCreateNestedOneWithoutDocumentsInput
+  loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutDocumentsInput
+}
+
+export type DocumentUncheckedCreateWithoutCoApplicantInput = {
+  id?: string
+  loanApplicationId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -712,6 +827,49 @@ export type DocumentCreateManyLoanApplicationInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DocumentCreateOrConnectWithoutCoApplicantInput = {
+  where: Prisma.DocumentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput>
+}
+
+export type DocumentCreateManyCoApplicantInputEnvelope = {
+  data: Prisma.DocumentCreateManyCoApplicantInput | Prisma.DocumentCreateManyCoApplicantInput[]
+  skipDuplicates?: boolean
+}
+
+export type DocumentUpsertWithWhereUniqueWithoutCoApplicantInput = {
+  where: Prisma.DocumentWhereUniqueInput
+  update: Prisma.XOR<Prisma.DocumentUpdateWithoutCoApplicantInput, Prisma.DocumentUncheckedUpdateWithoutCoApplicantInput>
+  create: Prisma.XOR<Prisma.DocumentCreateWithoutCoApplicantInput, Prisma.DocumentUncheckedCreateWithoutCoApplicantInput>
+}
+
+export type DocumentUpdateWithWhereUniqueWithoutCoApplicantInput = {
+  where: Prisma.DocumentWhereUniqueInput
+  data: Prisma.XOR<Prisma.DocumentUpdateWithoutCoApplicantInput, Prisma.DocumentUncheckedUpdateWithoutCoApplicantInput>
+}
+
+export type DocumentUpdateManyWithWhereWithoutCoApplicantInput = {
+  where: Prisma.DocumentScalarWhereInput
+  data: Prisma.XOR<Prisma.DocumentUpdateManyMutationInput, Prisma.DocumentUncheckedUpdateManyWithoutCoApplicantInput>
+}
+
+export type DocumentCreateManyLoanApplicationInput = {
+  id?: string
+  coApplicantId?: string | null
+  documentType: string
+  documentPath: string
+  verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
+  kycId?: string | null
+  uploadedBy: string
+  verified?: boolean
+  verifiedBy?: string | null
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentUpdateWithoutLoanApplicationInput = {
@@ -725,11 +883,14 @@ export type DocumentUpdateWithoutLoanApplicationInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kyc?: Prisma.KycUpdateOneWithoutDocumentsNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutDocumentsNestedInput
 }
 
 export type DocumentUncheckedUpdateWithoutLoanApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
@@ -740,10 +901,12 @@ export type DocumentUncheckedUpdateWithoutLoanApplicationInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentUncheckedUpdateManyWithoutLoanApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
@@ -754,11 +917,13 @@ export type DocumentUncheckedUpdateManyWithoutLoanApplicationInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentCreateManyKycInput = {
   id?: string
   loanApplicationId?: string | null
+  coApplicantId?: string | null
   documentType: string
   documentPath: string
   verificationStatus?: $Enums.VerificationStatus
@@ -768,6 +933,7 @@ export type DocumentCreateManyKycInput = {
   verifiedBy?: string | null
   verifiedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DocumentUpdateWithoutKycInput = {
@@ -781,12 +947,15 @@ export type DocumentUpdateWithoutKycInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutDocumentsNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutDocumentsNestedInput
 }
 
 export type DocumentUncheckedUpdateWithoutKycInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
@@ -796,20 +965,87 @@ export type DocumentUncheckedUpdateWithoutKycInput = {
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DocumentUncheckedUpdateManyWithoutKycInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coApplicantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentType?: Prisma.StringFieldUpdateOperationsInput | string
+  documentPath?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DocumentCreateManyCoApplicantInput = {
+  id?: string
+  loanApplicationId?: string | null
+  documentType: string
+  documentPath: string
+  verificationStatus?: $Enums.VerificationStatus
+  rejectionReason?: string | null
+  kycId?: string | null
+  uploadedBy: string
+  verified?: boolean
+  verifiedBy?: string | null
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DocumentUpdateWithoutCoApplicantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.StringFieldUpdateOperationsInput | string
+  documentPath?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kyc?: Prisma.KycUpdateOneWithoutDocumentsNestedInput
+  loanApplication?: Prisma.LoanApplicationUpdateOneWithoutDocumentsNestedInput
+}
+
+export type DocumentUncheckedUpdateWithoutCoApplicantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   documentPath?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DocumentUncheckedUpdateManyWithoutCoApplicantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentType?: Prisma.StringFieldUpdateOperationsInput | string
+  documentPath?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationStatus?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kycId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -817,6 +1053,7 @@ export type DocumentUncheckedUpdateManyWithoutKycInput = {
 export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   loanApplicationId?: boolean
+  coApplicantId?: boolean
   documentType?: boolean
   documentPath?: boolean
   verificationStatus?: boolean
@@ -827,8 +1064,10 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   verifiedBy?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   kyc?: boolean | Prisma.Document$kycArgs<ExtArgs>
   loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
+  coApplicant?: boolean | Prisma.Document$coApplicantArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
 
 
@@ -836,6 +1075,7 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type DocumentSelectScalar = {
   id?: boolean
   loanApplicationId?: boolean
+  coApplicantId?: boolean
   documentType?: boolean
   documentPath?: boolean
   verificationStatus?: boolean
@@ -846,12 +1086,14 @@ export type DocumentSelectScalar = {
   verifiedBy?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "documentType" | "documentPath" | "verificationStatus" | "rejectionReason" | "kycId" | "uploadedBy" | "verified" | "verifiedBy" | "verifiedAt" | "createdAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "coApplicantId" | "documentType" | "documentPath" | "verificationStatus" | "rejectionReason" | "kycId" | "uploadedBy" | "verified" | "verifiedBy" | "verifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   kyc?: boolean | Prisma.Document$kycArgs<ExtArgs>
   loanApplication?: boolean | Prisma.Document$loanApplicationArgs<ExtArgs>
+  coApplicant?: boolean | Prisma.Document$coApplicantArgs<ExtArgs>
 }
 
 export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -859,10 +1101,12 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     kyc: Prisma.$KycPayload<ExtArgs> | null
     loanApplication: Prisma.$LoanApplicationPayload<ExtArgs> | null
+    coApplicant: Prisma.$CoApplicantPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     loanApplicationId: string | null
+    coApplicantId: string | null
     documentType: string
     documentPath: string
     verificationStatus: $Enums.VerificationStatus
@@ -873,6 +1117,7 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     verifiedBy: string | null
     verifiedAt: Date | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["document"]>
   composites: {}
 }
@@ -1215,6 +1460,7 @@ export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   kyc<T extends Prisma.Document$kycArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$kycArgs<ExtArgs>>): Prisma.Prisma__KycClient<runtime.Types.Result.GetResult<Prisma.$KycPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   loanApplication<T extends Prisma.Document$loanApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$loanApplicationArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  coApplicant<T extends Prisma.Document$coApplicantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Document$coApplicantArgs<ExtArgs>>): Prisma.Prisma__CoApplicantClient<runtime.Types.Result.GetResult<Prisma.$CoApplicantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1246,6 +1492,7 @@ export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends runtime
 export interface DocumentFieldRefs {
   readonly id: Prisma.FieldRef<"Document", 'String'>
   readonly loanApplicationId: Prisma.FieldRef<"Document", 'String'>
+  readonly coApplicantId: Prisma.FieldRef<"Document", 'String'>
   readonly documentType: Prisma.FieldRef<"Document", 'String'>
   readonly documentPath: Prisma.FieldRef<"Document", 'String'>
   readonly verificationStatus: Prisma.FieldRef<"Document", 'VerificationStatus'>
@@ -1256,6 +1503,7 @@ export interface DocumentFieldRefs {
   readonly verifiedBy: Prisma.FieldRef<"Document", 'String'>
   readonly verifiedAt: Prisma.FieldRef<"Document", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Document", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Document", 'DateTime'>
 }
     
 
@@ -1634,6 +1882,25 @@ export type Document$loanApplicationArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.LoanApplicationInclude<ExtArgs> | null
   where?: Prisma.LoanApplicationWhereInput
+}
+
+/**
+ * Document.coApplicant
+ */
+export type Document$coApplicantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CoApplicant
+   */
+  select?: Prisma.CoApplicantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CoApplicant
+   */
+  omit?: Prisma.CoApplicantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoApplicantInclude<ExtArgs> | null
+  where?: Prisma.CoApplicantWhereInput
 }
 
 /**

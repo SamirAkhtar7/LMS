@@ -398,6 +398,7 @@ export const ModelName = {
   UserPermission: 'UserPermission',
   Document: 'Document',
   Kyc: 'Kyc',
+  CoApplicant: 'CoApplicant',
   LoanEmiSchedule: 'LoanEmiSchedule',
   EmiPayment: 'EmiPayment',
   EmiMoratorium: 'EmiMoratorium',
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "auditLog"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1351,6 +1352,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CoApplicant: {
+      payload: Prisma.$CoApplicantPayload<ExtArgs>
+      fields: Prisma.CoApplicantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CoApplicantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CoApplicantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        findFirst: {
+          args: Prisma.CoApplicantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CoApplicantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        findMany: {
+          args: Prisma.CoApplicantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>[]
+        }
+        create: {
+          args: Prisma.CoApplicantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        createMany: {
+          args: Prisma.CoApplicantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CoApplicantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        update: {
+          args: Prisma.CoApplicantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        deleteMany: {
+          args: Prisma.CoApplicantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CoApplicantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CoApplicantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoApplicantPayload>
+        }
+        aggregate: {
+          args: Prisma.CoApplicantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCoApplicant>
+        }
+        groupBy: {
+          args: Prisma.CoApplicantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CoApplicantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CoApplicantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CoApplicantCountAggregateOutputType> | number
+        }
+      }
+    }
     LoanEmiSchedule: {
       payload: Prisma.$LoanEmiSchedulePayload<ExtArgs>
       fields: Prisma.LoanEmiScheduleFieldRefs
@@ -2206,12 +2273,6 @@ export const LoanApplicationScalarFieldEnum = {
   interestType: 'interestType',
   emiAmount: 'emiAmount',
   purposeDetails: 'purposeDetails',
-  coApplicantName: 'coApplicantName',
-  coApplicantRelation: 'coApplicantRelation',
-  coApplicantContact: 'coApplicantContact',
-  coApplicantIncome: 'coApplicantIncome',
-  coApplicantPan: 'coApplicantPan',
-  coApplicantAadhaar: 'coApplicantAadhaar',
   totalPayable: 'totalPayable',
   loanPurpose: 'loanPurpose',
   cibilScore: 'cibilScore',
@@ -2309,6 +2370,7 @@ export type UserPermissionScalarFieldEnum = (typeof UserPermissionScalarFieldEnu
 export const DocumentScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
+  coApplicantId: 'coApplicantId',
   documentType: 'documentType',
   documentPath: 'documentPath',
   verificationStatus: 'verificationStatus',
@@ -2318,7 +2380,8 @@ export const DocumentScalarFieldEnum = {
   verified: 'verified',
   verifiedBy: 'verifiedBy',
   verifiedAt: 'verifiedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
@@ -2336,6 +2399,28 @@ export const KycScalarFieldEnum = {
 } as const
 
 export type KycScalarFieldEnum = (typeof KycScalarFieldEnum)[keyof typeof KycScalarFieldEnum]
+
+
+export const CoApplicantScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  firstName: 'firstName',
+  LastName: 'LastName',
+  middleName: 'middleName',
+  relation: 'relation',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  dob: 'dob',
+  panNumber: 'panNumber',
+  aadhaarNumber: 'aadhaarNumber',
+  employmentType: 'employmentType',
+  monthlyIncome: 'monthlyIncome',
+  kycId: 'kycId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoApplicantScalarFieldEnum = (typeof CoApplicantScalarFieldEnum)[keyof typeof CoApplicantScalarFieldEnum]
 
 
 export const LoanEmiScheduleScalarFieldEnum = {
@@ -2722,10 +2807,6 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   leadId: 'leadId',
   loanTypeId: 'loanTypeId',
   purposeDetails: 'purposeDetails',
-  coApplicantName: 'coApplicantName',
-  coApplicantContact: 'coApplicantContact',
-  coApplicantPan: 'coApplicantPan',
-  coApplicantAadhaar: 'coApplicantAadhaar',
   loanPurpose: 'loanPurpose',
   rejectionReason: 'rejectionReason',
   approvedBy: 'approvedBy',
@@ -2780,6 +2861,7 @@ export type UserPermissionOrderByRelevanceFieldEnum = (typeof UserPermissionOrde
 export const DocumentOrderByRelevanceFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
+  coApplicantId: 'coApplicantId',
   documentType: 'documentType',
   documentPath: 'documentPath',
   rejectionReason: 'rejectionReason',
@@ -2799,6 +2881,22 @@ export const KycOrderByRelevanceFieldEnum = {
 } as const
 
 export type KycOrderByRelevanceFieldEnum = (typeof KycOrderByRelevanceFieldEnum)[keyof typeof KycOrderByRelevanceFieldEnum]
+
+
+export const CoApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  firstName: 'firstName',
+  LastName: 'LastName',
+  middleName: 'middleName',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  panNumber: 'panNumber',
+  aadhaarNumber: 'aadhaarNumber',
+  kycId: 'kycId'
+} as const
+
+export type CoApplicantOrderByRelevanceFieldEnum = (typeof CoApplicantOrderByRelevanceFieldEnum)[keyof typeof CoApplicantOrderByRelevanceFieldEnum]
 
 
 export const LoanEmiScheduleOrderByRelevanceFieldEnum = {
@@ -3072,13 +3170,6 @@ export type EnumInterestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'CoApplicantRelation'
- */
-export type EnumCoApplicantRelationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoApplicantRelation'>
-    
-
-
-/**
  * Reference to a field of type 'LoanStatus'
  */
 export type EnumLoanStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanStatus'>
@@ -3110,6 +3201,20 @@ export type EnumPaymentModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'VerificationStatus'
  */
 export type EnumVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CoApplicantRelation'
+ */
+export type EnumCoApplicantRelationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoApplicantRelation'>
+    
+
+
+/**
+ * Reference to a field of type 'EmploymentType'
+ */
+export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
     
 
 
@@ -3173,13 +3278,6 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'LoanTypes'
  */
 export type EnumLoanTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LoanTypes'>
-    
-
-
-/**
- * Reference to a field of type 'EmploymentType'
- */
-export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
     
 
 
@@ -3319,6 +3417,7 @@ export type GlobalOmitConfig = {
   userPermission?: Prisma.UserPermissionOmit
   document?: Prisma.DocumentOmit
   kyc?: Prisma.KycOmit
+  coApplicant?: Prisma.CoApplicantOmit
   loanEmiSchedule?: Prisma.LoanEmiScheduleOmit
   emiPayment?: Prisma.EmiPaymentOmit
   emiMoratorium?: Prisma.EmiMoratoriumOmit

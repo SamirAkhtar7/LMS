@@ -208,6 +208,7 @@ export type KycWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Kyc"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
+  coApplicant?: Prisma.XOR<Prisma.CoApplicantNullableScalarRelationFilter, Prisma.CoApplicantWhereInput> | null
   verifiedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -223,6 +224,7 @@ export type KycOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
+  coApplicant?: Prisma.CoApplicantOrderByWithRelationInput
   verifiedByUser?: Prisma.UserOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.KycOrderByRelevanceInput
@@ -242,6 +244,7 @@ export type KycWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Kyc"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationNullableScalarRelationFilter, Prisma.LoanApplicationWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
+  coApplicant?: Prisma.XOR<Prisma.CoApplicantNullableScalarRelationFilter, Prisma.CoApplicantWhereInput> | null
   verifiedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -283,6 +286,7 @@ export type KycCreateInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutKycInput
   verifiedByUser?: Prisma.UserCreateNestedOneWithoutVerifiedKycsInput
   user: Prisma.UserCreateNestedOneWithoutKycsInput
 }
@@ -298,6 +302,7 @@ export type KycUncheckedCreateInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantUncheckedCreateNestedOneWithoutKycInput
 }
 
 export type KycUpdateInput = {
@@ -309,6 +314,7 @@ export type KycUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutKycNestedInput
   verifiedByUser?: Prisma.UserUpdateOneWithoutVerifiedKycsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutKycsNestedInput
 }
@@ -324,6 +330,7 @@ export type KycUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUncheckedUpdateOneWithoutKycNestedInput
 }
 
 export type KycCreateManyInput = {
@@ -527,6 +534,22 @@ export type KycUpdateOneWithoutDocumentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.KycUpdateToOneWithWhereWithoutDocumentsInput, Prisma.KycUpdateWithoutDocumentsInput>, Prisma.KycUncheckedUpdateWithoutDocumentsInput>
 }
 
+export type KycCreateNestedOneWithoutCoApplicantInput = {
+  create?: Prisma.XOR<Prisma.KycCreateWithoutCoApplicantInput, Prisma.KycUncheckedCreateWithoutCoApplicantInput>
+  connectOrCreate?: Prisma.KycCreateOrConnectWithoutCoApplicantInput
+  connect?: Prisma.KycWhereUniqueInput
+}
+
+export type KycUpdateOneWithoutCoApplicantNestedInput = {
+  create?: Prisma.XOR<Prisma.KycCreateWithoutCoApplicantInput, Prisma.KycUncheckedCreateWithoutCoApplicantInput>
+  connectOrCreate?: Prisma.KycCreateOrConnectWithoutCoApplicantInput
+  upsert?: Prisma.KycUpsertWithoutCoApplicantInput
+  disconnect?: Prisma.KycWhereInput | boolean
+  delete?: Prisma.KycWhereInput | boolean
+  connect?: Prisma.KycWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KycUpdateToOneWithWhereWithoutCoApplicantInput, Prisma.KycUpdateWithoutCoApplicantInput>, Prisma.KycUncheckedUpdateWithoutCoApplicantInput>
+}
+
 export type KycCreateWithoutUserInput = {
   id?: string
   status?: $Enums.KycStatus
@@ -536,6 +559,7 @@ export type KycCreateWithoutUserInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutKycInput
   verifiedByUser?: Prisma.UserCreateNestedOneWithoutVerifiedKycsInput
 }
 
@@ -549,6 +573,7 @@ export type KycUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantUncheckedCreateNestedOneWithoutKycInput
 }
 
 export type KycCreateOrConnectWithoutUserInput = {
@@ -570,6 +595,7 @@ export type KycCreateWithoutVerifiedByUserInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutKycInput
   user: Prisma.UserCreateNestedOneWithoutKycsInput
 }
 
@@ -583,6 +609,7 @@ export type KycUncheckedCreateWithoutVerifiedByUserInput = {
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedCreateNestedOneWithoutKycInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantUncheckedCreateNestedOneWithoutKycInput
 }
 
 export type KycCreateOrConnectWithoutVerifiedByUserInput = {
@@ -649,6 +676,7 @@ export type KycCreateWithoutLoanApplicationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   documents?: Prisma.DocumentCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutKycInput
   verifiedByUser?: Prisma.UserCreateNestedOneWithoutVerifiedKycsInput
   user: Prisma.UserCreateNestedOneWithoutKycsInput
 }
@@ -663,6 +691,7 @@ export type KycUncheckedCreateWithoutLoanApplicationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKycInput
+  coApplicant?: Prisma.CoApplicantUncheckedCreateNestedOneWithoutKycInput
 }
 
 export type KycCreateOrConnectWithoutLoanApplicationInput = {
@@ -689,6 +718,7 @@ export type KycUpdateWithoutLoanApplicationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   documents?: Prisma.DocumentUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutKycNestedInput
   verifiedByUser?: Prisma.UserUpdateOneWithoutVerifiedKycsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutKycsNestedInput
 }
@@ -703,6 +733,7 @@ export type KycUncheckedUpdateWithoutLoanApplicationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUncheckedUpdateOneWithoutKycNestedInput
 }
 
 export type KycCreateWithoutDocumentsInput = {
@@ -713,6 +744,7 @@ export type KycCreateWithoutDocumentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutKycInput
+  coApplicant?: Prisma.CoApplicantCreateNestedOneWithoutKycInput
   verifiedByUser?: Prisma.UserCreateNestedOneWithoutVerifiedKycsInput
   user: Prisma.UserCreateNestedOneWithoutKycsInput
 }
@@ -727,6 +759,7 @@ export type KycUncheckedCreateWithoutDocumentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedCreateNestedOneWithoutKycInput
+  coApplicant?: Prisma.CoApplicantUncheckedCreateNestedOneWithoutKycInput
 }
 
 export type KycCreateOrConnectWithoutDocumentsInput = {
@@ -753,6 +786,7 @@ export type KycUpdateWithoutDocumentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutKycNestedInput
   verifiedByUser?: Prisma.UserUpdateOneWithoutVerifiedKycsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutKycsNestedInput
 }
@@ -767,6 +801,75 @@ export type KycUncheckedUpdateWithoutDocumentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedUpdateOneWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUncheckedUpdateOneWithoutKycNestedInput
+}
+
+export type KycCreateWithoutCoApplicantInput = {
+  id?: string
+  status?: $Enums.KycStatus
+  remarks?: string | null
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplication?: Prisma.LoanApplicationCreateNestedOneWithoutKycInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutKycInput
+  verifiedByUser?: Prisma.UserCreateNestedOneWithoutVerifiedKycsInput
+  user: Prisma.UserCreateNestedOneWithoutKycsInput
+}
+
+export type KycUncheckedCreateWithoutCoApplicantInput = {
+  id?: string
+  userId: string
+  status?: $Enums.KycStatus
+  remarks?: string | null
+  verifiedBy?: string | null
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplication?: Prisma.LoanApplicationUncheckedCreateNestedOneWithoutKycInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKycInput
+}
+
+export type KycCreateOrConnectWithoutCoApplicantInput = {
+  where: Prisma.KycWhereUniqueInput
+  create: Prisma.XOR<Prisma.KycCreateWithoutCoApplicantInput, Prisma.KycUncheckedCreateWithoutCoApplicantInput>
+}
+
+export type KycUpsertWithoutCoApplicantInput = {
+  update: Prisma.XOR<Prisma.KycUpdateWithoutCoApplicantInput, Prisma.KycUncheckedUpdateWithoutCoApplicantInput>
+  create: Prisma.XOR<Prisma.KycCreateWithoutCoApplicantInput, Prisma.KycUncheckedCreateWithoutCoApplicantInput>
+  where?: Prisma.KycWhereInput
+}
+
+export type KycUpdateToOneWithWhereWithoutCoApplicantInput = {
+  where?: Prisma.KycWhereInput
+  data: Prisma.XOR<Prisma.KycUpdateWithoutCoApplicantInput, Prisma.KycUncheckedUpdateWithoutCoApplicantInput>
+}
+
+export type KycUpdateWithoutCoApplicantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplication?: Prisma.LoanApplicationUpdateOneWithoutKycNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutKycNestedInput
+  verifiedByUser?: Prisma.UserUpdateOneWithoutVerifiedKycsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutKycsNestedInput
+}
+
+export type KycUncheckedUpdateWithoutCoApplicantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplication?: Prisma.LoanApplicationUncheckedUpdateOneWithoutKycNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutKycNestedInput
 }
 
 export type KycCreateManyUserInput = {
@@ -798,6 +901,7 @@ export type KycUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutKycNestedInput
   verifiedByUser?: Prisma.UserUpdateOneWithoutVerifiedKycsNestedInput
 }
 
@@ -811,6 +915,7 @@ export type KycUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUncheckedUpdateOneWithoutKycNestedInput
 }
 
 export type KycUncheckedUpdateManyWithoutUserInput = {
@@ -832,6 +937,7 @@ export type KycUpdateWithoutVerifiedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUpdateOneWithoutKycNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutKycsNestedInput
 }
 
@@ -845,6 +951,7 @@ export type KycUncheckedUpdateWithoutVerifiedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUncheckedUpdateOneWithoutKycNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKycNestedInput
+  coApplicant?: Prisma.CoApplicantUncheckedUpdateOneWithoutKycNestedInput
 }
 
 export type KycUncheckedUpdateManyWithoutVerifiedByUserInput = {
@@ -899,6 +1006,7 @@ export type KycSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   updatedAt?: boolean
   loanApplication?: boolean | Prisma.Kyc$loanApplicationArgs<ExtArgs>
   documents?: boolean | Prisma.Kyc$documentsArgs<ExtArgs>
+  coApplicant?: boolean | Prisma.Kyc$coApplicantArgs<ExtArgs>
   verifiedByUser?: boolean | Prisma.Kyc$verifiedByUserArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.KycCountOutputTypeDefaultArgs<ExtArgs>
@@ -921,6 +1029,7 @@ export type KycOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
 export type KycInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplication?: boolean | Prisma.Kyc$loanApplicationArgs<ExtArgs>
   documents?: boolean | Prisma.Kyc$documentsArgs<ExtArgs>
+  coApplicant?: boolean | Prisma.Kyc$coApplicantArgs<ExtArgs>
   verifiedByUser?: boolean | Prisma.Kyc$verifiedByUserArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.KycCountOutputTypeDefaultArgs<ExtArgs>
@@ -931,6 +1040,7 @@ export type $KycPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   objects: {
     loanApplication: Prisma.$LoanApplicationPayload<ExtArgs> | null
     documents: Prisma.$DocumentPayload<ExtArgs>[]
+    coApplicant: Prisma.$CoApplicantPayload<ExtArgs> | null
     verifiedByUser: Prisma.$UserPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
   }
@@ -1285,6 +1395,7 @@ export interface Prisma__KycClient<T, Null = never, ExtArgs extends runtime.Type
   readonly [Symbol.toStringTag]: "PrismaPromise"
   loanApplication<T extends Prisma.Kyc$loanApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Kyc$loanApplicationArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.Kyc$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Kyc$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  coApplicant<T extends Prisma.Kyc$coApplicantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Kyc$coApplicantArgs<ExtArgs>>): Prisma.Prisma__CoApplicantClient<runtime.Types.Result.GetResult<Prisma.$CoApplicantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   verifiedByUser<T extends Prisma.Kyc$verifiedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Kyc$verifiedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1707,6 +1818,25 @@ export type Kyc$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+}
+
+/**
+ * Kyc.coApplicant
+ */
+export type Kyc$coApplicantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CoApplicant
+   */
+  select?: Prisma.CoApplicantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CoApplicant
+   */
+  omit?: Prisma.CoApplicantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoApplicantInclude<ExtArgs> | null
+  where?: Prisma.CoApplicantWhereInput
 }
 
 /**

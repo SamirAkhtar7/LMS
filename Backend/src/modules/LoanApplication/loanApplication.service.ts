@@ -6,7 +6,7 @@ import {
 import createLoanApplicationSchema, {
   ApperoveLoanInput,
 } from "./loanApplication.schema.js";
-import type * as Enums from "../../../generated/prisma-client/enums.js";
+import * as Enums from "../../../generated/prisma-client/enums.js";
 import { generateLoanNumber } from "../../common/generateId/generateLoanNumber.js";
 import {
   getPagination,
@@ -20,15 +20,12 @@ export async function createLoanApplicationService(
 ) {
   try {
     const parsed = createLoanApplicationSchema.parse(data);
-
     const loanType = await prisma.loanType.findFirst({
       where: { id: parsed.loanTypeId },
     });
-
     if (!loanType || !loanType.isActive) {
       throw new Error("Invalid loan type");
     }
-
     const dobValue =
       parsed.dob && typeof parsed.dob === "string"
         ? new Date(parsed.dob)
@@ -48,7 +45,6 @@ export async function createLoanApplicationService(
           ].filter(Boolean) as object[],
         },
       });
-
       if (!customer) {
         customer = await tx.customer.create({
           data: {
@@ -81,9 +77,7 @@ export async function createLoanApplicationService(
             status: "ACTIVE",
           },
         });
-      }
-
-      /* -------- 2. Prevent duplicate active loan -------- */
+      } /* -------- 2. Prevent duplicate active loan -------- */
       const existingLoan = await tx.loanApplication.findFirst({
         where: {
           customerId: customer.id,
@@ -98,18 +92,14 @@ export async function createLoanApplicationService(
           },
         },
       });
-
       if (existingLoan) {
         const err: any = new Error(
           "Customer already has an active loan application",
         );
         err.statusCode = 409;
         throw err;
-      }
-
-      /* -------- 3. Generate Loan Number -------- */
+      } /* -------- 3. Generate Loan Number -------- */
       const loanNumber = await generateLoanNumber(tx);
-
       /* -------- 4. Create Loan Application -------- */
       const loanApplication = await tx.loanApplication.create({
         data: {
@@ -128,28 +118,56 @@ export async function createLoanApplicationService(
           createdById: loggedInUser.id,
         },
       });
-
-      /* -------- 5. Create KYC -------- */
-      const kyc = await tx.kyc.create({
+      /* -------- 5. Create PRIMARY KYC -------- */
+      const primaryKyc = await tx.kyc.create({
         data: {
-          loanApplication: {
-            connect: { id: loanApplication.id },
-          },
           userId: loggedInUser.id,
-          status: "PENDING",
+          status: Enums.KycStatus.PENDING,
+          loanApplication: { connect: { id: loanApplication.id } },
         },
       });
-
       /* -------- 6. Link KYC -------- */
       await tx.loanApplication.update({
         where: { id: loanApplication.id },
-        data: { kycId: kyc.id },
+        data: { kycId: primaryKyc.id },
       });
 
+      if (parsed.coApplicants?.length) {
+        for (const co of parsed.coApplicants) {
+          const coApplication = await tx.coApplicant.create({
+            data: {
+              loanApplicationId: loanApplication.id,
+              firstName: co.firstName,
+              LastName: co.lastName ?? "",
+              relation: co.relation as Enums.CoApplicantRelation,
+              contactNumber: co.contactNumber,
+              email: co.email,
+              dob: co.dob,
+              aadhaarNumber: co.aadhaarNumber,
+              panNumber: co.panNumber,
+              employmentType: co.employmentType as Enums.EmploymentType,
+              monthlyIncome: co.monthlyIncome,
+            },
+          });
+
+          const coKyc = await tx.kyc.create({
+            data: {
+              userId: loggedInUser.id,
+              status: Enums.KycStatus.PENDING,
+            },
+          });
+
+          await tx.coApplicant.update({
+            where: { id: coApplication.id },
+            data: { kycId: coKyc.id },
+          });
+        }
+      }
       return {
         loanApplication,
         customer,
-        kyc,
+        primaryKyc,
+        coApplicantsCreated: parsed.coApplicants?.length ?? 0,
       };
     });
   } catch (error: any) {
@@ -237,7 +255,7 @@ export async function verifyDocumentService(
       await tx.kyc.update({
         where: { id: document.kycId },
         data: {
-          status: "VERIFIED",
+          status: Enums.KycStatus.VERIFIED,
           verifiedBy: verifierId,
           verifiedAt: new Date(),
         },
@@ -304,7 +322,7 @@ export async function rejectDocumentService(
   await prisma.kyc.update({
     where: { id: document.kycId },
     data: {
-      status: "REJECTED",
+      status: Enums.KycStatus.REJECTED,
       verifiedBy: verifierId,
       verifiedAt: new Date(),
     },
@@ -335,6 +353,7 @@ export const getAllLoanApplicationsService = async (params: {
       include: {
         customer: true,
         kyc: { include: { documents: true } },
+        coapplicants: true,
       },
       orderBy: { createdAt: "desc" },
       skip,
@@ -368,6 +387,7 @@ export const getLoanApplicationByIdService = async (id: string) => {
             recoveryPayments: true,
           },
         },
+        coapplicants: true,
       },
     });
     return loanApplication;
@@ -483,12 +503,6 @@ export const approveLoanService = async (
       approvedAt: new Date(),
     },
   });
-
-  // console.log("APPROVE DATA", {
-  //   latePaymentFeeType: data.latePaymentFeeType,
-  //   latePaymentFee: data.latePaymentFee,
-  //   bounceCharges: data.bounceCharges,
-  // });
 
   if (result.count === 0) {
     throw new Error("Loan not ready for approval");
