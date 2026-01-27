@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-    createTechinicalReportController,
-    approveTeechnicalReportController,
+    createTechnicalReportController,
+    approveTechnicalReportController,
     getAllTechnicalReportsController
 } from "./technical.controller.js";
 
@@ -13,13 +13,13 @@ const technicalReportRouter = Router();
 technicalReportRouter.post(
   "/loan-applications/:loanId/technical-reports",
   authMiddleware,
-  createTechinicalReportController,
+  createTechnicalReportController,
 );
 
 technicalReportRouter.post(
     "/technical-reports/:reportId/approve",
     authMiddleware,
-    approveTeechnicalReportController,
+    approveTechnicalReportController,
 )
 
 technicalReportRouter.get(
