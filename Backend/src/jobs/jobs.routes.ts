@@ -15,7 +15,15 @@ jobsRouter.get(
   "/loan-default-cron",
   authMiddleware,
   adminMiddleware,
-  runLoanDefaultCron
+  async (req, res) => {
+    try {
+      const result = await runLoanDefaultCron();
+      res.json(result); // ✅ Send response back to Postman
+    } catch (err) {
+      console.error("Error running loan default cron:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
 );
 
 export default jobsRouter;

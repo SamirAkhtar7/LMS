@@ -24,23 +24,34 @@ export const processOverdueEmisController = async (
 };
 
 export const runLoanDefaultCron = async () => {
-  const activeLoans = await prisma.loanApplication.findMany({
-    where: { status: "active" },
-    select: { id: true },
-  });
-  let processedCount = 0;
-  let failedCount = 0;
-  for (const loan of activeLoans) {
-    try {
-      await checkAndMarkLoanDefault(loan.id);
-      processedCount++;
-    } catch (error) {
-      failedCount++;
-      console.error(`Error processing loan ${loan.id}:`, error);
+  try {
+    // Fetch all active and delinquent loans
+    const activeLoans = await prisma.loanApplication.findMany({
+      where: { status: { in: ["active", "delinquent"] } },
+      select: { id: true },
+    });
+
+    let processedCount = 0;
+    let failedCount = 0;
+
+    // Process each loan sequentially
+    for (const loan of activeLoans) {
+      try {
+        await checkAndMarkLoanDefault(loan.id);
+        processedCount++;
+      } catch (error) {
+        failedCount++;
+        console.error(`Error processing loan ${loan.id}:`, error);
+      }
     }
+
+    console.log(
+      `Loan default cron completed: ${processedCount} processed, ${failedCount} failed`,
+    );
+
+    return { processedCount, failedCount };
+  } catch (err) {
+    console.error("Error fetching loans:", err);
+    return { processedCount: 0, failedCount: 0 };
   }
-  console.log(
-    `Loan default cron completed: ${processedCount} processed, ${failedCount} failed`
-  );
-  return { processedCount, failedCount };
 };

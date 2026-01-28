@@ -1,15 +1,14 @@
 import { prisma } from "../../db/prismaService.js";
 
 export const checkAndMarkLoanDefault = async (loanId: string) => {
-  const data = await prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx) => {
     const loan = await tx.loanApplication.findUnique({
-      where: {
-        id: loanId,
-      },
+      where: { id: loanId },
     });
 
-    if (!loan || loan.status !== "active") {
-      throw new Error("Loan application not found");
+    // ✅ Allow active + delinquent, block only defaulted
+    if (!loan || loan.status === "defaulted") {
+      return { skipped: true };
     }
 
     const overdueEmis = await tx.loanEmiSchedule.findMany({
@@ -17,9 +16,7 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
         loanApplicationId: loanId,
         status: "overdue",
       },
-      orderBy: {
-        dueDate: "asc",
-      },
+      orderBy: { dueDate: "asc" },
     });
 
     if (overdueEmis.length === 0) {
@@ -28,38 +25,34 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
 
     const firstOverdueEmi = overdueEmis[0];
     const dpd = Math.floor(
-      (Date.now() - firstOverdueEmi.dueDate.getTime()) / (1000 * 60 * 60 * 24)
+      (Date.now() - firstOverdueEmi.dueDate.getTime()) / (1000 * 60 * 60 * 24),
     );
 
-    //default condition
+    const isDefault = overdueEmis.length >= 3 || dpd >= 90;
 
-    if (dpd < 90 && overdueEmis.length < 3) {
+    // 🔸 DELINQUENT
+    if (!isDefault) {
       await tx.loanApplication.update({
-        where: {
-          id: loanId,
-        },
-        data: {
-          status: "delinquent",
-          dpd: dpd,
-        },
+        where: { id: loanId },
+        data: { status: "delinquent", dpd },
       });
 
-     return { status: "Delinquent", dpd: dpd };
+      return { status: "Delinquent", dpd };
     }
 
+    // 🔴 DEFAULT
     const outstanding = overdueEmis.reduce(
       (sum, e) =>
         sum + Number(e.principalAmount + e.interestAmount + e.latePaymentFee),
-      0
+      0,
     );
+
     await tx.loanApplication.update({
-      where: {
-        id: loanId,
-      },
+      where: { id: loanId },
       data: {
         status: "defaulted",
         defaultedAt: new Date(),
-        dpd: dpd,
+        dpd,
       },
     });
 
@@ -67,7 +60,7 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
       data: {
         loanApplicationId: loanId,
         customerId: loan.customerId,
-        totalOutstandingAmount: outstanding, // Fixed typo: tolalOutstandingAmount -> totalOutstandingAmount
+        totalOutstandingAmount: outstanding,
         recoveredAmount: 0,
         balanceAmount: outstanding,
         dpd,
@@ -76,10 +69,9 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
         recoveryStatus: "ONGOING",
       },
     });
-    return { status: "Defaulted", dpd: dpd, outstandingAmount: outstanding };
-  });
 
-  return data;
+    return { status: "Defaulted", dpd, outstandingAmount: outstanding };
+  });
 };
 
 

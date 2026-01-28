@@ -6,7 +6,8 @@ import {
   paySettlementController,
   rejectSettlementController,
   getAllSettlementsController,
-  getSettlementByIdController,
+    getSettlementByIdController,
+    getPayableAmountController,
   getSettlementsByLoanIdController,
   getPendingSettlementsController,
   getRejectedSettlementsController,
@@ -54,6 +55,13 @@ loanSettlementRouter.post(
     paySettlementController
 )
 
+
+loanSettlementRouter.get(
+     "/recoveries/:recoveryId/settlement/payable-amount",
+     authMiddleware,
+     getPayableAmountController
+)
+
 loanSettlementRouter.post(
     "/recoveries/:recoveryId/settlement/reject",
     authMiddleware,
@@ -87,12 +95,15 @@ loanSettlementRouter.get(
     authMiddleware,
     getSettlementDashboardController
 );
-loanSettlementRouter.get(
-    "/settlements/:settlementId",
-    authMiddleware,
-    checkPermissionMiddleware("VIEW_SETTLEMENTS"),
-    getSettlementByIdController
-);
+
+
+// loanSettlementRouter.get(
+//     "/settlements/:settlementId",
+//     authMiddleware,
+//     checkPermissionMiddleware("VIEW_SETTLEMENTS"),
+//     getSettlementByIdController
+// );
+
 loanSettlementRouter.get(
     "/loan-applications/:loanId/settlements",
     authMiddleware,

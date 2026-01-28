@@ -10,10 +10,12 @@ import {
   uploadLoanDocumentsService,
   verifyDocumentService,
   rejectDocumentService,
+  uploadDocumentsService,
 } from "./loanApplication.service.js";
 import { prisma } from "../../db/prismaService.js";
 
 import { cleanupFiles } from "../../common/utils/cleanup.js";
+import { success } from "zod";
 
 export const createLoanApplicationController = async (
   req: Request,
@@ -355,5 +357,46 @@ export const rejectLoanController = async (req: any, res: Response) => {
       success: false,
       message: error.message || "Loan rejection failed",
     });
+  }
+};
+
+export const uploadCoApplicantDocumentsController = async (
+  req: Request,
+  res: Response,
+  next: Function,
+) => {
+  try {
+    const { coApplicantId } = req.params;
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const userId = req.user.id;
+
+    if (!req.files || !(req.files instanceof Array)) {
+      return res.status(400).json({
+        success: false,
+        message: "No documents uploaded",
+      });
+    }
+
+    const documents = req.files.map((file: Express.Multer.File) => ({
+      documentType: file.fieldname, // e.g. PAN, AADHAAR, PHOTO
+      documentPath: `/uploads/${file.filename}`, // public path
+      uploadedBy: userId,
+    }));
+
+    const uploadedDocuments = await uploadDocumentsService(
+      "coApplicant",
+      coApplicantId,
+      documents,
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Co-applicant documents uploaded successfully",
+      data: uploadedDocuments,
+    });
+  } catch (error) {
+    next(error);
   }
 };

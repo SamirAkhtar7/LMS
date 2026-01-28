@@ -14,5 +14,7 @@ export const applySettlementSchema = z.object({
 
 export const approveSettlementSchema = z.object({
     settlementAmount: z.number().positive(),
-    approvedBy: z.string().min(3),
+    approvedBy: z.string().min(3).optional(),
 })
+
+

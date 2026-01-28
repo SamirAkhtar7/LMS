@@ -3,6 +3,7 @@ import type {
   EmiStatus as PrismaEmiStatus,
   CommissionType,
 } from "../../../generated/prisma-client/enums.js";
+import * as Enums from "../../../generated/prisma-client/enums.js";
 
 export type InterestType = "FLAT" | "REDUCING";
 export type LoanStatus =
@@ -20,98 +21,6 @@ export type LoanStatus =
   | "defaulted"
   | "application_in_progress";
 
-// export interface LoanProductModel {
-//   id: string;
-//   name: string;
-//   code?: string | null;
-//   description?: string | null;
-//   interestRate?: number | null;
-//   category?: string | null; // LoanCategory
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
-
-// export interface LoanDocumentModel {
-//   id: string;
-//   loanApplicationId: string;
-//   documentType: string;
-//   documentPath: string;
-//   verificationStatus: string; // VerificationStatus
-//   createdAt: Date;
-// }
-
-// export interface LoanApprovalModel {
-//   id: string;
-//   loanApplicationId: string;
-//   approvalLevel: string; // ApprovalLevel
-//   approvedAmount: number;
-//   approvedInterest: number;
-//   remarks?: string | null;
-//   approvedAt: Date;
-// }
-
-// export interface LoanDisbursementModel {
-//   id: string;
-//   loanApplicationId: string;
-//   disbursedAmount: string; // Decimal stored as string at runtime from Prisma
-//   bankAccount: string;
-//   ifscCode: string;
-//   transactionRef: string;
-//   disbursedAt: Date;
-// }
-
-// export interface LoanEmiScheduleModel {
-//   id: string;
-//   loanApplicationId: string;
-//   emiNo: number;
-//   dueDate: Date;
-//   principalAmount: string;
-//   openingBalance: string;
-//   interestAmount: string;
-//   emiAmount: string;
-//   closingBalance: string;
-//   status: string; // EmiStatus
-//   paidDate?: Date | null;
-// }
-
-// export interface LoanPaymentModel {
-//   id: string;
-//   loanApplicationId: string;
-//   emiId?: string | null;
-//   paymentAmount: string;
-//   paymentMode: string; // PaymentMode
-//   transactionRef: string;
-//   paymentDate: Date;
-// }
-
-// export interface LoanNachMandateModel {
-//   id: string;
-//   loanApplicationId: string;
-//   mandateReference: string;
-//   bankName: string;
-//   accountNumber: string;
-//   ifscCode: string;
-//   status: string; // VerificationStatus
-//   registeredAt: Date;
-// }
-
-// export interface LoanChargeModel {
-//   id: string;
-//   loanApplicationId: string;
-//   chargeType: string; // ChargeType
-//   chargeAmount: string;
-//   chargeDate: Date;
-//   status: string;
-// }
-
-// export interface LoanStatusHistoryModel {
-//   id: string;
-//   loanApplicationId: string;
-//   oldStatus: LoanStatus;
-//   newStatus: LoanStatus;
-//   remarks?: string | null;
-//   changedAt: Date;
-// }
 
 export type Title = "MR" | "MRS" | "MS" | "DR" | "PROF";
 export type Gender = "MALE" | "FEMALE" | "OTHER";
@@ -204,7 +113,32 @@ export interface CreateLoanApplication {
 
   approvedAmount?: number;
   status?: LoanStatus; // optional, default: application_in_progress
-}
+
+  documents?: {
+    documentType: string;
+    documentPath: string;
+  }[];
+
+  coApplicants?: {
+    firstName: string;
+    lastName?: string;
+    relation: Enums.CoApplicantRelation;
+    contactNumber?: string;
+    email?: string;
+    dob?: Date;
+    aadhaarNumber?: string;
+    panNumber?: string;
+    employmentType?: Enums.EmploymentType;
+    monthlyIncome?: number;
+
+    documents?: {
+      documentType: string;
+      documentPath: string;
+    }[];
+  }[];
+};
+
+
 
 export interface EmiScheduleInput {
   loanId: string;

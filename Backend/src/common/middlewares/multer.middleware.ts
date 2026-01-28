@@ -19,21 +19,27 @@ const storage = multer.diskStorage({
   },
 });
 
+const fileFilter = function (
+  req: any,
+  file: Express.Multer.File,
+  cb: multer.FileFilterCallback,
+) {
+  const allowedTypes = /jpeg|jpg|webp|avif|png/;
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase(),
+  );
+  const mimetype = allowedTypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  }
+  cb(new Error("Only .jpeg, .jpg, .webp, .avif, .png files are allowed."));
+};
+
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
-  fileFilter: function (req, file, cb) {
-    const allowedTypes = /jpeg|jpg|webp|avif|png/;
-    const extname = allowedTypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-    const mimetype = allowedTypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    cb(new Error("Only .jpeg, .jpg, .webp, .avif, .png files are allowed."));
-  },
+  fileFilter,
 });
 
 export default upload;

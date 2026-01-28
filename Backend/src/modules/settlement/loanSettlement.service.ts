@@ -1,5 +1,5 @@
 import { prisma } from "../../db/prismaService.js";
-  import {
+import {
   PaymentMode,
   PaymentMode as PrismaPaymentMode,
   recovery_stage,
@@ -171,20 +171,24 @@ export const paySettlementService = async (
         amount: amount,
         paymentDate: new Date(),
         paymentMode: paymentMode,
-        referenceNo: referenceNo,
+        referenceNo: referenceNo?.toString() || null,
       },
     });
+    const newRecovered = (recovery.recoveredAmount || 0) + amount;
+    const newBalance = (recovery.balanceAmount || 0) - amount;
+
     await tx.loanRecovery.update({
       where: {
         id: recoveryId,
       },
       data: {
-        recoveryAmount: recovery.recoveredAmount + amount,
-        balanceAmount: 0,
+        recoveredAmount: newRecovered,
+        balanceAmount: newBalance,
         recoveryStatus: recovery_status.SETTLED as any,
         recoveryStage: recovery_stage.SETTLEMENT as any,
       },
     });
+
     await tx.loanApplication.update({
       where: {
         id: recovery.loanApplicationId,
@@ -193,8 +197,11 @@ export const paySettlementService = async (
         status: "closed",
       },
     });
+
     return {
       message: "Settlement processed successfully",
+      totalOutstandingAmount: newBalance,
+      recoveredAmount: newRecovered,
     };
   });
 };
@@ -210,6 +217,13 @@ export const rejectSettlementService = async (
   });
   if (!recovery) {
     throw new Error("Recovery record not found");
+  }
+  // if settlement already approved (approved amount set or already settled), reject
+  if (
+    recovery.settlementAmount ||
+    recovery.recoveryStatus === (recovery_status.SETTLED as any)
+  ) {
+    throw new Error("Loan settlement already approved");
   }
   if (recovery.recoveryStatus !== "IN_PROGRESS") {
     throw new Error("Settlement is not in progress for this recovery");
@@ -339,4 +353,19 @@ export const getSettlementDashboardService = async () => {
     },
   });
   return settlements;
+};
+
+export const getPayableAmountService = async (recoveryId: string) => {
+  const recovery = await prisma.loanRecovery.findUnique({
+    where: {
+      id: recoveryId,
+    },
+  });
+  if (!recovery) {
+    throw new Error("Recovery record not found");
+  }
+  return {
+    balanceAmount: recovery.balanceAmount,
+    settlementAmount: recovery.settlementAmount || recovery.balanceAmount,
+  };
 };

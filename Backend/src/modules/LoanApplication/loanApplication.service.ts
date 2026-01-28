@@ -14,6 +14,12 @@ import {
 } from "../../common/utils/pagination.js";
 import { buildLoanApplicationSearch } from "../../common/utils/search.js";
 
+interface CoApplicantDocumentUpload {
+  coApplicants: { id: string; documentType: string }[];
+  files: Express.Multer.File[];
+  uploadedBy: string;
+}
+
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
   loggedInUser: { id: string; role: Enums.Role },
@@ -131,6 +137,8 @@ export async function createLoanApplicationService(
         where: { id: loanApplication.id },
         data: { kycId: primaryKyc.id },
       });
+
+      /* -------- 7. primary Documents  -------- */
 
       if (parsed.coApplicants?.length) {
         for (const co of parsed.coApplicants) {
@@ -387,7 +395,11 @@ export const getLoanApplicationByIdService = async (id: string) => {
             recoveryPayments: true,
           },
         },
-        coapplicants: true,
+        coapplicants: {
+          include: {
+            documents: true,
+          },
+        }
       },
     });
     return loanApplication;
@@ -533,3 +545,57 @@ export const rejectLoanService = async (
     },
   });
 };
+
+
+
+
+export async function uploadDocumentsService(
+  target: "loan" | "coApplicant",
+  targetId: string,
+  documents: {
+    documentType: string;
+    documentPath: string;
+    uploadedBy: string;
+  }[],
+) {
+  return prisma.$transaction(async (tx) => {
+    let kycId: string | null = null;
+
+    if (target === "loan") {
+      const loan = await tx.loanApplication.findUnique({
+        where: { id: targetId },
+        select: { kyc: { select: { id: true } } },
+      });
+      if (!loan || !loan.kyc) throw new Error("Loan or KYC not found");
+      kycId = loan.kyc.id;
+    } else if (target === "coApplicant") {
+      const co = await tx.coApplicant.findUnique({
+        where: { id: targetId },
+        select: { kyc: { select: { id: true } } },
+      });
+      if (!co || !co.kyc) throw new Error("CoApplicant or KYC not found");
+      kycId = co.kyc.id;
+    }
+
+    await tx.document.createMany({
+      data: documents.map((doc) => ({
+        documentType: doc.documentType,
+        documentPath: doc.documentPath,
+        uploadedBy: doc.uploadedBy,
+        kycId,
+        loanApplicationId: target === "loan" ? targetId : undefined,
+        coApplicantId: target === "coApplicant" ? targetId : undefined,
+      })),
+      skipDuplicates: true,
+    });
+
+    // Return all documents for this target
+    return tx.document.findMany({
+      where:
+        target === "loan"
+          ? { loanApplicationId: targetId }
+          : { coApplicantId: targetId },
+      orderBy: { createdAt: "asc" },
+    });
+  });
+}

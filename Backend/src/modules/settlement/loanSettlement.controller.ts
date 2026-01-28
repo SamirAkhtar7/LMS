@@ -14,6 +14,8 @@ import {
 } from "./loanSettlement.service.js";
 
 
+import { getPayableAmountService } from "./loanSettlement.service.js";
+
 // import { processLoanSettlementService, settleLoanService } from "./loanSettlement.service.js";
 
 
@@ -144,6 +146,29 @@ export const rejectSettlementController = async (req: Request, res: Response) =>
             error: error.message,
         });
     }
+}
+
+
+export const getPayableAmountController = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const { recoveryId } = req.params;
+        const result = await getPayableAmountService(recoveryId);
+        res.status(200).json({
+            success: true,
+            message: "Payable amount retrieved successfully",
+            data: result,
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to retrieve payable amount",
+            error: error.message,
+        });
+    }
+
 }
 
 export const getAllSettlementsController = async (req: Request, res: Response) => {
