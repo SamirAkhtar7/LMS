@@ -13,6 +13,9 @@ import {
   buildPaginationMeta,
 } from "../../common/utils/pagination.js";
 import { buildLoanApplicationSearch } from "../../common/utils/search.js";
+ 
+import path from "path";
+import fs from "fs";
 
 interface CoApplicantDocumentUpload {
   coApplicants: { id: string; documentType: string }[];
@@ -213,6 +216,25 @@ export async function uploadLoanDocumentsService(
     if (!loanApplication.kyc) {
       throw new Error("KYC record not found for loan application");
     }
+    /*   check already uploaded document types */
+    const existingDocs = await tx.document.findMany({
+      where: { loanApplicationId },
+      select: { documentType: true },
+    });
+    const existingTypes = new Set(existingDocs.map((d) => d.documentType));
+
+    const duplicateDocs = documents.map((d) => d.documentType).filter((type) => existingTypes.has(type));
+
+    if (duplicateDocs.length > 0) {
+      const err: any = new Error(
+        `Document(s) already uploaded: ${duplicateDocs.join(", ")}`,
+      );
+      err.statusCode = 409;
+      err.duplicateDocs = duplicateDocs;
+      throw err;
+    }
+      
+
 
     /* 2️⃣ Bulk insert documents (safe) */
     await tx.document.createMany({
@@ -343,6 +365,58 @@ export async function rejectDocumentService(
   });
   return document;
 }
+
+export const reuploadLoanDocumentService = async(
+  loanApplicationId: string,
+  documentType: string,
+  file: {
+    filename: string; 
+    path: string;
+    uploadedBy: string;
+  },
+) => {
+  return prisma.$transaction(async (tx) => {
+    /* 1️⃣ Find existing document */
+    const existingDoc = await tx.document.findFirst({
+      where: {
+        loanApplicationId,
+        documentType
+      }
+    })
+
+
+    if (!existingDoc) {
+      const err: any = new Error(`Document ${documentType} not found. Upload first.`
+      );
+      err.statusCode = 404;
+      throw err;
+    }
+    /* 2️⃣ Delete old file from disk */
+    if (existingDoc.documentPath) {
+      const oldFilePath = path.join(process.cwd(),
+        "public",
+        existingDoc.documentPath
+      );
+
+      if(fs.existsSync(oldFilePath)) {
+        fs.unlinkSync(oldFilePath);
+      }
+    }
+    /* 3️⃣ Update document */
+    return tx.document.update({
+      where: { id: existingDoc.id },
+      data: {
+        documentPath: `/uploads/${file.filename}`,
+        uploadedBy: file.uploadedBy,
+        verificationStatus: "pending",
+        rejectionReason: null,
+        verified: false,
+        verifiedBy: null,
+        verifiedAt: null,
+      },
+    })
+  })
+  }
 
 export const getAllLoanApplicationsService = async (params: {
   page?: number;
@@ -549,53 +623,3 @@ export const rejectLoanService = async (
 
 
 
-export async function uploadDocumentsService(
-  target: "loan" | "coApplicant",
-  targetId: string,
-  documents: {
-    documentType: string;
-    documentPath: string;
-    uploadedBy: string;
-  }[],
-) {
-  return prisma.$transaction(async (tx) => {
-    let kycId: string | null = null;
-
-    if (target === "loan") {
-      const loan = await tx.loanApplication.findUnique({
-        where: { id: targetId },
-        select: { kyc: { select: { id: true } } },
-      });
-      if (!loan || !loan.kyc) throw new Error("Loan or KYC not found");
-      kycId = loan.kyc.id;
-    } else if (target === "coApplicant") {
-      const co = await tx.coApplicant.findUnique({
-        where: { id: targetId },
-        select: { kyc: { select: { id: true } } },
-      });
-      if (!co || !co.kyc) throw new Error("CoApplicant or KYC not found");
-      kycId = co.kyc.id;
-    }
-
-    await tx.document.createMany({
-      data: documents.map((doc) => ({
-        documentType: doc.documentType,
-        documentPath: doc.documentPath,
-        uploadedBy: doc.uploadedBy,
-        kycId,
-        loanApplicationId: target === "loan" ? targetId : undefined,
-        coApplicantId: target === "coApplicant" ? targetId : undefined,
-      })),
-      skipDuplicates: true,
-    });
-
-    // Return all documents for this target
-    return tx.document.findMany({
-      where:
-        target === "loan"
-          ? { loanApplicationId: targetId }
-          : { coApplicantId: targetId },
-      orderBy: { createdAt: "asc" },
-    });
-  });
-}

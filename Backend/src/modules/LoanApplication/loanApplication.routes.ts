@@ -11,7 +11,8 @@ import {
   uploadLoanDocumentsController,
   verifyDocumentController,
   rejectDocumentController,
-  uploadCoApplicantDocumentsController,
+  reuploadLoanDocumentController,
+
 } from "./loanApplication.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {
@@ -24,6 +25,7 @@ import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import upload from "../../common/middlewares/multer.middleware.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 import { markLoanDefaultController } from "../loanDefault/loanDefault.controller.js";
+
 // Define your loan application routes here
 loanApplicationRouter.post(
   "/",
@@ -113,12 +115,11 @@ loanApplicationRouter.post(
 //TODO : Add routes for co-applicant document uploads LIST AND SIZE
 
 loanApplicationRouter.post(
-  "/co-applicant/:coApplicantId/documents",
+  "/documents/:loanApplicationId/:documentType/reupload",
   authMiddleware,
-  
   checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
-  upload.any(),
-  uploadCoApplicantDocumentsController,
+  upload.single("document"),
+  reuploadLoanDocumentController,
 );
 
 export default loanApplicationRouter;

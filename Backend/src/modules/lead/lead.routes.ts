@@ -32,14 +32,14 @@ leadRouter.get(
 leadRouter.get(
   "/:id",
   validate(leadIdParamSchema, "params"),
-  // checkPermissionMiddleware("View_Lead_Details"),
+   checkPermissionMiddleware("View_Lead_Details"),
   getLeadByIdController
 );
 
 leadRouter.patch(
   "/update-status/:id",
   validate(updateLeadStatusSchema),
-  // checkPermissionMiddleware("Update_Lead_Status"),
+   checkPermissionMiddleware("Update_Lead_Status"),
   updateLeadStatusController
 );
 

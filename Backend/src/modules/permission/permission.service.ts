@@ -84,3 +84,14 @@ export const getUserPermissionsService = async (userId: string) => {
     allowed: up.allowed,
   }));
 };
+
+
+export const getAllPermissionsCodeAndNameService = async () => {
+  const permissions = await prisma.permission.findMany({
+    select: {
+      code: true,
+      name: true,
+    },
+  });
+  return permissions;
+}

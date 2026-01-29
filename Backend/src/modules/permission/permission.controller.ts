@@ -1,8 +1,11 @@
 
+import { get } from "node:http";
 import {
     assignPermissionsService,
     createPermissionsService,
     getUserPermissionsService,
+ getAllPermissionsCodeAndNameService
+
 } from "./permission.service.js";
 import e, { Response, Request } from "express";
 export const assignPermissionsController = async (req: Request, res: Response) => {
@@ -77,4 +80,31 @@ export const getUserPermissionsController = async (req: Request, res: Response) 
         res.status(500).json({ success: false, message: error.message || "Failed to fetch user permissions" });
     }
 };
-        
+    
+
+export const getAllPermissionsNameAndCodeController = async (req: Request, res: Response) => {
+    try {
+
+        const permissions = await getAllPermissionsCodeAndNameService();
+
+        if (permissions.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No permissions found",
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: permissions,
+        });
+
+    }
+    catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch permissions",
+            error:  error.message || "INTERNAL_SERVER_ERROR",
+        });
+    }
+};
+

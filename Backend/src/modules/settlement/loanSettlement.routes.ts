@@ -18,14 +18,16 @@ import { validate } from "../../common/middlewares/zod.middleware.js";
 import { loanSettlementSchema } from "./loanSettlement.schema.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 import { approveSettlementSchema } from "./loanSettlement.schema.js";
-`   `
+import { check } from "zod";
+
 
 const loanSettlementRouter = Router();
 
 
 loanSettlementRouter.post(
   "/recoveries/:recoveryId/settle",
-  authMiddleware,
+    authMiddleware,
+  checkPermissionMiddleware("SETTLE_LOAN"),
   validate(loanSettlementSchema, "body"),
   settleLoanController
 );
@@ -35,6 +37,7 @@ loanSettlementRouter.post(
 loanSettlementRouter.post(
     "/recoveries/:recoveryId/apply-settlement",
     authMiddleware,
+        checkPermissionMiddleware("APPLY_SETTLEMENT"),
     applySettlementController
 )
 
@@ -52,19 +55,22 @@ loanSettlementRouter.post(
 loanSettlementRouter.post(
     "/recoveries/:recoveryId/settlement/pay",
     authMiddleware,
+        checkPermissionMiddleware("PAY_SETTLEMENT"),
     paySettlementController
 )
 
 
 loanSettlementRouter.get(
      "/recoveries/:recoveryId/settlement/payable-amount",
-     authMiddleware,
+    authMiddleware,
+        checkPermissionMiddleware("VIEW_SETTLEMENT_PAYABLE_AMOUNT"),
      getPayableAmountController
 )
 
 loanSettlementRouter.post(
     "/recoveries/:recoveryId/settlement/reject",
     authMiddleware,
+        checkPermissionMiddleware("REJECT_SETTLEMENT"),
     rejectSettlementController
 )
 
@@ -73,6 +79,7 @@ loanSettlementRouter.get(
     "/settlements",
     authMiddleware,
     checkPermissionMiddleware("VIEW_SETTLEMENTS"),
+
     getAllSettlementsController
 );
 
@@ -93,6 +100,7 @@ loanSettlementRouter.get(
 loanSettlementRouter.get(
     "/settlements/dashboard",
     authMiddleware,
+    checkPermissionMiddleware("VIEW_SETTLEMENT_DASHBOARD"),
     getSettlementDashboardController
 );
 

@@ -17,6 +17,7 @@ import eligibilityRouter from "./modules/loanRuleEngine/ruleEngine.routes.js";
 import creditReportRouter from "./modules/creditReport/creditReport.router.js";
 import technicalReportRouter from "./modules/reports/technicalReport/technical.routes.js";
 import legalReportRouter from "./modules/reports/legalReport/legal.routes.js";
+import coApplicantRouter from "./modules/coApplicants/coApplicant.routes.js";
 
 const router = Router();
 
@@ -41,5 +42,6 @@ router.use("/loan-default", loanDefaultRouter);
 router.use("/credit", creditReportRouter);
 router.use("/reports/technical", technicalReportRouter);
 router.use("/reports/legal", legalReportRouter);
+router.use("/co-applicant", coApplicantRouter);
 
 export default router;

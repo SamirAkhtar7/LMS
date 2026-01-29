@@ -10,7 +10,8 @@ import {
   uploadLoanDocumentsService,
   verifyDocumentService,
   rejectDocumentService,
-  uploadDocumentsService,
+  reuploadLoanDocumentService,
+ 
 } from "./loanApplication.service.js";
 import { prisma } from "../../db/prismaService.js";
 
@@ -359,46 +360,43 @@ export const rejectLoanController = async (req: any, res: Response) => {
   }
 };
 
-export const uploadCoApplicantDocumentsController = async (
+
+
+export const reuploadLoanDocumentController = async(
   req: Request,
   res: Response,
   next: Function,
 ) => {
   try {
-    const { coApplicantId } = req.params;
+    const { loanApplicationId, documentType } = req.params;
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const userId = req.user.id;
-
-    if (!req.files || !(req.files instanceof Array)) {
+    if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: "No documents uploaded",
+        message: "No document uploaded",
       });
     }
-
-    const documents = req.files.map((file: Express.Multer.File) => ({
-      documentType: file.fieldname, // e.g. PAN, AADHAAR, PHOTO
-      documentPath: `/uploads/${file.filename}`, // public path
-      uploadedBy: userId,
-    }));
-
-    const uploadedDocuments = await uploadDocumentsService(
-      "coApplicant",
-      coApplicantId,
-      documents,
+    const updatedDoc = await reuploadLoanDocumentService(
+      loanApplicationId,
+      documentType,
+      {
+        filename: req.file.filename,
+        path: req.file.path,
+        uploadedBy: req.user.id,
+      },
     );
-
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: "Co-applicant documents uploaded successfully",
-      data: uploadedDocuments,
+      message: "Document re-uploaded successfully",
+      data: updatedDoc,
     });
-  } catch (error) {
-    if (req.files && req.files instanceof Array) {
-      cleanupFiles(req.files);
+  }
+  catch (error: any) {
+    if (req.file) {
+      cleanupFiles([req.file]);
     }
     next(error);
   }
-};
+}

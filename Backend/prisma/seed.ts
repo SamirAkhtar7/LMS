@@ -1,8 +1,23 @@
 import { hashPassword } from "../src/common/utils/utils.ts";
 import { prisma } from "../src/db/prismaService.ts";
+import { PERMISSIONS } from "../src/common/constants/permission.ts";
+import { skip } from "node:test";
 
 async function main(): Promise<void> {
   const now: Date = new Date();
+
+  const permissions = await Promise.all(
+    PERMISSIONS.map(async (code) => {
+      return prisma.permission.upsert({
+        where: { code },
+        update: {},
+        create: {
+          code,
+          name: code.replace(/_/g, " "),
+        },
+      });
+    }),
+  );
 
   let password: string = "Admin@123";
   password = await hashPassword(password);

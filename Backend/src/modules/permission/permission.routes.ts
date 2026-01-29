@@ -5,6 +5,7 @@ import {
   assignPermissionsController,
   getUserPermissionsController,
   createPermissionsController,
+  getAllPermissionsNameAndCodeController
 } from "./permission.controller.js";
 
 import { validate } from "../../common/middlewares/zod.middleware.js";
@@ -37,4 +38,12 @@ permissionRouter.get(
   checkPermissionMiddleware("View_User_Permissions"),
   getUserPermissionsController
 );
+
+permissionRouter.get(
+    "/all-permissions",
+    authMiddleware,
+    checkPermissionMiddleware("View_All_Permissions"),
+    getAllPermissionsNameAndCodeController
+  )
+
 export default permissionRouter;
