@@ -13,7 +13,7 @@ import {
   buildPaginationMeta,
 } from "../../common/utils/pagination.js";
 import { buildLoanApplicationSearch } from "../../common/utils/search.js";
- 
+
 import path from "path";
 import fs from "fs";
 
@@ -223,7 +223,9 @@ export async function uploadLoanDocumentsService(
     });
     const existingTypes = new Set(existingDocs.map((d) => d.documentType));
 
-    const duplicateDocs = documents.map((d) => d.documentType).filter((type) => existingTypes.has(type));
+    const duplicateDocs = documents
+      .map((d) => d.documentType)
+      .filter((type) => existingTypes.has(type));
 
     if (duplicateDocs.length > 0) {
       const err: any = new Error(
@@ -233,8 +235,6 @@ export async function uploadLoanDocumentsService(
       err.duplicateDocs = duplicateDocs;
       throw err;
     }
-      
-
 
     /* 2️⃣ Bulk insert documents (safe) */
     await tx.document.createMany({
@@ -366,11 +366,11 @@ export async function rejectDocumentService(
   return document;
 }
 
-export const reuploadLoanDocumentService = async(
+export const reuploadLoanDocumentService = async (
   loanApplicationId: string,
   documentType: string,
   file: {
-    filename: string; 
+    filename: string;
     path: string;
     uploadedBy: string;
   },
@@ -380,26 +380,32 @@ export const reuploadLoanDocumentService = async(
     const existingDoc = await tx.document.findFirst({
       where: {
         loanApplicationId,
-        documentType
-      }
-    })
-
+        documentType,
+      },
+    });
 
     if (!existingDoc) {
-      const err: any = new Error(`Document ${documentType} not found. Upload first.`
+      const err: any = new Error(
+        `Document ${documentType} not found. Upload first.`,
       );
       err.statusCode = 404;
       throw err;
     }
     /* 2️⃣ Delete old file from disk */
     if (existingDoc.documentPath) {
-      const oldFilePath = path.join(process.cwd(),
+      const oldFilePath = path.join(
+        process.cwd(),
         "public",
-        existingDoc.documentPath
+        existingDoc.documentPath,
       );
 
-      if(fs.existsSync(oldFilePath)) {
+      try {
         fs.unlinkSync(oldFilePath);
+      } catch (err: any) {
+        if (err.code !== "ENOENT") {
+          // Log unexpected errors but don't fail the transaction
+          console.error(`Failed to delete old file: ${oldFilePath}`, err);
+        }
       }
     }
     /* 3️⃣ Update document */
@@ -414,9 +420,9 @@ export const reuploadLoanDocumentService = async(
         verifiedBy: null,
         verifiedAt: null,
       },
-    })
-  })
-  }
+    });
+  });
+};
 
 export const getAllLoanApplicationsService = async (params: {
   page?: number;
@@ -473,7 +479,7 @@ export const getLoanApplicationByIdService = async (id: string) => {
           include: {
             documents: true,
           },
-        }
+        },
       },
     });
     return loanApplication;
@@ -619,7 +625,3 @@ export const rejectLoanService = async (
     },
   });
 };
-
-
-
-

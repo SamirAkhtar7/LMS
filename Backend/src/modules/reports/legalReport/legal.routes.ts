@@ -26,6 +26,7 @@ legalReportRouter.post(
     authMiddleware,
   validate(approveLegalReportSchema),
   checkPermissionMiddleware("APPROVE_LEGAL_REPORT"),
+   validate(approveLegalReportSchema),
   approvelLegalReportController,
 ); 
 

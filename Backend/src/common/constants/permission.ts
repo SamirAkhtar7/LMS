@@ -38,30 +38,30 @@ export const PERMISSIONS = [
   "APPLY_MORATORIUM",
 
   // Leads
-  "View_All_Leads",
-  "View_Lead_Details",
-  "Update_Lead_Status",
-  "Assign_Lead",
-  "Convert_Lead_To_Loan",
+  "VIEW_ALL_LEADS",
+  "VIEW_LEAD_DETAILS",
+  "UPDATE_LEAD_STATUS",
+  "ASSIGN_LEAD",
+  "CONVERT_LEAD_TO_LOAN",
 
   // Employees
-  "Create_Employee",
-  "View_All_Employees",
-  "View_Employee_Details",
-  "Update_Employee",
+  "CREATE_EMPLOYEE",
+  "VIEW_ALL_EMPLOYEES",
+  "VIEW_EMPLOYEE_DETAILS",
+  "UPDATE_EMPLOYEE",
 
   // Partners
-  "Create_Partner",
-  "View_All_Partners",
-  "View_Partner_Details",
-  "Update_Partner",
+  "CREATE_PARTNER",
+  "VIEW_ALL_PARTNERS",
+  "VIEW_PARTNER_DETAILS",
+  "UPDATE_PARTNER",
 
   // Loan Types
-  "create_loan_type",
-  "view_loan_types",
-  "view_loan_type",
-  "update_loan_type",
-  "delete_loan_type",
+  "CREATE_LOAN_TYPE",
+  "VIEW_LOAN_TYPES",
+  "VIEW_LOAN_TYPE",
+  "UPDATE_LOAN_TYPE",
+  "DELETE_LOAN_TYPE",
 
   // Legal & Technical
   "CREATE_LEGAL_REPORT",
@@ -82,8 +82,8 @@ export const PERMISSIONS = [
   "VIEW_SETTLEMENT_DASHBOARD",
 
   // Permissions
-  "Create_Permissions",
-  "Assign_Permissions",
-  "View_User_Permissions",
-  "View_All_Permissions",
+  "CREATE_PERMISSIONS",
+  "ASSIGN_PERMISSIONS",
+  "VIEW_USER_PERMISSIONS",
+  "VIEW_ALL_PERMISSIONS",
 ] as const;

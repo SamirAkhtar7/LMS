@@ -18,7 +18,6 @@ import { validate } from "../../common/middlewares/zod.middleware.js";
 import { loanSettlementSchema } from "./loanSettlement.schema.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 import { approveSettlementSchema } from "./loanSettlement.schema.js";
-import { check } from "zod";
 
 
 const loanSettlementRouter = Router();
