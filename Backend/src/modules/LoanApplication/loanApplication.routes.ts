@@ -24,7 +24,6 @@ import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import upload from "../../common/middlewares/multer.middleware.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 import { markLoanDefaultController } from "../loanDefault/loanDefault.controller.js";
-import { uploadDocumentsService } from "./loanApplication.service.js";
 // Define your loan application routes here
 loanApplicationRouter.post(
   "/",
@@ -111,16 +110,15 @@ loanApplicationRouter.post(
   markLoanDefaultController,
 );
 
-
 //TODO : Add routes for co-applicant document uploads LIST AND SIZE
 
 loanApplicationRouter.post(
   "/co-applicant/:coApplicantId/documents",
   authMiddleware,
+  
   checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
   upload.any(),
   uploadCoApplicantDocumentsController,
 );
-
 
 export default loanApplicationRouter;

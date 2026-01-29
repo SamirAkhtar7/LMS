@@ -21,7 +21,6 @@ export type LoanStatus =
   | "defaulted"
   | "application_in_progress";
 
-
 export type Title = "MR" | "MRS" | "MS" | "DR" | "PROF";
 export type Gender = "MALE" | "FEMALE" | "OTHER";
 export type EmploymentType = PrismaEmploymentType;
@@ -125,7 +124,7 @@ export interface CreateLoanApplication {
     relation: Enums.CoApplicantRelation;
     contactNumber?: string;
     email?: string;
-    dob?: Date;
+    dob?: Date | string;
     aadhaarNumber?: string;
     panNumber?: string;
     employmentType?: Enums.EmploymentType;
@@ -136,9 +135,7 @@ export interface CreateLoanApplication {
       documentPath: string;
     }[];
   }[];
-};
-
-
+}
 
 export interface EmiScheduleInput {
   loanId: string;

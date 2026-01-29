@@ -16,7 +16,6 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://d9vxjqxn-5173.inc1.devtunnels.ms/",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // if sending cookies

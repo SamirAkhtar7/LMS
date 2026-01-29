@@ -43,10 +43,12 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
     // 🔴 DEFAULT
     const outstanding = overdueEmis.reduce(
       (sum, e) =>
-        sum + Number(e.principalAmount + e.interestAmount + e.latePaymentFee),
+        sum +
+        Number(e.principalAmount) +
+        Number(e.interestAmount) +
+        Number(e.latePaymentFee),
       0,
     );
-
     await tx.loanApplication.update({
       where: { id: loanId },
       data: {
@@ -74,47 +76,39 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
   });
 };
 
-
-
 export const getAllDefaultedLoansService = async () => {
-
-    const loans = await prisma.loanApplication.findMany({
-        where: { status: "defaulted" },
-        orderBy: {
-            defaultedAt: "desc"
-        }, 
+  const loans = await prisma.loanApplication.findMany({
+    where: { status: "defaulted" },
+    orderBy: {
+      defaultedAt: "desc",
+    },
+    include: {
+      customer: true,
+      loanRecoveries: {
         include: {
-            customer: true,
-            loanRecoveries: {
-                include: {
-                    recoveryPayments: true
-                }
-            }
-        }
-    });
+          recoveryPayments: true,
+        },
+      },
+    },
+  });
 
-    return loans;
-
-
-}
-
-
+  return loans;
+};
 
 export const getDefaultLoanByIdService = async (loanId: string) => {
-    const loan = await prisma.loanApplication.findUnique({
-        where: { id: loanId },
+  const loan = await prisma.loanApplication.findUnique({
+    where: { id: loanId },
+    include: {
+      customer: true,
+      loanRecoveries: {
         include: {
-            customer: true,
-            loanRecoveries: {
-                include: {
-                    recoveryPayments: true
-                }
-            }
-        }
-    })
-    if (!loan || loan.status !== "defaulted") {
-        throw new Error("Defaulted loan not found");
-    }
-    return loan;
-}
-
+          recoveryPayments: true,
+        },
+      },
+    },
+  });
+  if (!loan || loan.status !== "defaulted") {
+    throw new Error("Defaulted loan not found");
+  }
+  return loan;
+};

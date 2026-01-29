@@ -6,7 +6,7 @@ import { prisma } from "../db/prismaService.js";
 
 export const processOverdueEmisController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     const count = await processOverdueEmis();
@@ -52,6 +52,10 @@ export const runLoanDefaultCron = async () => {
     return { processedCount, failedCount };
   } catch (err) {
     console.error("Error fetching loans:", err);
-    return { processedCount: 0, failedCount: 0 };
+    return {
+      processedCount: 0,
+      failedCount: 0,
+      error: err instanceof Error ? err.message : "Failed to fetch loans",
+    };
   }
 };
