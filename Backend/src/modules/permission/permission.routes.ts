@@ -21,13 +21,13 @@ import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 
 permissionRouter.post("/create-permissions",
   authMiddleware,
-  checkPermissionMiddleware("Create_Permissions"),
+  checkPermissionMiddleware("CREATE_PERMISSIONS"),
   createPermissionsController);
 permissionRouter.post(
   "/assign",
   authMiddleware,
   validate(assignPermissionsSchema),
-  checkPermissionMiddleware("Assign_Permissions"),
+  checkPermissionMiddleware("ASSIGN_PERMISSIONS"),
     assignPermissionsController
 );
 
@@ -35,14 +35,14 @@ permissionRouter.get(
   "/user/:userId",
   authMiddleware,
   validate(userIdParamSchema, "params"),
-  checkPermissionMiddleware("View_User_Permissions"),
+  checkPermissionMiddleware("VIEW_USER_PERMISSIONS"),
   getUserPermissionsController
 );
 
 permissionRouter.get(
     "/all-permissions",
     authMiddleware,
-    checkPermissionMiddleware("View_All_Permissions"),
+    checkPermissionMiddleware("VIEW_ALL_PERMISSIONS"),
     getAllPermissionsNameAndCodeController
   )
 

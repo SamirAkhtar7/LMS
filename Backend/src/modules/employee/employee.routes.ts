@@ -18,22 +18,22 @@ employeeRouter.use(authMiddleware);
 employeeRouter.post(
   "/",
 validate(createEmployeeSchema),
-checkPermissionMiddleware("Create_Employee"),
+checkPermissionMiddleware("CREATE_EMPLOYEE"),
   createEmployeeController
 );
 employeeRouter.get("/all",
-  checkPermissionMiddleware("View_All_Employees"),
+  checkPermissionMiddleware("VIEW_ALL_EMPLOYEES"),
   getAllEmployeesController);
 employeeRouter.patch(
   "/:id",
   validate(employeeIdParamSchema, "params"),
   validate(updateEmployeeSchema),
-  checkPermissionMiddleware("Update_Employee"),
+  checkPermissionMiddleware("UPDATE_EMPLOYEE"),
   updateEmployeeController
 );
 employeeRouter.get("/:id",
   validate(employeeIdParamSchema, "params"),
-  checkPermissionMiddleware("View_Employee_Details"),
+  checkPermissionMiddleware("VIEW_EMPLOYEE_DETAILS"),
   getEmployeeByIdController);
 
 export default employeeRouter;

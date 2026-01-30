@@ -24,20 +24,20 @@ partnerRouter.post(
   "/",
   authMiddleware,
   validate(createPartnerSchema),
-  checkPermissionMiddleware("Create_Partner"),
+  checkPermissionMiddleware("CREATE_PARTNER"),
   createPartnerController
 );
 partnerRouter.get(
   "/all",
   authMiddleware,
-  checkPermissionMiddleware("View_All_Partners"),
+  checkPermissionMiddleware("VIEW_ALL_PARTNERS"),
   getAllPartnersController
 );
 partnerRouter.get(
   "/:id",
   authMiddleware,
   validate(partnerIdParamSchema, "params"),
-  checkPermissionMiddleware("View_Partner_Details"),
+  checkPermissionMiddleware("VIEW_PARTNER_DETAILS"),
   getPartnerByIdController
 );
 partnerRouter.patch(
@@ -45,7 +45,7 @@ partnerRouter.patch(
   authMiddleware,
   validate(partnerIdParamSchema, "params"),
   validate(updatePartnerSchema),
-  checkPermissionMiddleware("Update_Partner"),
+  checkPermissionMiddleware("UPDATE_PARTNER"),
   updatePartnerController
 );
 

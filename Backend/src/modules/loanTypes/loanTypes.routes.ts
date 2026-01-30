@@ -12,26 +12,26 @@ LoanTypesRouter.use(authMiddleware);
 LoanTypesRouter.post(
   "/",
   validate(createLoanTypeSchema),
-  checkPermissionMiddleware("create_loan_type")
+  checkPermissionMiddleware("CREATE_LOAN_TYPE")
   , createLoanTypeController);
 
 LoanTypesRouter.get("/",
-  checkPermissionMiddleware("view_loan_types")
+  checkPermissionMiddleware("VIEW_LOAN_TYPES")
   , getAllLoanTypesController);
 
 
   LoanTypesRouter.get("/:id",
-  checkPermissionMiddleware("view_loan_type")
+  checkPermissionMiddleware("VIEW_LOAN_TYPE")
   , getLoanTypeByIdController);
 
 LoanTypesRouter.put("/:id",
 
-  checkPermissionMiddleware("update_loan_type")
+  checkPermissionMiddleware("UPDATE_LOAN_TYPE")
   , updateLoanTypeController);
 
 
 LoanTypesRouter.delete("/:id",
-  checkPermissionMiddleware("delete_loan_type"),
+  checkPermissionMiddleware("DELETE_LOAN_TYPE"),
   deleteLoanTypeController);
 
 

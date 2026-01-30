@@ -39,14 +39,14 @@ leadRouter.get(
 leadRouter.patch(
   "/update-status/:id",
   validate(updateLeadStatusSchema),
-   checkPermissionMiddleware("Update_Lead_Status"),
+   checkPermissionMiddleware("UPDATE_LEAD_STATUS"),
   updateLeadStatusController
 );
 
 leadRouter.patch(
   "/assign/:id",
   validate(leadAssigedSchema, "params"),
-  checkPermissionMiddleware("Assign_Lead"),
+  checkPermissionMiddleware("ASSIGN_LEAD"),
   assignLeadController
 ); // Assign lead route requires auth
 
