@@ -32,6 +32,12 @@ export const assignLoanService = async (
     },
   });
 
+  if (existing) {
+    throw new Error(
+      "Active assignment already exists for this loan, employee, and role",
+    );
+  }
+
   return prisma.loanAssignment.create({
     data: {
       loanApplicationId,
@@ -60,7 +66,7 @@ export const getAssignedLoansForEmployeeService = async (userId: string) => {
   const employee = await prisma.employee.findUnique({
     where: { userId },
   });
-  if (!employee) { 
+  if (!employee) {
     throw new Error("Employee not found");
   }
   const employeeId = employee.id;
