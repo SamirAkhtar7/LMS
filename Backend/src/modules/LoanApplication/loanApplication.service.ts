@@ -428,12 +428,24 @@ export const getAllLoanApplicationsService = async (params: {
   page?: number;
   limit?: number;
   q?: string;
+  user: { id: string; role: Enums.Role };
 }) => {
   const { page, limit, skip } = getPagination(params.page, params.limit);
 
-  const where = {
-    ...buildLoanApplicationSearch(params.q),
+  const searchFilter = buildLoanApplicationSearch(params.q);
+
+  const where: any = {
+    ...searchFilter,
   };
+
+  if (params.user.role === "EMPLOYEE") {
+    where.loanAssignments = {
+      some: {
+        employeeId: params.user.id,
+        isActive: true,
+      },
+    };
+  }
 
   const [data, total] = await Promise.all([
     prisma.loanApplication.findMany({

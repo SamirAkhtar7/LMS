@@ -138,6 +138,11 @@ export type TechnicalReport = Prisma.TechnicalReportModel
  */
 export type LegalReport = Prisma.LegalReportModel
 /**
+ * Model LoanAssignment
+ * 
+ */
+export type LoanAssignment = Prisma.LoanAssignmentModel
+/**
  * Model AuditLog
  * 
  */

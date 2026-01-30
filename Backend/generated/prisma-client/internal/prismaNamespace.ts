@@ -408,6 +408,7 @@ export const ModelName = {
   Customer: 'Customer',
   TechnicalReport: 'TechnicalReport',
   LegalReport: 'LegalReport',
+  LoanAssignment: 'LoanAssignment',
   AuditLog: 'AuditLog'
 } as const
 
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "auditLog"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2012,6 +2013,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LoanAssignment: {
+      payload: Prisma.$LoanAssignmentPayload<ExtArgs>
+      fields: Prisma.LoanAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoanAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoanAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.LoanAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoanAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.LoanAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.LoanAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.LoanAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoanAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        update: {
+          args: Prisma.LoanAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoanAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoanAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoanAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.LoanAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanAssignment>
+        }
+        groupBy: {
+          args: Prisma.LoanAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoanAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -2670,6 +2737,21 @@ export const LegalReportScalarFieldEnum = {
 export type LegalReportScalarFieldEnum = (typeof LegalReportScalarFieldEnum)[keyof typeof LegalReportScalarFieldEnum]
 
 
+export const LoanAssignmentScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  employeeId: 'employeeId',
+  role: 'role',
+  isActive: 'isActive',
+  assignedBy: 'assignedBy',
+  assignedAt: 'assignedAt',
+  unassignedBy: 'unassignedBy',
+  unassignedAt: 'unassignedAt'
+} as const
+
+export type LoanAssignmentScalarFieldEnum = (typeof LoanAssignmentScalarFieldEnum)[keyof typeof LoanAssignmentScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   entityType: 'entityType',
@@ -3039,6 +3121,17 @@ export const LegalReportOrderByRelevanceFieldEnum = {
 export type LegalReportOrderByRelevanceFieldEnum = (typeof LegalReportOrderByRelevanceFieldEnum)[keyof typeof LegalReportOrderByRelevanceFieldEnum]
 
 
+export const LoanAssignmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  employeeId: 'employeeId',
+  assignedBy: 'assignedBy',
+  unassignedBy: 'unassignedBy'
+} as const
+
+export type LoanAssignmentOrderByRelevanceFieldEnum = (typeof LoanAssignmentOrderByRelevanceFieldEnum)[keyof typeof LoanAssignmentOrderByRelevanceFieldEnum]
+
+
 export const AuditLogOrderByRelevanceFieldEnum = {
   id: 'id',
   entityType: 'entityType',
@@ -3308,6 +3401,13 @@ export type EnumCustomerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 export type EnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportStatus'>
     
 
+
+/**
+ * Reference to a field of type 'AssignedRole'
+ */
+export type EnumAssignedRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssignedRole'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -3427,6 +3527,7 @@ export type GlobalOmitConfig = {
   customer?: Prisma.CustomerOmit
   technicalReport?: Prisma.TechnicalReportOmit
   legalReport?: Prisma.LegalReportOmit
+  loanAssignment?: Prisma.LoanAssignmentOmit
   auditLog?: Prisma.AuditLogOmit
 }
 

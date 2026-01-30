@@ -11,7 +11,6 @@ import {
   verifyDocumentService,
   rejectDocumentService,
   reuploadLoanDocumentService,
- 
 } from "./loanApplication.service.js";
 import { prisma } from "../../db/prismaService.js";
 
@@ -47,10 +46,17 @@ export const getAllLoanApplicationsController = async (
   res: Response,
 ) => {
   try {
+    if (!req.user)
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+
     const result = await getAllLoanApplicationsService({
       page: Number(req.query.page),
       limit: Number(req.query.limit),
       q: req.query.q?.toString(),
+      user: {
+        id: req.user.id,
+        role: req.user.role as any,
+      },
     });
 
     res.status(200).json({
@@ -360,9 +366,7 @@ export const rejectLoanController = async (req: any, res: Response) => {
   }
 };
 
-
-
-export const reuploadLoanDocumentController = async(
+export const reuploadLoanDocumentController = async (
   req: Request,
   res: Response,
   next: Function,
@@ -392,11 +396,10 @@ export const reuploadLoanDocumentController = async(
       message: "Document re-uploaded successfully",
       data: updatedDoc,
     });
-  }
-  catch (error: any) {
+  } catch (error: any) {
     if (req.file) {
       cleanupFiles([req.file]);
     }
     next(error);
   }
-}
+};

@@ -18,6 +18,7 @@ import creditReportRouter from "./modules/creditReport/creditReport.router.js";
 import technicalReportRouter from "./modules/reports/technicalReport/technical.routes.js";
 import legalReportRouter from "./modules/reports/legalReport/legal.routes.js";
 import coApplicantRouter from "./modules/coApplicants/coApplicant.routes.js";
+import loanAssignmentRouter from "./modules/loanAssignment/loanAssignment.routes.js";
 
 const router = Router();
 
@@ -43,5 +44,6 @@ router.use("/credit", creditReportRouter);
 router.use("/reports/technical", technicalReportRouter);
 router.use("/reports/legal", legalReportRouter);
 router.use("/co-applicant", coApplicantRouter);
+router.use("/loan-assignment", loanAssignmentRouter);
 
 export default router;

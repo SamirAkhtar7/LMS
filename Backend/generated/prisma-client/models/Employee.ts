@@ -360,6 +360,7 @@ export type EmployeeWhereInput = {
   salary?: Prisma.FloatFilter<"Employee"> | number
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  loanAssignments?: Prisma.LoanAssignmentListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -387,6 +388,7 @@ export type EmployeeOrderByWithRelationInput = {
   salary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  loanAssignments?: Prisma.LoanAssignmentOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.EmployeeOrderByRelevanceInput
 }
@@ -418,6 +420,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   salary?: Prisma.FloatFilter<"Employee"> | number
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  loanAssignments?: Prisma.LoanAssignmentListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId" | "employeeId">
 
@@ -504,6 +507,7 @@ export type EmployeeCreateInput = {
   salary: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  loanAssignments?: Prisma.LoanAssignmentCreateNestedManyWithoutEmployeeInput
   user: Prisma.UserCreateNestedOneWithoutEmployeeInput
 }
 
@@ -531,6 +535,7 @@ export type EmployeeUncheckedCreateInput = {
   salary: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  loanAssignments?: Prisma.LoanAssignmentUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUpdateInput = {
@@ -556,6 +561,7 @@ export type EmployeeUpdateInput = {
   salary?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanAssignments?: Prisma.LoanAssignmentUpdateManyWithoutEmployeeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
 }
 
@@ -583,6 +589,7 @@ export type EmployeeUncheckedUpdateInput = {
   salary?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanAssignments?: Prisma.LoanAssignmentUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateManyInput = {
@@ -759,6 +766,11 @@ export type EmployeeSumOrderByAggregateInput = {
   salary?: Prisma.SortOrder
 }
 
+export type EmployeeScalarRelationFilter = {
+  is?: Prisma.EmployeeWhereInput
+  isNot?: Prisma.EmployeeWhereInput
+}
+
 export type EmployeeCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.EmployeeCreateWithoutUserInput, Prisma.EmployeeUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutUserInput
@@ -815,6 +827,20 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EmployeeCreateNestedOneWithoutLoanAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedCreateWithoutLoanAssignmentsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutLoanAssignmentsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutLoanAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedCreateWithoutLoanAssignmentsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutLoanAssignmentsInput
+  upsert?: Prisma.EmployeeUpsertWithoutLoanAssignmentsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutLoanAssignmentsInput, Prisma.EmployeeUpdateWithoutLoanAssignmentsInput>, Prisma.EmployeeUncheckedUpdateWithoutLoanAssignmentsInput>
+}
+
 export type EmployeeCreateWithoutUserInput = {
   id?: string
   employeeId: string
@@ -838,6 +864,7 @@ export type EmployeeCreateWithoutUserInput = {
   salary: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  loanAssignments?: Prisma.LoanAssignmentCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutUserInput = {
@@ -863,6 +890,7 @@ export type EmployeeUncheckedCreateWithoutUserInput = {
   salary: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  loanAssignments?: Prisma.LoanAssignmentUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutUserInput = {
@@ -904,6 +932,7 @@ export type EmployeeUpdateWithoutUserInput = {
   salary?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanAssignments?: Prisma.LoanAssignmentUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutUserInput = {
@@ -929,8 +958,158 @@ export type EmployeeUncheckedUpdateWithoutUserInput = {
   salary?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanAssignments?: Prisma.LoanAssignmentUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
+export type EmployeeCreateWithoutLoanAssignmentsInput = {
+  id?: string
+  employeeId: string
+  mobileNumber: string
+  atlMobileNumber: string
+  dob: Date | string
+  designation: string
+  gender: $Enums.Gender
+  maritalStatus: $Enums.MaritalStatus
+  address: string
+  city: string
+  state: string
+  pinCode: string
+  emergencyContact: string
+  emergencyRelationship: $Enums.Relationship
+  department: string
+  dateOfJoining: Date | string
+  experience: string
+  reportingManagerId: string
+  workLocation: $Enums.WorkLocation
+  salary: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutLoanAssignmentsInput = {
+  id?: string
+  userId: string
+  employeeId: string
+  mobileNumber: string
+  atlMobileNumber: string
+  dob: Date | string
+  designation: string
+  gender: $Enums.Gender
+  maritalStatus: $Enums.MaritalStatus
+  address: string
+  city: string
+  state: string
+  pinCode: string
+  emergencyContact: string
+  emergencyRelationship: $Enums.Relationship
+  department: string
+  dateOfJoining: Date | string
+  experience: string
+  reportingManagerId: string
+  workLocation: $Enums.WorkLocation
+  salary: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EmployeeCreateOrConnectWithoutLoanAssignmentsInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedCreateWithoutLoanAssignmentsInput>
+}
+
+export type EmployeeUpsertWithoutLoanAssignmentsInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedUpdateWithoutLoanAssignmentsInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedCreateWithoutLoanAssignmentsInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutLoanAssignmentsInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutLoanAssignmentsInput, Prisma.EmployeeUncheckedUpdateWithoutLoanAssignmentsInput>
+}
+
+export type EmployeeUpdateWithoutLoanAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  maritalStatus?: Prisma.EnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContact?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyRelationship?: Prisma.EnumRelationshipFieldUpdateOperationsInput | $Enums.Relationship
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfJoining?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  experience?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingManagerId?: Prisma.StringFieldUpdateOperationsInput | string
+  workLocation?: Prisma.EnumWorkLocationFieldUpdateOperationsInput | $Enums.WorkLocation
+  salary?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutLoanAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  maritalStatus?: Prisma.EnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContact?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyRelationship?: Prisma.EnumRelationshipFieldUpdateOperationsInput | $Enums.Relationship
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfJoining?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  experience?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingManagerId?: Prisma.StringFieldUpdateOperationsInput | string
+  workLocation?: Prisma.EnumWorkLocationFieldUpdateOperationsInput | $Enums.WorkLocation
+  salary?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type EmployeeCountOutputType
+ */
+
+export type EmployeeCountOutputType = {
+  loanAssignments: number
+}
+
+export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  loanAssignments?: boolean | EmployeeCountOutputTypeCountLoanAssignmentsArgs
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmployeeCountOutputType
+   */
+  select?: Prisma.EmployeeCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountLoanAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LoanAssignmentWhereInput
+}
 
 
 export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -957,7 +1136,9 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   salary?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  loanAssignments?: boolean | Prisma.Employee$loanAssignmentsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employee"]>
 
 
@@ -990,12 +1171,15 @@ export type EmployeeSelectScalar = {
 
 export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "mobileNumber" | "atlMobileNumber" | "dob" | "designation" | "gender" | "maritalStatus" | "address" | "city" | "state" | "pinCode" | "emergencyContact" | "emergencyRelationship" | "department" | "dateOfJoining" | "experience" | "reportingManagerId" | "workLocation" | "salary" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  loanAssignments?: boolean | Prisma.Employee$loanAssignmentsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Employee"
   objects: {
+    loanAssignments: Prisma.$LoanAssignmentPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1362,6 +1546,7 @@ readonly fields: EmployeeFieldRefs;
  */
 export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  loanAssignments<T extends Prisma.Employee$loanAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$loanAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1755,6 +1940,30 @@ export type EmployeeDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Employees to delete.
    */
   limit?: number
+}
+
+/**
+ * Employee.loanAssignments
+ */
+export type Employee$loanAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LoanAssignment
+   */
+  select?: Prisma.LoanAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LoanAssignment
+   */
+  omit?: Prisma.LoanAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LoanAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LoanAssignmentWhereInput
+  orderBy?: Prisma.LoanAssignmentOrderByWithRelationInput | Prisma.LoanAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LoanAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LoanAssignmentScalarFieldEnum | Prisma.LoanAssignmentScalarFieldEnum[]
 }
 
 /**

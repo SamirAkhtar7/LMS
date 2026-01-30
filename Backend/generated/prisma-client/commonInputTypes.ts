@@ -881,6 +881,23 @@ export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
+export type EnumAssignedRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssignedRole | Prisma.EnumAssignedRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.AssignedRole[]
+  notIn?: $Enums.AssignedRole[]
+  not?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel> | $Enums.AssignedRole
+}
+
+export type EnumAssignedRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssignedRole | Prisma.EnumAssignedRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.AssignedRole[]
+  notIn?: $Enums.AssignedRole[]
+  not?: Prisma.NestedEnumAssignedRoleWithAggregatesFilter<$PrismaModel> | $Enums.AssignedRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -1714,6 +1731,23 @@ export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumAssignedRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssignedRole | Prisma.EnumAssignedRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.AssignedRole[]
+  notIn?: $Enums.AssignedRole[]
+  not?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel> | $Enums.AssignedRole
+}
+
+export type NestedEnumAssignedRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssignedRole | Prisma.EnumAssignedRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.AssignedRole[]
+  notIn?: $Enums.AssignedRole[]
+  not?: Prisma.NestedEnumAssignedRoleWithAggregatesFilter<$PrismaModel> | $Enums.AssignedRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAssignedRoleFilter<$PrismaModel>
 }
 
 

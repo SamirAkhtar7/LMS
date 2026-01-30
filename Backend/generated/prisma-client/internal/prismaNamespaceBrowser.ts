@@ -75,6 +75,7 @@ export const ModelName = {
   Customer: 'Customer',
   TechnicalReport: 'TechnicalReport',
   LegalReport: 'LegalReport',
+  LoanAssignment: 'LoanAssignment',
   AuditLog: 'AuditLog'
 } as const
 
@@ -647,6 +648,21 @@ export const LegalReportScalarFieldEnum = {
 export type LegalReportScalarFieldEnum = (typeof LegalReportScalarFieldEnum)[keyof typeof LegalReportScalarFieldEnum]
 
 
+export const LoanAssignmentScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  employeeId: 'employeeId',
+  role: 'role',
+  isActive: 'isActive',
+  assignedBy: 'assignedBy',
+  assignedAt: 'assignedAt',
+  unassignedBy: 'unassignedBy',
+  unassignedAt: 'unassignedAt'
+} as const
+
+export type LoanAssignmentScalarFieldEnum = (typeof LoanAssignmentScalarFieldEnum)[keyof typeof LoanAssignmentScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   entityType: 'entityType',
@@ -1014,6 +1030,17 @@ export const LegalReportOrderByRelevanceFieldEnum = {
 } as const
 
 export type LegalReportOrderByRelevanceFieldEnum = (typeof LegalReportOrderByRelevanceFieldEnum)[keyof typeof LegalReportOrderByRelevanceFieldEnum]
+
+
+export const LoanAssignmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  employeeId: 'employeeId',
+  assignedBy: 'assignedBy',
+  unassignedBy: 'unassignedBy'
+} as const
+
+export type LoanAssignmentOrderByRelevanceFieldEnum = (typeof LoanAssignmentOrderByRelevanceFieldEnum)[keyof typeof LoanAssignmentOrderByRelevanceFieldEnum]
 
 
 export const AuditLogOrderByRelevanceFieldEnum = {

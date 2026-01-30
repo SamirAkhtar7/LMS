@@ -31,6 +31,16 @@ export const ReportStatus = {
 export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
 
 
+export const AssignedRole = {
+  PROCESSOR: 'PROCESSOR',
+  LEGAL: 'LEGAL',
+  TECHNICAL: 'TECHNICAL',
+  RECOVERY: 'RECOVERY'
+} as const
+
+export type AssignedRole = (typeof AssignedRole)[keyof typeof AssignedRole]
+
+
 export const Role = {
   ADMIN: 'ADMIN',
   EMPLOYEE: 'EMPLOYEE',
