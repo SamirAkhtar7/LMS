@@ -62,6 +62,7 @@ export const unassignloanService = async (
   });
 };
 
+
 export const getAssignedLoansForEmployeeService = async (userId: string) => {
   const employee = await prisma.employee.findUnique({
     where: { userId },
@@ -84,3 +85,5 @@ export const getAssignedLoansForEmployeeService = async (userId: string) => {
   });
   return loans;
 };
+
+

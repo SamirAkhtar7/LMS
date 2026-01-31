@@ -2,7 +2,10 @@ import { prisma } from "../../db/prismaService.js";
 import { hashPassword } from "../../common/utils/utils.js";
 import { CreateEmployee } from "./employee.types.js";
 import * as crypto from "crypto";
-import { getPagination ,buildPaginationMeta } from "../../common/utils/pagination.js";
+import {
+  getPagination,
+  buildPaginationMeta,
+} from "../../common/utils/pagination.js";
 import { buildEmployeeSearch } from "../../common/utils/search.js";
 import { generateUniqueEmployeeId } from "../../common/generateId/generateEmployeeId.js";
 //Todo: add permission checks where necessary
@@ -114,7 +117,6 @@ export async function getAllEmployeesService(params: {
     meta: buildPaginationMeta(total, page, limit),
   };
 }
-
 
 export async function getEmployeeByIdService(id: string) {
   const employee = await prisma.employee.findUnique({
@@ -241,3 +243,88 @@ export async function updateEmployeeService(
 }
 
 //Todo: delete employee service
+
+export const getEmployeeDashBoardService = async (employeeId: string) => {
+  const assignedLoanIds = await prisma.loanAssignment.findMany({
+    where: {
+      employeeId,
+      isActive: true,
+    },
+    select: {
+      loanApplicationId: true,
+    },
+  });
+
+  const loanIds = assignedLoanIds.map((l) => l.loanApplicationId);
+  if (loanIds.length === 0) {
+    return {
+      assignedLoans: 0,
+      pendingKyc: 0,
+      underReview: 0,
+      legalTechnicalPending: 0,
+      todaysTasks: [],
+    };
+  }
+
+  const [
+    assignedLoans,
+    pendingKyc,
+    underReview,
+    legalPending,
+    technicalPending,
+  ] = await Promise.all([
+    prisma.loanApplication.count({
+      where: { id: { in: loanIds } },
+    }),
+    prisma.loanApplication.count({
+      where: {
+        id: { in: loanIds },
+        status: "kyc_pending",
+      },
+    }),
+    prisma.loanApplication.count({
+      where: {
+        id: { in: loanIds },
+        status: "under_review",
+      },
+    }),
+    prisma.legalReport.count({
+      where: {
+        loanApplicationId: { in: loanIds },
+      },
+    }),
+    prisma.technicalReport.count({
+      where: {
+        loanApplicationId: { in: loanIds },
+      },
+    }),
+  ]);
+
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+
+  const todaysTasks = await prisma.loanApplication.findMany({
+    where: {
+      id: { in: loanIds },
+      OR: [{ status: "kyc_pending" }, { status: "under_review" }],
+      updatedAt: {
+        gte: todayStart,
+      },
+    },
+    select: {
+      id: true,
+      loanNumber: true,
+      status: true,
+      updatedAt: true,
+    },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  return {
+    assignedLoans,
+    pendingKyc,
+    underReview,
+    legalTechnicalPending: legalPending + technicalPending,
+    todaysTasks,
+  };
+};

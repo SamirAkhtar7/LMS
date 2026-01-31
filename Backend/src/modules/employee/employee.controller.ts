@@ -4,7 +4,9 @@ import {
   getAllEmployeesService,
   getEmployeeByIdService,
   updateEmployeeService,
+  getEmployeeDashBoardService,
 } from "./employee.service.js";
+import { prisma } from "../../db/prismaService.js";
 
 export const createEmployeeController = async (req: Request, res: Response) => {
   try {
@@ -97,3 +99,39 @@ export const updateEmployeeController = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
+export const getEmployeeDashBoardController = async(
+  req: Request,
+  res: Response
+
+) => {
+  try {
+
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const employee = await prisma.employee.findUnique({
+      where: { userId: req.user.id },
+    
+    })
+    if (!employee) {
+      return res.status(404).json({ success: false, message: "Employee not found" });
+    }
+    const employeeId = employee.id;
+    const dashboardData = await getEmployeeDashBoardService(employeeId);
+    res.status(200).json({
+      success: true,
+      message: "Employee dashboard data retrieved successfully",
+      data: dashboardData,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve dashboard data",
+      error: error.message,
+    });
+  }
+
+}
