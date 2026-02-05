@@ -384,6 +384,23 @@ export type EnumPaymentCycleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPaymentCycleFilter<$PrismaModel>
 }
 
+export type EnumBranchTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BranchType | Prisma.EnumBranchTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BranchType[]
+  notIn?: $Enums.BranchType[]
+  not?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel> | $Enums.BranchType
+}
+
+export type EnumBranchTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BranchType | Prisma.EnumBranchTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BranchType[]
+  notIn?: $Enums.BranchType[]
+  not?: Prisma.NestedEnumBranchTypeWithAggregatesFilter<$PrismaModel> | $Enums.BranchType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel>
+}
+
 export type EnumLeadStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LeadStatus | Prisma.EnumLeadStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LeadStatus[]
@@ -1261,6 +1278,23 @@ export type NestedEnumPaymentCycleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPaymentCycleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPaymentCycleFilter<$PrismaModel>
+}
+
+export type NestedEnumBranchTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BranchType | Prisma.EnumBranchTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BranchType[]
+  notIn?: $Enums.BranchType[]
+  not?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel> | $Enums.BranchType
+}
+
+export type NestedEnumBranchTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BranchType | Prisma.EnumBranchTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BranchType[]
+  notIn?: $Enums.BranchType[]
+  not?: Prisma.NestedEnumBranchTypeWithAggregatesFilter<$PrismaModel> | $Enums.BranchType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBranchTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumLeadStatusFilter<$PrismaModel = never> = {

@@ -58,7 +58,6 @@ export const getAllLoanApplicationsController = async (
         role: req.user.role as any,
       },
     });
-
     res.status(200).json({
       success: true,
       message: "Loan applications retrieved successfully",

@@ -84,6 +84,14 @@ export const recovery_status = {
 export type recovery_status = (typeof recovery_status)[keyof typeof recovery_status]
 
 
+export const BranchType = {
+  MAIN: 'MAIN',
+  SUB: 'SUB'
+} as const
+
+export type BranchType = (typeof BranchType)[keyof typeof BranchType]
+
+
 export const MoratoriumType = {
   FULL: 'FULL',
   INTEREST_ONLY: 'INTEREST_ONLY'

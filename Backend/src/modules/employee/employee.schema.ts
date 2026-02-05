@@ -31,7 +31,7 @@ export const createEmployeeSchema = z
       .refine((v) => ["OFFICE", "REMOTE", "HYBRID"].includes(v), {
         message: 'Invalid option: expected one of "OFFICE"|"REMOTE"|"HYBRID"',
       })
-.optional(),
+      .optional(),
     department: z.string().min(1),
     dateOfJoining: z.string().optional(),
     salary: z.number().positive().optional(),
@@ -39,6 +39,7 @@ export const createEmployeeSchema = z
     city: z.string().min(1),
     state: z.string().min(1),
     pinCode: z.string().min(6),
+    branchId: z.string().min(1, "Branch assignment is required"),
   })
   .strict();
 

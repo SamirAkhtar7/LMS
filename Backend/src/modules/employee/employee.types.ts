@@ -44,4 +44,5 @@ export interface CreateEmployee {
   reportingManagerId?: string;
   workLocation?: WorkLocation;
   salary?: number;
+  branchId: string;
 }

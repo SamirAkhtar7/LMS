@@ -57,6 +57,7 @@ export const ModelName = {
   Admin: 'Admin',
   Employee: 'Employee',
   Partner: 'Partner',
+  Branch: 'Branch',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
   LoanRecovery: 'LoanRecovery',
@@ -168,6 +169,7 @@ export const EmployeeScalarFieldEnum = {
   reportingManagerId: 'reportingManagerId',
   workLocation: 'workLocation',
   salary: 'salary',
+  branchId: 'branchId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -210,6 +212,20 @@ export const PartnerScalarFieldEnum = {
 } as const
 
 export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
+
+
+export const BranchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  type: 'type',
+  parentBranchId: 'parentBranchId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
 
 
 export const LeadsScalarFieldEnum = {
@@ -280,7 +296,8 @@ export const LoanApplicationScalarFieldEnum = {
   dpd: 'dpd',
   createdById: 'createdById',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  branchId: 'branchId'
 } as const
 
 export type LoanApplicationScalarFieldEnum = (typeof LoanApplicationScalarFieldEnum)[keyof typeof LoanApplicationScalarFieldEnum]
@@ -737,7 +754,8 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   emergencyContact: 'emergencyContact',
   department: 'department',
   experience: 'experience',
-  reportingManagerId: 'reportingManagerId'
+  reportingManagerId: 'reportingManagerId',
+  branchId: 'branchId'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
@@ -774,6 +792,16 @@ export const PartnerOrderByRelevanceFieldEnum = {
 export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
 
 
+export const BranchOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  parentBranchId: 'parentBranchId'
+} as const
+
+export type BranchOrderByRelevanceFieldEnum = (typeof BranchOrderByRelevanceFieldEnum)[keyof typeof BranchOrderByRelevanceFieldEnum]
+
+
 export const LeadsOrderByRelevanceFieldEnum = {
   id: 'id',
   fullName: 'fullName',
@@ -805,7 +833,8 @@ export const LoanApplicationOrderByRelevanceFieldEnum = {
   approvedBy: 'approvedBy',
   rejectedBy: 'rejectedBy',
   kycId: 'kycId',
-  createdById: 'createdById'
+  createdById: 'createdById',
+  branchId: 'branchId'
 } as const
 
 export type LoanApplicationOrderByRelevanceFieldEnum = (typeof LoanApplicationOrderByRelevanceFieldEnum)[keyof typeof LoanApplicationOrderByRelevanceFieldEnum]

@@ -109,6 +109,8 @@ model Employee {
   // subordinates       Employee[] @relation("ManagerEmployees")
   workLocation       WorkLocation
   salary             Float
+  branchId           String
+  branch             Branch   @relation(fields: [branchId], references: [id])
 
   // Optional username if separate from `User`
   loanAssignments LoanAssignment[]
@@ -155,6 +157,28 @@ model Partner {
 
   // Relations
   user User @relation(fields: [userId], references: [id])
+}
+
+
+
+model Branch {
+  id        String   @id @default(cuid())
+  name   String 
+  code String @unique
+  type  BranchType   // MAIN | SUBSIDIARY 
+  parentBranchId String?   // null for main branches
+
+
+  parentBranch   Branch? @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
+  subBranches    Branch[] @relation("BranchHierarchy")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employees Employee[]
+  loanApplications LoanApplication[]
+
+  @@index([parentBranchId])
 }
 
 model Leads {
@@ -251,6 +275,8 @@ model LoanApplication {
   createdBy            User?             @relation(fields: [createdById], references: [id])
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
+  branchId            String
+  branch              Branch   @relation(fields: [branchId], references: [id])
 
   // Relations
   loanType        LoanType?        @relation(fields: [loanTypeId], references: [id])
@@ -828,6 +854,11 @@ enum recovery_status {
   WRITE_OFF
   SETTLED
   COMPLETED
+}
+
+enum BranchType {
+  MAIN
+  SUB
 }
 
 enum MoratoriumType {

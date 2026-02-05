@@ -23,6 +23,24 @@ export async function createEmployeeService(data: CreateEmployee) {
 
   const hashedPassword = await hashPassword(data.password);
 
+  // Add validation for branchId
+  if (!data.branchId) {
+    const e: any = new Error("Branch assignment is required for employee");
+    e.statusCode = 400;
+    throw e;
+  }
+
+  // Verify branch exists
+  const branch = await prisma.branch.findUnique({
+    where: { id: data.branchId },
+  });
+  
+  if (!branch || !branch.isActive) {
+    const e: any = new Error("Invalid or inactive branch");
+    e.statusCode = 400;
+    throw e;
+  }
+
   try {
     // create the user first
     const user = await prisma.user.create({
@@ -77,6 +95,7 @@ export async function createEmployeeService(data: CreateEmployee) {
         city: data.city ?? "",
         state: data.state ?? "",
         pinCode: data.pinCode ?? "",
+        branchId: data.branchId,  // Ensure this is set
       },
     });
 
@@ -121,7 +140,10 @@ export async function getAllEmployeesService(params: {
 export async function getEmployeeByIdService(id: string) {
   const employee = await prisma.employee.findUnique({
     where: { id },
-    include: { user: true },
+    include: {
+      user: true, 
+      branch: true,
+    },
   });
 
   if (!employee) {

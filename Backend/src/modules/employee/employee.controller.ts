@@ -101,7 +101,6 @@ export const updateEmployeeController = async (req: Request, res: Response) => {
 };
 
 
-
 export const getEmployeeDashBoardController = async(
   req: Request,
   res: Response
