@@ -1,4 +1,4 @@
-import  { Request, Response } from "express";
+import { Request, Response } from "express";
 import {
   getRecoveryByLoanIdService,
   payRecoveryAmountService,
@@ -14,57 +14,61 @@ import { recovery_stage } from "../../../generated/prisma-client/enums.js";
 
 export const getRecoveryByLoanIdController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
-    const { loanId } = req.params;
+  const { loanId } = req.params;
   try {
-  const recovery = await getRecoveryByLoanIdService(loanId);
+    const recovery = await getRecoveryByLoanIdService(loanId);
 
-  if (!recovery) {
-    return res.status(404).json({
-      success: false,
-      message: "Recovery record not found for the given loan ID",
+    if (!recovery) {
+      return res.status(404).json({
+        success: false,
+        message: "Recovery record not found for the given loan ID",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Recovery record retrieved successfully",
+      data: recovery,
     });
-  }
-  res.status(200).json({
-    success: true,
-    message: "Recovery record retrieved successfully",
-    data: recovery,
-  });
-    } catch (error: any) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-        message: error.message || "Failed to retrieve recovery record",
-        error: error.message,
+      message: error.message || "Failed to retrieve recovery record",
+      error: error.message,
     });
-    }
+  }
 };
 
 export const payRecoveryAmountController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   const { recoveryId } = req.params;
   const { amount, paymentMode, referenceNo } = req.body;
-    try {
-      
-           if (amount === undefined || amount === null || typeof amount !== 'number' || amount <= 0) {
-            return res.status(400).json({
-               success: false,
-                message: "Valid positive amount is required",
-            });
-        }
-        if (!paymentMode) {
-            return res.status(400).json({
-                success: false,
-               message: "paymentMode is required",
-           });
-        }
+  try {
+    if (
+      amount === undefined ||
+      amount === null ||
+      typeof amount !== "number" ||
+      amount <= 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Valid positive amount is required",
+      });
+    }
+    if (!paymentMode) {
+      return res.status(400).json({
+        success: false,
+        message: "paymentMode is required",
+      });
+    }
     const recovery = await payRecoveryAmountService(
       recoveryId,
       amount,
       paymentMode,
-      referenceNo
+      referenceNo,
     );
 
     res.json({
@@ -83,7 +87,7 @@ export const payRecoveryAmountController = async (
 
 export const assignRecoveryAgentController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   const { recoveryId } = req.params;
   const { assignedTo } = req.body;
@@ -112,22 +116,25 @@ export const assignRecoveryAgentController = async (
 
 export const updateRecoveryStageController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   const { recoveryId } = req.params;
   const { recoveryStage, remarks } = req.body;
-    try {
-            if (!recoveryStage || !Object.values(recovery_stage).includes(recoveryStage)) {
-            return res.status(400).json({
-                success: false,
-                message: "Valid recoveryStage is required",
-            });
-        }
-         
+  try {
+    if (
+      !recoveryStage ||
+      !Object.values(recovery_stage).includes(recoveryStage)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Valid recoveryStage is required",
+      });
+    }
+
     const recovery = await updateRecoveryStageService(
       recoveryId,
       recoveryStage as recovery_stage,
-      remarks
+      remarks,
     );
     res.status(200).json({
       success: true,
@@ -145,7 +152,7 @@ export const updateRecoveryStageController = async (
 
 export const getLoanWithRecoveryController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     const loans = await getLoanWithRecoveryService();
@@ -166,23 +173,30 @@ export const getLoanWithRecoveryController = async (
 
 export const getAllRecoveriesController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
-    const recoveries = await getAllRecoveriesService({
-      page: Number(req.query.page),
-      limit: Number(req.query.limit),
-      q: req.query.q?.toString(),
-      status: req.query.status?.toString(),
-    },
+
+    if(!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: User not authenticated",
+      });
+    }
+    const recoveries = await getAllRecoveriesService(
+      {
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+        q: req.query.q?.toString(),
+        status: req.query.status?.toString(),
+      },
       {
         id: req.user!.id,
         role: (req.user as any).role,
-        branchId: (req.user as any).branchId
-        
-      }
-      
-  );
+        branchId: (req.user as any).branchId,
+      },
+    );
+
     res.status(200).json({
       success: true,
       message: "All recoveries retrieved successfully",
@@ -199,7 +213,7 @@ export const getAllRecoveriesController = async (
 
 export const getRecoveryDetailsController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   const { recoveryId } = req.params;
   try {
@@ -226,7 +240,7 @@ export const getRecoveryDetailsController = async (
 
 export const getRecoveryByAgentController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   const { agentId } = req.params;
   try {
@@ -247,11 +261,18 @@ export const getRecoveryByAgentController = async (
 
 export const getRecoveryDashboardController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
-    const data = await getRecoveryDashboardService(req.user as { role: string; branchId?: string });
-
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: User not authenticated",
+      });
+    }
+    const data = await getRecoveryDashboardService(
+      req.user as { role: string; branchId?: string },
+    );
     res.status(200).json({
       success: true,
       message: "Recovery dashboard data retrieved successfully",

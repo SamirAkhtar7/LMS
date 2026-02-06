@@ -30,7 +30,7 @@ export interface AuthRequest extends Request {
 export const authMiddleware = async (
   req: AuthRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const accessToken =
@@ -42,7 +42,7 @@ export const authMiddleware = async (
       try {
         const decoded = jwt.verify(
           accessToken,
-          ENV.ACCESS_TOKEN_SECRET
+          ENV.ACCESS_TOKEN_SECRET,
         ) as AuthPayload;
 
         req.user = {
@@ -94,13 +94,13 @@ export const authMiddleware = async (
     const newAccess = generateAccessToken(
       decodedRefresh.id,
       decodedRefresh.email,
-      decodedRefresh.role
+      decodedRefresh.role,
     );
 
     const newRefresh = generateRefreshToken(
       decodedRefresh.id,
       decodedRefresh.email,
-      decodedRefresh.role
+      decodedRefresh.role,
     );
 
     // 4️⃣ Set cookies

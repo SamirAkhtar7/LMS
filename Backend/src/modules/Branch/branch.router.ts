@@ -50,7 +50,7 @@ branchRouter.get(
 branchRouter.get(
   "/main",
   authMiddleware,
-  //checkPermissionMiddleware("VIEW_BRANCH"),
+  checkPermissionMiddleware("VIEW_BRANCH"),
   getAllMainBranchesController,
 );
 
@@ -58,6 +58,7 @@ branchRouter.get(
   "/:id",
   authMiddleware,
   checkPermissionMiddleware("VIEW_BRANCH"),
+  validate(branchIdParamSchema, "params"),
   getBranchByIdController,
 );
 
