@@ -16,6 +16,7 @@ import { buildLoanApplicationSearch } from "../../common/utils/search.js";
 
 import path from "path";
 import fs from "fs";
+import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 
 interface CoApplicantDocumentUpload {
   coApplicants: { id: string; documentType: string }[];
@@ -444,10 +445,27 @@ export const getAllLoanApplicationsService = async (params: {
 }) => {
   const { page, limit, skip } = getPagination(params.page, params.limit);
 
+  let userBranchId: string | undefined;
+  if (params.user.role === "EMPLOYEE") {
+    const employee = await prisma.employee.findUnique({
+      where: { userId: params.user.id },
+      select: { branchId: true }
+    })
+    if (!employee) {
+      throw new Error("Employee record not found for user");
+    }
+    userBranchId = employee.branchId;
+  }
+  const accessibleBranches = await getAccessibleBranchIds({
+    id: params.user.id,
+    role: params.user.role,
+    branchId: userBranchId,
+  });
   const searchFilter = buildLoanApplicationSearch(params.q);
 
   const where: any = {
     ...searchFilter,
+    ...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
   };
 
   const employee = await prisma.employee.findUnique({

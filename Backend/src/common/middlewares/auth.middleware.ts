@@ -10,6 +10,7 @@ import {
   verifyRefreshToken,
   cookieOptions,
 } from "../utils/utils.js";
+import { prisma } from "../../db/prismaService.js";
 
 interface AuthPayload extends JwtPayload {
   id: string;
@@ -22,6 +23,7 @@ export interface AuthRequest extends Request {
     id: string;
     email: string;
     role: string;
+    branchId?: string;
   };
   permissions?: string[];
 }
@@ -48,6 +50,17 @@ export const authMiddleware = async (
           email: decoded.email,
           role: decoded.role,
         };
+
+        // Fetch branchId for employees
+        if (decoded.role === "EMPLOYEE") {
+          const employee = await prisma.employee.findUnique({
+            where: { userId: decoded.id },
+            select: { branchId: true },
+          });
+          if (employee) {
+            req.user.branchId = employee.branchId;
+          }
+        }
 
         // expose tokens to downstream handlers/controllers if needed
         // (req as any).accessToken = accessToken;
@@ -99,6 +112,17 @@ export const authMiddleware = async (
       email: decodedRefresh.email,
       role: decodedRefresh.role,
     };
+
+    // Fetch branchId for employees
+    if (decodedRefresh.role === "EMPLOYEE") {
+      const employee = await prisma.employee.findUnique({
+        where: { userId: decodedRefresh.id },
+        select: { branchId: true },
+      });
+      if (employee) {
+        req.user.branchId = employee.branchId;
+      }
+    }
 
     // expose the freshly generated tokens on the request for controllers that may want them
     // (req as any).accessToken = newAccess;

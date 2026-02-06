@@ -4,7 +4,8 @@ import {
     getAllBranchesService,
     getBranchByIdService,
     updateBranchService,
-    deleteBranchService
+    deleteBranchService,
+    getAllMainBranchesService
 } from './branch.service.js';
 
 
@@ -19,10 +20,11 @@ export const createBranchController = async (req: Request, res: Response) => {
         });
     }
     catch (error: any) {
-        res.status(400).json({
-            success: false,
-            message: error.message,
-        });
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+        success: false,
+        message: error.message || "Internal server error",
+       });
     }
 }
 
@@ -93,3 +95,26 @@ export const getBranchByIdController = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
+export const getAllMainBranchesController = async (
+    req: Request,
+    res: Response
+) => {
+   
+    try {
+        const mainBranches = await getAllMainBranchesService();
+        res.status(200).json({
+            success: true,
+            message: 'Main branches retrieved successfully',
+            data: mainBranches,
+        });
+    } catch (error: any) {
+        res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+
+    }
+}

@@ -307,6 +307,7 @@ export const LoanRecoveryScalarFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
+  branchId: 'branchId',
   recoveryStage: 'recoveryStage',
   recoveryStatus: 'recoveryStatus',
   totalOutstandingAmount: 'totalOutstandingAmount',
@@ -844,6 +845,7 @@ export const LoanRecoveryOrderByRelevanceFieldEnum = {
   id: 'id',
   loanApplicationId: 'loanApplicationId',
   customerId: 'customerId',
+  branchId: 'branchId',
   settlementApprovedBy: 'settlementApprovedBy',
   assignedTo: 'assignedTo',
   remarks: 'remarks'

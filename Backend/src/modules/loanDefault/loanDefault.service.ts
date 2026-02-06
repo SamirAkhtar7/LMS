@@ -64,6 +64,7 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
         customerId: loan.customerId,
         totalOutstandingAmount: outstanding,
         recoveredAmount: 0,
+        branchId: loan.branchId,
         balanceAmount: outstanding,
         dpd,
         defaultedAt: new Date(),

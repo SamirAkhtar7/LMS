@@ -1,22 +1,25 @@
-import { Router } from 'express';
+import { Router } from "express";
 
 import {
-    createBranchController,
-    getAllBranchesController,
-    getBranchByIdController,
-    updateBranchController,
-    deleteBranchController
+  createBranchController,
+  getAllBranchesController,
+  getBranchByIdController,
+  updateBranchController,
+  deleteBranchController,
+  getAllMainBranchesController,
+} from "./branch.controller.js";
 
-} from './branch.controller.js';
+import { validate } from "../../common/middlewares/zod.middleware.js";
+import {
+  CreateBranchInput,
+  updateBranchInput,
+  branchIdParamSchema,
+} from "./branch.types.js";
 
-import { validate } from '../../common/middlewares/zod.middleware.js';
-import { CreateBranchInput, updateBranchInput, branchIdParamSchema } from './branch.types.js';
+import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
+import { createBranchSchema, updateBranchSchema } from "./branch.schema.js";
 
-import { authMiddleware } from '../../common/middlewares/auth.middleware.js';
-import { createBranchSchema, updateBranchSchema } from './branch.schema.js';
-
-import { checkPermissionMiddleware } from '../../common/middlewares/permission.middleware.js';
-
+import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
 
 const branchRouter = Router();
 
@@ -28,7 +31,6 @@ branchRouter.post(
   createBranchController,
 );
 
-
 branchRouter.put(
   "/:id",
   authMiddleware,
@@ -38,29 +40,33 @@ branchRouter.put(
   updateBranchController,
 );
 
-
 branchRouter.get(
-    "/",
-    authMiddleware,
-    checkPermissionMiddleware("VIEW_BRANCH"),
-    getAllBranchesController,
+  "/",
+  authMiddleware,
+  checkPermissionMiddleware("VIEW_BRANCH"),
+  getAllBranchesController,
 );
 
+branchRouter.get(
+  "/main",
+  authMiddleware,
+  //checkPermissionMiddleware("VIEW_BRANCH"),
+  getAllMainBranchesController,
+);
 
 branchRouter.get(
-    "/:id",
-    authMiddleware,
-    checkPermissionMiddleware("VIEW_BRANCH"),
-    getBranchByIdController,
+  "/:id",
+  authMiddleware,
+  checkPermissionMiddleware("VIEW_BRANCH"),
+  getBranchByIdController,
 );
 
 branchRouter.delete(
-    "/:id",
-    authMiddleware,
-    checkPermissionMiddleware("DELETE_BRANCH"),
-    validate(branchIdParamSchema, "params"),
-    deleteBranchController,
+  "/:id",
+  authMiddleware,
+  checkPermissionMiddleware("DELETE_BRANCH"),
+  validate(branchIdParamSchema, "params"),
+  deleteBranchController,
 );
-
 
 export default branchRouter;

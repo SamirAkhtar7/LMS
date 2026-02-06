@@ -6,6 +6,7 @@ import {
   RECOVERY_STATUSES,
 } from "../../common/utils/search.js";
 import { getPagination } from "../../common/utils/pagination.js";
+import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 
 export const getRecoveryByLoanIdService = async (loanId: string) => {
   return prisma.$transaction(async (tx) => {
@@ -17,6 +18,7 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
         status: true,
         approvedAmount: true,
         customerId: true,
+        branchId: true,
         defaultedAt: true,
         dpd: true,
       },
@@ -81,6 +83,7 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
       data: {
         loanApplicationId: loan.id,
         customerId: loan.customerId,
+        branchId: loan.branchId,
         totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
         recoveredAmount: 0,
         balanceAmount: Number(correctOutstanding.toFixed(2)),
@@ -155,9 +158,25 @@ export const assignRecoveryAgentService = async (
   recoveryId: string,
   assignedTo: string,
 ) => {
+  const recovery = await prisma.loanRecovery.findUnique({
+    where: { id: recoveryId },
+  });
+  if (!recovery) {
+    throw new Error("Recovery record not found");
+  }
+
+  const agent = await prisma.employee.findUnique({
+    where: { id: assignedTo },
+  });
+  if (!agent || agent.branchId !== recovery.branchId) {
+    throw new Error(
+      "Invalid agent or agent does not belong to the same branch",
+    );
+  }
+
   return prisma.loanRecovery.update({
     where: { id: recoveryId },
-    data: { assignedTo: assignedTo },
+    data: { assignedTo },
   });
 };
 
@@ -193,15 +212,27 @@ export const getLoanWithRecoveryService = async () => {
   return loanWithRecovery;
 };
 
-export const getAllRecoveriesService = async (params: {
-  page?: number;
-  limit?: number;
-  q?: string;
-  status?: string;
-}) => {
+export const getAllRecoveriesService = async (
+  params: {
+    page?: number;
+    limit?: number;
+    q?: string;
+    status?: string;
+  },
+  user: { id: string; role: string; branchId?: string },
+) => {
   const { page, limit, skip } = getPagination(params.page, params.limit);
+  const accessibleBranches = await getAccessibleBranchIds(user);
   const where: any = {
     ...buildRecoverySearch(params.q),
+    ...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
+
+    // Scope filter
+    ...(user.role !== "ADMIN" && user.branchId
+      ? {
+          branchId: user.branchId,
+        }
+      : {}),
   };
 
   // ✅ SAFE enum filter
@@ -250,8 +281,18 @@ export const getRecoveryDetailsService = async (recoveryId: string) => {
   return recovery;
 };
 export const getRecoveriesByAgentService = async (agentId: string) => {
+  const agent = await prisma.employee.findUnique({
+    where: { id: agentId },
+  });
+  if (!agent) {
+    throw new Error("Agent not found");
+  }
+
   const recoveries = await prisma.loanRecovery.findMany({
-    where: { assignedTo: agentId },
+    where: {
+      assignedTo: agentId,
+      branchId: agent.branchId,
+    },
     include: {
       loanApplication: {
         include: {
@@ -293,10 +334,16 @@ export const getRecoveriesByStageService = async (stage: string) => {
   return recoveries;
 };
 
-export const getRecoveryDashboardService = async () => {
+export const getRecoveryDashboardService = async (user: {
+  role: string;
+  branchId?: string;
+}) => {
   const recoveries = await prisma.loanRecovery.findMany({
     where: {
       recoveryStatus: "ONGOING",
+      ...(user.role !== "ADMIN" && user.branchId
+        ? { branchId: user.branchId }
+        : {}),
     },
     orderBy: {
       createdAt: "desc",

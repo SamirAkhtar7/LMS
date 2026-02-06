@@ -252,13 +252,12 @@ export const convertLeadToLoanApplicationService = async (leadId: string) => {
     // 3. Create the loan application and associate it with the customer and lead
     const loanNumber = await generateLoanNumber(tx);
 
-    const branchUserId = lead.assignedTo ?? lead.assignedBy;
-    if (!branchUserId) {
+    if (!lead.assignedTo) {
       const e: any = new Error("Lead must be assigned to an employee");
       e.statusCode = 400;
       throw e;
     }
-
+    const branchUserId = lead.assignedTo;
     const employee = await tx.employee.findUnique({
       where: { userId: branchUserId },
       select: { branchId: true },

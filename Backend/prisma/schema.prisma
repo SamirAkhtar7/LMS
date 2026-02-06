@@ -177,6 +177,7 @@ model Branch {
 
   employees Employee[]
   loanApplications LoanApplication[]
+  loanRecoveries LoanRecovery[]
 
   @@index([parentBranchId])
 }
@@ -293,6 +294,9 @@ model LoanRecovery {
 
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id])
+  
+  branchId String
+  branch   Branch   @relation(fields: [branchId], references: [id])
 
   recoveryStage  recovery_stage
   recoveryStatus recovery_status
@@ -318,6 +322,7 @@ model LoanRecovery {
   updatedAt DateTime @updatedAt
 
   @@index([loanApplicationId])
+  @@index([branchId])
 }
 
 model RecoveryPayment {
@@ -379,6 +384,7 @@ model Document {
   coApplicant        CoApplicant?       @relation(fields: [coApplicantId], references: [id])
 
   @@unique([loanApplicationId, documentType]) // ✅ prevents duplicate uploads
+
 }
 
 model Kyc {

@@ -17,8 +17,7 @@ export const getRecoveryByLoanIdController = async (
   res: Response
 ) => {
     const { loanId } = req.params;
-    
-    try{
+  try {
   const recovery = await getRecoveryByLoanIdService(loanId);
 
   if (!recovery) {
@@ -174,8 +173,16 @@ export const getAllRecoveriesController = async (
       page: Number(req.query.page),
       limit: Number(req.query.limit),
       q: req.query.q?.toString(),
+      status: req.query.status?.toString(),
+    },
+      {
+        id: req.user!.id,
+        role: (req.user as any).role,
+        branchId: (req.user as any).branchId
+        
+      }
       
-    });
+  );
     res.status(200).json({
       success: true,
       message: "All recoveries retrieved successfully",
@@ -243,7 +250,7 @@ export const getRecoveryDashboardController = async (
   res: Response
 ) => {
   try {
-    const data = await getRecoveryDashboardService();
+    const data = await getRecoveryDashboardService(req.user as { role: string; branchId?: string });
 
     res.status(200).json({
       success: true,

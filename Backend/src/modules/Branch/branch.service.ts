@@ -65,3 +65,9 @@ export const deleteBranchService = async (id: string) => {
     data: { isActive: false },
   });
 };
+
+export const getAllMainBranchesService = async () => {
+  return prisma.branch.findMany({
+    where: { type: "MAIN" },
+  });
+}
