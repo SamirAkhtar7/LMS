@@ -17,11 +17,23 @@ export async function loginService(identifier: string, password: string) {
   // if (user.kycStatus !== "VERIFIED") {
   //   throw new Error("User KYC is not verified cannot login");
   // }
-    const isMatch = await comparePassword(password, user.password);
+  const isMatch = await comparePassword(password, user.password);
   if (!isMatch) throw new Error("Invalid credentials");
 
-  const accessToken = generateAccessToken(user.id, user.email, user.role ,user.branchId);
-  const refreshToken = generateRefreshToken(user.id, user.email, user.role ,user.branchId);
+  //TODO remonve the undefined branchId from token if the user does not have a branchId
+
+  const accessToken = generateAccessToken(
+    user.id,
+    user.email,
+    user.role,
+    user.branchId ?? undefined,
+  );
+  const refreshToken = generateRefreshToken(
+    user.id,
+    user.email,
+    user.role,
+    user.branchId ?? undefined,
+  );
 
   return { user, accessToken, refreshToken };
 }

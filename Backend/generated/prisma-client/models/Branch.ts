@@ -397,14 +397,14 @@ export type BranchUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type BranchScalarRelationFilter = {
-  is?: Prisma.BranchWhereInput
-  isNot?: Prisma.BranchWhereInput
-}
-
 export type BranchNullableScalarRelationFilter = {
   is?: Prisma.BranchWhereInput | null
   isNot?: Prisma.BranchWhereInput | null
+}
+
+export type BranchScalarRelationFilter = {
+  is?: Prisma.BranchWhereInput
+  isNot?: Prisma.BranchWhereInput
 }
 
 export type BranchListRelationFilter = {
@@ -462,10 +462,12 @@ export type BranchCreateNestedOneWithoutUserInput = {
   connect?: Prisma.BranchWhereUniqueInput
 }
 
-export type BranchUpdateOneRequiredWithoutUserNestedInput = {
+export type BranchUpdateOneWithoutUserNestedInput = {
   create?: Prisma.XOR<Prisma.BranchCreateWithoutUserInput, Prisma.BranchUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.BranchCreateOrConnectWithoutUserInput
   upsert?: Prisma.BranchUpsertWithoutUserInput
+  disconnect?: Prisma.BranchWhereInput | boolean
+  delete?: Prisma.BranchWhereInput | boolean
   connect?: Prisma.BranchWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutUserInput, Prisma.BranchUpdateWithoutUserInput>, Prisma.BranchUncheckedUpdateWithoutUserInput>
 }

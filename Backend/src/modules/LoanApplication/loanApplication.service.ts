@@ -464,7 +464,6 @@ export const getAllLoanApplicationsService = async (params: {
     role: params.user.role,
     branchId: userBranchId,
   });
-  console.log("Accessible Branches:", accessibleBranches);
   const searchFilter = buildLoanApplicationSearch(params.q);
 
   const where: any = {
@@ -472,7 +471,7 @@ export const getAllLoanApplicationsService = async (params: {
     ...buildBranchFilter(accessibleBranches),
     //...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
   };
-  console.log("Loan Application Where Filter:", where);
+
 
   const employee = await prisma.employee.findUnique({
     where: { userId: params.user.id },

@@ -34,7 +34,7 @@ export async function createEmployeeService(data: CreateEmployee) {
   const branch = await prisma.branch.findUnique({
     where: { id: data.branchId },
   });
-  
+
   if (!branch || !branch.isActive) {
     const e: any = new Error("Invalid or inactive branch");
     e.statusCode = 400;
@@ -96,7 +96,7 @@ export async function createEmployeeService(data: CreateEmployee) {
         city: data.city ?? "",
         state: data.state ?? "",
         pinCode: data.pinCode ?? "",
-        branchId: data.branchId,  // Ensure this is set
+        branchId: data.branchId, // Ensure this is set
       },
     });
 
@@ -142,7 +142,7 @@ export async function getEmployeeByIdService(id: string) {
   const employee = await prisma.employee.findUnique({
     where: { id },
     include: {
-      user: true, 
+      user: true,
       branch: true,
     },
   });

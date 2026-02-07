@@ -80,10 +80,10 @@ model Admin {
 }
 
 model Employee {
-  id         String @id @default(cuid())
-  userId     String @unique
-  employeeId String @unique
-//TODO: remove the mobile number from employee and partner tables 
+  id              String        @id @default(cuid())
+  userId          String        @unique
+  employeeId      String        @unique
+  //TODO: remove the mobile number from employee and partner tables 
   mobileNumber    String
   atlMobileNumber String
   dob             DateTime
@@ -748,8 +748,8 @@ model TechnicalReport {
 
 model LegalReport {
   id                String          @id @default(cuid())
-  loanApplicationId String
-  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+loanApplication   LoanApplication? @relation(fields: [loanApplicationId], references: [id])
+loanApplicationId String?
 
   //Advocate 
   advocateId   String?

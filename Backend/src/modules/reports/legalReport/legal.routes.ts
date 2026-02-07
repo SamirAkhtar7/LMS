@@ -33,8 +33,8 @@ legalReportRouter.post(
 legalReportRouter.get(
   "/legal-reports",
   authMiddleware,
-  checkPermissionMiddleware("VIEW_LEGAL_REPORTS"),
-   getAllLegalReportsController,
+  //checkPermissionMiddleware("VIEW_LEGAL_REPORTS"),
+  getAllLegalReportsController,
 );
 
 

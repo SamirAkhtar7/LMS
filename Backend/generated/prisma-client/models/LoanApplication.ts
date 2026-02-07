@@ -1703,10 +1703,12 @@ export type LoanApplicationCreateNestedOneWithoutLegalReportsInput = {
   connect?: Prisma.LoanApplicationWhereUniqueInput
 }
 
-export type LoanApplicationUpdateOneRequiredWithoutLegalReportsNestedInput = {
+export type LoanApplicationUpdateOneWithoutLegalReportsNestedInput = {
   create?: Prisma.XOR<Prisma.LoanApplicationCreateWithoutLegalReportsInput, Prisma.LoanApplicationUncheckedCreateWithoutLegalReportsInput>
   connectOrCreate?: Prisma.LoanApplicationCreateOrConnectWithoutLegalReportsInput
   upsert?: Prisma.LoanApplicationUpsertWithoutLegalReportsInput
+  disconnect?: Prisma.LoanApplicationWhereInput | boolean
+  delete?: Prisma.LoanApplicationWhereInput | boolean
   connect?: Prisma.LoanApplicationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.LoanApplicationUpdateToOneWithWhereWithoutLegalReportsInput, Prisma.LoanApplicationUpdateWithoutLegalReportsInput>, Prisma.LoanApplicationUncheckedUpdateWithoutLegalReportsInput>
 }
