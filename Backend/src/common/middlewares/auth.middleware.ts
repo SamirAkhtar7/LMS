@@ -16,6 +16,7 @@ interface AuthPayload extends JwtPayload {
   id: string;
   email: string;
   role: string;
+  branchId?: string;
 }
 
 export interface AuthRequest extends Request {
@@ -51,7 +52,16 @@ export const authMiddleware = async (
           role: decoded.role,
         };
 
-        // Fetch branchId for employees
+        // Fetch branchId from User table
+        const user = await prisma.user.findUnique({
+          where: { id: decoded.id },
+          select: { branchId: true },
+        });
+        if (user?.branchId) {
+          req.user.branchId = user.branchId;
+        }
+
+        // For employees, also check Employee table
         if (decoded.role === "EMPLOYEE") {
           const employee = await prisma.employee.findUnique({
             where: { userId: decoded.id },
@@ -90,30 +100,22 @@ export const authMiddleware = async (
       return ApiError.send(res, 401, "Invalid refresh token");
     }
 
-    // 3️⃣ Generate new tokens
-    const newAccess = generateAccessToken(
-      decodedRefresh.id,
-      decodedRefresh.email,
-      decodedRefresh.role,
-    );
-
-    const newRefresh = generateRefreshToken(
-      decodedRefresh.id,
-      decodedRefresh.email,
-      decodedRefresh.role,
-    );
-
-    // 4️⃣ Set cookies
-    res.cookie("accessToken", newAccess, cookieOptions);
-    res.cookie("refreshToken", newRefresh, cookieOptions);
-
     req.user = {
       id: decodedRefresh.id,
       email: decodedRefresh.email,
       role: decodedRefresh.role,
     };
 
-    // Fetch branchId for employees
+    // Fetch branchId from User table
+    const user = await prisma.user.findUnique({
+      where: { id: decodedRefresh.id },
+      select: { branchId: true },
+    });
+    if (user?.branchId) {
+      req.user.branchId = user.branchId;
+    }
+
+    // For employees, also check Employee table
     if (decodedRefresh.role === "EMPLOYEE") {
       const employee = await prisma.employee.findUnique({
         where: { userId: decodedRefresh.id },
@@ -123,6 +125,25 @@ export const authMiddleware = async (
         req.user.branchId = employee.branchId;
       }
     }
+
+    // 3️⃣ Generate new tokens with branchId
+    const newAccess = generateAccessToken(
+      decodedRefresh.id,
+      decodedRefresh.email,
+      decodedRefresh.role,
+      req.user.branchId,
+    );
+
+    const newRefresh = generateRefreshToken(
+      decodedRefresh.id,
+      decodedRefresh.email,
+      decodedRefresh.role,
+      req.user.branchId,
+    );
+
+    // 4️⃣ Set cookies
+    res.cookie("accessToken", newAccess, cookieOptions);
+    res.cookie("refreshToken", newRefresh, cookieOptions);
 
     // expose the freshly generated tokens on the request for controllers that may want them
     // (req as any).accessToken = newAccess;

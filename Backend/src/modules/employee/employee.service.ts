@@ -51,6 +51,7 @@ export async function createEmployeeService(data: CreateEmployee) {
         password: hashedPassword,
         role: data.role,
         contactNumber: data.contactNumber ?? data.mobileNumber ?? "",
+        branchId: data.branchId,
         isActive: typeof data.isActive === "boolean" ? data.isActive : true,
       },
     });

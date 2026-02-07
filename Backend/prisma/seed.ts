@@ -19,6 +19,18 @@ async function main(): Promise<void> {
     }),
   );
 
+  // Create Super Branch for admin users
+  const superBranch = await prisma.branch.upsert({
+    where: { code: "HQ-SUPER" },
+    update: {},
+    create: {
+      name: "Headquarters - Super Admin",
+      code: "HQ-SUPER",
+      type: "MAIN",
+      isActive: true,
+    },
+  });
+
   let password: string = "Admin@123";
   password = await hashPassword(password);
 
@@ -30,6 +42,7 @@ async function main(): Promise<void> {
       password,
       role: "ADMIN",
       contactNumber: "9999999999",
+      branchId: superBranch.id,
       isActive: true,
       // kycStatus: "VERIFIED",
       createdAt: now,
@@ -37,6 +50,7 @@ async function main(): Promise<void> {
   });
 
   console.log(" Seed completed successfully:", user);
+  console.log(" Super Branch created:", superBranch);
 }
 
 // Run the script

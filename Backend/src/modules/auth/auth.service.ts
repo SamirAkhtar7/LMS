@@ -20,8 +20,8 @@ export async function loginService(identifier: string, password: string) {
     const isMatch = await comparePassword(password, user.password);
   if (!isMatch) throw new Error("Invalid credentials");
 
-  const accessToken = generateAccessToken(user.id, user.email, user.role);
-  const refreshToken = generateRefreshToken(user.id, user.email, user.role);
+  const accessToken = generateAccessToken(user.id, user.email, user.role ,user.branchId);
+  const refreshToken = generateRefreshToken(user.id, user.email, user.role ,user.branchId);
 
   return { user, accessToken, refreshToken };
 }

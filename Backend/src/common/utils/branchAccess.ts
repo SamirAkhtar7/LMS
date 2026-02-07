@@ -9,20 +9,25 @@ export const getAccessibleBranchIds = async (user: {
   if (user.role === "SUPER_ADMIN") {
     return null; // null means no filter, access to all branches
   }
-    // user Role is EMPLOYEE or ADMIN, we need to check their branch access
-if (user.role === "EMPLOYEE") {
-  if (!user.branchId) {
-    throw new Error("Employee is not mapped to any branch");
+
+  // Admin can access all branches
+  if (user.role === "ADMIN") {
+    return null; // null means no filter, access to all branches
   }
 
-  return [user.branchId];
-}
+  // user Role is EMPLOYEE, we need to check their branch access
+  if (user.role === "EMPLOYEE") {
+    if (!user.branchId) {
+      throw new Error("Employee is not mapped to any branch");
+    }
 
-    
-    
+    return [user.branchId];
+  }
+
   if (!user.branchId) {
     throw new Error("User does not have an associated branch");
   }
+
   const userBranch = await prisma.branch.findUnique({
     where: { id: user.branchId },
     include: {
@@ -37,8 +42,8 @@ if (user.role === "EMPLOYEE") {
   if (userBranch.type === "MAIN") {
     const subBranchIds = userBranch.subBranches.map((sb) => sb.id);
     return [user.branchId, ...subBranchIds];
-    }
-    
+  }
+
   // If it's a sub branch, they can only access their own branch
   return [user.branchId];
 };

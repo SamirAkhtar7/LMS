@@ -8,6 +8,7 @@ export interface JwtPayload extends JWT {
   id: string;
   email: string;
   role: "ADMIN" | "EMPLOYEE" | "PARTNER";
+  branchId?: string;
 }
 
 export const cookieOptions = {
@@ -36,9 +37,10 @@ const getSecret = (type: "ACCESS" | "REFRESH") => {
 export const generateAccessToken = (
   id: string,
   email: string,
-  role: string
+  role: string,
+  branchId?: string,
 ) => {
-  return jwt.sign({ id, email, role }, getSecret("ACCESS"), {
+  return jwt.sign({ id, email, role, branchId }, getSecret("ACCESS"), {
     expiresIn: ENV.ACCESS_TOKEN_EXPIRY,
   });
 };
@@ -46,9 +48,10 @@ export const generateAccessToken = (
 export const generateRefreshToken = (
   id: string,
   email: string,
-  role: string
+  role: string,
+  branchId?: string,
 ) => {
-  return jwt.sign({ id, email, role }, getSecret("REFRESH"), {
+  return jwt.sign({ id, email, role, branchId }, getSecret("REFRESH"), {
     expiresIn: ENV.REFRESH_TOKEN_EXPIRY,
   });
 };

@@ -32,6 +32,8 @@ model User {
   password      String
   role          Role
   contactNumber String
+  branchId      String?
+  branch        Branch?  @relation(fields: [branchId], references: [id])
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -50,7 +52,6 @@ model User {
   leadsAssignedBy  Leads[]           @relation("LeadAssignedBy")
   verifiedKycs     Kyc[]             @relation("KycVerifiedBy")
   loanApplications LoanApplication[]
-  
 }
 
 model UserProfile {
@@ -82,7 +83,7 @@ model Employee {
   id         String @id @default(cuid())
   userId     String @unique
   employeeId String @unique
-
+//TODO: remove the mobile number from employee and partner tables 
   mobileNumber    String
   atlMobileNumber String
   dob             DateTime
@@ -110,7 +111,7 @@ model Employee {
   workLocation       WorkLocation
   salary             Float
   branchId           String
-  branch             Branch   @relation(fields: [branchId], references: [id])
+  branch             Branch       @relation(fields: [branchId], references: [id])
 
   // Optional username if separate from `User`
   loanAssignments LoanAssignment[]
@@ -159,25 +160,25 @@ model Partner {
   user User @relation(fields: [userId], references: [id])
 }
 
-
-
 model Branch {
-  id        String   @id @default(cuid())
-  name   String 
-  code String @unique
-  type  BranchType   // MAIN | SUBSIDIARY 
-  parentBranchId String?   // null for main branches
+  id             String     @id @default(cuid())
+  name           String
+  code           String     @unique
+  type           BranchType // MAIN | SUBSIDIARY 
+  parentBranchId String? // null for main branches
 
-
-  parentBranch   Branch? @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
-  subBranches    Branch[] @relation("BranchHierarchy")
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  employees Employee[]
+  parentBranch     Branch?           @relation("BranchHierarchy", fields: [parentBranchId], references: [id])
+  subBranches      Branch[]          @relation("BranchHierarchy")
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  user             User[]
+  employees        Employee[]
   loanApplications LoanApplication[]
-  loanRecoveries LoanRecovery[]
+  loanRecoveries   LoanRecovery[]
+  technicalReports TechnicalReport[]
+  legalReports     LegalReport[]
+  documents        Document[]
 
   @@index([parentBranchId])
 }
@@ -276,8 +277,8 @@ model LoanApplication {
   createdBy            User?             @relation(fields: [createdById], references: [id])
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
-  branchId            String
-  branch              Branch   @relation(fields: [branchId], references: [id])
+  branchId             String
+  branch               Branch            @relation(fields: [branchId], references: [id])
 
   // Relations
   loanType        LoanType?        @relation(fields: [loanTypeId], references: [id])
@@ -294,9 +295,9 @@ model LoanRecovery {
 
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id])
-  
+
   branchId String
-  branch   Branch   @relation(fields: [branchId], references: [id])
+  branch   Branch @relation(fields: [branchId], references: [id])
 
   recoveryStage  recovery_stage
   recoveryStatus recovery_status
@@ -373,6 +374,7 @@ model Document {
   verificationStatus VerificationStatus @default(pending)
   rejectionReason    String?
   kycId              String?
+  branchId           String
   uploadedBy         String
   verified           Boolean            @default(false)
   verifiedBy         String?
@@ -382,9 +384,9 @@ model Document {
   kyc                Kyc?               @relation("KycDocuments", fields: [kycId], references: [id])
   loanApplication    LoanApplication?   @relation(fields: [loanApplicationId], references: [id])
   coApplicant        CoApplicant?       @relation(fields: [coApplicantId], references: [id])
+  branch             Branch             @relation(fields: [branchId], references: [id])
 
   @@unique([loanApplicationId, documentType]) // ✅ prevents duplicate uploads
-
 }
 
 model Kyc {
@@ -737,6 +739,9 @@ model TechnicalReport {
   approvedBy  String?
   approvedAt  DateTime?
 
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -778,6 +783,9 @@ model LegalReport {
   approvedBy  String?
   approvedAt  DateTime?
 
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -796,7 +804,8 @@ model LoanAssignment {
   unassignedAt      DateTime?
 
   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
-  employee   Employee @relation(fields: [employeeId], references: [id])
+  employee        Employee        @relation(fields: [employeeId], references: [id])
+
   @@unique([loanApplicationId, employeeId, role])
   @@index([loanApplicationId, employeeId])
 }
@@ -863,6 +872,7 @@ enum recovery_status {
 }
 
 enum BranchType {
+  SUPER
   MAIN
   SUB
 }

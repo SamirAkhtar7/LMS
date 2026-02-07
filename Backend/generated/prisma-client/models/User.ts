@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   contactNumber: string | null
+  branchId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -46,6 +47,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   contactNumber: string | null
+  branchId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -60,6 +62,7 @@ export type UserCountAggregateOutputType = {
   password: number
   role: number
   contactNumber: number
+  branchId: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -76,6 +79,7 @@ export type UserMinAggregateInputType = {
   password?: true
   role?: true
   contactNumber?: true
+  branchId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -90,6 +94,7 @@ export type UserMaxAggregateInputType = {
   password?: true
   role?: true
   contactNumber?: true
+  branchId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -104,6 +109,7 @@ export type UserCountAggregateInputType = {
   password?: true
   role?: true
   contactNumber?: true
+  branchId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -191,6 +197,7 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -226,10 +233,12 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   contactNumber?: Prisma.StringFilter<"User"> | string
+  branchId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   kycStatus?: Prisma.EnumKycStatusFilter<"User"> | $Enums.KycStatus
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
@@ -250,10 +259,12 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   kycStatus?: Prisma.SortOrder
+  branch?: Prisma.BranchOrderByWithRelationInput
   profile?: Prisma.UserProfileOrderByWithRelationInput
   admin?: Prisma.AdminOrderByWithRelationInput
   partner?: Prisma.PartnerOrderByWithRelationInput
@@ -278,10 +289,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   contactNumber?: Prisma.StringFilter<"User"> | string
+  branchId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   kycStatus?: Prisma.EnumKycStatusFilter<"User"> | $Enums.KycStatus
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
   partner?: Prisma.XOR<Prisma.PartnerNullableScalarRelationFilter, Prisma.PartnerWhereInput> | null
@@ -302,6 +315,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -322,6 +336,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   contactNumber?: Prisma.StringWithAggregatesFilter<"User"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"User"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -340,6 +355,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -360,6 +376,7 @@ export type UserUncheckedCreateInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -388,6 +405,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -408,6 +426,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,6 +451,7 @@ export type UserCreateManyInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -460,6 +480,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -480,6 +501,7 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -494,6 +516,7 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -508,6 +531,7 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -517,6 +541,16 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -594,6 +628,48 @@ export type UserUpdateOneRequiredWithoutPartnerNestedInput = {
   upsert?: Prisma.UserUpsertWithoutPartnerInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPartnerInput, Prisma.UserUpdateWithoutPartnerInput>, Prisma.UserUncheckedUpdateWithoutPartnerInput>
+}
+
+export type UserCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBranchInput | Prisma.UserUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBranchInput | Prisma.UserUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBranchInput | Prisma.UserUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBranchInput | Prisma.UserUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBranchInput | Prisma.UserUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBranchInput | Prisma.UserUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutLeadsAssignedToInput = {
@@ -700,6 +776,7 @@ export type UserCreateWithoutProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
@@ -719,6 +796,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -762,6 +840,7 @@ export type UserUpdateWithoutProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
@@ -781,6 +860,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -808,6 +888,7 @@ export type UserCreateWithoutAdminInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
@@ -827,6 +908,7 @@ export type UserUncheckedCreateWithoutAdminInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -870,6 +952,7 @@ export type UserUpdateWithoutAdminInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
@@ -889,6 +972,7 @@ export type UserUncheckedUpdateWithoutAdminInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -916,6 +1000,7 @@ export type UserCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -935,6 +1020,7 @@ export type UserUncheckedCreateWithoutEmployeeInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -978,6 +1064,7 @@ export type UserUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -997,6 +1084,7 @@ export type UserUncheckedUpdateWithoutEmployeeInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1024,6 +1112,7 @@ export type UserCreateWithoutPartnerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
@@ -1043,6 +1132,7 @@ export type UserUncheckedCreateWithoutPartnerInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1086,6 +1176,7 @@ export type UserUpdateWithoutPartnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
@@ -1105,6 +1196,7 @@ export type UserUncheckedUpdateWithoutPartnerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1120,6 +1212,98 @@ export type UserUncheckedUpdateWithoutPartnerInput = {
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
+export type UserCreateWithoutBranchInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycCreateNestedManyWithoutUserInput
+  permissions?: Prisma.UserPermissionCreateNestedManyWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsCreateNestedManyWithoutAssignedByUserInput
+  verifiedKycs?: Prisma.KycCreateNestedManyWithoutVerifiedByUserInput
+  loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutBranchInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput
+  partner?: Prisma.PartnerUncheckedCreateNestedOneWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
+  kycs?: Prisma.KycUncheckedCreateNestedManyWithoutUserInput
+  permissions?: Prisma.UserPermissionUncheckedCreateNestedManyWithoutUserInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedToUserInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedCreateNestedManyWithoutAssignedByUserInput
+  verifiedKycs?: Prisma.KycUncheckedCreateNestedManyWithoutVerifiedByUserInput
+  loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput>
+}
+
+export type UserCreateManyBranchInputEnvelope = {
+  data: Prisma.UserCreateManyBranchInput | Prisma.UserCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBranchInput, Prisma.UserUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBranchInput, Prisma.UserUncheckedUpdateWithoutBranchInput>
+}
+
+export type UserUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutBranchInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  fullName?: Prisma.StringFilter<"User"> | string
+  userName?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  contactNumber?: Prisma.StringFilter<"User"> | string
+  branchId?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  kycStatus?: Prisma.EnumKycStatusFilter<"User"> | $Enums.KycStatus
+}
+
 export type UserCreateWithoutLeadsAssignedToInput = {
   id?: string
   fullName: string
@@ -1132,6 +1316,7 @@ export type UserCreateWithoutLeadsAssignedToInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1151,6 +1336,7 @@ export type UserUncheckedCreateWithoutLeadsAssignedToInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1183,6 +1369,7 @@ export type UserCreateWithoutLeadsAssignedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1202,6 +1389,7 @@ export type UserUncheckedCreateWithoutLeadsAssignedByInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1245,6 +1433,7 @@ export type UserUpdateWithoutLeadsAssignedToInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1264,6 +1453,7 @@ export type UserUncheckedUpdateWithoutLeadsAssignedToInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1302,6 +1492,7 @@ export type UserUpdateWithoutLeadsAssignedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1321,6 +1512,7 @@ export type UserUncheckedUpdateWithoutLeadsAssignedByInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1348,6 +1540,7 @@ export type UserCreateWithoutLoanApplicationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1367,6 +1560,7 @@ export type UserUncheckedCreateWithoutLoanApplicationsInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1410,6 +1604,7 @@ export type UserUpdateWithoutLoanApplicationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1429,6 +1624,7 @@ export type UserUncheckedUpdateWithoutLoanApplicationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1456,6 +1652,7 @@ export type UserCreateWithoutPermissionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1475,6 +1672,7 @@ export type UserUncheckedCreateWithoutPermissionsInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1518,6 +1716,7 @@ export type UserUpdateWithoutPermissionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1537,6 +1736,7 @@ export type UserUncheckedUpdateWithoutPermissionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1564,6 +1764,7 @@ export type UserCreateWithoutVerifiedKycsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1583,6 +1784,7 @@ export type UserUncheckedCreateWithoutVerifiedKycsInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1615,6 +1817,7 @@ export type UserCreateWithoutKycsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   kycStatus?: $Enums.KycStatus
+  branch: Prisma.BranchCreateNestedOneWithoutUserInput
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   admin?: Prisma.AdminCreateNestedOneWithoutUserInput
   partner?: Prisma.PartnerCreateNestedOneWithoutUserInput
@@ -1634,6 +1837,7 @@ export type UserUncheckedCreateWithoutKycsInput = {
   password: string
   role: $Enums.Role
   contactNumber: string
+  branchId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1677,6 +1881,7 @@ export type UserUpdateWithoutVerifiedKycsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1696,6 +1901,7 @@ export type UserUncheckedUpdateWithoutVerifiedKycsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1734,6 +1940,7 @@ export type UserUpdateWithoutKycsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUserNestedInput
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
   partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
@@ -1753,6 +1960,7 @@ export type UserUncheckedUpdateWithoutKycsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1766,6 +1974,82 @@ export type UserUncheckedUpdateWithoutKycsInput = {
   leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
   verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserCreateManyBranchInput = {
+  id?: string
+  fullName: string
+  userName: string
+  email: string
+  password: string
+  role: $Enums.Role
+  contactNumber: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  kycStatus?: $Enums.KycStatus
+}
+
+export type UserUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUpdateManyWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUpdateManyWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUpdateManyWithoutAssignedByUserNestedInput
+  verifiedKycs?: Prisma.KycUpdateManyWithoutVerifiedByUserNestedInput
+  loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput
+  partner?: Prisma.PartnerUncheckedUpdateOneWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+  kycs?: Prisma.KycUncheckedUpdateManyWithoutUserNestedInput
+  permissions?: Prisma.UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+  leadsAssignedTo?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  leadsAssignedBy?: Prisma.LeadsUncheckedUpdateManyWithoutAssignedByUserNestedInput
+  verifiedKycs?: Prisma.KycUncheckedUpdateManyWithoutVerifiedByUserNestedInput
+  loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
 }
 
 
@@ -1852,10 +2136,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   contactNumber?: boolean
+  branchId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   kycStatus?: boolean
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
@@ -1879,14 +2165,16 @@ export type UserSelectScalar = {
   password?: boolean
   role?: boolean
   contactNumber?: boolean
+  branchId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   kycStatus?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "userName" | "email" | "password" | "role" | "contactNumber" | "isActive" | "createdAt" | "updatedAt" | "kycStatus", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "userName" | "email" | "password" | "role" | "contactNumber" | "branchId" | "isActive" | "createdAt" | "updatedAt" | "kycStatus", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   admin?: boolean | Prisma.User$adminArgs<ExtArgs>
   partner?: boolean | Prisma.User$partnerArgs<ExtArgs>
@@ -1903,6 +2191,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    branch: Prisma.$BranchPayload<ExtArgs>
     profile: Prisma.$UserProfilePayload<ExtArgs> | null
     admin: Prisma.$AdminPayload<ExtArgs> | null
     partner: Prisma.$PartnerPayload<ExtArgs> | null
@@ -1922,6 +2211,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.Role
     contactNumber: string
+    branchId: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -2266,6 +2556,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   profile<T extends Prisma.User$profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.User$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminArgs<ExtArgs>>): Prisma.Prisma__AdminClient<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   partner<T extends Prisma.User$partnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$partnerArgs<ExtArgs>>): Prisma.Prisma__PartnerClient<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2312,6 +2603,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly contactNumber: Prisma.FieldRef<"User", 'String'>
+  readonly branchId: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

@@ -2268,6 +2268,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   contactNumber: 'contactNumber',
+  branchId: 'branchId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -2527,6 +2528,7 @@ export const DocumentScalarFieldEnum = {
   verificationStatus: 'verificationStatus',
   rejectionReason: 'rejectionReason',
   kycId: 'kycId',
+  branchId: 'branchId',
   uploadedBy: 'uploadedBy',
   verified: 'verified',
   verifiedBy: 'verifiedBy',
@@ -2786,6 +2788,7 @@ export const TechnicalReportScalarFieldEnum = {
   submittedAt: 'submittedAt',
   approvedBy: 'approvedBy',
   approvedAt: 'approvedAt',
+  branchId: 'branchId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2814,6 +2817,7 @@ export const LegalReportScalarFieldEnum = {
   submittedAt: 'submittedAt',
   approvedBy: 'approvedBy',
   approvedAt: 'approvedAt',
+  branchId: 'branchId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2870,7 +2874,8 @@ export const UserOrderByRelevanceFieldEnum = {
   userName: 'userName',
   email: 'email',
   password: 'password',
-  contactNumber: 'contactNumber'
+  contactNumber: 'contactNumber',
+  branchId: 'branchId'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -3045,6 +3050,7 @@ export const DocumentOrderByRelevanceFieldEnum = {
   documentPath: 'documentPath',
   rejectionReason: 'rejectionReason',
   kycId: 'kycId',
+  branchId: 'branchId',
   uploadedBy: 'uploadedBy',
   verifiedBy: 'verifiedBy'
 } as const
@@ -3195,7 +3201,8 @@ export const TechnicalReportOrderByRelevanceFieldEnum = {
   remarks: 'remarks',
   reportUrl: 'reportUrl',
   sitePhotographs: 'sitePhotographs',
-  approvedBy: 'approvedBy'
+  approvedBy: 'approvedBy',
+  branchId: 'branchId'
 } as const
 
 export type TechnicalReportOrderByRelevanceFieldEnum = (typeof TechnicalReportOrderByRelevanceFieldEnum)[keyof typeof TechnicalReportOrderByRelevanceFieldEnum]
@@ -3212,7 +3219,8 @@ export const LegalReportOrderByRelevanceFieldEnum = {
   encumbranceDetails: 'encumbranceDetails',
   remarks: 'remarks',
   reportUrl: 'reportUrl',
-  approvedBy: 'approvedBy'
+  approvedBy: 'approvedBy',
+  branchId: 'branchId'
 } as const
 
 export type LegalReportOrderByRelevanceFieldEnum = (typeof LegalReportOrderByRelevanceFieldEnum)[keyof typeof LegalReportOrderByRelevanceFieldEnum]

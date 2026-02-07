@@ -55,6 +55,7 @@ export type LegalReportMinAggregateOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -80,6 +81,7 @@ export type LegalReportMaxAggregateOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -105,6 +107,7 @@ export type LegalReportCountAggregateOutputType = {
   submittedAt: number
   approvedBy: number
   approvedAt: number
+  branchId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -140,6 +143,7 @@ export type LegalReportMinAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -165,6 +169,7 @@ export type LegalReportMaxAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -190,6 +195,7 @@ export type LegalReportCountAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -302,6 +308,7 @@ export type LegalReportGroupByOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string
   createdAt: Date
   updatedAt: Date
   _count: LegalReportCountAggregateOutputType | null
@@ -350,9 +357,11 @@ export type LegalReportWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableFilter<"LegalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"LegalReport"> | string
   createdAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationScalarRelationFilter, Prisma.LoanApplicationWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }
 
 export type LegalReportOrderByWithRelationInput = {
@@ -376,9 +385,11 @@ export type LegalReportOrderByWithRelationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   _relevance?: Prisma.LegalReportOrderByRelevanceInput
 }
 
@@ -406,9 +417,11 @@ export type LegalReportWhereUniqueInput = Prisma.AtLeast<{
   submittedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableFilter<"LegalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"LegalReport"> | string
   createdAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationScalarRelationFilter, Prisma.LoanApplicationWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }, "id">
 
 export type LegalReportOrderByWithAggregationInput = {
@@ -432,6 +445,7 @@ export type LegalReportOrderByWithAggregationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LegalReportCountOrderByAggregateInput
@@ -465,6 +479,7 @@ export type LegalReportScalarWhereWithAggregatesInput = {
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LegalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableWithAggregatesFilter<"LegalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LegalReport"> | Date | string | null
+  branchId?: Prisma.StringWithAggregatesFilter<"LegalReport"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LegalReport"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LegalReport"> | Date | string
 }
@@ -492,6 +507,7 @@ export type LegalReportCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplication: Prisma.LoanApplicationCreateNestedOneWithoutLegalReportsInput
+  branch: Prisma.BranchCreateNestedOneWithoutLegalReportsInput
 }
 
 export type LegalReportUncheckedCreateInput = {
@@ -515,6 +531,7 @@ export type LegalReportUncheckedCreateInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -542,6 +559,7 @@ export type LegalReportUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneRequiredWithoutLegalReportsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutLegalReportsNestedInput
 }
 
 export type LegalReportUncheckedUpdateInput = {
@@ -565,6 +583,7 @@ export type LegalReportUncheckedUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -590,6 +609,7 @@ export type LegalReportCreateManyInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -639,6 +659,7 @@ export type LegalReportUncheckedUpdateManyInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -680,6 +701,7 @@ export type LegalReportCountOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -709,6 +731,7 @@ export type LegalReportMaxOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -734,12 +757,55 @@ export type LegalReportMinOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type LegalReportSumOrderByAggregateInput = {
   titleChainYears?: Prisma.SortOrder
+}
+
+export type LegalReportCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput> | Prisma.LegalReportCreateWithoutBranchInput[] | Prisma.LegalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.LegalReportCreateOrConnectWithoutBranchInput | Prisma.LegalReportCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.LegalReportCreateManyBranchInputEnvelope
+  connect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+}
+
+export type LegalReportUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput> | Prisma.LegalReportCreateWithoutBranchInput[] | Prisma.LegalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.LegalReportCreateOrConnectWithoutBranchInput | Prisma.LegalReportCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.LegalReportCreateManyBranchInputEnvelope
+  connect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+}
+
+export type LegalReportUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput> | Prisma.LegalReportCreateWithoutBranchInput[] | Prisma.LegalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.LegalReportCreateOrConnectWithoutBranchInput | Prisma.LegalReportCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.LegalReportUpsertWithWhereUniqueWithoutBranchInput | Prisma.LegalReportUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.LegalReportCreateManyBranchInputEnvelope
+  set?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  disconnect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  delete?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  connect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  update?: Prisma.LegalReportUpdateWithWhereUniqueWithoutBranchInput | Prisma.LegalReportUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.LegalReportUpdateManyWithWhereWithoutBranchInput | Prisma.LegalReportUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
+}
+
+export type LegalReportUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput> | Prisma.LegalReportCreateWithoutBranchInput[] | Prisma.LegalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.LegalReportCreateOrConnectWithoutBranchInput | Prisma.LegalReportCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.LegalReportUpsertWithWhereUniqueWithoutBranchInput | Prisma.LegalReportUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.LegalReportCreateManyBranchInputEnvelope
+  set?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  disconnect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  delete?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  connect?: Prisma.LegalReportWhereUniqueInput | Prisma.LegalReportWhereUniqueInput[]
+  update?: Prisma.LegalReportUpdateWithWhereUniqueWithoutBranchInput | Prisma.LegalReportUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.LegalReportUpdateManyWithWhereWithoutBranchInput | Prisma.LegalReportUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
 }
 
 export type LegalReportCreateNestedManyWithoutLoanApplicationInput = {
@@ -788,8 +854,34 @@ export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
 }
 
-export type LegalReportCreateWithoutLoanApplicationInput = {
+export type LegalReportCreateWithoutBranchInput = {
   id?: string
+  advocateId?: string | null
+  advocateName: string
+  lawFirmName?: string | null
+  ownerName: string
+  ownershipType: string
+  titleClear: boolean
+  titleChainYears: number
+  encumbranceFound: boolean
+  encumbranceDetails?: string | null
+  reraRegistered?: boolean | null
+  landUserClear?: boolean | null
+  buildingApproval?: boolean | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplication: Prisma.LoanApplicationCreateNestedOneWithoutLegalReportsInput
+}
+
+export type LegalReportUncheckedCreateWithoutBranchInput = {
+  id?: string
+  loanApplicationId: string
   advocateId?: string | null
   advocateName: string
   lawFirmName?: string | null
@@ -812,6 +904,86 @@ export type LegalReportCreateWithoutLoanApplicationInput = {
   updatedAt?: Date | string
 }
 
+export type LegalReportCreateOrConnectWithoutBranchInput = {
+  where: Prisma.LegalReportWhereUniqueInput
+  create: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput>
+}
+
+export type LegalReportCreateManyBranchInputEnvelope = {
+  data: Prisma.LegalReportCreateManyBranchInput | Prisma.LegalReportCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type LegalReportUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.LegalReportWhereUniqueInput
+  update: Prisma.XOR<Prisma.LegalReportUpdateWithoutBranchInput, Prisma.LegalReportUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.LegalReportCreateWithoutBranchInput, Prisma.LegalReportUncheckedCreateWithoutBranchInput>
+}
+
+export type LegalReportUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.LegalReportWhereUniqueInput
+  data: Prisma.XOR<Prisma.LegalReportUpdateWithoutBranchInput, Prisma.LegalReportUncheckedUpdateWithoutBranchInput>
+}
+
+export type LegalReportUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.LegalReportScalarWhereInput
+  data: Prisma.XOR<Prisma.LegalReportUpdateManyMutationInput, Prisma.LegalReportUncheckedUpdateManyWithoutBranchInput>
+}
+
+export type LegalReportScalarWhereInput = {
+  AND?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
+  OR?: Prisma.LegalReportScalarWhereInput[]
+  NOT?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
+  id?: Prisma.StringFilter<"LegalReport"> | string
+  loanApplicationId?: Prisma.StringFilter<"LegalReport"> | string
+  advocateId?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  advocateName?: Prisma.StringFilter<"LegalReport"> | string
+  lawFirmName?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  ownerName?: Prisma.StringFilter<"LegalReport"> | string
+  ownershipType?: Prisma.StringFilter<"LegalReport"> | string
+  titleClear?: Prisma.BoolFilter<"LegalReport"> | boolean
+  titleChainYears?: Prisma.IntFilter<"LegalReport"> | number
+  encumbranceFound?: Prisma.BoolFilter<"LegalReport"> | boolean
+  encumbranceDetails?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  reraRegistered?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
+  landUserClear?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
+  buildingApproval?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
+  status?: Prisma.EnumReportStatusFilter<"LegalReport"> | $Enums.ReportStatus
+  remarks?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  reportUrl?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  submittedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"LegalReport"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"LegalReport"> | string
+  createdAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
+}
+
+export type LegalReportCreateWithoutLoanApplicationInput = {
+  id?: string
+  advocateId?: string | null
+  advocateName: string
+  lawFirmName?: string | null
+  ownerName: string
+  ownershipType: string
+  titleClear: boolean
+  titleChainYears: number
+  encumbranceFound: boolean
+  encumbranceDetails?: string | null
+  reraRegistered?: boolean | null
+  landUserClear?: boolean | null
+  buildingApproval?: boolean | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutLegalReportsInput
+}
+
 export type LegalReportUncheckedCreateWithoutLoanApplicationInput = {
   id?: string
   advocateId?: string | null
@@ -832,6 +1004,7 @@ export type LegalReportUncheckedCreateWithoutLoanApplicationInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -862,32 +1035,104 @@ export type LegalReportUpdateManyWithWhereWithoutLoanApplicationInput = {
   data: Prisma.XOR<Prisma.LegalReportUpdateManyMutationInput, Prisma.LegalReportUncheckedUpdateManyWithoutLoanApplicationInput>
 }
 
-export type LegalReportScalarWhereInput = {
-  AND?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
-  OR?: Prisma.LegalReportScalarWhereInput[]
-  NOT?: Prisma.LegalReportScalarWhereInput | Prisma.LegalReportScalarWhereInput[]
-  id?: Prisma.StringFilter<"LegalReport"> | string
-  loanApplicationId?: Prisma.StringFilter<"LegalReport"> | string
-  advocateId?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  advocateName?: Prisma.StringFilter<"LegalReport"> | string
-  lawFirmName?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  ownerName?: Prisma.StringFilter<"LegalReport"> | string
-  ownershipType?: Prisma.StringFilter<"LegalReport"> | string
-  titleClear?: Prisma.BoolFilter<"LegalReport"> | boolean
-  titleChainYears?: Prisma.IntFilter<"LegalReport"> | number
-  encumbranceFound?: Prisma.BoolFilter<"LegalReport"> | boolean
-  encumbranceDetails?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  reraRegistered?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
-  landUserClear?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
-  buildingApproval?: Prisma.BoolNullableFilter<"LegalReport"> | boolean | null
-  status?: Prisma.EnumReportStatusFilter<"LegalReport"> | $Enums.ReportStatus
-  remarks?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  reportUrl?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  submittedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
-  approvedBy?: Prisma.StringNullableFilter<"LegalReport"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"LegalReport"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"LegalReport"> | Date | string
+export type LegalReportCreateManyBranchInput = {
+  id?: string
+  loanApplicationId: string
+  advocateId?: string | null
+  advocateName: string
+  lawFirmName?: string | null
+  ownerName: string
+  ownershipType: string
+  titleClear: boolean
+  titleChainYears: number
+  encumbranceFound: boolean
+  encumbranceDetails?: string | null
+  reraRegistered?: boolean | null
+  landUserClear?: boolean | null
+  buildingApproval?: boolean | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LegalReportUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advocateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  advocateName?: Prisma.StringFieldUpdateOperationsInput | string
+  lawFirmName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipType?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClear?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleChainYears?: Prisma.IntFieldUpdateOperationsInput | number
+  encumbranceFound?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  encumbranceDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reraRegistered?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  landUserClear?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  buildingApproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplication?: Prisma.LoanApplicationUpdateOneRequiredWithoutLegalReportsNestedInput
+}
+
+export type LegalReportUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.StringFieldUpdateOperationsInput | string
+  advocateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  advocateName?: Prisma.StringFieldUpdateOperationsInput | string
+  lawFirmName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipType?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClear?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleChainYears?: Prisma.IntFieldUpdateOperationsInput | number
+  encumbranceFound?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  encumbranceDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reraRegistered?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  landUserClear?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  buildingApproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LegalReportUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.StringFieldUpdateOperationsInput | string
+  advocateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  advocateName?: Prisma.StringFieldUpdateOperationsInput | string
+  lawFirmName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  ownershipType?: Prisma.StringFieldUpdateOperationsInput | string
+  titleClear?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleChainYears?: Prisma.IntFieldUpdateOperationsInput | number
+  encumbranceFound?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  encumbranceDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reraRegistered?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  landUserClear?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  buildingApproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LegalReportCreateManyLoanApplicationInput = {
@@ -910,6 +1155,7 @@ export type LegalReportCreateManyLoanApplicationInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -936,6 +1182,7 @@ export type LegalReportUpdateWithoutLoanApplicationInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutLegalReportsNestedInput
 }
 
 export type LegalReportUncheckedUpdateWithoutLoanApplicationInput = {
@@ -958,6 +1205,7 @@ export type LegalReportUncheckedUpdateWithoutLoanApplicationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -982,6 +1230,7 @@ export type LegalReportUncheckedUpdateManyWithoutLoanApplicationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1009,9 +1258,11 @@ export type LegalReportSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   submittedAt?: boolean
   approvedBy?: boolean
   approvedAt?: boolean
+  branchId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   loanApplication?: boolean | Prisma.LoanApplicationDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["legalReport"]>
 
 
@@ -1037,19 +1288,22 @@ export type LegalReportSelectScalar = {
   submittedAt?: boolean
   approvedBy?: boolean
   approvedAt?: boolean
+  branchId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LegalReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "advocateId" | "advocateName" | "lawFirmName" | "ownerName" | "ownershipType" | "titleClear" | "titleChainYears" | "encumbranceFound" | "encumbranceDetails" | "reraRegistered" | "landUserClear" | "buildingApproval" | "status" | "remarks" | "reportUrl" | "submittedAt" | "approvedBy" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["legalReport"]>
+export type LegalReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "advocateId" | "advocateName" | "lawFirmName" | "ownerName" | "ownershipType" | "titleClear" | "titleChainYears" | "encumbranceFound" | "encumbranceDetails" | "reraRegistered" | "landUserClear" | "buildingApproval" | "status" | "remarks" | "reportUrl" | "submittedAt" | "approvedBy" | "approvedAt" | "branchId" | "createdAt" | "updatedAt", ExtArgs["result"]["legalReport"]>
 export type LegalReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplication?: boolean | Prisma.LoanApplicationDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }
 
 export type $LegalReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LegalReport"
   objects: {
     loanApplication: Prisma.$LoanApplicationPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1072,6 +1326,7 @@ export type $LegalReportPayload<ExtArgs extends runtime.Types.Extensions.Interna
     submittedAt: Date | null
     approvedBy: string | null
     approvedAt: Date | null
+    branchId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["legalReport"]>
@@ -1415,6 +1670,7 @@ readonly fields: LegalReportFieldRefs;
 export interface Prisma__LegalReportClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   loanApplication<T extends Prisma.LoanApplicationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplicationDefaultArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1464,6 +1720,7 @@ export interface LegalReportFieldRefs {
   readonly submittedAt: Prisma.FieldRef<"LegalReport", 'DateTime'>
   readonly approvedBy: Prisma.FieldRef<"LegalReport", 'String'>
   readonly approvedAt: Prisma.FieldRef<"LegalReport", 'DateTime'>
+  readonly branchId: Prisma.FieldRef<"LegalReport", 'String'>
   readonly createdAt: Prisma.FieldRef<"LegalReport", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LegalReport", 'DateTime'>
 }

@@ -70,6 +70,7 @@ export type TechnicalReportMinAggregateOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -100,6 +101,7 @@ export type TechnicalReportMaxAggregateOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -130,6 +132,7 @@ export type TechnicalReportCountAggregateOutputType = {
   submittedAt: number
   approvedBy: number
   approvedAt: number
+  branchId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -180,6 +183,7 @@ export type TechnicalReportMinAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -210,6 +214,7 @@ export type TechnicalReportMaxAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -240,6 +245,7 @@ export type TechnicalReportCountAggregateInputType = {
   submittedAt?: true
   approvedBy?: true
   approvedAt?: true
+  branchId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -357,6 +363,7 @@ export type TechnicalReportGroupByOutputType = {
   submittedAt: Date | null
   approvedBy: string | null
   approvedAt: Date | null
+  branchId: string
   createdAt: Date
   updatedAt: Date
   _count: TechnicalReportCountAggregateOutputType | null
@@ -410,9 +417,11 @@ export type TechnicalReportWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableFilter<"TechnicalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"TechnicalReport"> | string
   createdAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationScalarRelationFilter, Prisma.LoanApplicationWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }
 
 export type TechnicalReportOrderByWithRelationInput = {
@@ -441,9 +450,11 @@ export type TechnicalReportOrderByWithRelationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   loanApplication?: Prisma.LoanApplicationOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   _relevance?: Prisma.TechnicalReportOrderByRelevanceInput
 }
 
@@ -476,9 +487,11 @@ export type TechnicalReportWhereUniqueInput = Prisma.AtLeast<{
   submittedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableFilter<"TechnicalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"TechnicalReport"> | string
   createdAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
   loanApplication?: Prisma.XOR<Prisma.LoanApplicationScalarRelationFilter, Prisma.LoanApplicationWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }, "id">
 
 export type TechnicalReportOrderByWithAggregationInput = {
@@ -507,6 +520,7 @@ export type TechnicalReportOrderByWithAggregationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TechnicalReportCountOrderByAggregateInput
@@ -545,6 +559,7 @@ export type TechnicalReportScalarWhereWithAggregatesInput = {
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TechnicalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableWithAggregatesFilter<"TechnicalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TechnicalReport"> | Date | string | null
+  branchId?: Prisma.StringWithAggregatesFilter<"TechnicalReport"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TechnicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TechnicalReport"> | Date | string
 }
@@ -577,6 +592,7 @@ export type TechnicalReportCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplication: Prisma.LoanApplicationCreateNestedOneWithoutTechnicalReportsInput
+  branch: Prisma.BranchCreateNestedOneWithoutTechnicalReportsInput
 }
 
 export type TechnicalReportUncheckedCreateInput = {
@@ -605,6 +621,7 @@ export type TechnicalReportUncheckedCreateInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -637,6 +654,7 @@ export type TechnicalReportUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplication?: Prisma.LoanApplicationUpdateOneRequiredWithoutTechnicalReportsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutTechnicalReportsNestedInput
 }
 
 export type TechnicalReportUncheckedUpdateInput = {
@@ -665,6 +683,7 @@ export type TechnicalReportUncheckedUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -695,6 +714,7 @@ export type TechnicalReportCreateManyInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -754,6 +774,7 @@ export type TechnicalReportUncheckedUpdateManyInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -800,6 +821,7 @@ export type TechnicalReportCountOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -839,6 +861,7 @@ export type TechnicalReportMaxOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -869,6 +892,7 @@ export type TechnicalReportMinOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -880,6 +904,48 @@ export type TechnicalReportSumOrderByAggregateInput = {
   recommendedLtv?: Prisma.SortOrder
   propertyAge?: Prisma.SortOrder
   residualLife?: Prisma.SortOrder
+}
+
+export type TechnicalReportCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput> | Prisma.TechnicalReportCreateWithoutBranchInput[] | Prisma.TechnicalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.TechnicalReportCreateOrConnectWithoutBranchInput | Prisma.TechnicalReportCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.TechnicalReportCreateManyBranchInputEnvelope
+  connect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+}
+
+export type TechnicalReportUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput> | Prisma.TechnicalReportCreateWithoutBranchInput[] | Prisma.TechnicalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.TechnicalReportCreateOrConnectWithoutBranchInput | Prisma.TechnicalReportCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.TechnicalReportCreateManyBranchInputEnvelope
+  connect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+}
+
+export type TechnicalReportUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput> | Prisma.TechnicalReportCreateWithoutBranchInput[] | Prisma.TechnicalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.TechnicalReportCreateOrConnectWithoutBranchInput | Prisma.TechnicalReportCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.TechnicalReportUpsertWithWhereUniqueWithoutBranchInput | Prisma.TechnicalReportUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.TechnicalReportCreateManyBranchInputEnvelope
+  set?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  disconnect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  delete?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  connect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  update?: Prisma.TechnicalReportUpdateWithWhereUniqueWithoutBranchInput | Prisma.TechnicalReportUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.TechnicalReportUpdateManyWithWhereWithoutBranchInput | Prisma.TechnicalReportUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.TechnicalReportScalarWhereInput | Prisma.TechnicalReportScalarWhereInput[]
+}
+
+export type TechnicalReportUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput> | Prisma.TechnicalReportCreateWithoutBranchInput[] | Prisma.TechnicalReportUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.TechnicalReportCreateOrConnectWithoutBranchInput | Prisma.TechnicalReportCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.TechnicalReportUpsertWithWhereUniqueWithoutBranchInput | Prisma.TechnicalReportUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.TechnicalReportCreateManyBranchInputEnvelope
+  set?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  disconnect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  delete?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  connect?: Prisma.TechnicalReportWhereUniqueInput | Prisma.TechnicalReportWhereUniqueInput[]
+  update?: Prisma.TechnicalReportUpdateWithWhereUniqueWithoutBranchInput | Prisma.TechnicalReportUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.TechnicalReportUpdateManyWithWhereWithoutBranchInput | Prisma.TechnicalReportUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.TechnicalReportScalarWhereInput | Prisma.TechnicalReportScalarWhereInput[]
 }
 
 export type TechnicalReportCreateNestedManyWithoutLoanApplicationInput = {
@@ -928,8 +994,39 @@ export type EnumReportStatusFieldUpdateOperationsInput = {
   set?: $Enums.ReportStatus
 }
 
-export type TechnicalReportCreateWithoutLoanApplicationInput = {
+export type TechnicalReportCreateWithoutBranchInput = {
   id?: string
+  engineerId?: string | null
+  engineerName: string
+  agencyName?: string | null
+  propertyType: string
+  propertyAddress: string
+  city: string
+  state: string
+  pincode: string
+  marketValue: number
+  discussionValue: number
+  forcesdSaleValue?: number | null
+  recommendedLtv: number
+  constructionStatus: string
+  propertyAge?: number | null
+  residualLife?: number | null
+  qualityOfConstruction?: string | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  sitePhotographs?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplication: Prisma.LoanApplicationCreateNestedOneWithoutTechnicalReportsInput
+}
+
+export type TechnicalReportUncheckedCreateWithoutBranchInput = {
+  id?: string
+  loanApplicationId: string
   engineerId?: string | null
   engineerName: string
   agencyName?: string | null
@@ -957,59 +1054,30 @@ export type TechnicalReportCreateWithoutLoanApplicationInput = {
   updatedAt?: Date | string
 }
 
-export type TechnicalReportUncheckedCreateWithoutLoanApplicationInput = {
-  id?: string
-  engineerId?: string | null
-  engineerName: string
-  agencyName?: string | null
-  propertyType: string
-  propertyAddress: string
-  city: string
-  state: string
-  pincode: string
-  marketValue: number
-  discussionValue: number
-  forcesdSaleValue?: number | null
-  recommendedLtv: number
-  constructionStatus: string
-  propertyAge?: number | null
-  residualLife?: number | null
-  qualityOfConstruction?: string | null
-  status?: $Enums.ReportStatus
-  remarks?: string | null
-  reportUrl?: string | null
-  sitePhotographs?: string | null
-  submittedAt?: Date | string | null
-  approvedBy?: string | null
-  approvedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type TechnicalReportCreateOrConnectWithoutLoanApplicationInput = {
+export type TechnicalReportCreateOrConnectWithoutBranchInput = {
   where: Prisma.TechnicalReportWhereUniqueInput
-  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedCreateWithoutLoanApplicationInput>
+  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput>
 }
 
-export type TechnicalReportCreateManyLoanApplicationInputEnvelope = {
-  data: Prisma.TechnicalReportCreateManyLoanApplicationInput | Prisma.TechnicalReportCreateManyLoanApplicationInput[]
+export type TechnicalReportCreateManyBranchInputEnvelope = {
+  data: Prisma.TechnicalReportCreateManyBranchInput | Prisma.TechnicalReportCreateManyBranchInput[]
   skipDuplicates?: boolean
 }
 
-export type TechnicalReportUpsertWithWhereUniqueWithoutLoanApplicationInput = {
+export type TechnicalReportUpsertWithWhereUniqueWithoutBranchInput = {
   where: Prisma.TechnicalReportWhereUniqueInput
-  update: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedUpdateWithoutLoanApplicationInput>
-  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedCreateWithoutLoanApplicationInput>
+  update: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutBranchInput, Prisma.TechnicalReportUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutBranchInput, Prisma.TechnicalReportUncheckedCreateWithoutBranchInput>
 }
 
-export type TechnicalReportUpdateWithWhereUniqueWithoutLoanApplicationInput = {
+export type TechnicalReportUpdateWithWhereUniqueWithoutBranchInput = {
   where: Prisma.TechnicalReportWhereUniqueInput
-  data: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedUpdateWithoutLoanApplicationInput>
+  data: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutBranchInput, Prisma.TechnicalReportUncheckedUpdateWithoutBranchInput>
 }
 
-export type TechnicalReportUpdateManyWithWhereWithoutLoanApplicationInput = {
+export type TechnicalReportUpdateManyWithWhereWithoutBranchInput = {
   where: Prisma.TechnicalReportScalarWhereInput
-  data: Prisma.XOR<Prisma.TechnicalReportUpdateManyMutationInput, Prisma.TechnicalReportUncheckedUpdateManyWithoutLoanApplicationInput>
+  data: Prisma.XOR<Prisma.TechnicalReportUpdateManyMutationInput, Prisma.TechnicalReportUncheckedUpdateManyWithoutBranchInput>
 }
 
 export type TechnicalReportScalarWhereInput = {
@@ -1041,8 +1109,215 @@ export type TechnicalReportScalarWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
   approvedBy?: Prisma.StringNullableFilter<"TechnicalReport"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"TechnicalReport"> | Date | string | null
+  branchId?: Prisma.StringFilter<"TechnicalReport"> | string
   createdAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TechnicalReport"> | Date | string
+}
+
+export type TechnicalReportCreateWithoutLoanApplicationInput = {
+  id?: string
+  engineerId?: string | null
+  engineerName: string
+  agencyName?: string | null
+  propertyType: string
+  propertyAddress: string
+  city: string
+  state: string
+  pincode: string
+  marketValue: number
+  discussionValue: number
+  forcesdSaleValue?: number | null
+  recommendedLtv: number
+  constructionStatus: string
+  propertyAge?: number | null
+  residualLife?: number | null
+  qualityOfConstruction?: string | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  sitePhotographs?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutTechnicalReportsInput
+}
+
+export type TechnicalReportUncheckedCreateWithoutLoanApplicationInput = {
+  id?: string
+  engineerId?: string | null
+  engineerName: string
+  agencyName?: string | null
+  propertyType: string
+  propertyAddress: string
+  city: string
+  state: string
+  pincode: string
+  marketValue: number
+  discussionValue: number
+  forcesdSaleValue?: number | null
+  recommendedLtv: number
+  constructionStatus: string
+  propertyAge?: number | null
+  residualLife?: number | null
+  qualityOfConstruction?: string | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  sitePhotographs?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  branchId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TechnicalReportCreateOrConnectWithoutLoanApplicationInput = {
+  where: Prisma.TechnicalReportWhereUniqueInput
+  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedCreateWithoutLoanApplicationInput>
+}
+
+export type TechnicalReportCreateManyLoanApplicationInputEnvelope = {
+  data: Prisma.TechnicalReportCreateManyLoanApplicationInput | Prisma.TechnicalReportCreateManyLoanApplicationInput[]
+  skipDuplicates?: boolean
+}
+
+export type TechnicalReportUpsertWithWhereUniqueWithoutLoanApplicationInput = {
+  where: Prisma.TechnicalReportWhereUniqueInput
+  update: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedUpdateWithoutLoanApplicationInput>
+  create: Prisma.XOR<Prisma.TechnicalReportCreateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedCreateWithoutLoanApplicationInput>
+}
+
+export type TechnicalReportUpdateWithWhereUniqueWithoutLoanApplicationInput = {
+  where: Prisma.TechnicalReportWhereUniqueInput
+  data: Prisma.XOR<Prisma.TechnicalReportUpdateWithoutLoanApplicationInput, Prisma.TechnicalReportUncheckedUpdateWithoutLoanApplicationInput>
+}
+
+export type TechnicalReportUpdateManyWithWhereWithoutLoanApplicationInput = {
+  where: Prisma.TechnicalReportScalarWhereInput
+  data: Prisma.XOR<Prisma.TechnicalReportUpdateManyMutationInput, Prisma.TechnicalReportUncheckedUpdateManyWithoutLoanApplicationInput>
+}
+
+export type TechnicalReportCreateManyBranchInput = {
+  id?: string
+  loanApplicationId: string
+  engineerId?: string | null
+  engineerName: string
+  agencyName?: string | null
+  propertyType: string
+  propertyAddress: string
+  city: string
+  state: string
+  pincode: string
+  marketValue: number
+  discussionValue: number
+  forcesdSaleValue?: number | null
+  recommendedLtv: number
+  constructionStatus: string
+  propertyAge?: number | null
+  residualLife?: number | null
+  qualityOfConstruction?: string | null
+  status?: $Enums.ReportStatus
+  remarks?: string | null
+  reportUrl?: string | null
+  sitePhotographs?: string | null
+  submittedAt?: Date | string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TechnicalReportUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  engineerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  engineerName?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyType?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  marketValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  discussionValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  forcesdSaleValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recommendedLtv?: Prisma.FloatFieldUpdateOperationsInput | number
+  constructionStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAge?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residualLife?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  qualityOfConstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sitePhotographs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplication?: Prisma.LoanApplicationUpdateOneRequiredWithoutTechnicalReportsNestedInput
+}
+
+export type TechnicalReportUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.StringFieldUpdateOperationsInput | string
+  engineerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  engineerName?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyType?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  marketValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  discussionValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  forcesdSaleValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recommendedLtv?: Prisma.FloatFieldUpdateOperationsInput | number
+  constructionStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAge?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residualLife?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  qualityOfConstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sitePhotographs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TechnicalReportUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loanApplicationId?: Prisma.StringFieldUpdateOperationsInput | string
+  engineerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  engineerName?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyType?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  marketValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  discussionValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  forcesdSaleValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recommendedLtv?: Prisma.FloatFieldUpdateOperationsInput | number
+  constructionStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyAge?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residualLife?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  qualityOfConstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sitePhotographs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TechnicalReportCreateManyLoanApplicationInput = {
@@ -1070,6 +1345,7 @@ export type TechnicalReportCreateManyLoanApplicationInput = {
   submittedAt?: Date | string | null
   approvedBy?: string | null
   approvedAt?: Date | string | null
+  branchId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1101,6 +1377,7 @@ export type TechnicalReportUpdateWithoutLoanApplicationInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutTechnicalReportsNestedInput
 }
 
 export type TechnicalReportUncheckedUpdateWithoutLoanApplicationInput = {
@@ -1128,6 +1405,7 @@ export type TechnicalReportUncheckedUpdateWithoutLoanApplicationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1157,6 +1435,7 @@ export type TechnicalReportUncheckedUpdateManyWithoutLoanApplicationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1189,9 +1468,11 @@ export type TechnicalReportSelect<ExtArgs extends runtime.Types.Extensions.Inter
   submittedAt?: boolean
   approvedBy?: boolean
   approvedAt?: boolean
+  branchId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   loanApplication?: boolean | Prisma.LoanApplicationDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["technicalReport"]>
 
 
@@ -1222,19 +1503,22 @@ export type TechnicalReportSelectScalar = {
   submittedAt?: boolean
   approvedBy?: boolean
   approvedAt?: boolean
+  branchId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TechnicalReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "engineerId" | "engineerName" | "agencyName" | "propertyType" | "propertyAddress" | "city" | "state" | "pincode" | "marketValue" | "discussionValue" | "forcesdSaleValue" | "recommendedLtv" | "constructionStatus" | "propertyAge" | "residualLife" | "qualityOfConstruction" | "status" | "remarks" | "reportUrl" | "sitePhotographs" | "submittedAt" | "approvedBy" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["technicalReport"]>
+export type TechnicalReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "engineerId" | "engineerName" | "agencyName" | "propertyType" | "propertyAddress" | "city" | "state" | "pincode" | "marketValue" | "discussionValue" | "forcesdSaleValue" | "recommendedLtv" | "constructionStatus" | "propertyAge" | "residualLife" | "qualityOfConstruction" | "status" | "remarks" | "reportUrl" | "sitePhotographs" | "submittedAt" | "approvedBy" | "approvedAt" | "branchId" | "createdAt" | "updatedAt", ExtArgs["result"]["technicalReport"]>
 export type TechnicalReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplication?: boolean | Prisma.LoanApplicationDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }
 
 export type $TechnicalReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TechnicalReport"
   objects: {
     loanApplication: Prisma.$LoanApplicationPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1262,6 +1546,7 @@ export type $TechnicalReportPayload<ExtArgs extends runtime.Types.Extensions.Int
     submittedAt: Date | null
     approvedBy: string | null
     approvedAt: Date | null
+    branchId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["technicalReport"]>
@@ -1605,6 +1890,7 @@ readonly fields: TechnicalReportFieldRefs;
 export interface Prisma__TechnicalReportClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   loanApplication<T extends Prisma.LoanApplicationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LoanApplicationDefaultArgs<ExtArgs>>): Prisma.Prisma__LoanApplicationClient<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1659,6 +1945,7 @@ export interface TechnicalReportFieldRefs {
   readonly submittedAt: Prisma.FieldRef<"TechnicalReport", 'DateTime'>
   readonly approvedBy: Prisma.FieldRef<"TechnicalReport", 'String'>
   readonly approvedAt: Prisma.FieldRef<"TechnicalReport", 'DateTime'>
+  readonly branchId: Prisma.FieldRef<"TechnicalReport", 'String'>
   readonly createdAt: Prisma.FieldRef<"TechnicalReport", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TechnicalReport", 'DateTime'>
 }

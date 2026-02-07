@@ -17,6 +17,7 @@ import { buildLoanApplicationSearch } from "../../common/utils/search.js";
 import path from "path";
 import fs from "fs";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
+import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 
 interface CoApplicantDocumentUpload {
   coApplicants: { id: string; documentType: string }[];
@@ -40,17 +41,17 @@ export async function createLoanApplicationService(
       parsed.dob && typeof parsed.dob === "string"
         ? new Date(parsed.dob)
         : parsed.dob;
-    
+
     /* -------- Get branchId from user's employee record -------- */
     const employee = await prisma.employee.findUnique({
       where: { userId: loggedInUser.id },
       select: { branchId: true },
     });
-    
+
     if (!employee?.branchId) {
       throw new Error("Employee branch information not found");
     }
-    
+
     return prisma.$transaction(async (tx) => {
       /* -------- 1. Find or create customer -------- */
       let customer = await tx.customer.findFirst({
@@ -218,6 +219,7 @@ export async function uploadLoanDocumentsService(
       where: { id: loanApplicationId },
       select: {
         id: true,
+        branchId: true,
         kyc: { select: { id: true } },
       },
     });
@@ -254,6 +256,7 @@ export async function uploadLoanDocumentsService(
       data: documents.map((doc) => ({
         loanApplicationId,
         kycId: loanApplication.kyc!.id,
+        branchId: loanApplication.branchId,
         documentType: doc.documentType,
         documentPath: doc.documentPath,
         uploadedBy: doc.uploadedBy,
@@ -449,8 +452,8 @@ export const getAllLoanApplicationsService = async (params: {
   if (params.user.role === "EMPLOYEE") {
     const employee = await prisma.employee.findUnique({
       where: { userId: params.user.id },
-      select: { branchId: true }
-    })
+      select: { branchId: true },
+    });
     if (!employee) {
       throw new Error("Employee record not found for user");
     }
@@ -461,16 +464,19 @@ export const getAllLoanApplicationsService = async (params: {
     role: params.user.role,
     branchId: userBranchId,
   });
+  console.log("Accessible Branches:", accessibleBranches);
   const searchFilter = buildLoanApplicationSearch(params.q);
 
   const where: any = {
     ...searchFilter,
-    ...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
+    ...buildBranchFilter(accessibleBranches),
+    //...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
   };
+  console.log("Loan Application Where Filter:", where);
 
   const employee = await prisma.employee.findUnique({
     where: { userId: params.user.id },
- 
+    select: { id: true },
   });
 
   if (params.user.role === "EMPLOYEE") {
@@ -496,7 +502,6 @@ export const getAllLoanApplicationsService = async (params: {
     }),
     prisma.loanApplication.count({ where }),
   ]);
-
 
   return {
     data,

@@ -31,13 +31,13 @@ loanApplicationRouter.post(
   "/",
   authMiddleware,
   validate(createLoanApplicationSchema),
-  checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
+  //checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
   createLoanApplicationController,
 );
 loanApplicationRouter.get(
   "/",
   authMiddleware,
-  checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
+ // checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
   getAllLoanApplicationsController,
 );
 

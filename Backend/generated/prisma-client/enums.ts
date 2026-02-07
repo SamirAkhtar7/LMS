@@ -85,6 +85,7 @@ export type recovery_status = (typeof recovery_status)[keyof typeof recovery_sta
 
 
 export const BranchType = {
+  SUPER: 'SUPER',
   MAIN: 'MAIN',
   SUB: 'SUB'
 } as const
