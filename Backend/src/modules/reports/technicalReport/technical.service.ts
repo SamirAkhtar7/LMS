@@ -24,9 +24,9 @@ export const createTechnicalReportService = async (
 
     const report = await tx.technicalReport.create({
       data: {
+        ...data,
         loanApplicationId,
         branchId: loanApplication.branchId,
-        ...data,
         status: "SUBMITTED",
         submittedAt: new Date(),
       },
@@ -58,7 +58,6 @@ export const approveTechnicalReportService = async (
     const report = await tx.technicalReport.update({
       where: { id: reportId },
       data: {
-        id: reportId,
         status: "APPROVED",
         approvedAt: new Date(),
       },

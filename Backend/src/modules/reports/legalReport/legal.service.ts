@@ -51,7 +51,7 @@ export const createLegalReportService = async (
   });
 };
 
-export const approvelLegalReportService = async (
+export const approveLegalReportService = async (
   reportId: string,
   approved: string,
 ) => {
@@ -94,8 +94,6 @@ export const getAllLegalReportsService = async (
     role: user.role,
     branchId: user.branchId,
   });
-
-  console.log("Allowed Branch IDs in Service:", allowedBranchIds);
 
   const where = {
     ...buildlegalReportSearch(params.q),

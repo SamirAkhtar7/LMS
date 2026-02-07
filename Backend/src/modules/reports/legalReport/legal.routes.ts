@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   createLegalReportController,
-  approvelLegalReportController,
+  approveLegalReportController,
   getAllLegalReportsController,
 } from "./legal.controller.js";
 
@@ -27,7 +27,7 @@ legalReportRouter.post(
   validate(approveLegalReportSchema),
   checkPermissionMiddleware("APPROVE_LEGAL_REPORT"),
    validate(approveLegalReportSchema),
-  approvelLegalReportController,
+  approveLegalReportController,
 ); 
 
 legalReportRouter.get(

@@ -3,7 +3,7 @@ import {
     Response
 } from "express";
 import {
-  approvelLegalReportService,
+  approveLegalReportService,
     createLegalReportService,
   getAllLegalReportsService
 } from "./legal.service.js";
@@ -38,11 +38,11 @@ export const createLegalReportController = async(
 };
 
 
-export const approvelLegalReportController = async (req: Request, res: Response) => {
+export const approveLegalReportController = async (req: Request, res: Response) => {
     try {
         const { reportId } = req.params;
         const approved = req.user!.id;
-        const report = await approvelLegalReportService(
+        const report = await approveLegalReportService(
           reportId,
           approved,
         );
