@@ -152,7 +152,6 @@ export const EmployeeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   employeeId: 'employeeId',
-  mobileNumber: 'mobileNumber',
   atlMobileNumber: 'atlMobileNumber',
   dob: 'dob',
   designation: 'designation',
@@ -691,6 +690,9 @@ export const AuditLogScalarFieldEnum = {
   entityId: 'entityId',
   action: 'action',
   performedBy: 'performedBy',
+  branchId: 'branchId',
+  oldValue: 'oldValue',
+  newValue: 'newValue',
   remarks: 'remarks',
   createdAt: 'createdAt'
 } as const
@@ -713,12 +715,12 @@ export const JsonNullValueInput = {
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
 } as const
 
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -758,7 +760,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
   employeeId: 'employeeId',
-  mobileNumber: 'mobileNumber',
   atlMobileNumber: 'atlMobileNumber',
   designation: 'designation',
   address: 'address',
@@ -773,6 +774,14 @@ export const EmployeeOrderByRelevanceFieldEnum = {
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const PartnerOrderByRelevanceFieldEnum = {
@@ -1088,6 +1097,7 @@ export const AuditLogOrderByRelevanceFieldEnum = {
   entityId: 'entityId',
   action: 'action',
   performedBy: 'performedBy',
+  branchId: 'branchId',
   remarks: 'remarks'
 } as const
 
