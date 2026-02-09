@@ -2,17 +2,17 @@ import { Router } from "express";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 
 import {
-  applyMorationtoriumController,
+  applyMoratoriumController,
   editEmiController,
   forecloseLoanController,
   generateEmiScheduleController,
-  genrateEmiAmount,
+  generateEmiAmount,
   getLoanEmiController,
   getThisMonthEmiAmountController,
   markEmiPaidController,
   payforecloseLoanController,
   getEmiPayableAmountController,
-  getAllEmisController
+  getAllEmisController,
   // processOverdueEmisController,
 } from "./emi.controller.js";
 
@@ -53,7 +53,7 @@ emiRouter.get(
 
 emiRouter.post(
   "/loan-applications/emi-amount",
-  genrateEmiAmount
+  generateEmiAmount
 );
 
 emiRouter.get(
@@ -82,12 +82,12 @@ payforecloseLoanController
 emiRouter.post("/loans/:loanId/moratorium",
   authMiddleware,
   checkPermissionMiddleware("APPLY_MORATORIUM"),
-  applyMorationtoriumController);
+  applyMoratoriumController);
 
 emiRouter.post("/get-emi-amount",
   authMiddleware,
   checkPermissionMiddleware("GENERATE_EMI_AMOUNT"),
-  genrateEmiAmount);
+  generateEmiAmount);
 
 emiRouter.post("/loan-emis/:emiId/pay",
   authMiddleware,

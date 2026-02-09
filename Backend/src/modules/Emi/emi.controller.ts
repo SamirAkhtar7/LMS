@@ -158,7 +158,7 @@ export const getEmiPayableAmountController = async (
     });
   }
 };
-export const genrateEmiAmount = async (req: Request, res: Response) => {
+export const generateEmiAmount = async (req: Request, res: Response) => {
   try {
     const { principal, annualInterestRate, tenureMonths, interestType } =
       req.body;
@@ -312,7 +312,7 @@ export const payforecloseLoanController = async (
     });
   }
 };
-export const applyMorationtoriumController = async (
+export const applyMoratoriumController = async (
   req: Request,
   res: Response,
 ) => {

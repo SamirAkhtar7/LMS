@@ -1,5 +1,3 @@
-import { connect } from "node:http2";
-
 export const buildLoanApplicationSearch = (q?: string) => {
   if (!q) return {};
 
@@ -302,7 +300,6 @@ export const buildRecoverySearch = (q?: string) => {
   return { OR };
 };
 
-
 export const buildSettlementSearch = (q?: string) => {
   if (!q) return {};
 
@@ -335,7 +332,6 @@ export const buildSettlementSearch = (q?: string) => {
   return { OR };
 };
 
-
 export const buildlegalReportSearch = (q?: string) => {
   if (!q) return {};
   return {
@@ -361,7 +357,6 @@ export const buildlegalReportSearch = (q?: string) => {
           customer: {
             panNumber: {
               contains: q,
-
             },
           },
         },
@@ -377,7 +372,7 @@ export const buildlegalReportSearch = (q?: string) => {
       },
     ],
   };
-}
+};
 export const buildTechnicalReportSearch = (q?: string) => {
   if (!q) return {};
   return {
@@ -395,10 +390,9 @@ export const buildTechnicalReportSearch = (q?: string) => {
             firstName: {
               contains: q,
             },
-
           },
         },
-      },  
+      },
       {
         loanApplication: {
           customer: {
@@ -428,7 +422,7 @@ export const buildTechnicalReportSearch = (q?: string) => {
       },
     ],
   };
-}
+};
 
 export const buildKycSearch = (q?: string) => {
   if (!q) return {};
