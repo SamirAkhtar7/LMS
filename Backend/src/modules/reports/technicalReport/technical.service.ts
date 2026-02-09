@@ -1,3 +1,5 @@
+import { buildBranchFilter } from "../../../common/utils/branchFilter.js";
+import { getAccessibleBranchIds } from "../../../common/utils/branchAccess.js";
 import {
   buildPaginationMeta,
   getPagination,
@@ -41,8 +43,9 @@ export const createTechnicalReportService = async (
       data: {
         entityType: "TECHNICAL_REPORT",
         entityId: report.id,
-        action: "SUBMITTED",
+        action: "CREATE_TECHNICAL_REPORT",
         performedBy: userId,
+        branchId: loanApplication.branchId,
       },
     });
 
@@ -72,15 +75,29 @@ export const approveTechnicalReportService = async (
   });
 };
 
-export const getAllTechnicalReportsService = async (params: {
-  page?: number;
-  limit?: number;
-  q?: string;
-}) => {
+export const getAllTechnicalReportsService = async (
+  params: {
+    page?: number;
+    limit?: number;
+    q?: string;
+  },
+  user: {
+    id: string;
+    role: string;
+    branchId: string;
+  },
+) => {
   const { page, limit, skip } = getPagination(params.page, params.limit);
+
+  const allowedBranchIds = await getAccessibleBranchIds({
+    id: user.id,
+    role: user.role,
+    branchId: user.branchId,
+  });
 
   const where = {
     ...buildTechnicalReportSearch(params.q),
+    ...buildBranchFilter(allowedBranchIds),
   };
 
   const [total, data] = await prisma.$transaction([

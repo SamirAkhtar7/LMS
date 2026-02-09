@@ -31,7 +31,9 @@ export const getAccessibleBranchIds = async (user: {
   const userBranch = await prisma.branch.findUnique({
     where: { id: user.branchId },
     include: {
-      subBranches: true,
+      subBranches: {
+        select: { id: true },
+      },
     },
   });
 

@@ -7,6 +7,7 @@ import {
 } from "../../common/utils/search.js";
 import { getPagination } from "../../common/utils/pagination.js";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
+import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 
 export const getRecoveryByLoanIdService = async (loanId: string) => {
   return prisma.$transaction(async (tx) => {
@@ -225,14 +226,8 @@ export const getAllRecoveriesService = async (
   const accessibleBranches = await getAccessibleBranchIds(user);
   const where: any = {
     ...buildRecoverySearch(params.q),
-    ...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
+    ...buildBranchFilter(accessibleBranches),
 
-    // Scope filter
-    ...(user.role !== "ADMIN" && user.branchId
-      ? {
-          branchId: user.branchId,
-        }
-      : {}),
   };
 
   // ✅ SAFE enum filter

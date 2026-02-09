@@ -1,14 +1,13 @@
 import { prisma } from "../../db/prismaService.js";
 import { hashPassword } from "../../common/utils/utils.js";
 import { CreateEmployee } from "./employee.types.js";
-import * as crypto from "crypto";
 import {
   getPagination,
   buildPaginationMeta,
 } from "../../common/utils/pagination.js";
 import { buildEmployeeSearch } from "../../common/utils/search.js";
 import { generateUniqueEmployeeId } from "../../common/generateId/generateEmployeeId.js";
-import { log } from "console";
+
 import { logAction } from "../../audit/audit.helper.js";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";

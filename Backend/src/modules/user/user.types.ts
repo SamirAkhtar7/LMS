@@ -6,5 +6,6 @@ export interface CreateUser {
   role: "ADMIN" | "EMPLOYEE" | "PARTNER";
   address: string;
   contactNumber: string;
+  branchId: string;
   isActive?: boolean;
 }

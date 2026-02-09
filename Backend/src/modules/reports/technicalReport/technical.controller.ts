@@ -79,6 +79,10 @@ export const getAllTechnicalReportsController = async (
       page: Number(req.query.page),
       limit: Number(req.query.limit),
       q: req.query.q?.toString(),
+    }, {
+      id: req.user!.id,
+      role: (req.user as any).role,
+      branchId: (req.user as any).branchId,
     });
     res.status(200).json({
       success: true,

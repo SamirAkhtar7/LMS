@@ -21,7 +21,8 @@ export async function createUserService(data: CreateUser) {
       userName: data.userName,
       password: hashedPassword,
       role: data.role,
-      contactNumber: data.contactNumber,
+      contactNumber: data.contactNumber, 
+      branchId: data.branchId,
       isActive: typeof data.isActive === "boolean" ? data.isActive : true,
     },
   });

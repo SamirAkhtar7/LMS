@@ -1,9 +1,5 @@
 import { prisma } from "../../db/prismaService.js";
 import { calculateEmi } from "../../common/utils/emi.util.js";
-import {
-  EmiScheduleItem,
-  EmiScheduleInput,
-} from "../LoanApplication/loanApplication.types.js";
 import { getPagination } from "../../common/utils/pagination.js";
 import { Prisma } from "../../../generated/prisma-client/client.js";
 import { buildEmiSearch } from "../../common/utils/search.js";

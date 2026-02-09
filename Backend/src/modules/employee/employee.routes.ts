@@ -26,7 +26,7 @@ checkPermissionMiddleware("CREATE_EMPLOYEE"),
 
 
 employeeRouter.get("/all",
-  //checkPermissionMiddleware("VIEW_ALL_EMPLOYEES"),
+  checkPermissionMiddleware("VIEW_ALL_EMPLOYEES"),
   getAllEmployeesController);
 
 

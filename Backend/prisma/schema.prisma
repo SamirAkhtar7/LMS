@@ -846,6 +846,7 @@ enum AssignedRole {
 }
 
 enum Role {
+  SUPER_ADMIN
   ADMIN
   EMPLOYEE
   PARTNER

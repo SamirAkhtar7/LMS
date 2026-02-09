@@ -77,6 +77,8 @@ export const checkAndMarkLoanDefault = async (loanId: string) => {
   });
 };
 
+
+//TODO : Add pagination and data filtering based on branch 
 export const getAllDefaultedLoansService = async () => {
   const loans = await prisma.loanApplication.findMany({
     where: { status: "defaulted" },

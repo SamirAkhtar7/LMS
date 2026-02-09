@@ -18,24 +18,28 @@ export const createEmployeeController = async (req: Request, res: Response) => {
     // Only log action if user has a branchId
     const userBranchId = req.user?.branchId || employee.branchId;
     if (userBranchId) {
-      await logAction({
-        action: "CREATE_EMPLOYEE",
-        performedBy: req.user?.id || "SYSTEM",
-        entityType: "EMPLOYEE",
-        entityId: employee.id,
-        branchId: userBranchId,
-        oldValue: null,
-        newValue: {
-          user: safeUser,
-          employee: {
-            id: employee.id,
-            name: employee.name,
-            email: employee.email,
-            contactNumber: employee.contactNumber,
-            branchId: employee.branchId,
+      try {
+        await logAction({
+          action: "CREATE_EMPLOYEE",
+          performedBy: req.user?.id || "SYSTEM",
+          entityType: "EMPLOYEE",
+          entityId: employee.id,
+          branchId: userBranchId,
+          oldValue: null,
+          newValue: {
+            user: safeUser,
+            employee: {
+              id: employee.id,
+              name: employee.name,
+              email: employee.email,
+              contactNumber: employee.contactNumber,
+              branchId: employee.branchId,
+            },
           },
-        },
-      });
+        });
+      } catch (auditError) {
+        console.error("Failed to log audit action:", auditError);
+      }
     }
 
     res.status(201).json({
@@ -63,14 +67,15 @@ export const getAllEmployeesController = async (
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const employees = await getAllEmployeesService({
-      page: Number(req.query.page),
-      limit: Number(req.query.limit),
-      q: req.query.q?.toString(),
-    },
-    {
+    const employees = await getAllEmployeesService(
+      {
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+        q: req.query.q?.toString(),
+      },
+      {
         id: req.user.id,
-        role: req.user.role ,
+        role: req.user.role,
         branchId: req.user.branchId,
       },
     );
@@ -123,8 +128,6 @@ export const updateEmployeeController = async (req: Request, res: Response) => {
       req.user?.id,
       req.user?.branchId,
     );
-
-
 
     res.status(200).json({
       success: true,

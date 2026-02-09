@@ -1,3 +1,5 @@
+import { connect } from "node:http2";
+
 export const buildLoanApplicationSearch = (q?: string) => {
   if (!q) return {};
 
@@ -428,3 +430,35 @@ export const buildTechnicalReportSearch = (q?: string) => {
   };
 }
 
+export const buildKycSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        loanApplication: {
+          loanNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        user: {
+          is: {
+            email: {
+              contains: q,
+            },
+          },
+        },
+      },
+      {
+        user: {
+          is: {
+            contactNumber: {
+              contains: q,
+            },
+          },
+        },
+      },
+    ],
+  };
+};
