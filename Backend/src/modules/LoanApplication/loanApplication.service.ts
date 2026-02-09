@@ -18,6 +18,8 @@ import path from "path";
 import fs from "fs";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
+import { logAction } from "../../audit/audit.helper.js";
+
 
 interface CoApplicantDocumentUpload {
   coApplicants: { id: string; documentType: string }[];
@@ -29,7 +31,8 @@ export async function createLoanApplicationService(
   data: CreateLoanApplication,
   loggedInUser: { id: string; role: Enums.Role },
 ) {
-  try {
+  try
+  {
     const parsed = createLoanApplicationSchema.parse(data);
     const loanType = await prisma.loanType.findFirst({
       where: { id: parsed.loanTypeId },
@@ -188,6 +191,20 @@ export async function createLoanApplicationService(
           });
         }
       }
+
+      await logAction({
+        entityType: "LOAN",
+        entityId: loanApplication.id,
+        action: "CREATE_LOAN",
+        performedBy: loggedInUser.id,
+        branchId: loanApplication.branchId,
+        oldValue: null,
+        newValue: {
+          loanApplication: {
+            status: "kyc_pending",
+          },
+        },
+      });
       return {
         loanApplication,
         customer,
@@ -263,6 +280,15 @@ export async function uploadLoanDocumentsService(
       })),
       skipDuplicates: true, // 🔒 protects against race conditions
     });
+    await logAction({
+      entityType: "LOAN",
+      entityId: loanApplicationId,
+      action: "UPDATE_LOAN_STATUS",
+      performedBy: documents[0].uploadedBy,
+      branchId: loanApplication.branchId,
+      oldValue: null,
+      newValue: { documents: { status: "uploaded" } },
+    });
 
     /* 3️⃣ Return uploaded documents */
     return tx.document.findMany({
@@ -313,6 +339,16 @@ export async function verifyDocumentService(
         },
       });
     }
+
+    await logAction({
+      entityType: "DOCUMENT",
+      entityId: documentId,
+      action: "VERIFY_DOCUMENT",
+      performedBy: verifierId,
+      branchId: document.branchId,
+      oldValue: { verificationStatus: "pending" },
+      newValue: { verificationStatus: "verified" },
+    });
 
     return document;
   });
@@ -379,6 +415,17 @@ export async function rejectDocumentService(
       status: "kyc_pending",
     },
   });
+
+  await logAction({
+    entityType: "DOCUMENT",
+    entityId: documentId,
+    action: "REJECT_DOCUMENT",
+    performedBy: verifierId,
+    branchId: document.branchId,
+    oldValue: { verificationStatus: "pending" },
+    newValue: { verificationStatus: "rejected", rejectionReason: reason },
+  });
+
   return document;
 }
 
@@ -471,7 +518,6 @@ export const getAllLoanApplicationsService = async (params: {
     ...buildBranchFilter(accessibleBranches),
     //...(accessibleBranches ? { branchId: { in: accessibleBranches } } : {}),
   };
-
 
   const employee = await prisma.employee.findUnique({
     where: { userId: params.user.id },
@@ -586,6 +632,7 @@ export const reviewLoanService = async (loanId: string) => {
   if (loan.status !== "application_in_progress") {
     throw new Error("Loan not eligible for review");
   }
+
   return prisma.loanApplication.update({
     where: { id: loanId },
     data: { status: "under_review" },
@@ -652,7 +699,25 @@ export const approveLoanService = async (
     throw new Error("Loan not ready for approval");
   }
 
-  return prisma.loanApplication.findUnique({ where: { id: loanId } });
+  const loandata = await prisma.loanApplication.findUnique({
+    where: { id: loanId },
+  });
+
+  if (!loandata) {
+    throw new Error("Loan application not found after approval");
+  }
+
+  await logAction({
+    entityType: "LOAN",
+    entityId: loanId,
+    action: "APPROVE_LOAN",
+    performedBy: userId,
+    branchId: loandata.branchId,
+    oldValue: { status: "under_review" },
+    newValue: { status: "approved" },
+  });
+
+  return loandata;
 };
 
 export const rejectLoanService = async (
@@ -667,6 +732,16 @@ export const rejectLoanService = async (
   if (!loan || loan.status !== "under_review") {
     throw new Error("Loan not ready for rejection");
   }
+
+  await logAction({
+    entityType: "LOAN",
+    entityId: loanId,
+    action: "REJECT_LOAN",
+    performedBy: userId,
+    branchId: loan.branchId,
+    oldValue: { status: "under_review" },
+    newValue: { status: "rejected", rejectionReason: reason },
+  });
 
   return prisma.loanApplication.update({
     where: { id: loanId },

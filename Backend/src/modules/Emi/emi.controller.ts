@@ -46,8 +46,11 @@ export const generateEmiScheduleController = async (
   res: Response
 ) => {
   try {
+
     const loanId = req.params.id;
-    const schedule = await generateEmiScheduleService(loanId);
+    const userId = req.user?.id; // Assuming you have user info in req.user
+    const branchId = req.user?.branchId; // Assuming branch info is also in req.user
+    const schedule = await generateEmiScheduleService(loanId, userId, branchId);
     res.status(200).json({ success: true, data: schedule });
   } catch (error: any) {
     if(error.message === "EMI schedule already generated") {

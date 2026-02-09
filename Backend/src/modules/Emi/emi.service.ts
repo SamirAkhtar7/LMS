@@ -7,8 +7,13 @@ import {
 import { getPagination } from "../../common/utils/pagination.js";
 import { Prisma } from "../../../generated/prisma-client/client.js";
 import { buildEmiSearch } from "../../common/utils/search.js";
+import { logAction } from "../../audit/audit.helper.js";
 
-export const generateEmiScheduleService = async (loanId: string) => {
+export const generateEmiScheduleService = async (
+  loanId: string,
+  userId?: string,
+  branchId?: string,
+) => {
   const loan = await prisma.loanApplication.findUnique({
     where: { id: loanId },
     select: {
@@ -105,8 +110,8 @@ export const generateEmiScheduleService = async (loanId: string) => {
 
     balance = closingBalance;
   }
+  //TODO  add option to remove the existing schedule for this loan to avoid duplicates
 
-  //remove any existing schedule for this loan to avoid duplicates
   await prisma.loanEmiSchedule.deleteMany({
     where: { loanApplicationId: loanId },
   });
@@ -119,6 +124,20 @@ export const generateEmiScheduleService = async (loanId: string) => {
     where: { id: loanId },
     data: { status: "active" },
   });
+
+  // Only log action if userId and branchId are provided
+  if (userId && branchId) {
+    await logAction({
+      entityType: "EMI_SCHEDULE",
+      entityId: loanId,
+      action: "GENERATE_EMI_SCHEDULE",
+      performedBy: userId,
+      branchId: branchId,
+      oldValue: { status: "approved" },
+      newValue: { status: "active" },
+      remarks: `EMI schedule generated for loan application ${loanId}`,
+    });
+  }
 
   return emi;
 };

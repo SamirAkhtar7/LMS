@@ -14,6 +14,6 @@ export interface EmiScheduleItem {
   openingBalance: number;
   interestAmount: number;
   principalAmount: number;
-  emiAmount: number;
+  emiAmount: number; 
   closingBalance: number;
 }
