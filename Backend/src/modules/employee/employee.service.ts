@@ -8,6 +8,10 @@ import {
 } from "../../common/utils/pagination.js";
 import { buildEmployeeSearch } from "../../common/utils/search.js";
 import { generateUniqueEmployeeId } from "../../common/generateId/generateEmployeeId.js";
+import { log } from "console";
+import { logAction } from "../../audit/audit.helper.js";
+import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
+import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 //Todo: add permission checks where necessary
 
 export async function createEmployeeService(data: CreateEmployee) {
@@ -50,7 +54,7 @@ export async function createEmployeeService(data: CreateEmployee) {
         userName: data.userName,
         password: hashedPassword,
         role: data.role,
-        contactNumber: data.contactNumber ?? data.mobileNumber ?? "",
+        contactNumber: data.contactNumber,
         branchId: data.branchId,
         isActive: typeof data.isActive === "boolean" ? data.isActive : true,
       },
@@ -78,7 +82,6 @@ export async function createEmployeeService(data: CreateEmployee) {
       data: {
         userId: user.id,
         employeeId,
-        mobileNumber: data.mobileNumber ?? data.contactNumber ?? "",
         atlMobileNumber: data.atlMobileNumber ?? "",
         dob: dobVal ?? new Date(),
         gender: (data.gender ?? "OTHER") as any,
@@ -117,10 +120,23 @@ export async function getAllEmployeesService(params: {
   page?: number;
   limit?: number;
   q?: string;
+}, user: {
+  id: string;
+  role: string;
+  branchId?: string;
 }) {
   const { page, limit, skip } = getPagination(params.page, params.limit);
 
-  const where = buildEmployeeSearch(params.q);
+   const accessibleBranches = await getAccessibleBranchIds({
+     id: user.id,
+     role: user.role,
+     branchId: user.branchId,
+   });
+
+  const where = {
+    ...buildEmployeeSearch(params.q),
+    ...buildBranchFilter(accessibleBranches),
+   };
 
   const [data, total] = await Promise.all([
     prisma.employee.findMany({
@@ -176,6 +192,8 @@ export async function getEmployeeByIdService(id: string) {
 export async function updateEmployeeService(
   id: string,
   updateData: Partial<CreateEmployee> & Record<string, any>,
+  userId?: string,
+  branchId?: string,
 ) {
   try {
     const existing = await prisma.employee.findUnique({ where: { id } });
@@ -249,6 +267,30 @@ export async function updateEmployeeService(
       include: { user: true },
     });
     const { user, ...employeeOnly } = updatedEmployee as any;
+
+    // Log the update action if userId and branchId are provided
+    const auditBranchId = branchId || existing.branchId;
+    if (userId && auditBranchId) {
+      await logAction({
+        action: "UPDATE_EMPLOYEE",
+        entityType: "EMPLOYEE",
+        entityId: id,
+        performedBy: userId,
+        branchId: auditBranchId,
+        oldValue: {
+          designation: existing.designation,
+          department: existing.department,
+          branchId: existing.branchId,
+        },
+        newValue: {
+          designation: employeeOnly.designation,
+          department: employeeOnly.department,
+          branchId: employeeOnly.branchId,
+        },
+        remarks: "Employee details updated",
+      });
+    }
+
     if (user) {
       const { password: _pw, ...safeUser } = user as any;
       return { employee: employeeOnly, user: safeUser };

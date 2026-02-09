@@ -38,7 +38,6 @@ export type EmployeeMinAggregateOutputType = {
   id: string | null
   userId: string | null
   employeeId: string | null
-  mobileNumber: string | null
   atlMobileNumber: string | null
   dob: Date | null
   designation: string | null
@@ -65,7 +64,6 @@ export type EmployeeMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   employeeId: string | null
-  mobileNumber: string | null
   atlMobileNumber: string | null
   dob: Date | null
   designation: string | null
@@ -92,7 +90,6 @@ export type EmployeeCountAggregateOutputType = {
   id: number
   userId: number
   employeeId: number
-  mobileNumber: number
   atlMobileNumber: number
   dob: number
   designation: number
@@ -129,7 +126,6 @@ export type EmployeeMinAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
   designation?: true
@@ -156,7 +152,6 @@ export type EmployeeMaxAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
   designation?: true
@@ -183,7 +178,6 @@ export type EmployeeCountAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
-  mobileNumber?: true
   atlMobileNumber?: true
   dob?: true
   designation?: true
@@ -297,7 +291,6 @@ export type EmployeeGroupByOutputType = {
   id: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date
   designation: string
@@ -347,7 +340,6 @@ export type EmployeeWhereInput = {
   id?: Prisma.StringFilter<"Employee"> | string
   userId?: Prisma.StringFilter<"Employee"> | string
   employeeId?: Prisma.StringFilter<"Employee"> | string
-  mobileNumber?: Prisma.StringFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringFilter<"Employee"> | string
   dob?: Prisma.DateTimeFilter<"Employee"> | Date | string
   designation?: Prisma.StringFilter<"Employee"> | string
@@ -377,7 +369,6 @@ export type EmployeeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   designation?: Prisma.SortOrder
@@ -411,7 +402,6 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   OR?: Prisma.EmployeeWhereInput[]
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
-  mobileNumber?: Prisma.StringFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringFilter<"Employee"> | string
   dob?: Prisma.DateTimeFilter<"Employee"> | Date | string
   designation?: Prisma.StringFilter<"Employee"> | string
@@ -441,7 +431,6 @@ export type EmployeeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   designation?: Prisma.SortOrder
@@ -476,7 +465,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   employeeId?: Prisma.StringWithAggregatesFilter<"Employee"> | string
-  mobileNumber?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   dob?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
   designation?: Prisma.StringWithAggregatesFilter<"Employee"> | string
@@ -502,7 +490,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
 export type EmployeeCreateInput = {
   id?: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -531,7 +518,6 @@ export type EmployeeUncheckedCreateInput = {
   id?: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -558,7 +544,6 @@ export type EmployeeUncheckedCreateInput = {
 export type EmployeeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -587,7 +572,6 @@ export type EmployeeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -615,7 +599,6 @@ export type EmployeeCreateManyInput = {
   id?: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -641,7 +624,6 @@ export type EmployeeCreateManyInput = {
 export type EmployeeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -667,7 +649,6 @@ export type EmployeeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -705,7 +686,6 @@ export type EmployeeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   designation?: Prisma.SortOrder
@@ -736,7 +716,6 @@ export type EmployeeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   designation?: Prisma.SortOrder
@@ -763,7 +742,6 @@ export type EmployeeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  mobileNumber?: Prisma.SortOrder
   atlMobileNumber?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   designation?: Prisma.SortOrder
@@ -920,7 +898,6 @@ export type EmployeeUpdateOneRequiredWithoutLoanAssignmentsNestedInput = {
 export type EmployeeCreateWithoutUserInput = {
   id?: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -947,7 +924,6 @@ export type EmployeeCreateWithoutUserInput = {
 export type EmployeeUncheckedCreateWithoutUserInput = {
   id?: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -990,7 +966,6 @@ export type EmployeeUpdateToOneWithWhereWithoutUserInput = {
 export type EmployeeUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1017,7 +992,6 @@ export type EmployeeUpdateWithoutUserInput = {
 export type EmployeeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1044,7 +1018,6 @@ export type EmployeeUncheckedUpdateWithoutUserInput = {
 export type EmployeeCreateWithoutBranchInput = {
   id?: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -1072,7 +1045,6 @@ export type EmployeeUncheckedCreateWithoutBranchInput = {
   id?: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -1128,7 +1100,6 @@ export type EmployeeScalarWhereInput = {
   id?: Prisma.StringFilter<"Employee"> | string
   userId?: Prisma.StringFilter<"Employee"> | string
   employeeId?: Prisma.StringFilter<"Employee"> | string
-  mobileNumber?: Prisma.StringFilter<"Employee"> | string
   atlMobileNumber?: Prisma.StringFilter<"Employee"> | string
   dob?: Prisma.DateTimeFilter<"Employee"> | Date | string
   designation?: Prisma.StringFilter<"Employee"> | string
@@ -1154,7 +1125,6 @@ export type EmployeeScalarWhereInput = {
 export type EmployeeCreateWithoutLoanAssignmentsInput = {
   id?: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -1182,7 +1152,6 @@ export type EmployeeUncheckedCreateWithoutLoanAssignmentsInput = {
   id?: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -1224,7 +1193,6 @@ export type EmployeeUpdateToOneWithWhereWithoutLoanAssignmentsInput = {
 export type EmployeeUpdateWithoutLoanAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1252,7 +1220,6 @@ export type EmployeeUncheckedUpdateWithoutLoanAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1279,7 +1246,6 @@ export type EmployeeCreateManyBranchInput = {
   id?: string
   userId: string
   employeeId: string
-  mobileNumber: string
   atlMobileNumber: string
   dob: Date | string
   designation: string
@@ -1304,7 +1270,6 @@ export type EmployeeCreateManyBranchInput = {
 export type EmployeeUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1332,7 +1297,6 @@ export type EmployeeUncheckedUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1359,7 +1323,6 @@ export type EmployeeUncheckedUpdateManyWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  mobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   atlMobileNumber?: Prisma.StringFieldUpdateOperationsInput | string
   dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1416,7 +1379,6 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   userId?: boolean
   employeeId?: boolean
-  mobileNumber?: boolean
   atlMobileNumber?: boolean
   dob?: boolean
   designation?: boolean
@@ -1449,7 +1411,6 @@ export type EmployeeSelectScalar = {
   id?: boolean
   userId?: boolean
   employeeId?: boolean
-  mobileNumber?: boolean
   atlMobileNumber?: boolean
   dob?: boolean
   designation?: boolean
@@ -1472,7 +1433,7 @@ export type EmployeeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "mobileNumber" | "atlMobileNumber" | "dob" | "designation" | "gender" | "maritalStatus" | "address" | "city" | "state" | "pinCode" | "emergencyContact" | "emergencyRelationship" | "department" | "dateOfJoining" | "experience" | "reportingManagerId" | "workLocation" | "salary" | "branchId" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "atlMobileNumber" | "dob" | "designation" | "gender" | "maritalStatus" | "address" | "city" | "state" | "pinCode" | "emergencyContact" | "emergencyRelationship" | "department" | "dateOfJoining" | "experience" | "reportingManagerId" | "workLocation" | "salary" | "branchId" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   loanAssignments?: boolean | Prisma.Employee$loanAssignmentsArgs<ExtArgs>
@@ -1491,7 +1452,6 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     userId: string
     employeeId: string
-    mobileNumber: string
     atlMobileNumber: string
     dob: Date
     designation: string
@@ -1887,7 +1847,6 @@ export interface EmployeeFieldRefs {
   readonly id: Prisma.FieldRef<"Employee", 'String'>
   readonly userId: Prisma.FieldRef<"Employee", 'String'>
   readonly employeeId: Prisma.FieldRef<"Employee", 'String'>
-  readonly mobileNumber: Prisma.FieldRef<"Employee", 'String'>
   readonly atlMobileNumber: Prisma.FieldRef<"Employee", 'String'>
   readonly dob: Prisma.FieldRef<"Employee", 'DateTime'>
   readonly designation: Prisma.FieldRef<"Employee", 'String'>

@@ -12,7 +12,6 @@ export const createEmployeeSchema = z
     contactNumber: z.string().trim().min(10).max(15),
     isActive: z.coerce.boolean(),
     userName: z.string().trim().min(1),
-    mobileNumber: z.string().min(10),
     atlMobileNumber: z.string().min(10),
     dob: z.coerce.date(),
     gender: z.enum(["MALE", "FEMALE", "OTHER"]),

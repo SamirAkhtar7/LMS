@@ -14,12 +14,11 @@ export interface CreateEmployee {
   email: string;
   password: string;
   role: "EMPLOYEE";
-  contactNumber?: string;
+  contactNumber: string;
   isActive?: boolean;
 
   // Required employee-specific fields
   userName: string;
-  mobileNumber: string;
   atlMobileNumber: string;
   dob: string | Date;
 
