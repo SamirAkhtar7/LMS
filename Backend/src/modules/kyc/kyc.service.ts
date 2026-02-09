@@ -1,4 +1,8 @@
 import logger from "../../common/logger.js";
+import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
+import { buildBranchFilter } from "../../common/utils/branchFilter.js";
+import { getPagination } from "../../common/utils/pagination.js";
+import { buildKycSearch } from "../../common/utils/search.js";
 import { prisma } from "../../db/prismaService.js";
 
 export const uploadKycDocumentService = async (data: {
@@ -7,8 +11,9 @@ export const uploadKycDocumentService = async (data: {
     documentType: string;
     documentPath: string;
   }[];
+  branchId?: string;
 }) => {
-  const { userId, documents } = data;
+  const { userId, documents, branchId } = data;
   try {
     // Resolve kycId from loanApplicationId when not provided
     return prisma.$transaction(async (tx) => {
@@ -25,6 +30,16 @@ export const uploadKycDocumentService = async (data: {
         });
       }
 
+      // Get user's branchId if not provided
+      let documentBranchId = branchId;
+      if (!documentBranchId) {
+        const user = await tx.user.findUnique({
+          where: { id: userId },
+          select: { branchId: true },
+        });
+        documentBranchId = user?.branchId || "";
+      }
+
       const saveDocuments = await Promise.all(
         documents.map((doc) =>
           tx.document.create({
@@ -33,9 +48,10 @@ export const uploadKycDocumentService = async (data: {
               documentType: doc.documentType,
               documentPath: doc.documentPath,
               uploadedBy: userId,
+              branchId: documentBranchId,
             },
-          })
-        )
+          }),
+        ),
       );
       return { kyc, documents: saveDocuments };
     });
@@ -47,7 +63,7 @@ export const uploadKycDocumentService = async (data: {
 
 export const verifyDocumentService = async (
   documentId: string,
-  adminId: string
+  adminId: string,
 ) => {
   try {
     return prisma.$transaction(async (tx) => {
@@ -112,3 +128,48 @@ export async function getMyKycService(userId: string) {
     include: { documents: true },
   });
 }
+
+export const getAllKycService = async (
+  params: {
+    page?: number;
+    limit?: number;
+    q?: string;
+  },
+  user: {
+    id: string;
+    role: string;
+    branchId?: string;
+  },
+) => {
+  const { page, limit, skip } = getPagination(params.page, params.limit);
+  const accessibleBranches = await getAccessibleBranchIds({
+    id: user.id,
+    role: user.role,
+    branchId: user.branchId,
+  });
+  const where = {
+    ...buildKycSearch(params.q),
+    ...buildBranchFilter(accessibleBranches),
+  };
+
+  const [data, total] = await Promise.all([
+    prisma.kyc.findMany({
+      where,
+      include: { documents: true, user: true },
+      skip,
+      take: limit,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.kyc.count({ where }),
+  ]);
+
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};

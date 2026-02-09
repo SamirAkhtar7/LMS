@@ -30,6 +30,7 @@ export const refreshCreditReportController = async (
       {
         requestedBy: req.user.id,
         reason,
+        branchId: req.user.branchId,
       },
     );
 

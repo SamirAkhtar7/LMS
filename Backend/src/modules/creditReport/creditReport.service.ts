@@ -1,6 +1,7 @@
 import { prisma } from "../../db/prismaService.js";
 import { CreditProvider } from "./providers/creditProvider.interface.js";
 import { getCreditProvider } from "./creditProvider.factory.js";
+import { logAction } from "../../audit/audit.helper.js";
 
 const creditProvider = getCreditProvider();
 
@@ -12,6 +13,8 @@ export const getOrCreateCreditReport = async (
   provider: CreditProvider,
   customerId: string,
   identifiers: { pan?: string; aadhar?: string },
+  userId?: string,
+  branchId?: string,
 ) => {
   // Check if credit report already exists
   let creditReport = await prisma.creditReport.findFirst({
@@ -113,6 +116,19 @@ export const getOrCreateCreditReport = async (
     }
     throw err;
   }
+
+  // Only log action if userId and branchId are provided
+  if (userId && branchId) {
+    await logAction({
+      entityType: "CREDIT_REPORT",
+      entityId: saved.id,
+      action: "MANUAL_REFRESH_CREDIT_REPORT",
+      performedBy: userId,
+      branchId: branchId,
+      remarks: `Credit report auto-fetched for customer ${customerId}`,
+    });
+  }
+
   return saved;
 };
 
@@ -121,6 +137,7 @@ export const refreshCreditReportService = async (
   provider: typeof creditProvider,
   meta: {
     requestedBy: string;
+    branchId?: string;
     reason: string;
   },
 ) => {
@@ -211,14 +228,16 @@ export const refreshCreditReportService = async (
     throw err;
   }
 
-  // await prisma.auditlog.create({
-  //     data: {
-  //         entityType: "CREDIT_REPORT",
-  //         entityId: saved.id,
-  //         action: "MANUAL_REFRESH",
-  //         performedBy: meta.requestedBy,
-  //         remarks: meta.reason,
-  //     }
-  // })
+  // Only log action if branchId is provided
+  if (meta.branchId) {
+    await logAction({
+      entityType: "CREDIT_REPORT",
+      entityId: saved.id,
+      action: "MANUAL_REFRESH_CREDIT_REPORT",
+      performedBy: meta.requestedBy,
+      remarks: meta.reason,
+      branchId: meta.branchId,
+    });
+  }
   return saved;
 };
