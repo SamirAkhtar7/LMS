@@ -8,11 +8,23 @@ export type AuditAction =
   | "REJECT_LOAN"
   | "VERIFY_DOCUMENT"
   | "REJECT_DOCUMENT"
+  | "REUPLOAD_DOCUMENT"
+  | "CREATE_CREDIT_REPORT"
   | "REFRESH_CREDIT_REPORT"
+  | "UPDATE_CREDIT_REPORT"
+  | "ASSIGN_RECOVERY_AGENT"
   | "ASSIGN_LOAN"
   | "UNASSIGN_LOAN"
+  | "CREATE_RECOVERY"
   | "UPDATE_RECOVERY_STAGE"
+  | "UPDATE_RECOVERY_AMOUNT"
+  | "RECORD_RECOVERY_PAYMENT"
   | "PAY_RECOVERY_AMOUNT"
+  | "APPLY_SETTLEMENT"
+  | "APPROVE_SETTLEMENT"
+  | "REJECT_SETTLEMENT"
+  | "SETTLE_LOAN"
+  | "PAY_SETTLEMENT"
   | "CREATE_LEGAL_REPORT"
   | "APPROVE_LEGAL_REPORT"
   | "CREATE_TECHNICAL_REPORT"
@@ -25,10 +37,12 @@ export type AuditAction =
   | "CREATE_BRANCH_ADMIN"
   | "UPDATE_BRANCH_ADMIN"
   | "MANUAL_REFRESH";
-  
 
 export type AuditEntityType =
   | "LOAN"
+  | "LOAN_ASSIGNMENT"
+  | "LOAN_RECOVERY"
+  | "RECOVERY_PAYMENT"
   | "EMPLOYEE"
   | "BRANCH_ADMIN"
   | "DOCUMENT"
@@ -39,7 +53,6 @@ export type AuditEntityType =
   | "TECHNICAL_REPORT"
   | "BRANCH"
   | "EMI_SCHEDULE";
-  
 
 export interface CreateAuditLogInput {
   entityType: AuditEntityType;
@@ -51,4 +64,3 @@ export interface CreateAuditLogInput {
   newValue?: any;
   remarks?: string;
 }
-    

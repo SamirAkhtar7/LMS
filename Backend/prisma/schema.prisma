@@ -82,7 +82,6 @@ model Employee {
   id              String        @id @default(cuid())
   userId          String        @unique
   employeeId      String        @unique
-  branchAdminId   String        @unique
   atlMobileNumber String
   dob             DateTime
   designation     String

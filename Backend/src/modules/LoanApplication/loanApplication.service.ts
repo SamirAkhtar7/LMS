@@ -1,8 +1,5 @@
 import { prisma } from "../../db/prismaService.js";
-import {
-  apperoveLoanInput,
-  CreateLoanApplication,
-} from "./loanApplication.types.js";
+import { CreateLoanApplication } from "./loanApplication.types.js";
 import createLoanApplicationSchema, {
   ApperoveLoanInput,
 } from "./loanApplication.schema.js";
@@ -19,12 +16,6 @@ import fs from "fs";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 import { logAction } from "../../audit/audit.helper.js";
-
-interface CoApplicantDocumentUpload {
-  coApplicants: { id: string; documentType: string }[];
-  files: Express.Multer.File[];
-  uploadedBy: string;
-}
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
@@ -469,7 +460,7 @@ export const reuploadLoanDocumentService = async (
       }
     }
     /* 3️⃣ Update document */
-    return tx.document.update({
+    const updatedDocument = await tx.document.update({
       where: { id: existingDoc.id },
       data: {
         documentPath: `/uploads/${file.filename}`,
@@ -481,6 +472,28 @@ export const reuploadLoanDocumentService = async (
         verifiedAt: null,
       },
     });
+
+    /* 4️⃣ Log audit trail */
+    await logAction({
+      entityType: "DOCUMENT",
+      entityId: existingDoc.id,
+      action: "REUPLOAD_DOCUMENT",
+      performedBy: file.uploadedBy,
+      branchId: existingDoc.branchId,
+      oldValue: {
+        documentPath: existingDoc.documentPath,
+        verificationStatus: existingDoc.verificationStatus,
+        verified: existingDoc.verified,
+      },
+      newValue: {
+        documentPath: updatedDocument.documentPath,
+        verificationStatus: "pending",
+        verified: false,
+      },
+      remarks: `Document ${documentType} reuploaded for loan application`,
+    });
+
+    return updatedDocument;
   });
 };
 
@@ -551,8 +564,11 @@ export const getAllLoanApplicationsService = async (params: {
   };
 };
 
-export const getLoanApplicationByIdService = async (id: string) => {
-  // Implementation for retrieving a loan application by ID
+export const getLoanApplicationByIdService = async (
+  id: string,
+  user?: { id: string; role: Enums.Role },
+) => {
+  // Implementation for retrieving a loan application by ID with branch isolation
   try {
     const loanApplication = await prisma.loanApplication.findUnique({
       where: { id },
@@ -577,6 +593,47 @@ export const getLoanApplicationByIdService = async (id: string) => {
         },
       },
     });
+
+    if (!loanApplication) {
+      const err: any = new Error("Loan application not found");
+      err.statusCode = 404;
+      throw err;
+    }
+
+    // Apply branch isolation if user is provided
+    if (user) {
+      let userBranchId: string | undefined;
+      if (user.role === "EMPLOYEE") {
+        const employee = await prisma.employee.findUnique({
+          where: { userId: user.id },
+          select: { branchId: true },
+        });
+        if (!employee) {
+          const err: any = new Error("Employee record not found");
+          err.statusCode = 404;
+          throw err;
+        }
+        userBranchId = employee.branchId;
+      }
+
+      const accessibleBranches = await getAccessibleBranchIds({
+        id: user.id,
+        role: user.role,
+        branchId: userBranchId,
+      });
+
+      // Check if user has access to this loan's branch
+      // null means no filter (global access), so only check if accessibleBranches is an array
+      if (
+        accessibleBranches !== null &&
+        !accessibleBranches.includes(loanApplication.branchId)
+      ) {
+        const err: any = new Error("Unauthorized: No access to this loan");
+        err.statusCode = 403;
+        throw err;
+      }
+    }
+
     return loanApplication;
   } catch (error) {
     throw error;
@@ -589,9 +646,22 @@ type StatusUpdate = {
 export const updateLoanApplicationStatusService = async (
   id: string,
   statusData: StatusUpdate,
+  userId: string,
 ) => {
   // Implementation for updating loan application status
   try {
+    // Fetch existing loan application before update
+    const existingLoan = await prisma.loanApplication.findUnique({
+      where: { id },
+      select: { status: true, branchId: true },
+    });
+
+    if (!existingLoan) {
+      const err: any = new Error("Loan application not found");
+      err.statusCode = 404;
+      throw err;
+    }
+
     const updatedLoanApplication = await prisma.loanApplication.update({
       where: { id },
       data: { status: statusData.status },
@@ -605,6 +675,19 @@ export const updateLoanApplicationStatusService = async (
         documents: true,
       },
     });
+
+    // Log status change
+    await logAction({
+      entityType: "LOAN",
+      entityId: id,
+      action: "UPDATE_LOAN_STATUS",
+      performedBy: userId,
+      branchId: existingLoan.branchId,
+      oldValue: { status: existingLoan.status },
+      newValue: { status: statusData.status },
+      remarks: `Loan status updated from ${existingLoan.status} to ${statusData.status}`,
+    });
+
     return updatedLoanApplication;
   } catch (error) {
     throw error;
@@ -641,6 +724,35 @@ export const approveLoanService = async (
   userId: string,
   data: ApperoveLoanInput,
 ) => {
+  // Fetch existing loan data before approval
+  const existingLoan = await prisma.loanApplication.findUnique({
+    where: { id: loanId },
+    select: {
+      status: true,
+      branchId: true,
+      approvedAmount: true,
+      tenureMonths: true,
+      interestType: true,
+      interestRate: true,
+      emiAmount: true,
+      latePaymentFeeType: true,
+      latePaymentFee: true,
+      bounceCharges: true,
+    },
+  });
+
+  if (!existingLoan) {
+    const err: any = new Error("Loan application not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (existingLoan.status !== "under_review") {
+    const err: any = new Error("Loan not ready for approval");
+    err.statusCode = 400;
+    throw err;
+  }
+
   // normalize emiStartDate to a full ISO Date if provided as yyyy-mm-dd string
   let emiStartDateNormalized: Date | undefined = undefined;
   if (data.emiStartDate !== undefined && data.emiStartDate !== null) {
@@ -709,9 +821,27 @@ export const approveLoanService = async (
     entityId: loanId,
     action: "APPROVE_LOAN",
     performedBy: userId,
-    branchId: loandata.branchId,
-    oldValue: { status: "under_review" },
-    newValue: { status: "approved" },
+    branchId: existingLoan.branchId,
+    oldValue: {
+      status: existingLoan.status,
+      approvedAmount: existingLoan.approvedAmount,
+      tenureMonths: existingLoan.tenureMonths,
+      interestType: existingLoan.interestType,
+      interestRate: existingLoan.interestRate,
+    },
+    newValue: {
+      status: "approved",
+      approvedAmount: data.approvedAmount,
+      tenureMonths: data.tenureMonths,
+      interestType: data.interestType,
+      interestRate: data.interestRate,
+      latePaymentFeeType: data.latePaymentFeeType,
+      latePaymentFee: data.latePaymentFee,
+      bounceCharges: data.bounceCharges,
+      emiAmount: data.emiAmount,
+      emiStartDate: emiStartDateNormalized,
+    },
+    remarks: `Loan approved with amount ${data.approvedAmount} for ${data.tenureMonths} months`,
   });
 
   return loandata;
@@ -724,23 +854,31 @@ export const rejectLoanService = async (
 ) => {
   const loan = await prisma.loanApplication.findUnique({
     where: { id: loanId },
+    select: {
+      id: true,
+      status: true,
+      branchId: true,
+      loanNumber: true,
+      requestedAmount: true,
+      rejectionReason: true,
+    },
   });
 
-  if (!loan || loan.status !== "under_review") {
-    throw new Error("Loan not ready for rejection");
+  if (!loan) {
+    const err: any = new Error("Loan application not found");
+    err.statusCode = 404;
+    throw err;
   }
 
-  await logAction({
-    entityType: "LOAN",
-    entityId: loanId,
-    action: "REJECT_LOAN",
-    performedBy: userId,
-    branchId: loan.branchId,
-    oldValue: { status: "under_review" },
-    newValue: { status: "rejected", rejectionReason: reason },
-  });
+  if (loan.status !== "under_review") {
+    const err: any = new Error(
+      "Loan not ready for rejection. Only loans under review can be rejected.",
+    );
+    err.statusCode = 400;
+    throw err;
+  }
 
-  return prisma.loanApplication.update({
+  const updatedLoan = await prisma.loanApplication.update({
     where: { id: loanId },
     data: {
       status: "rejected",
@@ -748,4 +886,23 @@ export const rejectLoanService = async (
       approvedBy: userId,
     },
   });
+
+  await logAction({
+    entityType: "LOAN",
+    entityId: loanId,
+    action: "REJECT_LOAN",
+    performedBy: userId,
+    branchId: loan.branchId,
+    oldValue: {
+      status: loan.status,
+      rejectionReason: loan.rejectionReason,
+    },
+    newValue: {
+      status: "rejected",
+      rejectionReason: reason,
+    },
+    remarks: `Loan ${loan.loanNumber} rejected. Reason: ${reason}`,
+  });
+
+  return updatedLoan;
 };

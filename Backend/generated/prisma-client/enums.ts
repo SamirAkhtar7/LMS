@@ -42,6 +42,7 @@ export type AssignedRole = (typeof AssignedRole)[keyof typeof AssignedRole]
 
 
 export const Role = {
+  SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
   EMPLOYEE: 'EMPLOYEE',
   PARTNER: 'PARTNER'

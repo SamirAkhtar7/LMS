@@ -1,5 +1,6 @@
 import { prisma } from "../../db/prismaService.js";
 import { AssignedRole } from "../../../generated/prisma-client/enums.js";
+import { logAction } from "../../audit/audit.helper.js";
 
 export const assignLoanService = async (
   loanApplicationId: string,
@@ -17,6 +18,7 @@ export const assignLoanService = async (
 
   const employee = await prisma.employee.findUnique({
     where: { id: employeeId },
+    include: { user: { select: { fullName: true } } },
   });
 
   if (!employee) {
@@ -38,7 +40,7 @@ export const assignLoanService = async (
     );
   }
 
-  return prisma.loanAssignment.create({
+  const assignment = await prisma.loanAssignment.create({
     data: {
       loanApplicationId,
       employeeId,
@@ -46,13 +48,54 @@ export const assignLoanService = async (
       assignedBy: assignedById,
     },
   });
+
+  // Log the assignment action
+  await logAction({
+    entityType: "LOAN_ASSIGNMENT",
+    entityId: assignment.id,
+    action: "ASSIGN_LOAN",
+    performedBy: assignedById,
+    branchId: loan.branchId,
+    oldValue: null,
+    newValue: {
+      loanApplicationId,
+      employeeId,
+      employeeName: employee.user.fullName,
+      role,
+      isActive: true,
+    },
+    remarks: `Loan ${loan.loanNumber} assigned to ${employee.user.fullName} as ${role}`,
+  });
+
+  return assignment;
 };
 
 export const unassignloanService = async (
   assignmentId: string,
   unassignedById: string,
 ) => {
-  return prisma.loanAssignment.update({
+  // Fetch existing assignment before updating
+  const existingAssignment = await prisma.loanAssignment.findUnique({
+    where: { id: assignmentId },
+    include: {
+      loanApplication: { select: { loanNumber: true, branchId: true } },
+      employee: { include: { user: { select: { fullName: true } } } },
+    },
+  });
+
+  if (!existingAssignment) {
+    const err: any = new Error("Loan assignment not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (!existingAssignment.isActive) {
+    const err: any = new Error("Assignment is already inactive");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const updatedAssignment = await prisma.loanAssignment.update({
     where: { id: assignmentId },
     data: {
       isActive: false,
@@ -60,8 +103,28 @@ export const unassignloanService = async (
       unassignedAt: new Date(),
     },
   });
-};
 
+  // Log the unassignment action
+  await logAction({
+    entityType: "LOAN_ASSIGNMENT",
+    entityId: assignmentId,
+    action: "UNASSIGN_LOAN",
+    performedBy: unassignedById,
+    branchId: existingAssignment.loanApplication.branchId,
+    oldValue: {
+      isActive: true,
+      employeeName: existingAssignment.employee.user.fullName,
+      role: existingAssignment.role,
+    },
+    newValue: {
+      isActive: false,
+      unassignedAt: updatedAssignment.unassignedAt,
+    },
+    remarks: `Loan ${existingAssignment.loanApplication.loanNumber} unassigned from ${existingAssignment.employee.user.fullName} (${existingAssignment.role})`,
+  });
+
+  return updatedAssignment;
+};
 
 export const getAssignedLoansForEmployeeService = async (userId: string) => {
   const employee = await prisma.employee.findUnique({
@@ -85,5 +148,3 @@ export const getAssignedLoansForEmployeeService = async (userId: string) => {
   });
   return loans;
 };
-
-

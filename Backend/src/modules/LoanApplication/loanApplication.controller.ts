@@ -77,7 +77,10 @@ export const getLoanApplicationByIdController = async (
   res: Response,
 ) => {
   try {
-    const loanApplication = await getLoanApplicationByIdService(req.params.id);
+    const loanApplication = await getLoanApplicationByIdService(
+      req.params.id,
+      req.user ? { id: req.user.id, role: req.user.role as any } : undefined,
+    );
     res.status(200).json({
       success: true,
       message: "Loan application retrieved successfully",
@@ -103,6 +106,7 @@ export const updateLoanApplicationStatusController = async (
     const updatedLoanApplication = await updateLoanApplicationStatusService(
       id,
       { status },
+      req.user.id,
     );
     res.status(200).json({
       success: true,

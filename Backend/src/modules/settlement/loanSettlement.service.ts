@@ -7,6 +7,7 @@ import {
 } from "../../../generated/prisma-client/enums.js";
 import { getPagination } from "../../common/utils/pagination.js";
 import { buildRecoverySearch } from "../../common/utils/search.js";
+import { logAction } from "../../audit/audit.helper.js";
 
 export const settleLoanService = async (
   recoveryId: string,
@@ -16,6 +17,7 @@ export const settleLoanService = async (
     paymentMode: PrismaPaymentMode;
     remarks?: string;
   },
+  userId: string,
 ) => {
   return prisma.$transaction(async (tx) => {
     const recovery = await tx.loanRecovery.findUnique({
@@ -43,7 +45,7 @@ export const settleLoanService = async (
       throw new Error("Settlement amount exceeds outstanding balance");
     }
 
-    await tx.recoveryPayment.create({
+    const payment = await tx.recoveryPayment.create({
       data: {
         loanRecoveryId: recoveryId,
         amount: data.settlementAmount,
@@ -52,7 +54,7 @@ export const settleLoanService = async (
       },
     });
 
-    await tx.loanRecovery.update({
+    const updatedRecovery = await tx.loanRecovery.update({
       where: {
         id: recoveryId,
       },
@@ -73,6 +75,30 @@ export const settleLoanService = async (
         status: "closed",
       },
     });
+
+    await logAction({
+      entityType: "LOAN_RECOVERY",
+      entityId: recoveryId,
+      action: "SETTLE_LOAN",
+      performedBy: userId,
+      branchId: recovery.branchId,
+      oldValue: {
+        recoveryStatus: recovery.recoveryStatus,
+        recoveryStage: recovery.recoveryStage,
+        recoveredAmount: recovery.recoveredAmount,
+        balanceAmount: recovery.balanceAmount,
+      },
+      newValue: {
+        recoveryStatus: recovery_status.RESOLVED as any,
+        recoveryStage: recovery_stage.SETTLEMENT as any,
+        settlementAmount: data.settlementAmount,
+        recoveredAmount: updatedRecovery.recoveredAmount,
+        balanceAmount: updatedRecovery.balanceAmount,
+        paymentMode: data.paymentMode,
+        paymentId: payment.id,
+      },
+      remarks: `Loan settled with payment of ${data.settlementAmount}`,
+    });
     return {
       message: "Loan settlement processed successfully",
     };
@@ -81,6 +107,7 @@ export const settleLoanService = async (
 
 export const applySettlementService = async (
   recoveryId: string,
+  userId: string,
   remarks?: string,
 ) => {
   const recovery = await prisma.loanRecovery.findUnique({
@@ -96,7 +123,7 @@ export const applySettlementService = async (
     throw new Error("Settlement has already been processed for this recovery");
   }
 
-  return prisma.loanRecovery.update({
+  const updatedRecovery = await prisma.loanRecovery.update({
     where: {
       id: recoveryId,
     },
@@ -105,6 +132,25 @@ export const applySettlementService = async (
       remarks: remarks,
     },
   });
+
+  await logAction({
+    entityType: "LOAN_RECOVERY",
+    entityId: recoveryId,
+    action: "APPLY_SETTLEMENT",
+    performedBy: userId,
+    branchId: recovery.branchId,
+    oldValue: {
+      recoveryStatus: recovery.recoveryStatus,
+      remarks: recovery.remarks,
+    },
+    newValue: {
+      recoveryStatus: recovery_status.IN_PROGRESS as any,
+      remarks: remarks,
+    },
+    remarks: "Settlement request applied",
+  });
+
+  return updatedRecovery;
 };
 
 export const approveSettlementService = async (
@@ -130,7 +176,7 @@ export const approveSettlementService = async (
     if (settlementAmount > recovery.balanceAmount) {
       throw new Error("Settlement amount exceeds outstanding balance");
     }
-    await tx.loanRecovery.update({
+    const updatedRecovery = await tx.loanRecovery.update({
       where: {
         id: recoveryId,
       },
@@ -142,6 +188,27 @@ export const approveSettlementService = async (
         recoveryStage: recovery_stage.SETTLEMENT as any,
       },
     });
+
+    await logAction({
+      entityType: "LOAN_RECOVERY",
+      entityId: recoveryId,
+      action: "APPROVE_SETTLEMENT",
+      performedBy: approvedBy,
+      branchId: recovery.branchId,
+      oldValue: {
+        settlementAmount: recovery.settlementAmount,
+        settlementApprovedBy: recovery.settlementApprovedBy,
+        recoveryStatus: recovery.recoveryStatus,
+        recoveryStage: recovery.recoveryStage,
+      },
+      newValue: {
+        settlementAmount: updatedRecovery.settlementAmount,
+        settlementApprovedBy: updatedRecovery.settlementApprovedBy,
+        recoveryStatus: updatedRecovery.recoveryStatus,
+        recoveryStage: updatedRecovery.recoveryStage,
+      },
+      remarks: `Settlement approved for amount ${settlementAmount}`,
+    });
   });
 };
 
@@ -149,6 +216,7 @@ export const paySettlementService = async (
   recoveryId: string,
   amount: number,
   paymentMode: PaymentMode,
+  userId: string,
   referenceNo?: string,
 ) => {
   return prisma.$transaction(async (tx) => {
@@ -165,7 +233,7 @@ export const paySettlementService = async (
         "Paid amount does not match the approved settlement amount",
       );
     }
-    await tx.recoveryPayment.create({
+    const payment = await tx.recoveryPayment.create({
       data: {
         loanRecoveryId: recoveryId,
         amount: amount,
@@ -177,7 +245,7 @@ export const paySettlementService = async (
     const newRecovered = (recovery.recoveredAmount || 0) + amount;
     const newBalance = (recovery.balanceAmount || 0) - amount;
 
-    await tx.loanRecovery.update({
+    const updatedRecovery = await tx.loanRecovery.update({
       where: {
         id: recoveryId,
       },
@@ -198,6 +266,28 @@ export const paySettlementService = async (
       },
     });
 
+    await logAction({
+      entityType: "LOAN_RECOVERY",
+      entityId: recoveryId,
+      action: "PAY_SETTLEMENT",
+      performedBy: userId,
+      branchId: recovery.branchId,
+      oldValue: {
+        recoveredAmount: recovery.recoveredAmount,
+        balanceAmount: recovery.balanceAmount,
+        recoveryStatus: recovery.recoveryStatus,
+      },
+      newValue: {
+        paymentAmount: amount,
+        paymentMode,
+        paymentId: payment.id,
+        recoveredAmount: updatedRecovery.recoveredAmount,
+        balanceAmount: updatedRecovery.balanceAmount,
+        recoveryStatus: updatedRecovery.recoveryStatus,
+      },
+      remarks: `Settlement payment of ${amount} recorded`,
+    });
+
     return {
       message: "Settlement processed successfully",
       totalOutstandingAmount: newBalance,
@@ -208,6 +298,7 @@ export const paySettlementService = async (
 
 export const rejectSettlementService = async (
   recoveryId: string,
+  userId: string,
   remarks?: string,
 ) => {
   const recovery = await prisma.loanRecovery.findUnique({
@@ -228,7 +319,7 @@ export const rejectSettlementService = async (
   if (recovery.recoveryStatus !== "IN_PROGRESS") {
     throw new Error("Settlement is not in progress for this recovery");
   }
-  return prisma.loanRecovery.update({
+  const updatedRecovery = await prisma.loanRecovery.update({
     where: {
       id: recoveryId,
     },
@@ -237,6 +328,25 @@ export const rejectSettlementService = async (
       remarks: remarks,
     },
   });
+
+  await logAction({
+    entityType: "LOAN_RECOVERY",
+    entityId: recoveryId,
+    action: "REJECT_SETTLEMENT",
+    performedBy: userId,
+    branchId: recovery.branchId,
+    oldValue: {
+      recoveryStatus: recovery.recoveryStatus,
+      remarks: recovery.remarks,
+    },
+    newValue: {
+      recoveryStatus: "ONGOING",
+      remarks: remarks,
+    },
+    remarks: "Settlement request rejected",
+  });
+
+  return updatedRecovery;
 };
 
 export const getAllSettlementsService = async (params: {

@@ -8,8 +8,12 @@ import {
 import { getPagination } from "../../common/utils/pagination.js";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
+import { logAction } from "../../audit/audit.helper.js";
 
-export const getRecoveryByLoanIdService = async (loanId: string) => {
+export const getRecoveryByLoanIdService = async (
+  loanId: string,
+  userId?: string,
+) => {
   return prisma.$transaction(async (tx) => {
     /* 1️⃣ Fetch loan */
     const loan = await tx.loanApplication.findUnique({
@@ -65,7 +69,7 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
         Number(existingRecovery.totalOutstandingAmount.toFixed(2)) !==
         Number(correctOutstanding.toFixed(2))
       ) {
-        return tx.loanRecovery.update({
+        const updatedRecovery = await tx.loanRecovery.update({
           where: { id: existingRecovery.id },
           data: {
             totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
@@ -74,13 +78,35 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
           },
           include: { recoveryPayments: true },
         });
+
+        // Log recovery update
+        if (userId) {
+          await logAction({
+            entityType: "LOAN_RECOVERY",
+            entityId: existingRecovery.id,
+            action: "UPDATE_RECOVERY_AMOUNT",
+            performedBy: userId,
+            branchId: loan.branchId,
+            oldValue: {
+              totalOutstandingAmount: existingRecovery.totalOutstandingAmount,
+              balanceAmount: existingRecovery.balanceAmount,
+            },
+            newValue: {
+              totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
+              balanceAmount: Number(correctOutstanding.toFixed(2)),
+            },
+            remarks: `Recovery amount corrected for loan ${loanId}`,
+          });
+        }
+
+        return updatedRecovery;
       }
 
       return existingRecovery;
     }
 
     /* 5️⃣ Create new recovery */
-    return tx.loanRecovery.create({
+    const newRecovery = await tx.loanRecovery.create({
       data: {
         loanApplicationId: loan.id,
         customerId: loan.customerId,
@@ -94,6 +120,27 @@ export const getRecoveryByLoanIdService = async (loanId: string) => {
         recoveryStatus: "ONGOING",
       },
     });
+
+    // Log recovery creation
+    if (userId) {
+      await logAction({
+        entityType: "LOAN_RECOVERY",
+        entityId: newRecovery.id,
+        action: "CREATE_RECOVERY",
+        performedBy: userId,
+        branchId: loan.branchId,
+        oldValue: null,
+        newValue: {
+          totalOutstandingAmount: Number(correctOutstanding.toFixed(2)),
+          recoveryStage: "INITIAL_CONTACT",
+          recoveryStatus: "ONGOING",
+          dpd: loan.dpd ?? 0,
+        },
+        remarks: `Recovery initiated for defaulted loan ${loanId}`,
+      });
+    }
+
+    return newRecovery;
   });
 };
 
@@ -101,6 +148,7 @@ export const payRecoveryAmountService = async (
   recoveryId: string,
   amount: number,
   paymentMode: PrismaPaymentMode,
+  userId: string,
   referenceNo?: string,
 ) => {
   return prisma.$transaction(async (tx) => {
@@ -115,7 +163,8 @@ export const payRecoveryAmountService = async (
     if (amount > recovery.balanceAmount) {
       throw new Error("Payment exceeds outstanding amount");
     }
-    await tx.recoveryPayment.create({
+
+    const payment = await tx.recoveryPayment.create({
       data: {
         loanRecoveryId: recoveryId,
         amount,
@@ -124,6 +173,7 @@ export const payRecoveryAmountService = async (
         referenceNo,
       },
     });
+
     const recoveredAmount = recovery.recoveredAmount + amount;
     const balanceAmount = Math.max(
       recovery.totalOutstandingAmount - recoveredAmount,
@@ -151,6 +201,31 @@ export const payRecoveryAmountService = async (
       });
     }
 
+    // Log recovery payment
+    await logAction({
+      entityType: "RECOVERY_PAYMENT",
+      entityId: payment.id,
+      action: "RECORD_RECOVERY_PAYMENT",
+      performedBy: userId,
+      branchId: recovery.branchId,
+      oldValue: {
+        recoveredAmount: recovery.recoveredAmount,
+        balanceAmount: recovery.balanceAmount,
+        recoveryStatus: recovery.recoveryStatus,
+      },
+      newValue: {
+        paymentAmount: amount,
+        paymentMode,
+        recoveredAmount: recoveredAmount,
+        balanceAmount: balanceAmount,
+        recoveryStatus: balanceAmount === 0 ? "COMPLETED" : "ONGOING",
+      },
+      remarks:
+        balanceAmount === 0
+          ? `Recovery completed with payment of ₹${amount}. Total recovered: ₹${recoveredAmount}`
+          : `Recovery payment of ₹${amount} recorded. Remaining balance: ₹${balanceAmount}`,
+    });
+
     return updatedRecovery;
   });
 };
@@ -158,6 +233,7 @@ export const payRecoveryAmountService = async (
 export const assignRecoveryAgentService = async (
   recoveryId: string,
   assignedTo: string,
+  assignedBy: string,
 ) => {
   const recovery = await prisma.loanRecovery.findUnique({
     where: { id: recoveryId },
@@ -168,6 +244,7 @@ export const assignRecoveryAgentService = async (
 
   const agent = await prisma.employee.findUnique({
     where: { id: assignedTo },
+    include: { user: { select: { fullName: true } } },
   });
   if (!agent || agent.branchId !== recovery.branchId) {
     throw new Error(
@@ -175,24 +252,76 @@ export const assignRecoveryAgentService = async (
     );
   }
 
-  return prisma.loanRecovery.update({
+  const updatedRecovery = await prisma.loanRecovery.update({
     where: { id: recoveryId },
     data: { assignedTo },
   });
+
+  // Log recovery assignment
+  await logAction({
+    entityType: "LOAN_RECOVERY",
+    entityId: recoveryId,
+    action: "ASSIGN_RECOVERY_AGENT",
+    performedBy: assignedBy,
+    branchId: recovery.branchId,
+    oldValue: {
+      assignedTo: recovery.assignedTo,
+    },
+    newValue: {
+      assignedTo: assignedTo,
+      agentName: agent.user.fullName,
+    },
+    remarks: recovery.assignedTo
+      ? `Recovery reassigned to ${agent.user.fullName}`
+      : `Recovery assigned to ${agent.user.fullName}`,
+  });
+
+  return updatedRecovery;
 };
 
 export const updateRecoveryStageService = async (
   recoveryId: string,
   recoveryStage: recovery_stage,
+  userId: string,
   remarks?: string,
 ) => {
-  return prisma.loanRecovery.update({
+  const existingRecovery = await prisma.loanRecovery.findUnique({
+    where: { id: recoveryId },
+  });
+
+  if (!existingRecovery) {
+    const err: any = new Error("Recovery record not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const updatedRecovery = await prisma.loanRecovery.update({
     where: { id: recoveryId },
     data: {
       recoveryStage,
       remarks,
     },
   });
+
+  // Log recovery stage update
+  await logAction({
+    entityType: "LOAN_RECOVERY",
+    entityId: recoveryId,
+    action: "UPDATE_RECOVERY_STAGE",
+    performedBy: userId,
+    branchId: existingRecovery.branchId,
+    oldValue: {
+      recoveryStage: existingRecovery.recoveryStage,
+      remarks: existingRecovery.remarks,
+    },
+    newValue: {
+      recoveryStage,
+      remarks,
+    },
+    remarks: `Recovery stage updated from ${existingRecovery.recoveryStage} to ${recoveryStage}`,
+  });
+
+  return updatedRecovery;
 };
 export const getLoanWithRecoveryService = async () => {
   const loanWithRecovery = await prisma.loanApplication.findMany({
@@ -227,7 +356,6 @@ export const getAllRecoveriesService = async (
   const where: any = {
     ...buildRecoverySearch(params.q),
     ...buildBranchFilter(accessibleBranches),
-
   };
 
   // ✅ SAFE enum filter

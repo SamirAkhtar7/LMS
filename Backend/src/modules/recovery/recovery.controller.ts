@@ -18,7 +18,7 @@ export const getRecoveryByLoanIdController = async (
 ) => {
   const { loanId } = req.params;
   try {
-    const recovery = await getRecoveryByLoanIdService(loanId);
+    const recovery = await getRecoveryByLoanIdService(loanId, req.user?.id);
 
     if (!recovery) {
       return res.status(404).json({
@@ -47,6 +47,13 @@ export const payRecoveryAmountController = async (
   const { recoveryId } = req.params;
   const { amount, paymentMode, referenceNo } = req.body;
   try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     if (
       amount === undefined ||
       amount === null ||
@@ -68,6 +75,7 @@ export const payRecoveryAmountController = async (
       recoveryId,
       amount,
       paymentMode,
+      req.user.id,
       referenceNo,
     );
 
@@ -92,6 +100,13 @@ export const assignRecoveryAgentController = async (
   const { recoveryId } = req.params;
   const { assignedTo } = req.body;
   try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     if (!assignedTo) {
       return res.status(400).json({
         success: false,
@@ -99,7 +114,11 @@ export const assignRecoveryAgentController = async (
       });
     }
 
-    const recovery = await assignRecoveryAgentService(recoveryId, assignedTo);
+    const recovery = await assignRecoveryAgentService(
+      recoveryId,
+      assignedTo,
+      req.user.id,
+    );
     res.status(200).json({
       success: true,
       message: "Recovery agent assigned successfully",
@@ -121,6 +140,13 @@ export const updateRecoveryStageController = async (
   const { recoveryId } = req.params;
   const { recoveryStage, remarks } = req.body;
   try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     if (
       !recoveryStage ||
       !Object.values(recovery_stage).includes(recoveryStage)
@@ -134,6 +160,7 @@ export const updateRecoveryStageController = async (
     const recovery = await updateRecoveryStageService(
       recoveryId,
       recoveryStage as recovery_stage,
+      req.user.id,
       remarks,
     );
     res.status(200).json({
@@ -176,8 +203,7 @@ export const getAllRecoveriesController = async (
   res: Response,
 ) => {
   try {
-
-    if(!req.user) {
+    if (!req.user) {
       return res.status(401).json({
         success: false,
         message: "Unauthorized: User not authenticated",

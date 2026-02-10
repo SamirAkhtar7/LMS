@@ -122,10 +122,24 @@ export const getOrCreateCreditReport = async (
     await logAction({
       entityType: "CREDIT_REPORT",
       entityId: saved.id,
-      action: "MANUAL_REFRESH_CREDIT_REPORT",
+      action: creditReport ? "UPDATE_CREDIT_REPORT" : "CREATE_CREDIT_REPORT",
       performedBy: userId,
       branchId: branchId,
-      remarks: `Credit report auto-fetched for customer ${customerId}`,
+      oldValue: creditReport
+        ? {
+            creditScore: creditReport.creditScore,
+            totalActiveLoans: creditReport.totalAtiveLoans,
+            totalOutstanding: creditReport.totalOutstandingLoans,
+          }
+        : null,
+      newValue: {
+        creditScore: report.creditScore,
+        totalActiveLoans: report.totalActiveLoans,
+        totalOutstanding: report.totalOutstanding,
+      },
+      remarks: creditReport
+        ? `Credit report refreshed for customer. Score changed from ${creditReport.creditScore} to ${report.creditScore}`
+        : `Credit report created for customer with score ${report.creditScore}`,
     });
   }
 
@@ -141,6 +155,15 @@ export const refreshCreditReportService = async (
     reason: string;
   },
 ) => {
+  // Fetch existing credit report before invalidating
+  const existingReport = await prisma.creditReport.findFirst({
+    where: {
+      customerId,
+      isValid: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
   await prisma.creditReport.updateMany({
     where: {
       customerId,
@@ -235,8 +258,24 @@ export const refreshCreditReportService = async (
       entityId: saved.id,
       action: "MANUAL_REFRESH_CREDIT_REPORT",
       performedBy: meta.requestedBy,
-      remarks: meta.reason,
       branchId: meta.branchId,
+      oldValue: existingReport
+        ? {
+            creditScore: existingReport.creditScore,
+            totalActiveLoans: existingReport.totalAtiveLoans,
+            totalOutstanding: existingReport.totalOutstandingLoans,
+            maxDPD: existingReport.maxDPD,
+          }
+        : null,
+      newValue: {
+        creditScore: report.creditScore,
+        totalActiveLoans: report.totalActiveLoans,
+        totalOutstanding: report.totalOutstanding,
+        maxDPD: report.maxDPD,
+      },
+      remarks: existingReport
+        ? `${meta.reason}. Score changed from ${existingReport.creditScore} to ${report.creditScore}`
+        : `${meta.reason}. New credit score: ${report.creditScore}`,
     });
   }
   return saved;

@@ -10,9 +10,33 @@ export const getAccessibleBranchIds = async (user: {
     return null; // null means no filter, access to all branches
   }
 
-  // Admin can access all branches
-  if (user.role === "ADMIN") {
+  // Admin without branchId is a global admin - access all branches
+  if (user.role === "ADMIN" && !user.branchId) {
     return null; // null means no filter, access to all branches
+  }
+
+  // Admin WITH branchId is a branch admin - access their branch and sub-branches
+  if (user.role === "ADMIN" && user.branchId) {
+    const userBranch = await prisma.branch.findUnique({
+      where: { id: user.branchId },
+      include: {
+        subBranches: {
+          select: { id: true },
+        },
+      },
+    });
+
+    if (!userBranch) {
+      throw new Error("User's branch not found");
+    }
+
+    // If main branch, include all sub-branches; if sub-branch, only that branch
+    if (userBranch.type === "MAIN") {
+      const subBranchIds = userBranch.subBranches.map((sb) => sb.id);
+      return [user.branchId, ...subBranchIds];
+    }
+
+    return [user.branchId];
   }
 
   // user Role is EMPLOYEE, we need to check their branch access

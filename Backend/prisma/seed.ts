@@ -1,7 +1,7 @@
 import { hashPassword } from "../src/common/utils/utils.ts";
 import { prisma } from "../src/db/prismaService.ts";
 import { PERMISSIONS } from "../src/common/constants/permission.ts";
-import { skip } from "node:test";
+
 
 async function main(): Promise<void> {
   const now: Date = new Date();
@@ -40,7 +40,7 @@ async function main(): Promise<void> {
       email: "admin@gmail.com",
       userName: "admin123",
       password,
-      role: "ADMIN",
+      role: "SUPER_ADMIN",
       contactNumber: "9999999999",
       branchId: superBranch.id,
       isActive: true,
