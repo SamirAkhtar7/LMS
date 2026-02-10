@@ -2,6 +2,7 @@ import { prisma } from "../../db/prismaService.js";
 
 import { hashPassword } from "../../common/utils/utils.js";
 import { logAction } from "../../audit/audit.helper.js";
+import logger from "../../common/logger.js";
 
 export const createBranchAdminService = async (
   data: {
@@ -14,86 +15,102 @@ export const createBranchAdminService = async (
   },
   userId: string,
 ) => {
-  // Verify branch exists and is active
-  const branch = await prisma.branch.findUnique({
-    where: { id: data.branchId },
-  });
-  if (!branch || !branch.isActive) {
-    const error: any = new Error("Branch not found or inactive");
-    error.statusCode = 400;
-    throw error;
-  }
+  try {
+    // Verify branch exists and is active
+    const branch = await prisma.branch.findUnique({
+      where: { id: data.branchId },
+    });
+    if (!branch || !branch.isActive) {
+      const error: any = new Error("Branch not found or inactive");
+      error.statusCode = 400;
+      throw error;
+    }
 
-  // Check if email already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email: data.email },
-  });
-  if (existingUser) {
-    const error: any = new Error("User with this email already exists");
-    error.statusCode = 409;
-    throw error;
-  }
+    // Check if email already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+    if (existingUser) {
+      const error: any = new Error("User with this email already exists");
+      error.statusCode = 409;
+      throw error;
+    }
 
-  // Check if userName already exists
-  const existingUserName = await prisma.user.findUnique({
-    where: { userName: data.userName },
-  });
-  if (existingUserName) {
-    const error: any = new Error("Username already exists");
-    error.statusCode = 409;
-    throw error;
-  }
+    // Check if userName already exists
+    const existingUserName = await prisma.user.findUnique({
+      where: { userName: data.userName },
+    });
+    if (existingUserName) {
+      const error: any = new Error("Username already exists");
+      error.statusCode = 409;
+      throw error;
+    }
 
-  const hashedPassword = await hashPassword(data.password);
+    const hashedPassword = await hashPassword(data.password);
 
-  const user = await prisma.user.create({
-    data: {
-      fullName: data.fullName,
-      email: data.email,
-      userName: data.userName,
-      contactNumber: data.contactNumber,
-      password: hashedPassword,
-      role: "ADMIN",
+    const user = await prisma.user.create({
+      data: {
+        fullName: data.fullName,
+        email: data.email,
+        userName: data.userName,
+        contactNumber: data.contactNumber,
+        password: hashedPassword,
+        role: "ADMIN",
+        branchId: data.branchId,
+        isActive: true,
+      },
+    });
+
+    // Log audit trail
+    await logAction({
+      entityType: "BRANCH_ADMIN",
+      entityId: user.id,
+      action: "CREATE_BRANCH_ADMIN",
+      performedBy: userId,
       branchId: data.branchId,
-      isActive: true,
-    },
-  });
+      oldValue: null,
+      newValue: {
+        fullName: user.fullName,
+        email: user.email,
+        userName: user.userName,
+        contactNumber: user.contactNumber,
+        branchId: user.branchId,
+      },
+      remarks: `Branch admin created for branch ${branch.name}`,
+    });
 
-  // Log audit trail
-  await logAction({
-    entityType: "BRANCH_ADMIN",
-    entityId: user.id,
-    action: "CREATE_BRANCH_ADMIN",
-    performedBy: userId,
-    branchId: data.branchId,
-    oldValue: null,
-    newValue: {
-      fullName: user.fullName,
-      email: user.email,
-      userName: user.userName,
-      contactNumber: user.contactNumber,
-      branchId: user.branchId,
-    },
-    remarks: `Branch admin created for branch ${branch.name}`,
-  });
+    // Return user without password
+    const { password: _pw, ...safeUser } = user;
+    return safeUser;
+  } catch (error: any) {
+    logger.error("Error creating branch admin:", {
+      message: error.message,
+      stack: error.stack,
+      statusCode: error.statusCode,
+    });
 
-  // Return user without password
-  const { password: _pw, ...safeUser } = user;
-  return safeUser;
+    if (!error.statusCode) {
+      error.statusCode = 500;
+      error.message = "Failed to create branch admin";
+    }
+    throw error;
+  }
 };
 
 export const updateBranchAdminService = async (
-  id: string,
-  data: {
-    fullName?: string;
-    email?: string;
-    userName?: string;
-    contactNumber?: string;
-    password?: string;
-    branchId?: string;
-  },
-  userId: string,
+    id: string,
+    data: {
+        fullName?: string;
+        email?: string;
+        userName?: string;
+        contactNumber?: string;
+        password?: string;
+        branchId?: string;
+    },
+    userId: string,
 ) => {
+
+    try{  
   // Fetch existing user
   const existingUser = await prisma.user.findUnique({
     where: { id },
@@ -155,7 +172,7 @@ export const updateBranchAdminService = async (
   });
 
   // Log audit trail
-  const auditBranchId = data.branchId || existingUser.branchId;
+  const auditBranchId = data.branchId ?? existingUser.branchId;
   await logAction({
     entityType: "BRANCH_ADMIN",
     entityId: updatedUser.id,
@@ -182,4 +199,18 @@ export const updateBranchAdminService = async (
   // Return user without password
   const { password: _pw, ...safeUser } = updatedUser;
   return safeUser;
-};
+    }
+    catch (err: any) {
+        logger.error("Error updating branch admin:", {
+            message: err.message,
+            stack: err.stack,
+            statusCode: err.statusCode,
+        });
+          if (!err.statusCode) {
+      err.statusCode = 500;
+      err.message = "Failed to update branch admin";
+    }
+        throw err;
+    }
+}
+      

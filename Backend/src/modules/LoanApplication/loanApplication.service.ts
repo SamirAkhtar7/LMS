@@ -20,7 +20,6 @@ import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 import { logAction } from "../../audit/audit.helper.js";
 
-
 interface CoApplicantDocumentUpload {
   coApplicants: { id: string; documentType: string }[];
   files: Express.Multer.File[];
@@ -31,8 +30,7 @@ export async function createLoanApplicationService(
   data: CreateLoanApplication,
   loggedInUser: { id: string; role: Enums.Role },
 ) {
-  try
-  {
+  try {
     const parsed = createLoanApplicationSchema.parse(data);
     const loanType = await prisma.loanType.findFirst({
       where: { id: parsed.loanTypeId },
@@ -45,7 +43,7 @@ export async function createLoanApplicationService(
         ? new Date(parsed.dob)
         : parsed.dob;
 
-    /* -------- Get branchId from user's employee record -------- */
+    /* -------- Get branchId from user record -------- */
     const user = await prisma.user.findUnique({
       where: { id: loggedInUser.id },
       select: { branchId: true },
@@ -54,7 +52,6 @@ export async function createLoanApplicationService(
     if (!user?.branchId) {
       throw new Error("User branch information not found");
     }
-
     return prisma.$transaction(async (tx) => {
       /* -------- 1. Find or create customer -------- */
       let customer = await tx.customer.findFirst({

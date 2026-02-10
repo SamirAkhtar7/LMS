@@ -3,8 +3,8 @@ import { Router } from "express";
 const branchAdminRouter = Router();
 
 import {
-    createBranchAdminController,
-    updateBranchAdminController,
+  createBranchAdminController,
+  updateBranchAdminController,
 } from "./branchAdmin.controller.js";
 
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
