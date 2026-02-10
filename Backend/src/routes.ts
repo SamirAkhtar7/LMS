@@ -20,6 +20,7 @@ import legalReportRouter from "./modules/reports/legalReport/legal.routes.js";
 import coApplicantRouter from "./modules/coApplicants/coApplicant.routes.js";
 import loanAssignmentRouter from "./modules/loanAssignment/loanAssignment.routes.js";
 import branchRouter from "./modules/Branch/branch.router.js";
+import branchAdminRouter from "./modules/branchAdmin/branchAdmin.router.js";
 
 const router = Router();
 
@@ -47,5 +48,6 @@ router.use("/reports/legal", legalReportRouter);
 router.use("/co-applicant", coApplicantRouter);
 router.use("/loan-assignment", loanAssignmentRouter);
 router.use("/branches", branchRouter);
+router.use("/branch-admins", branchAdminRouter);
 
 export default router;

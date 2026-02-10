@@ -22,12 +22,15 @@ export type AuditAction =
   | "DELETE_BRANCH"
   | "MANUAL_REFRESH_CREDIT_REPORT"
   | "GENERATE_EMI_SCHEDULE"
+  | "CREATE_BRANCH_ADMIN"
+  | "UPDATE_BRANCH_ADMIN"
   | "MANUAL_REFRESH";
   
 
 export type AuditEntityType =
   | "LOAN"
   | "EMPLOYEE"
+  | "BRANCH_ADMIN"
   | "DOCUMENT"
   | "CREDIT_REPORT"
   | "RECOVERY"

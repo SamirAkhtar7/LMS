@@ -46,13 +46,13 @@ export async function createLoanApplicationService(
         : parsed.dob;
 
     /* -------- Get branchId from user's employee record -------- */
-    const employee = await prisma.employee.findUnique({
-      where: { userId: loggedInUser.id },
+    const user = await prisma.user.findUnique({
+      where: { id: loggedInUser.id },
       select: { branchId: true },
     });
 
-    if (!employee?.branchId) {
-      throw new Error("Employee branch information not found");
+    if (!user?.branchId) {
+      throw new Error("User branch information not found");
     }
 
     return prisma.$transaction(async (tx) => {
@@ -141,7 +141,7 @@ export async function createLoanApplicationService(
           cibilScore: parsed.cibilScore,
           status: "kyc_pending",
           createdById: loggedInUser.id,
-          branchId: employee.branchId,
+          branchId: user.branchId,
         },
       });
       /* -------- 5. Create PRIMARY KYC -------- */
