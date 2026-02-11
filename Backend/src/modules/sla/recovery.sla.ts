@@ -1,20 +1,21 @@
 import { logAction } from "../../audit/audit.helper.js";
+import logger from "../../common/logger.js";
 import { prisma } from "../../db/prismaService.js";
-
 export const checkRecoverySLA = async () => {
-    const threSholdHours = 48;
 
-    const cutoffDate = new Date(Date.now() - threSholdHours * 60 * 60 * 1000);
+    const thresholdHours = 48;
+
+    const cutoffDate = new Date(Date.now() - thresholdHours * 60 * 60 * 1000);
     
     
     const stuckRecoveries = await prisma.loanRecovery.findMany({
-      where: {
-        recoveryStage: "INITIAL_CONTACT",
-        updatedAt: {
-          lt: cutoffDate,
+        where: {
+            recoveryStage: "INITIAL_CONTACT",
+            updatedAt: {
+                lt: cutoffDate,
+            },
         },
-        },
-        include : { loanApplication: true }
+        include: { loanApplication: true }
     });
 
     for (const rec of stuckRecoveries) {
@@ -28,6 +29,11 @@ export const checkRecoverySLA = async () => {
                 }
             });
             if (!exists) {
+                const branchId = rec.loanApplication?.branchId;
+                if (!branchId) {
+                    logger.error(`Loan Application missing for Recovery ID: ${rec.id}. Skipping SLA breach log creation.`);
+                    return;
+                }
                 await prisma.sLABreachLog.create({
                     data: {
                         entityType: "RECOVERY",
@@ -36,7 +42,7 @@ export const checkRecoverySLA = async () => {
                         breachedAt: new Date(),
                         escalatedTo: "BREACH_ADMIN",
                         remarks: "Recovery stuck in INITIAL_CONTACT for more than 48 hours. Needs urgent attention.",
-                        branchId: rec.loanApplication.branchId
+                        branchId: branchId
                     }
                 });
                 await logAction({
@@ -44,7 +50,7 @@ export const checkRecoverySLA = async () => {
                     entityType: "RECOVERY",
                     action: "SLA_BREACH",
                     performedBy: "SYSTEM",
-                    branchId: rec.loanApplication.branchId,
+                    branchId: branchId,
                     remarks: "Recovery stuck in INITIAL_CONTACT for more than 48 hours. Needs urgent attention.",
                     
                 })
@@ -52,5 +58,5 @@ export const checkRecoverySLA = async () => {
             }
         });
     }
+
 }
-              

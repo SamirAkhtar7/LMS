@@ -833,6 +833,9 @@ model SLAPolicy {
   action         String // ESCALATE | NOTIFY | REASSIGN
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@unique([module, stage])
+  @@index([module])
 }
 
 model SLABreachLog {

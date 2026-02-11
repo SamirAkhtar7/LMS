@@ -6,7 +6,9 @@ export const checkKycSLA = async () => {
     where: {
       module: "KYC",
       stage: "kyc_Pending",
+      isActive: true,
     },
+    orderBy: { createdAt: "desc" },
   });
   if (!policy) return { message: "No active SLA policy for KYC pending stage" };
 
@@ -49,7 +51,7 @@ export const checkKycSLA = async () => {
             breachedAt: new Date(),
             escalatedTo: "BREACH_ADMIN",
             branchId: loanApplication.branchId,
-            remarks: "kyc pending beyond SLA ",
+            remarks: "kyc pending beyond SLA",
           },
         });
         await logAction({
