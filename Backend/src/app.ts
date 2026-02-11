@@ -5,12 +5,15 @@ import multer from "multer";
 import cors from "cors";
 import { startEmiOverdueJob } from "./jobs/emiOverdue.job.js";
 import { runLoanDefaultCron } from "./jobs/jobs.controller.js";
+import { startSlaScheduler } from "./modules/sla/sla.cron.js";
 const app = express();
 
 // Start the EMI overdue job scheduler
 startEmiOverdueJob();
 // Start the Loan Default cron job (you might want to schedule this as well)
 runLoanDefaultCron();
+// Start the SLA scheduler
+startSlaScheduler();
 
 app.use(
   cors({

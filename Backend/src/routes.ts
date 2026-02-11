@@ -21,7 +21,7 @@ import coApplicantRouter from "./modules/coApplicants/coApplicant.routes.js";
 import loanAssignmentRouter from "./modules/loanAssignment/loanAssignment.routes.js";
 import branchRouter from "./modules/Branch/branch.router.js";
 import branchAdminRouter from "./modules/branchAdmin/branchAdmin.router.js";
-
+import slaRouter from "./modules/sla/sla.router.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -49,5 +49,6 @@ router.use("/co-applicant", coApplicantRouter);
 router.use("/loan-assignment", loanAssignmentRouter);
 router.use("/branches", branchRouter);
 router.use("/branch-admins", branchAdminRouter);
+router.use("/sla", slaRouter )
 
 export default router;

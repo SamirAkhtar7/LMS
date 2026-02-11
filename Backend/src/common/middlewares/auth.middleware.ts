@@ -131,14 +131,14 @@ export const authMiddleware = async (
       decodedRefresh.id,
       decodedRefresh.email,
       decodedRefresh.role,
-      req.user.branchId,
+      req.user.branchId || "",
     );
 
     const newRefresh = generateRefreshToken(
       decodedRefresh.id,
       decodedRefresh.email,
       decodedRefresh.role,
-      req.user.branchId,
+      req.user.branchId || "",
     );
 
     // 4️⃣ Set cookies

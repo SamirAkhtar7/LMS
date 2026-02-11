@@ -9,6 +9,7 @@ import { getPagination } from "../../common/utils/pagination.js";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 import { logAction } from "../../audit/audit.helper.js";
+import { th } from "zod/locales";
 
 export const getRecoveryByLoanIdService = async (
   loanId: string,
@@ -290,9 +291,7 @@ export const updateRecoveryStageService = async (
   });
 
   if (!existingRecovery) {
-    const err: any = new Error("Recovery record not found");
-    err.statusCode = 404;
-    throw err;
+    throw new Error("Recovery record not found");
   }
 
   const updatedRecovery = await prisma.loanRecovery.update({
@@ -458,15 +457,20 @@ export const getRecoveriesByStageService = async (stage: string) => {
 };
 
 export const getRecoveryDashboardService = async (user: {
+  id: string;
   role: string;
   branchId?: string;
 }) => {
+  const accessibleBranches = await getAccessibleBranchIds({
+    id: user.id,
+    role: user.role,
+    branchId: user.branchId,
+  });
+
   const recoveries = await prisma.loanRecovery.findMany({
     where: {
       recoveryStatus: "ONGOING",
-      ...(user.role !== "ADMIN" && user.branchId
-        ? { branchId: user.branchId }
-        : {}),
+      ...buildBranchFilter(accessibleBranches),
     },
     orderBy: {
       createdAt: "desc",

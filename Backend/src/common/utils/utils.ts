@@ -38,7 +38,7 @@ export const generateAccessToken = (
   id: string,
   email: string,
   role: string,
-  branchId?: string,
+  branchId: string,
 ) => {
   return jwt.sign({ id, email, role, branchId }, getSecret("ACCESS"), {
     expiresIn: ENV.ACCESS_TOKEN_EXPIRY,
@@ -49,7 +49,7 @@ export const generateRefreshToken = (
   id: string,
   email: string,
   role: string,
-  branchId?: string,
+  branchId: string,
 ) => {
   return jwt.sign({ id, email, role, branchId }, getSecret("REFRESH"), {
     expiresIn: ENV.REFRESH_TOKEN_EXPIRY,

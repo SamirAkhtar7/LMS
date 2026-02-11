@@ -33,7 +33,7 @@ model User {
   role          Role
   contactNumber String
   branchId      String
-  branch        Branch  @relation(fields: [branchId], references: [id])
+  branch        Branch   @relation(fields: [branchId], references: [id])
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -75,7 +75,7 @@ model Admin {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   // Relations
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Employee {
@@ -744,9 +744,9 @@ model TechnicalReport {
 }
 
 model LegalReport {
-  id                String          @id @default(cuid())
-loanApplication   LoanApplication? @relation(fields: [loanApplicationId], references: [id])
-loanApplicationId String?
+  id                String           @id @default(cuid())
+  loanApplication   LoanApplication? @relation(fields: [loanApplicationId], references: [id])
+  loanApplicationId String?
 
   //Advocate 
   advocateId   String?
@@ -808,20 +808,46 @@ model LoanAssignment {
 }
 
 model AuditLog {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   entityType  String // LOAN | TECHNICAL_REPORT | LEGAL_REPORT
   entityId    String
   action      String // CREATED | SUBMITTED | APPROVED | REJECTED
   performedBy String
 
-  branchId String
-  oldValue Json?
-  newValue Json?
-  remarks     String?
-  createdAt   DateTime @default(now())
+  branchId  String
+  oldValue  Json?
+  newValue  Json?
+  remarks   String?
+  createdAt DateTime @default(now())
 
   @@index([entityType, entityId])
   @@index([performedBy])
+  @@index([branchId])
+}
+
+model SLAPolicy {
+  id             String   @id @default(cuid())
+  module         String // KYC | LEGAL | TECHNICAL | LOAN | RECOVERY
+  stage          String // kyc_pending, under_review, etc.
+  thresholdHours Int
+  action         String // ESCALATE | NOTIFY | REASSIGN
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SLABreachLog {
+  id          String   @id @default(cuid())
+  entityType  String // LOAN | TECHNICAL_REPORT | LEGAL_REPORT | KYC
+  entityId    String
+  stage       String
+  breachedAt  DateTime @default(now())
+  escalatedTo String?
+  remarks     String?
+  branchId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([entityType, entityId])
   @@index([branchId])
 }
 

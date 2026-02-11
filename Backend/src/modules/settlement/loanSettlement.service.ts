@@ -8,6 +8,8 @@ import {
 import { getPagination } from "../../common/utils/pagination.js";
 import { buildRecoverySearch } from "../../common/utils/search.js";
 import { logAction } from "../../audit/audit.helper.js";
+import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
+import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 
 export const settleLoanService = async (
   recoveryId: string,
@@ -353,11 +355,18 @@ export const getAllSettlementsService = async (params: {
   page?: number;
   limit?: number;
   q?: string;
+}, user: {
+  id: string;
+  role: string;
+  branchId: string;
+
 }) => {
   const { page, limit, skip } = getPagination(params.page, params.limit);
+  const accessibleBranches = await getAccessibleBranchIds({id: user.id, role: user.role, branchId: user.branchId});
   const where = {
     recoveryStage: recovery_stage.SETTLEMENT as any,
     ...buildRecoverySearch(params.q),
+    ...buildBranchFilter(accessibleBranches),
   };
   const [data, total] = await Promise.all([
     prisma.loanRecovery.findMany({

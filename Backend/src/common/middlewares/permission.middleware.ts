@@ -13,9 +13,18 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
       }
 
       const { id, role } = req.user;
+      
+      // Super Admin has all permissions globally
+      if (role === "SUPER_ADMIN") {
+        return next();
+      }
+
+      // Admin has all permissions within their branch
       if (role === "ADMIN") {
         return next();
       }
+
+      // For other roles, check specific permissions
       const permission = await prisma.userPermission.findFirst({
         where: {
           userId: id,
@@ -25,6 +34,7 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
           },
         },
       });
+      
       if (!permission) {
         return res.status(403).json({
           success: false,
@@ -38,5 +48,6 @@ export const checkPermissionMiddleware = (permissionCode: string) => {
       return res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
-    }    }
+    }
   };
+};

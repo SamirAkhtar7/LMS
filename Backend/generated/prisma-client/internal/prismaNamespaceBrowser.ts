@@ -77,7 +77,9 @@ export const ModelName = {
   TechnicalReport: 'TechnicalReport',
   LegalReport: 'LegalReport',
   LoanAssignment: 'LoanAssignment',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  SLAPolicy: 'SLAPolicy',
+  SLABreachLog: 'SLABreachLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -700,6 +702,35 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const SLAPolicyScalarFieldEnum = {
+  id: 'id',
+  module: 'module',
+  stage: 'stage',
+  thresholdHours: 'thresholdHours',
+  action: 'action',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SLAPolicyScalarFieldEnum = (typeof SLAPolicyScalarFieldEnum)[keyof typeof SLAPolicyScalarFieldEnum]
+
+
+export const SLABreachLogScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  stage: 'stage',
+  breachedAt: 'breachedAt',
+  escalatedTo: 'escalatedTo',
+  remarks: 'remarks',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SLABreachLogScalarFieldEnum = (typeof SLABreachLogScalarFieldEnum)[keyof typeof SLABreachLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1102,4 +1133,27 @@ export const AuditLogOrderByRelevanceFieldEnum = {
 } as const
 
 export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
+
+
+export const SLAPolicyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  module: 'module',
+  stage: 'stage',
+  action: 'action'
+} as const
+
+export type SLAPolicyOrderByRelevanceFieldEnum = (typeof SLAPolicyOrderByRelevanceFieldEnum)[keyof typeof SLAPolicyOrderByRelevanceFieldEnum]
+
+
+export const SLABreachLogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  stage: 'stage',
+  escalatedTo: 'escalatedTo',
+  remarks: 'remarks',
+  branchId: 'branchId'
+} as const
+
+export type SLABreachLogOrderByRelevanceFieldEnum = (typeof SLABreachLogOrderByRelevanceFieldEnum)[keyof typeof SLABreachLogOrderByRelevanceFieldEnum]
 

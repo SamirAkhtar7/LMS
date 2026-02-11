@@ -296,9 +296,11 @@ export const getRecoveryDashboardController = async (
         message: "Unauthorized: User not authenticated",
       });
     }
-    const data = await getRecoveryDashboardService(
-      req.user as { role: string; branchId?: string },
-    );
+    const data = await getRecoveryDashboardService({
+      id: req.user.id,
+      role: req.user.role,
+      branchId: req.user.branchId,
+    });
     res.status(200).json({
       success: true,
       message: "Recovery dashboard data retrieved successfully",

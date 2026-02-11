@@ -152,3 +152,13 @@ export type LoanAssignment = Prisma.LoanAssignmentModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model SLAPolicy
+ * 
+ */
+export type SLAPolicy = Prisma.SLAPolicyModel
+/**
+ * Model SLABreachLog
+ * 
+ */
+export type SLABreachLog = Prisma.SLABreachLogModel

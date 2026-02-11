@@ -49,8 +49,35 @@ async function main(): Promise<void> {
     },
   });
 
+  // Create SLA Policies
+  const slaPolicies = await Promise.all([
+    prisma.sLAPolicy.upsert({
+      where: { id: "kyc-pending-policy" },
+      update: {},
+      create: {
+        id: "kyc-pending-policy",
+        module: "KYC",
+        stage: "kyc_Pending",
+        thresholdHours: 72,
+        action: "ESCALATE",
+      },
+    }),
+    prisma.sLAPolicy.upsert({
+      where: { id: "loan-assignment-policy" },
+      update: {},
+      create: {
+        id: "loan-assignment-policy",
+        module: "LOAN",
+        stage: "ASSIGNED",
+        thresholdHours: 72,
+        action: "REASSIGN",
+      },
+    }),
+  ]);
+
   console.log(" Seed completed successfully:", user);
   console.log(" Super Branch created:", superBranch);
+  console.log(" SLA Policies created:", slaPolicies.length);
 }
 
 // Run the script

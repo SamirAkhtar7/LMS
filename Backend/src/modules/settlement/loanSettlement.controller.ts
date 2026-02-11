@@ -14,6 +14,7 @@ import {
 } from "./loanSettlement.service.js";
 
 import { getPayableAmountService } from "./loanSettlement.service.js";
+import { string } from "zod";
 
 // import { processLoanSettlementService, settleLoanService } from "./loanSettlement.service.js";
 
@@ -200,11 +201,25 @@ export const getAllSettlementsController = async (
   res: Response,
 ) => {
   try {
-    const settlements = await getAllSettlementsService({
-      page: Number(req.query.page),
-      limit: Number(req.query.limit),
-      q: req.query.q?.toString(),
-    });
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+    const settlements = await getAllSettlementsService(
+      {
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+        q: req.query.q?.toString(),
+      },
+      {
+        id: user.id,
+        role: user.role,
+        branchId: user.branchId || "",
+      },
+    );
     res.status(200).json({
       success: true,
       message: "Settlements retrieved successfully",

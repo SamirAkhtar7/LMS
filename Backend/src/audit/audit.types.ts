@@ -35,7 +35,9 @@ export type AuditAction =
   | "MANUAL_REFRESH_CREDIT_REPORT"
   | "GENERATE_EMI_SCHEDULE"
   | "CREATE_BRANCH_ADMIN"
+  | "SLA_BREACH"
   | "UPDATE_BRANCH_ADMIN"
+  | "SLA_BREACH_AUTO_UNASSIGN"
   | "MANUAL_REFRESH";
 
 export type AuditEntityType =
