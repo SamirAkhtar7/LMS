@@ -1,19 +1,11 @@
 import { logAction } from "../../audit/audit.helper.js";
 import { prisma } from "../../db/prismaService.js";
 
-
-
 // TODO - Add notification logic to alert assigned employee and branch manager about the breach
-// TODO - Consider adding or not 
+// TODO - Consider adding or not
 export const checkLoanAssignmentSLA = async () => {
-
-    // const threshold = 72; // hours
-    // const cutoffTime = new Date(Date.now() - threshold * 60 * 60 * 1000);
-
-  const threshold = 72; // minutes for testing (change to 72 hours in production)
-
-  const cutoffTime = new Date(Date.now() - threshold *60 * 60 * 1000); // testing: 1 minute
-
+  const threshold = 72; // hours
+  const cutoffTime = new Date(Date.now() - threshold * 60 * 60 * 1000);
   const staleLoans = await prisma.loanAssignment.findMany({
     where: {
       assignedAt: {

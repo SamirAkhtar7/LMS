@@ -198,37 +198,14 @@ export const uploadLoanDocumentsController = async (
       });
     }
 
-    /* ---------------- 4️⃣ Prevent duplicate uploads ---------------- */
-    const existingDocs = await prisma.document.findMany({
-      where: {
-        loanApplicationId,
-        documentType: {
-          in: uploadedDocTypes,
-        },
-      },
-      select: {
-        documentType: true,
-      },
-    });
-
-    if (existingDocs.length > 0) {
-      cleanupFiles(files);
-      return res.status(400).json({
-        success: false,
-        message: `Document(s) already uploaded: ${existingDocs
-          .map((d) => d.documentType)
-          .join(", ")}`,
-      });
-    }
-
-    /* ---------------- 5️⃣ Build payload ---------------- */
+    /* ---------------- 4️⃣ Build payload and save documents (service handles create/update) ---------------- */
     const documentsPayload = files.map((file) => ({
       documentType: file.fieldname,
       documentPath: file.path,
       uploadedBy: userId,
     }));
 
-    /* ---------------- 6️⃣ Save documents ---------------- */
+    /* Save documents */
     const documents = await uploadLoanDocumentsService(
       loanApplicationId,
       documentsPayload,

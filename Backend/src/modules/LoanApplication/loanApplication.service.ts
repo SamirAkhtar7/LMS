@@ -236,38 +236,45 @@ export async function uploadLoanDocumentsService(
     if (!loanApplication.kyc) {
       throw new Error("KYC record not found for loan application");
     }
-    /*   check already uploaded document types */
-    const existingDocs = await tx.document.findMany({
-      where: { loanApplicationId },
-      select: { documentType: true },
-    });
-    const existingTypes = new Set(existingDocs.map((d) => d.documentType));
 
-    const duplicateDocs = documents
-      .map((d) => d.documentType)
-      .filter((type) => existingTypes.has(type));
+    /* 2️⃣ Handle each document - update if exists, create if not */
+    for (const doc of documents) {
+      const existingDoc = await tx.document.findFirst({
+        where: {
+          loanApplicationId,
+          documentType: doc.documentType,
+        },
+      });
 
-    if (duplicateDocs.length > 0) {
-      const err: any = new Error(
-        `Document(s) already uploaded: ${duplicateDocs.join(", ")}`,
-      );
-      err.statusCode = 409;
-      err.duplicateDocs = duplicateDocs;
-      throw err;
+      if (existingDoc) {
+        // Update existing document (re-upload scenario)
+        await tx.document.update({
+          where: { id: existingDoc.id },
+          data: {
+            documentPath: doc.documentPath,
+            uploadedBy: doc.uploadedBy,
+            verificationStatus: "pending",
+            verified: false,
+            verifiedBy: null,
+            verifiedAt: null,
+            rejectionReason: null,
+          },
+        });
+      } else {
+        // Create new document
+        await tx.document.create({
+          data: {
+            loanApplicationId,
+            kycId: loanApplication.kyc!.id,
+            branchId: loanApplication.branchId,
+            documentType: doc.documentType,
+            documentPath: doc.documentPath,
+            uploadedBy: doc.uploadedBy,
+          },
+        });
+      }
     }
 
-    /* 2️⃣ Bulk insert documents (safe) */
-    await tx.document.createMany({
-      data: documents.map((doc) => ({
-        loanApplicationId,
-        kycId: loanApplication.kyc!.id,
-        branchId: loanApplication.branchId,
-        documentType: doc.documentType,
-        documentPath: doc.documentPath,
-        uploadedBy: doc.uploadedBy,
-      })),
-      skipDuplicates: true, // 🔒 protects against race conditions
-    });
     await logAction({
       entityType: "LOAN",
       entityId: loanApplicationId,
@@ -278,7 +285,7 @@ export async function uploadLoanDocumentsService(
       newValue: { documents: { status: "uploaded" } },
     });
 
-    /* 3️⃣ Return uploaded documents */
+    /* 3️⃣ Return all documents */
     return tx.document.findMany({
       where: { loanApplicationId },
       orderBy: { createdAt: "asc" },
