@@ -247,6 +247,7 @@ export type SLAPolicyOrderByWithRelationInput = {
 
 export type SLAPolicyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  module_stage?: Prisma.SLAPolicyModuleStageCompoundUniqueInput
   AND?: Prisma.SLAPolicyWhereInput | Prisma.SLAPolicyWhereInput[]
   OR?: Prisma.SLAPolicyWhereInput[]
   NOT?: Prisma.SLAPolicyWhereInput | Prisma.SLAPolicyWhereInput[]
@@ -256,7 +257,7 @@ export type SLAPolicyWhereUniqueInput = Prisma.AtLeast<{
   action?: Prisma.StringFilter<"SLAPolicy"> | string
   createdAt?: Prisma.DateTimeFilter<"SLAPolicy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SLAPolicy"> | Date | string
-}, "id">
+}, "id" | "module_stage">
 
 export type SLAPolicyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -360,6 +361,11 @@ export type SLAPolicyOrderByRelevanceInput = {
   fields: Prisma.SLAPolicyOrderByRelevanceFieldEnum | Prisma.SLAPolicyOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
   search: string
+}
+
+export type SLAPolicyModuleStageCompoundUniqueInput = {
+  module: string
+  stage: string
 }
 
 export type SLAPolicyCountOrderByAggregateInput = {
