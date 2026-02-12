@@ -14,28 +14,34 @@ export async function uploadDocumentsService(
 ) {
   return prisma.$transaction(async (tx) => {
     let kycId: string | null = null;
+    let branchId: string | null = null;
     let whereClause: any = {};
 
     /* 1️⃣ Resolve KYC + where condition */
     if (target === "loan") {
       const loan = await tx.loanApplication.findUnique({
         where: { id: targetId },
-        select: { kyc: { select: { id: true } } },
+        select: { kyc: { select: { id: true } }, branchId: true },
       });
       if (!loan || !loan.kyc) throw new Error("Loan or KYC not found");
 
       kycId = loan.kyc.id;
+      branchId = loan.branchId;
       whereClause = { loanApplicationId: targetId };
     }
 
     if (target === "coApplicant") {
       const co = await tx.coApplicant.findUnique({
         where: { id: targetId },
-        select: { kyc: { select: { id: true } } },
+        select: {
+          kyc: { select: { id: true } },
+          loanApplication: { select: { branchId: true } },
+        },
       });
       if (!co || !co.kyc) throw new Error("CoApplicant or KYC not found");
 
       kycId = co.kyc.id;
+      branchId = co.loanApplication.branchId;
       whereClause = { coApplicantId: targetId };
     }
 
@@ -67,6 +73,7 @@ export async function uploadDocumentsService(
         documentPath: doc.documentPath,
         uploadedBy: doc.uploadedBy,
         kycId,
+        branchId: branchId!,
         loanApplicationId: target === "loan" ? targetId : undefined,
         coApplicantId: target === "coApplicant" ? targetId : undefined,
       })),
@@ -133,13 +140,14 @@ export async function reuploadCoApplicantDocumentService(
       },
     });
   });
-} 
-
-
-export const getAllCoApplicantInLoanService = async (loanApplicationId: string) => {
-    const coApplicants = await prisma.coApplicant.findMany({
-        where: { loanApplicationId },
-        include:{documents: true},
-    });
-    return coApplicants;
 }
+
+export const getAllCoApplicantInLoanService = async (
+  loanApplicationId: string,
+) => {
+  const coApplicants = await prisma.coApplicant.findMany({
+    where: { loanApplicationId },
+    include: { documents: true },
+  });
+  return coApplicants;
+};
