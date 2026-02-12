@@ -40,14 +40,40 @@ export const assignLoanService = async (
     );
   }
 
-  const assignment = await prisma.loanAssignment.create({
-    data: {
+  // Check if there's an inactive assignment that needs to be reactivated
+  const inactiveAssignment = await prisma.loanAssignment.findFirst({
+    where: {
       loanApplicationId,
       employeeId,
       role,
-      assignedBy: assignedById,
+      isActive: false,
     },
   });
+
+  let assignment;
+  if (inactiveAssignment) {
+    // Reactivate the existing assignment
+    assignment = await prisma.loanAssignment.update({
+      where: { id: inactiveAssignment.id },
+      data: {
+        isActive: true,
+        assignedBy: assignedById,
+        assignedAt: new Date(),
+        unassignedAt: null,
+        unassignedBy: null,
+      },
+    });
+  } else {
+    // Create new assignment
+    assignment = await prisma.loanAssignment.create({
+      data: {
+        loanApplicationId,
+        employeeId,
+        role,
+        assignedBy: assignedById,
+      },
+    });
+  }
 
   // Log the assignment action
   await logAction({

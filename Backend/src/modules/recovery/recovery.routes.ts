@@ -66,7 +66,7 @@ recoveryRouter.get(
 recoveryRouter.get(
   "/recoveries",
   authMiddleware,
-  checkPermissionMiddleware("VIEW_ALL_RECOVERIES"),
+  //checkPermissionMiddleware("VIEW_ALL_RECOVERIES"),
     getAllRecoveriesController
 );
 

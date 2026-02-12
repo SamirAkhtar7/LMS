@@ -64,7 +64,7 @@ loanApplicationRouter.put(
   reviewLoanController,
 );
 
-loanApplicationRouter.put(
+loanApplicationRouter.post(
   "/:id/approve",
   authMiddleware,
   checkPermissionMiddleware("APPROVE_LOAN"),
@@ -85,7 +85,7 @@ loanApplicationRouter.post(
   authMiddleware,
 
   validate(loanApplicationIdParamSchema, "params"),
-  checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
+  //checkPermissionMiddleware("UPLOAD_DOCUMENTS"),
   upload.any(),
   uploadLoanDocumentsController,
 );
@@ -93,7 +93,7 @@ loanApplicationRouter.post(
   "/documents/:id/verify",
   authMiddleware,
   validate(loanApplicationIdParamSchema, "params"),
-  checkPermissionMiddleware("VERIFY_DOCUMENTS"),
+  //checkPermissionMiddleware("VERIFY_DOCUMENTS"),
   verifyDocumentController,
 );
 loanApplicationRouter.post(

@@ -18,52 +18,46 @@ export const assignLoanController = async (req: Request, res: Response) => {
       req.user!.id,
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Loan assigned successfully",
       data: assigned,
     });
-        const { assignmentId } = req.params;
-
-        if (!assignmentId) {
-            return res.status(400).json({
-                success: false,
-                message: "assignmentId is required"
-            });
-        }
-
-        if (!req.user?.id) {
-            return res.status(401).json({
-                success: false,
-                message: "Unauthorized"
-            });
-        }
-
-        const unassigned = await unassignloanService(
-            assignmentId,
-            req.user.id
-        )
-    } catch (error: any) {
-    res.status(500).json({
-        success: false,
-        message: error.message,
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
-    }
+  }
 };
-
 
 export const unassignLoanController = async (req: Request, res: Response) => {
   try {
     const { assignmentId } = req.params;
 
-    const unassigned = await unassignloanService(assignmentId, req.user!.id);
-    res.status(200).json({
+    if (!assignmentId) {
+      return res.status(400).json({
+        success: false,
+        message: "assignmentId is required",
+      });
+    }
+
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const unassigned = await unassignloanService(assignmentId, req.user.id);
+
+    return res.status(200).json({
       success: true,
       message: "Loan unassigned successfully",
       data: unassigned,
     });
   } catch (error: any) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -85,16 +79,15 @@ export const getMyAssignedLoansController = async (
     const userId = req.user.id;
     const loans = await getAssignedLoansForEmployeeService(userId);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Assigned loans fetched successfully",
       data: loans,
     });
   } catch (error: any) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
-      error: error.message,
     });
   }
 };

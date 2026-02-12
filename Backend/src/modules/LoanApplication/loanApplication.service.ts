@@ -291,6 +291,25 @@ export async function verifyDocumentService(
   verifierId: string,
 ) {
   return prisma.$transaction(async (tx) => {
+    // First, check if document exists
+    const existingDocument = await tx.document.findUnique({
+      where: { id: documentId },
+    });
+
+    if (!existingDocument) {
+      const err: any = new Error("Document not found");
+      err.statusCode = 404;
+      throw err;
+    }
+
+    if (existingDocument.verificationStatus !== "pending") {
+      const err: any = new Error(
+        `Document is already ${existingDocument.verificationStatus}. Cannot verify a document that is not in pending status.`,
+      );
+      err.statusCode = 400;
+      throw err;
+    }
+
     const document = await tx.document.update({
       where: { id: documentId },
       data: {

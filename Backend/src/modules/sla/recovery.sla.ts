@@ -3,7 +3,8 @@ import logger from "../../common/logger.js";
 import { prisma } from "../../db/prismaService.js";
 export const checkRecoverySLA = async () => {
 
-    const thresholdHours = 48;
+    // For testing, we set threshold to 1 minutes. Change to 48 hours (48) for production.
+    const thresholdHours = 48; // 48 hours for production
 
     const cutoffDate = new Date(Date.now() - thresholdHours * 60 * 60 * 1000);
     
@@ -54,6 +55,8 @@ export const checkRecoverySLA = async () => {
                     remarks: "Recovery stuck in INITIAL_CONTACT for more than 48 hours. Needs urgent attention.",
                     
                 })
+
+                console.log(`Logged SLA breach for Recovery ID: ${rec.id}`);
     
             }
         });

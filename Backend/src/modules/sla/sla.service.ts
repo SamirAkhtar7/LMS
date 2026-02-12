@@ -6,7 +6,6 @@ export const checkKycSLA = async () => {
     where: {
       module: "KYC",
       stage: "kyc_Pending",
-      isActive: true,
     },
     orderBy: { createdAt: "desc" },
   });
