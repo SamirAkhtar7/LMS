@@ -13,8 +13,9 @@ export async function uploadDocumentsService(
   }[],
 ) {
   return prisma.$transaction(async (tx) => {
-    let kycId: string | null = null;
-    let branchId: string | null = null;
+    let kycId: string ;
+    let branchId: string ;
+    let loanApplicationId: string ;
     let whereClause: any = {};
 
     /* 1️⃣ Resolve KYC + where condition */
@@ -27,6 +28,7 @@ export async function uploadDocumentsService(
 
       kycId = loan.kyc.id;
       branchId = loan.branchId;
+      loanApplicationId = targetId;
       whereClause = { loanApplicationId: targetId };
     }
 
@@ -35,13 +37,14 @@ export async function uploadDocumentsService(
         where: { id: targetId },
         select: {
           kyc: { select: { id: true } },
-          loanApplication: { select: { branchId: true } },
+          loanApplication: { select: { branchId: true, id: true } },
         },
       });
       if (!co || !co.kyc) throw new Error("CoApplicant or KYC not found");
 
       kycId = co.kyc.id;
       branchId = co.loanApplication.branchId;
+      loanApplicationId = co.loanApplication.id;
       whereClause = { coApplicantId: targetId };
     }
 
@@ -74,7 +77,7 @@ export async function uploadDocumentsService(
         uploadedBy: doc.uploadedBy,
         kycId,
         branchId: branchId!,
-        loanApplicationId: target === "loan" ? targetId : undefined,
+        loanApplicationId: loanApplicationId!,
         coApplicantId: target === "coApplicant" ? targetId : undefined,
       })),
     });
