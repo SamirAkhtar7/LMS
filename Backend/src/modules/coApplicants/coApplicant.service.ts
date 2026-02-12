@@ -13,9 +13,9 @@ export async function uploadDocumentsService(
   }[],
 ) {
   return prisma.$transaction(async (tx) => {
-    let kycId: string ;
-    let branchId: string ;
-    let loanApplicationId: string ;
+    let kycId: string;
+    let branchId: string;
+    let loanApplicationId: string;
     let whereClause: any = {};
 
     /* 1️⃣ Resolve KYC + where condition */
