@@ -70,6 +70,11 @@ export type Employee = Prisma.EmployeeModel
  */
 export type Partner = Prisma.PartnerModel
 /**
+ * Model PartnerCommission
+ * 
+ */
+export type PartnerCommission = Prisma.PartnerCommissionModel
+/**
  * Model Branch
  * 
  */

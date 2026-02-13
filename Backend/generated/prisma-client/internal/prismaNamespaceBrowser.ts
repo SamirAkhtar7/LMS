@@ -57,6 +57,7 @@ export const ModelName = {
   Admin: 'Admin',
   Employee: 'Employee',
   Partner: 'Partner',
+  PartnerCommission: 'PartnerCommission',
   Branch: 'Branch',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
@@ -186,7 +187,12 @@ export const PartnerScalarFieldEnum = {
   companyName: 'companyName',
   contactPerson: 'contactPerson',
   alternateNumber: 'alternateNumber',
-  website: 'website',
+  panNumber: 'panNumber',
+  gstNumber: 'gstNumber',
+  commissionType: 'commissionType',
+  commissionValue: 'commissionValue',
+  branchId: 'branchId',
+  isActive: 'isActive',
   establishedYear: 'establishedYear',
   partnerType: 'partnerType',
   businessNature: 'businessNature',
@@ -200,8 +206,6 @@ export const PartnerScalarFieldEnum = {
   totalEmployees: 'totalEmployees',
   annualTurnover: 'annualTurnover',
   businessRegistrationNumber: 'businessRegistrationNumber',
-  commissionType: 'commissionType',
-  commissionValue: 'commissionValue',
   paymentCycle: 'paymentCycle',
   minimumPayout: 'minimumPayout',
   taxDeduction: 'taxDeduction',
@@ -214,6 +218,25 @@ export const PartnerScalarFieldEnum = {
 } as const
 
 export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
+
+
+export const PartnerCommissionScalarFieldEnum = {
+  id: 'id',
+  partnerId: 'partnerId',
+  loanId: 'loanId',
+  approvedAmount: 'approvedAmount',
+  commissionType: 'commissionType',
+  commissionValue: 'commissionValue',
+  commissionAmount: 'commissionAmount',
+  status: 'status',
+  calculatedAt: 'calculatedAt',
+  paidAt: 'paidAt',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartnerCommissionScalarFieldEnum = (typeof PartnerCommissionScalarFieldEnum)[keyof typeof PartnerCommissionScalarFieldEnum]
 
 
 export const BranchScalarFieldEnum = {
@@ -238,6 +261,7 @@ export const LeadsScalarFieldEnum = {
   email: 'email',
   dob: 'dob',
   gender: 'gender',
+  partnerId: 'partnerId',
   loanAmount: 'loanAmount',
   loanTypeId: 'loanTypeId',
   city: 'city',
@@ -822,7 +846,9 @@ export const PartnerOrderByRelevanceFieldEnum = {
   companyName: 'companyName',
   contactPerson: 'contactPerson',
   alternateNumber: 'alternateNumber',
-  website: 'website',
+  panNumber: 'panNumber',
+  gstNumber: 'gstNumber',
+  branchId: 'branchId',
   businessNature: 'businessNature',
   fullAddress: 'fullAddress',
   city: 'city',
@@ -836,6 +862,16 @@ export const PartnerOrderByRelevanceFieldEnum = {
 } as const
 
 export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
+
+
+export const PartnerCommissionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  partnerId: 'partnerId',
+  loanId: 'loanId',
+  remarks: 'remarks'
+} as const
+
+export type PartnerCommissionOrderByRelevanceFieldEnum = (typeof PartnerCommissionOrderByRelevanceFieldEnum)[keyof typeof PartnerCommissionOrderByRelevanceFieldEnum]
 
 
 export const BranchOrderByRelevanceFieldEnum = {
@@ -854,6 +890,7 @@ export const LeadsOrderByRelevanceFieldEnum = {
   contactNumber: 'contactNumber',
   leadNumber: 'leadNumber',
   email: 'email',
+  partnerId: 'partnerId',
   loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',

@@ -390,6 +390,7 @@ export const ModelName = {
   Admin: 'Admin',
   Employee: 'Employee',
   Partner: 'Partner',
+  PartnerCommission: 'PartnerCommission',
   Branch: 'Branch',
   Leads: 'Leads',
   LoanApplication: 'LoanApplication',
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "partnerCommission" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -825,6 +826,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PartnerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PartnerCountAggregateOutputType> | number
+        }
+      }
+    }
+    PartnerCommission: {
+      payload: Prisma.$PartnerCommissionPayload<ExtArgs>
+      fields: Prisma.PartnerCommissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PartnerCommissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PartnerCommissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        findFirst: {
+          args: Prisma.PartnerCommissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PartnerCommissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        findMany: {
+          args: Prisma.PartnerCommissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>[]
+        }
+        create: {
+          args: Prisma.PartnerCommissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        createMany: {
+          args: Prisma.PartnerCommissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PartnerCommissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        update: {
+          args: Prisma.PartnerCommissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PartnerCommissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PartnerCommissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PartnerCommissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartnerCommissionPayload>
+        }
+        aggregate: {
+          args: Prisma.PartnerCommissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePartnerCommission>
+        }
+        groupBy: {
+          args: Prisma.PartnerCommissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartnerCommissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PartnerCommissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartnerCommissionCountAggregateOutputType> | number
         }
       }
     }
@@ -2473,7 +2540,12 @@ export const PartnerScalarFieldEnum = {
   companyName: 'companyName',
   contactPerson: 'contactPerson',
   alternateNumber: 'alternateNumber',
-  website: 'website',
+  panNumber: 'panNumber',
+  gstNumber: 'gstNumber',
+  commissionType: 'commissionType',
+  commissionValue: 'commissionValue',
+  branchId: 'branchId',
+  isActive: 'isActive',
   establishedYear: 'establishedYear',
   partnerType: 'partnerType',
   businessNature: 'businessNature',
@@ -2487,8 +2559,6 @@ export const PartnerScalarFieldEnum = {
   totalEmployees: 'totalEmployees',
   annualTurnover: 'annualTurnover',
   businessRegistrationNumber: 'businessRegistrationNumber',
-  commissionType: 'commissionType',
-  commissionValue: 'commissionValue',
   paymentCycle: 'paymentCycle',
   minimumPayout: 'minimumPayout',
   taxDeduction: 'taxDeduction',
@@ -2501,6 +2571,25 @@ export const PartnerScalarFieldEnum = {
 } as const
 
 export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
+
+
+export const PartnerCommissionScalarFieldEnum = {
+  id: 'id',
+  partnerId: 'partnerId',
+  loanId: 'loanId',
+  approvedAmount: 'approvedAmount',
+  commissionType: 'commissionType',
+  commissionValue: 'commissionValue',
+  commissionAmount: 'commissionAmount',
+  status: 'status',
+  calculatedAt: 'calculatedAt',
+  paidAt: 'paidAt',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartnerCommissionScalarFieldEnum = (typeof PartnerCommissionScalarFieldEnum)[keyof typeof PartnerCommissionScalarFieldEnum]
 
 
 export const BranchScalarFieldEnum = {
@@ -2525,6 +2614,7 @@ export const LeadsScalarFieldEnum = {
   email: 'email',
   dob: 'dob',
   gender: 'gender',
+  partnerId: 'partnerId',
   loanAmount: 'loanAmount',
   loanTypeId: 'loanTypeId',
   city: 'city',
@@ -3109,7 +3199,9 @@ export const PartnerOrderByRelevanceFieldEnum = {
   companyName: 'companyName',
   contactPerson: 'contactPerson',
   alternateNumber: 'alternateNumber',
-  website: 'website',
+  panNumber: 'panNumber',
+  gstNumber: 'gstNumber',
+  branchId: 'branchId',
   businessNature: 'businessNature',
   fullAddress: 'fullAddress',
   city: 'city',
@@ -3123,6 +3215,16 @@ export const PartnerOrderByRelevanceFieldEnum = {
 } as const
 
 export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
+
+
+export const PartnerCommissionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  partnerId: 'partnerId',
+  loanId: 'loanId',
+  remarks: 'remarks'
+} as const
+
+export type PartnerCommissionOrderByRelevanceFieldEnum = (typeof PartnerCommissionOrderByRelevanceFieldEnum)[keyof typeof PartnerCommissionOrderByRelevanceFieldEnum]
 
 
 export const BranchOrderByRelevanceFieldEnum = {
@@ -3141,6 +3243,7 @@ export const LeadsOrderByRelevanceFieldEnum = {
   contactNumber: 'contactNumber',
   leadNumber: 'leadNumber',
   email: 'email',
+  partnerId: 'partnerId',
   loanTypeId: 'loanTypeId',
   city: 'city',
   state: 'state',
@@ -3529,13 +3632,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
 
 
 /**
- * Reference to a field of type 'PartnerType'
- */
-export type EnumPartnerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartnerType'>
-    
-
-
-/**
  * Reference to a field of type 'CommissionType'
  */
 export type EnumCommissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommissionType'>
@@ -3543,9 +3639,23 @@ export type EnumCommissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'PartnerType'
+ */
+export type EnumPartnerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartnerType'>
+    
+
+
+/**
  * Reference to a field of type 'PaymentCycle'
  */
 export type EnumPaymentCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentCycle'>
+    
+
+
+/**
+ * Reference to a field of type 'CommissionStatus'
+ */
+export type EnumCommissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommissionStatus'>
     
 
 
@@ -3817,6 +3927,7 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   employee?: Prisma.EmployeeOmit
   partner?: Prisma.PartnerOmit
+  partnerCommission?: Prisma.PartnerCommissionOmit
   branch?: Prisma.BranchOmit
   leads?: Prisma.LeadsOmit
   loanApplication?: Prisma.LoanApplicationOmit

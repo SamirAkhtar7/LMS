@@ -123,11 +123,19 @@ model Partner {
   id     String @id @default(cuid())
   userId String @unique
 
-  partnerId                  String         @unique
+  partnerId                  String              @unique
   companyName                String
   contactPerson              String
   alternateNumber            String?
-  website                    String?
+  panNumber                  String
+  gstNumber                  String?
+  commissionType             CommissionType
+  commissionValue            Float?
+  branchId                   String
+  branch                     Branch              @relation(fields: [branchId], references: [id])
+  leads                      Leads[]             @relation("PartnerLeads")
+  isActive                   Boolean             @default(true)
+  commission                 PartnerCommission[]
   establishedYear            Int?
   partnerType                PartnerType
   businessNature             String?
@@ -141,20 +149,42 @@ model Partner {
   totalEmployees             Int?
   annualTurnover             Float?
   businessRegistrationNumber String?
-  commissionType             CommissionType
-  commissionValue            Float?
   paymentCycle               PaymentCycle
   minimumPayout              Float?
   taxDeduction               Float?
   targetArea                 String?
-  totalReferrals             Int?           @default(0)
-  activeReferrals            Int?           @default(0)
-  commissionEarned           Float?         @default(0)
-  createdAt                  DateTime       @default(now())
-  updatedAt                  DateTime       @updatedAt
+  totalReferrals             Int?                @default(0)
+  activeReferrals            Int?                @default(0)
+  commissionEarned           Float?              @default(0)
+  createdAt                  DateTime            @default(now())
+  updatedAt                  DateTime            @updatedAt
 
   // Relations
+  loanApplications LoanApplication[]
   user User @relation(fields: [userId], references: [id])
+}
+
+model PartnerCommission {
+  id        String @id @default(cuid())
+  partnerId String
+  loanId    String @unique
+
+  approvedAmount   Float
+  commissionType   CommissionType
+  commissionValue  Float
+  commissionAmount Float
+
+  status       CommissionStatus @default(PENDING)
+  calculatedAt DateTime         @default(now())
+  paidAt       DateTime?
+  remarks      String?
+
+  partner   Partner         @relation(fields: [partnerId], references: [id])
+  loan      LoanApplication @relation(fields: [loanId], references: [id])
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([partnerId])
 }
 
 model Branch {
@@ -170,6 +200,7 @@ model Branch {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   user             User[]
+  partners         Partner[]
   employees        Employee[]
   loanApplications LoanApplication[]
   loanRecoveries   LoanRecovery[]
@@ -188,6 +219,7 @@ model Leads {
   email                      String
   dob                        DateTime
   gender                     Gender
+  partnerId                  String?
   loanAmount                 Float
   loanTypeId                 String
   city                       String
@@ -201,6 +233,7 @@ model Leads {
   createdAt                  DateTime          @default(now())
   updatedAt                  DateTime          @updatedAt
   // Relations  assignedToUser User? @relation("LeadAssignedTo", fields: [assignedTo], references
+  partner                    Partner?          @relation("PartnerLeads", fields: [partnerId], references: [id])
   assignedToUser             User?             @relation("LeadAssignedTo", fields: [assignedTo], references: [id])
   assignedByUser             User?             @relation("LeadAssignedBy", fields: [assignedBy], references: [id])
   loanApplications           LoanApplication[]
@@ -220,6 +253,8 @@ model LoanApplication {
   leadId          String?
   lead            Leads?   @relation(fields: [leadId], references: [id])
   loanTypeId      String
+  partnerId        String?
+  partner           Partner?         @relation(fields: [partnerId], references: [id])
   requestedAmount Float
   approvedAmount  Float?
   tenureMonths    Int?
@@ -259,7 +294,7 @@ model LoanApplication {
   foreclosureCharges     Float? // amount or %
 
   prepaymentChargeType CommissionType?
-  prepaymentAllowed    Boolean           @default(true)
+  prepaymentAllowed    Boolean             @default(true)
   prepaymentDate       DateTime?
   prepaymentCharges    Float? // amount or %
   defaultedAt          DateTime?
@@ -270,12 +305,13 @@ model LoanApplication {
   technicalReports     TechnicalReport[]
   legalReports         LegalReport[]
   emis                 LoanEmiSchedule[]
+  commissionPayments   PartnerCommission[]
   createdById          String?
-  createdBy            User?             @relation(fields: [createdById], references: [id])
-  createdAt            DateTime          @default(now())
-  updatedAt            DateTime          @updatedAt
+  createdBy            User?               @relation(fields: [createdById], references: [id])
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
   branchId             String
-  branch               Branch            @relation(fields: [branchId], references: [id])
+  branch               Branch              @relation(fields: [branchId], references: [id])
 
   // Relations
   loanType        LoanType?        @relation(fields: [loanTypeId], references: [id])
@@ -863,6 +899,13 @@ enum ReportStatus {
   APPROVED
   REJECTED
   REWORK_REQUIRED
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
 }
 
 enum AssignedRole {

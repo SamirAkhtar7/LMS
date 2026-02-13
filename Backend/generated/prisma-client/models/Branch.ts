@@ -209,6 +209,7 @@ export type BranchWhereInput = {
   parentBranch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   subBranches?: Prisma.BranchListRelationFilter
   user?: Prisma.UserListRelationFilter
+  partners?: Prisma.PartnerListRelationFilter
   employees?: Prisma.EmployeeListRelationFilter
   loanApplications?: Prisma.LoanApplicationListRelationFilter
   loanRecoveries?: Prisma.LoanRecoveryListRelationFilter
@@ -229,6 +230,7 @@ export type BranchOrderByWithRelationInput = {
   parentBranch?: Prisma.BranchOrderByWithRelationInput
   subBranches?: Prisma.BranchOrderByRelationAggregateInput
   user?: Prisma.UserOrderByRelationAggregateInput
+  partners?: Prisma.PartnerOrderByRelationAggregateInput
   employees?: Prisma.EmployeeOrderByRelationAggregateInput
   loanApplications?: Prisma.LoanApplicationOrderByRelationAggregateInput
   loanRecoveries?: Prisma.LoanRecoveryOrderByRelationAggregateInput
@@ -253,6 +255,7 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   parentBranch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   subBranches?: Prisma.BranchListRelationFilter
   user?: Prisma.UserListRelationFilter
+  partners?: Prisma.PartnerListRelationFilter
   employees?: Prisma.EmployeeListRelationFilter
   loanApplications?: Prisma.LoanApplicationListRelationFilter
   loanRecoveries?: Prisma.LoanRecoveryListRelationFilter
@@ -300,6 +303,7 @@ export type BranchCreateInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -319,6 +323,7 @@ export type BranchUncheckedCreateInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -338,6 +343,7 @@ export type BranchUpdateInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -357,6 +363,7 @@ export type BranchUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -482,6 +489,20 @@ export type BranchUpdateOneRequiredWithoutEmployeesNestedInput = {
   upsert?: Prisma.BranchUpsertWithoutEmployeesInput
   connect?: Prisma.BranchWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutEmployeesInput, Prisma.BranchUpdateWithoutEmployeesInput>, Prisma.BranchUncheckedUpdateWithoutEmployeesInput>
+}
+
+export type BranchCreateNestedOneWithoutPartnersInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPartnersInput, Prisma.BranchUncheckedCreateWithoutPartnersInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPartnersInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutPartnersNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPartnersInput, Prisma.BranchUncheckedCreateWithoutPartnersInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPartnersInput
+  upsert?: Prisma.BranchUpsertWithoutPartnersInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutPartnersInput, Prisma.BranchUpdateWithoutPartnersInput>, Prisma.BranchUncheckedUpdateWithoutPartnersInput>
 }
 
 export type BranchCreateNestedOneWithoutSubBranchesInput = {
@@ -626,6 +647,7 @@ export type BranchCreateWithoutUserInput = {
   updatedAt?: Date | string
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -644,6 +666,7 @@ export type BranchUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -678,6 +701,7 @@ export type BranchUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -696,6 +720,7 @@ export type BranchUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -715,6 +740,7 @@ export type BranchCreateWithoutEmployeesInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportCreateNestedManyWithoutBranchInput
@@ -733,6 +759,7 @@ export type BranchUncheckedCreateWithoutEmployeesInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportUncheckedCreateNestedManyWithoutBranchInput
@@ -767,6 +794,7 @@ export type BranchUpdateWithoutEmployeesInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUpdateManyWithoutBranchNestedInput
@@ -785,6 +813,99 @@ export type BranchUncheckedUpdateWithoutEmployeesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
+  loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
+  loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
+  technicalReports?: Prisma.TechnicalReportUncheckedUpdateManyWithoutBranchNestedInput
+  legalReports?: Prisma.LegalReportUncheckedUpdateManyWithoutBranchNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutPartnersInput = {
+  id?: string
+  name: string
+  code: string
+  type: $Enums.BranchType
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
+  subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
+  user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
+  loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
+  loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
+  technicalReports?: Prisma.TechnicalReportCreateNestedManyWithoutBranchInput
+  legalReports?: Prisma.LegalReportCreateNestedManyWithoutBranchInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutPartnersInput = {
+  id?: string
+  name: string
+  code: string
+  type: $Enums.BranchType
+  parentBranchId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
+  user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
+  loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
+  loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
+  technicalReports?: Prisma.TechnicalReportUncheckedCreateNestedManyWithoutBranchInput
+  legalReports?: Prisma.LegalReportUncheckedCreateNestedManyWithoutBranchInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutPartnersInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPartnersInput, Prisma.BranchUncheckedCreateWithoutPartnersInput>
+}
+
+export type BranchUpsertWithoutPartnersInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutPartnersInput, Prisma.BranchUncheckedUpdateWithoutPartnersInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPartnersInput, Prisma.BranchUncheckedCreateWithoutPartnersInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutPartnersInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutPartnersInput, Prisma.BranchUncheckedUpdateWithoutPartnersInput>
+}
+
+export type BranchUpdateWithoutPartnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumBranchTypeFieldUpdateOperationsInput | $Enums.BranchType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
+  subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
+  user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
+  loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
+  loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
+  technicalReports?: Prisma.TechnicalReportUpdateManyWithoutBranchNestedInput
+  legalReports?: Prisma.LegalReportUpdateManyWithoutBranchNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutPartnersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumBranchTypeFieldUpdateOperationsInput | $Enums.BranchType
+  parentBranchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
+  user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUncheckedUpdateManyWithoutBranchNestedInput
@@ -802,6 +923,7 @@ export type BranchCreateWithoutSubBranchesInput = {
   updatedAt?: Date | string
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -820,6 +942,7 @@ export type BranchUncheckedCreateWithoutSubBranchesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -843,6 +966,7 @@ export type BranchCreateWithoutParentBranchInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -861,6 +985,7 @@ export type BranchUncheckedCreateWithoutParentBranchInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -900,6 +1025,7 @@ export type BranchUpdateWithoutSubBranchesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -918,6 +1044,7 @@ export type BranchUncheckedUpdateWithoutSubBranchesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -967,6 +1094,7 @@ export type BranchCreateWithoutLoanApplicationsInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportCreateNestedManyWithoutBranchInput
@@ -985,6 +1113,7 @@ export type BranchUncheckedCreateWithoutLoanApplicationsInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportUncheckedCreateNestedManyWithoutBranchInput
@@ -1019,6 +1148,7 @@ export type BranchUpdateWithoutLoanApplicationsInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUpdateManyWithoutBranchNestedInput
@@ -1037,6 +1167,7 @@ export type BranchUncheckedUpdateWithoutLoanApplicationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUncheckedUpdateManyWithoutBranchNestedInput
@@ -1055,6 +1186,7 @@ export type BranchCreateWithoutLoanRecoveriesInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportCreateNestedManyWithoutBranchInput
@@ -1073,6 +1205,7 @@ export type BranchUncheckedCreateWithoutLoanRecoveriesInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   technicalReports?: Prisma.TechnicalReportUncheckedCreateNestedManyWithoutBranchInput
@@ -1107,6 +1240,7 @@ export type BranchUpdateWithoutLoanRecoveriesInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUpdateManyWithoutBranchNestedInput
@@ -1125,6 +1259,7 @@ export type BranchUncheckedUpdateWithoutLoanRecoveriesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   technicalReports?: Prisma.TechnicalReportUncheckedUpdateManyWithoutBranchNestedInput
@@ -1143,6 +1278,7 @@ export type BranchCreateWithoutDocumentsInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -1161,6 +1297,7 @@ export type BranchUncheckedCreateWithoutDocumentsInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -1195,6 +1332,7 @@ export type BranchUpdateWithoutDocumentsInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -1213,6 +1351,7 @@ export type BranchUncheckedUpdateWithoutDocumentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -1231,6 +1370,7 @@ export type BranchCreateWithoutTechnicalReportsInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -1249,6 +1389,7 @@ export type BranchUncheckedCreateWithoutTechnicalReportsInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -1283,6 +1424,7 @@ export type BranchUpdateWithoutTechnicalReportsInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -1301,6 +1443,7 @@ export type BranchUncheckedUpdateWithoutTechnicalReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -1319,6 +1462,7 @@ export type BranchCreateWithoutLegalReportsInput = {
   parentBranch?: Prisma.BranchCreateNestedOneWithoutSubBranchesInput
   subBranches?: Prisma.BranchCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutBranchInput
@@ -1337,6 +1481,7 @@ export type BranchUncheckedCreateWithoutLegalReportsInput = {
   updatedAt?: Date | string
   subBranches?: Prisma.BranchUncheckedCreateNestedManyWithoutParentBranchInput
   user?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  partners?: Prisma.PartnerUncheckedCreateNestedManyWithoutBranchInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutBranchInput
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutBranchInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutBranchInput
@@ -1371,6 +1516,7 @@ export type BranchUpdateWithoutLegalReportsInput = {
   parentBranch?: Prisma.BranchUpdateOneWithoutSubBranchesNestedInput
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -1389,6 +1535,7 @@ export type BranchUncheckedUpdateWithoutLegalReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -1416,6 +1563,7 @@ export type BranchUpdateWithoutParentBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutBranchNestedInput
@@ -1434,6 +1582,7 @@ export type BranchUncheckedUpdateWithoutParentBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subBranches?: Prisma.BranchUncheckedUpdateManyWithoutParentBranchNestedInput
   user?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  partners?: Prisma.PartnerUncheckedUpdateManyWithoutBranchNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutBranchNestedInput
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutBranchNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutBranchNestedInput
@@ -1460,6 +1609,7 @@ export type BranchUncheckedUpdateManyWithoutParentBranchInput = {
 export type BranchCountOutputType = {
   subBranches: number
   user: number
+  partners: number
   employees: number
   loanApplications: number
   loanRecoveries: number
@@ -1471,6 +1621,7 @@ export type BranchCountOutputType = {
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subBranches?: boolean | BranchCountOutputTypeCountSubBranchesArgs
   user?: boolean | BranchCountOutputTypeCountUserArgs
+  partners?: boolean | BranchCountOutputTypeCountPartnersArgs
   employees?: boolean | BranchCountOutputTypeCountEmployeesArgs
   loanApplications?: boolean | BranchCountOutputTypeCountLoanApplicationsArgs
   loanRecoveries?: boolean | BranchCountOutputTypeCountLoanRecoveriesArgs
@@ -1501,6 +1652,13 @@ export type BranchCountOutputTypeCountSubBranchesArgs<ExtArgs extends runtime.Ty
  */
 export type BranchCountOutputTypeCountUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountPartnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PartnerWhereInput
 }
 
 /**
@@ -1558,6 +1716,7 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   parentBranch?: boolean | Prisma.Branch$parentBranchArgs<ExtArgs>
   subBranches?: boolean | Prisma.Branch$subBranchesArgs<ExtArgs>
   user?: boolean | Prisma.Branch$userArgs<ExtArgs>
+  partners?: boolean | Prisma.Branch$partnersArgs<ExtArgs>
   employees?: boolean | Prisma.Branch$employeesArgs<ExtArgs>
   loanApplications?: boolean | Prisma.Branch$loanApplicationsArgs<ExtArgs>
   loanRecoveries?: boolean | Prisma.Branch$loanRecoveriesArgs<ExtArgs>
@@ -1585,6 +1744,7 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   parentBranch?: boolean | Prisma.Branch$parentBranchArgs<ExtArgs>
   subBranches?: boolean | Prisma.Branch$subBranchesArgs<ExtArgs>
   user?: boolean | Prisma.Branch$userArgs<ExtArgs>
+  partners?: boolean | Prisma.Branch$partnersArgs<ExtArgs>
   employees?: boolean | Prisma.Branch$employeesArgs<ExtArgs>
   loanApplications?: boolean | Prisma.Branch$loanApplicationsArgs<ExtArgs>
   loanRecoveries?: boolean | Prisma.Branch$loanRecoveriesArgs<ExtArgs>
@@ -1600,6 +1760,7 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     parentBranch: Prisma.$BranchPayload<ExtArgs> | null
     subBranches: Prisma.$BranchPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>[]
+    partners: Prisma.$PartnerPayload<ExtArgs>[]
     employees: Prisma.$EmployeePayload<ExtArgs>[]
     loanApplications: Prisma.$LoanApplicationPayload<ExtArgs>[]
     loanRecoveries: Prisma.$LoanRecoveryPayload<ExtArgs>[]
@@ -1959,6 +2120,7 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   parentBranch<T extends Prisma.Branch$parentBranchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$parentBranchArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   subBranches<T extends Prisma.Branch$subBranchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$subBranchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.Branch$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$userArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  partners<T extends Prisma.Branch$partnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$partnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employees<T extends Prisma.Branch$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   loanApplications<T extends Prisma.Branch$loanApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$loanApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   loanRecoveries<T extends Prisma.Branch$loanRecoveriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$loanRecoveriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanRecoveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2409,6 +2571,30 @@ export type Branch$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Branch.partners
+ */
+export type Branch$partnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Partner
+   */
+  select?: Prisma.PartnerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Partner
+   */
+  omit?: Prisma.PartnerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PartnerInclude<ExtArgs> | null
+  where?: Prisma.PartnerWhereInput
+  orderBy?: Prisma.PartnerOrderByWithRelationInput | Prisma.PartnerOrderByWithRelationInput[]
+  cursor?: Prisma.PartnerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PartnerScalarFieldEnum | Prisma.PartnerScalarFieldEnum[]
 }
 
 /**

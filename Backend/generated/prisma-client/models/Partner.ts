@@ -27,10 +27,10 @@ export type AggregatePartner = {
 }
 
 export type PartnerAvgAggregateOutputType = {
+  commissionValue: number | null
   establishedYear: number | null
   totalEmployees: number | null
   annualTurnover: number | null
-  commissionValue: number | null
   minimumPayout: number | null
   taxDeduction: number | null
   totalReferrals: number | null
@@ -39,10 +39,10 @@ export type PartnerAvgAggregateOutputType = {
 }
 
 export type PartnerSumAggregateOutputType = {
+  commissionValue: number | null
   establishedYear: number | null
   totalEmployees: number | null
   annualTurnover: number | null
-  commissionValue: number | null
   minimumPayout: number | null
   taxDeduction: number | null
   totalReferrals: number | null
@@ -57,7 +57,12 @@ export type PartnerMinAggregateOutputType = {
   companyName: string | null
   contactPerson: string | null
   alternateNumber: string | null
-  website: string | null
+  panNumber: string | null
+  gstNumber: string | null
+  commissionType: $Enums.CommissionType | null
+  commissionValue: number | null
+  branchId: string | null
+  isActive: boolean | null
   establishedYear: number | null
   partnerType: $Enums.PartnerType | null
   businessNature: string | null
@@ -71,8 +76,6 @@ export type PartnerMinAggregateOutputType = {
   totalEmployees: number | null
   annualTurnover: number | null
   businessRegistrationNumber: string | null
-  commissionType: $Enums.CommissionType | null
-  commissionValue: number | null
   paymentCycle: $Enums.PaymentCycle | null
   minimumPayout: number | null
   taxDeduction: number | null
@@ -91,7 +94,12 @@ export type PartnerMaxAggregateOutputType = {
   companyName: string | null
   contactPerson: string | null
   alternateNumber: string | null
-  website: string | null
+  panNumber: string | null
+  gstNumber: string | null
+  commissionType: $Enums.CommissionType | null
+  commissionValue: number | null
+  branchId: string | null
+  isActive: boolean | null
   establishedYear: number | null
   partnerType: $Enums.PartnerType | null
   businessNature: string | null
@@ -105,8 +113,6 @@ export type PartnerMaxAggregateOutputType = {
   totalEmployees: number | null
   annualTurnover: number | null
   businessRegistrationNumber: string | null
-  commissionType: $Enums.CommissionType | null
-  commissionValue: number | null
   paymentCycle: $Enums.PaymentCycle | null
   minimumPayout: number | null
   taxDeduction: number | null
@@ -125,7 +131,12 @@ export type PartnerCountAggregateOutputType = {
   companyName: number
   contactPerson: number
   alternateNumber: number
-  website: number
+  panNumber: number
+  gstNumber: number
+  commissionType: number
+  commissionValue: number
+  branchId: number
+  isActive: number
   establishedYear: number
   partnerType: number
   businessNature: number
@@ -139,8 +150,6 @@ export type PartnerCountAggregateOutputType = {
   totalEmployees: number
   annualTurnover: number
   businessRegistrationNumber: number
-  commissionType: number
-  commissionValue: number
   paymentCycle: number
   minimumPayout: number
   taxDeduction: number
@@ -155,10 +164,10 @@ export type PartnerCountAggregateOutputType = {
 
 
 export type PartnerAvgAggregateInputType = {
+  commissionValue?: true
   establishedYear?: true
   totalEmployees?: true
   annualTurnover?: true
-  commissionValue?: true
   minimumPayout?: true
   taxDeduction?: true
   totalReferrals?: true
@@ -167,10 +176,10 @@ export type PartnerAvgAggregateInputType = {
 }
 
 export type PartnerSumAggregateInputType = {
+  commissionValue?: true
   establishedYear?: true
   totalEmployees?: true
   annualTurnover?: true
-  commissionValue?: true
   minimumPayout?: true
   taxDeduction?: true
   totalReferrals?: true
@@ -185,7 +194,12 @@ export type PartnerMinAggregateInputType = {
   companyName?: true
   contactPerson?: true
   alternateNumber?: true
-  website?: true
+  panNumber?: true
+  gstNumber?: true
+  commissionType?: true
+  commissionValue?: true
+  branchId?: true
+  isActive?: true
   establishedYear?: true
   partnerType?: true
   businessNature?: true
@@ -199,8 +213,6 @@ export type PartnerMinAggregateInputType = {
   totalEmployees?: true
   annualTurnover?: true
   businessRegistrationNumber?: true
-  commissionType?: true
-  commissionValue?: true
   paymentCycle?: true
   minimumPayout?: true
   taxDeduction?: true
@@ -219,7 +231,12 @@ export type PartnerMaxAggregateInputType = {
   companyName?: true
   contactPerson?: true
   alternateNumber?: true
-  website?: true
+  panNumber?: true
+  gstNumber?: true
+  commissionType?: true
+  commissionValue?: true
+  branchId?: true
+  isActive?: true
   establishedYear?: true
   partnerType?: true
   businessNature?: true
@@ -233,8 +250,6 @@ export type PartnerMaxAggregateInputType = {
   totalEmployees?: true
   annualTurnover?: true
   businessRegistrationNumber?: true
-  commissionType?: true
-  commissionValue?: true
   paymentCycle?: true
   minimumPayout?: true
   taxDeduction?: true
@@ -253,7 +268,12 @@ export type PartnerCountAggregateInputType = {
   companyName?: true
   contactPerson?: true
   alternateNumber?: true
-  website?: true
+  panNumber?: true
+  gstNumber?: true
+  commissionType?: true
+  commissionValue?: true
+  branchId?: true
+  isActive?: true
   establishedYear?: true
   partnerType?: true
   businessNature?: true
@@ -267,8 +287,6 @@ export type PartnerCountAggregateInputType = {
   totalEmployees?: true
   annualTurnover?: true
   businessRegistrationNumber?: true
-  commissionType?: true
-  commissionValue?: true
   paymentCycle?: true
   minimumPayout?: true
   taxDeduction?: true
@@ -374,7 +392,12 @@ export type PartnerGroupByOutputType = {
   companyName: string
   contactPerson: string
   alternateNumber: string | null
-  website: string | null
+  panNumber: string
+  gstNumber: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue: number | null
+  branchId: string
+  isActive: boolean
   establishedYear: number | null
   partnerType: $Enums.PartnerType
   businessNature: string | null
@@ -388,8 +411,6 @@ export type PartnerGroupByOutputType = {
   totalEmployees: number | null
   annualTurnover: number | null
   businessRegistrationNumber: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout: number | null
   taxDeduction: number | null
@@ -431,7 +452,12 @@ export type PartnerWhereInput = {
   companyName?: Prisma.StringFilter<"Partner"> | string
   contactPerson?: Prisma.StringFilter<"Partner"> | string
   alternateNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
-  website?: Prisma.StringNullableFilter<"Partner"> | string | null
+  panNumber?: Prisma.StringFilter<"Partner"> | string
+  gstNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
+  commissionType?: Prisma.EnumCommissionTypeFilter<"Partner"> | $Enums.CommissionType
+  commissionValue?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  branchId?: Prisma.StringFilter<"Partner"> | string
+  isActive?: Prisma.BoolFilter<"Partner"> | boolean
   establishedYear?: Prisma.IntNullableFilter<"Partner"> | number | null
   partnerType?: Prisma.EnumPartnerTypeFilter<"Partner"> | $Enums.PartnerType
   businessNature?: Prisma.StringNullableFilter<"Partner"> | string | null
@@ -445,8 +471,6 @@ export type PartnerWhereInput = {
   totalEmployees?: Prisma.IntNullableFilter<"Partner"> | number | null
   annualTurnover?: Prisma.FloatNullableFilter<"Partner"> | number | null
   businessRegistrationNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
-  commissionType?: Prisma.EnumCommissionTypeFilter<"Partner"> | $Enums.CommissionType
-  commissionValue?: Prisma.FloatNullableFilter<"Partner"> | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFilter<"Partner"> | $Enums.PaymentCycle
   minimumPayout?: Prisma.FloatNullableFilter<"Partner"> | number | null
   taxDeduction?: Prisma.FloatNullableFilter<"Partner"> | number | null
@@ -456,6 +480,9 @@ export type PartnerWhereInput = {
   commissionEarned?: Prisma.FloatNullableFilter<"Partner"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
+  leads?: Prisma.LeadsListRelationFilter
+  commission?: Prisma.PartnerCommissionListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -466,7 +493,12 @@ export type PartnerOrderByWithRelationInput = {
   companyName?: Prisma.SortOrder
   contactPerson?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  panNumber?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  commissionType?: Prisma.SortOrder
+  commissionValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrderInput | Prisma.SortOrder
   partnerType?: Prisma.SortOrder
   businessNature?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -480,8 +512,6 @@ export type PartnerOrderByWithRelationInput = {
   totalEmployees?: Prisma.SortOrderInput | Prisma.SortOrder
   annualTurnover?: Prisma.SortOrderInput | Prisma.SortOrder
   businessRegistrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  commissionType?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentCycle?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrderInput | Prisma.SortOrder
   taxDeduction?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -491,6 +521,9 @@ export type PartnerOrderByWithRelationInput = {
   commissionEarned?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  branch?: Prisma.BranchOrderByWithRelationInput
+  leads?: Prisma.LeadsOrderByRelationAggregateInput
+  commission?: Prisma.PartnerCommissionOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.PartnerOrderByRelevanceInput
 }
@@ -505,7 +538,12 @@ export type PartnerWhereUniqueInput = Prisma.AtLeast<{
   companyName?: Prisma.StringFilter<"Partner"> | string
   contactPerson?: Prisma.StringFilter<"Partner"> | string
   alternateNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
-  website?: Prisma.StringNullableFilter<"Partner"> | string | null
+  panNumber?: Prisma.StringFilter<"Partner"> | string
+  gstNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
+  commissionType?: Prisma.EnumCommissionTypeFilter<"Partner"> | $Enums.CommissionType
+  commissionValue?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  branchId?: Prisma.StringFilter<"Partner"> | string
+  isActive?: Prisma.BoolFilter<"Partner"> | boolean
   establishedYear?: Prisma.IntNullableFilter<"Partner"> | number | null
   partnerType?: Prisma.EnumPartnerTypeFilter<"Partner"> | $Enums.PartnerType
   businessNature?: Prisma.StringNullableFilter<"Partner"> | string | null
@@ -519,8 +557,6 @@ export type PartnerWhereUniqueInput = Prisma.AtLeast<{
   totalEmployees?: Prisma.IntNullableFilter<"Partner"> | number | null
   annualTurnover?: Prisma.FloatNullableFilter<"Partner"> | number | null
   businessRegistrationNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
-  commissionType?: Prisma.EnumCommissionTypeFilter<"Partner"> | $Enums.CommissionType
-  commissionValue?: Prisma.FloatNullableFilter<"Partner"> | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFilter<"Partner"> | $Enums.PaymentCycle
   minimumPayout?: Prisma.FloatNullableFilter<"Partner"> | number | null
   taxDeduction?: Prisma.FloatNullableFilter<"Partner"> | number | null
@@ -530,6 +566,9 @@ export type PartnerWhereUniqueInput = Prisma.AtLeast<{
   commissionEarned?: Prisma.FloatNullableFilter<"Partner"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
+  leads?: Prisma.LeadsListRelationFilter
+  commission?: Prisma.PartnerCommissionListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId" | "partnerId">
 
@@ -540,7 +579,12 @@ export type PartnerOrderByWithAggregationInput = {
   companyName?: Prisma.SortOrder
   contactPerson?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  panNumber?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  commissionType?: Prisma.SortOrder
+  commissionValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrderInput | Prisma.SortOrder
   partnerType?: Prisma.SortOrder
   businessNature?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -554,8 +598,6 @@ export type PartnerOrderByWithAggregationInput = {
   totalEmployees?: Prisma.SortOrderInput | Prisma.SortOrder
   annualTurnover?: Prisma.SortOrderInput | Prisma.SortOrder
   businessRegistrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  commissionType?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentCycle?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrderInput | Prisma.SortOrder
   taxDeduction?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -582,7 +624,12 @@ export type PartnerScalarWhereWithAggregatesInput = {
   companyName?: Prisma.StringWithAggregatesFilter<"Partner"> | string
   contactPerson?: Prisma.StringWithAggregatesFilter<"Partner"> | string
   alternateNumber?: Prisma.StringNullableWithAggregatesFilter<"Partner"> | string | null
-  website?: Prisma.StringNullableWithAggregatesFilter<"Partner"> | string | null
+  panNumber?: Prisma.StringWithAggregatesFilter<"Partner"> | string
+  gstNumber?: Prisma.StringNullableWithAggregatesFilter<"Partner"> | string | null
+  commissionType?: Prisma.EnumCommissionTypeWithAggregatesFilter<"Partner"> | $Enums.CommissionType
+  commissionValue?: Prisma.FloatNullableWithAggregatesFilter<"Partner"> | number | null
+  branchId?: Prisma.StringWithAggregatesFilter<"Partner"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"Partner"> | boolean
   establishedYear?: Prisma.IntNullableWithAggregatesFilter<"Partner"> | number | null
   partnerType?: Prisma.EnumPartnerTypeWithAggregatesFilter<"Partner"> | $Enums.PartnerType
   businessNature?: Prisma.StringNullableWithAggregatesFilter<"Partner"> | string | null
@@ -596,8 +643,6 @@ export type PartnerScalarWhereWithAggregatesInput = {
   totalEmployees?: Prisma.IntNullableWithAggregatesFilter<"Partner"> | number | null
   annualTurnover?: Prisma.FloatNullableWithAggregatesFilter<"Partner"> | number | null
   businessRegistrationNumber?: Prisma.StringNullableWithAggregatesFilter<"Partner"> | string | null
-  commissionType?: Prisma.EnumCommissionTypeWithAggregatesFilter<"Partner"> | $Enums.CommissionType
-  commissionValue?: Prisma.FloatNullableWithAggregatesFilter<"Partner"> | number | null
   paymentCycle?: Prisma.EnumPaymentCycleWithAggregatesFilter<"Partner"> | $Enums.PaymentCycle
   minimumPayout?: Prisma.FloatNullableWithAggregatesFilter<"Partner"> | number | null
   taxDeduction?: Prisma.FloatNullableWithAggregatesFilter<"Partner"> | number | null
@@ -615,7 +660,11 @@ export type PartnerCreateInput = {
   companyName: string
   contactPerson: string
   alternateNumber?: string | null
-  website?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
   establishedYear?: number | null
   partnerType: $Enums.PartnerType
   businessNature?: string | null
@@ -629,8 +678,6 @@ export type PartnerCreateInput = {
   totalEmployees?: number | null
   annualTurnover?: number | null
   businessRegistrationNumber?: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue?: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout?: number | null
   taxDeduction?: number | null
@@ -640,6 +687,9 @@ export type PartnerCreateInput = {
   commissionEarned?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutPartnersInput
+  leads?: Prisma.LeadsCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionCreateNestedManyWithoutPartnerInput
   user: Prisma.UserCreateNestedOneWithoutPartnerInput
 }
 
@@ -650,7 +700,12 @@ export type PartnerUncheckedCreateInput = {
   companyName: string
   contactPerson: string
   alternateNumber?: string | null
-  website?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  branchId: string
+  isActive?: boolean
   establishedYear?: number | null
   partnerType: $Enums.PartnerType
   businessNature?: string | null
@@ -664,8 +719,6 @@ export type PartnerUncheckedCreateInput = {
   totalEmployees?: number | null
   annualTurnover?: number | null
   businessRegistrationNumber?: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue?: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout?: number | null
   taxDeduction?: number | null
@@ -675,6 +728,8 @@ export type PartnerUncheckedCreateInput = {
   commissionEarned?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leads?: Prisma.LeadsUncheckedCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionUncheckedCreateNestedManyWithoutPartnerInput
 }
 
 export type PartnerUpdateInput = {
@@ -683,7 +738,11 @@ export type PartnerUpdateInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -697,8 +756,6 @@ export type PartnerUpdateInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
-  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -708,6 +765,9 @@ export type PartnerUpdateInput = {
   commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPartnersNestedInput
+  leads?: Prisma.LeadsUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUpdateManyWithoutPartnerNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutPartnerNestedInput
 }
 
@@ -718,7 +778,12 @@ export type PartnerUncheckedUpdateInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -732,8 +797,6 @@ export type PartnerUncheckedUpdateInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
-  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -743,6 +806,8 @@ export type PartnerUncheckedUpdateInput = {
   commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadsUncheckedUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUncheckedUpdateManyWithoutPartnerNestedInput
 }
 
 export type PartnerCreateManyInput = {
@@ -752,7 +817,12 @@ export type PartnerCreateManyInput = {
   companyName: string
   contactPerson: string
   alternateNumber?: string | null
-  website?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  branchId: string
+  isActive?: boolean
   establishedYear?: number | null
   partnerType: $Enums.PartnerType
   businessNature?: string | null
@@ -766,8 +836,6 @@ export type PartnerCreateManyInput = {
   totalEmployees?: number | null
   annualTurnover?: number | null
   businessRegistrationNumber?: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue?: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout?: number | null
   taxDeduction?: number | null
@@ -785,7 +853,11 @@ export type PartnerUpdateManyMutationInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -799,8 +871,6 @@ export type PartnerUpdateManyMutationInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
-  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -819,7 +889,12 @@ export type PartnerUncheckedUpdateManyInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -833,8 +908,6 @@ export type PartnerUncheckedUpdateManyInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
-  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -864,7 +937,12 @@ export type PartnerCountOrderByAggregateInput = {
   companyName?: Prisma.SortOrder
   contactPerson?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
-  website?: Prisma.SortOrder
+  panNumber?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  commissionType?: Prisma.SortOrder
+  commissionValue?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrder
   partnerType?: Prisma.SortOrder
   businessNature?: Prisma.SortOrder
@@ -878,8 +956,6 @@ export type PartnerCountOrderByAggregateInput = {
   totalEmployees?: Prisma.SortOrder
   annualTurnover?: Prisma.SortOrder
   businessRegistrationNumber?: Prisma.SortOrder
-  commissionType?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrder
   paymentCycle?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrder
   taxDeduction?: Prisma.SortOrder
@@ -892,10 +968,10 @@ export type PartnerCountOrderByAggregateInput = {
 }
 
 export type PartnerAvgOrderByAggregateInput = {
+  commissionValue?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrder
   totalEmployees?: Prisma.SortOrder
   annualTurnover?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrder
   taxDeduction?: Prisma.SortOrder
   totalReferrals?: Prisma.SortOrder
@@ -910,7 +986,12 @@ export type PartnerMaxOrderByAggregateInput = {
   companyName?: Prisma.SortOrder
   contactPerson?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
-  website?: Prisma.SortOrder
+  panNumber?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  commissionType?: Prisma.SortOrder
+  commissionValue?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrder
   partnerType?: Prisma.SortOrder
   businessNature?: Prisma.SortOrder
@@ -924,8 +1005,6 @@ export type PartnerMaxOrderByAggregateInput = {
   totalEmployees?: Prisma.SortOrder
   annualTurnover?: Prisma.SortOrder
   businessRegistrationNumber?: Prisma.SortOrder
-  commissionType?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrder
   paymentCycle?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrder
   taxDeduction?: Prisma.SortOrder
@@ -944,7 +1023,12 @@ export type PartnerMinOrderByAggregateInput = {
   companyName?: Prisma.SortOrder
   contactPerson?: Prisma.SortOrder
   alternateNumber?: Prisma.SortOrder
-  website?: Prisma.SortOrder
+  panNumber?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  commissionType?: Prisma.SortOrder
+  commissionValue?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrder
   partnerType?: Prisma.SortOrder
   businessNature?: Prisma.SortOrder
@@ -958,8 +1042,6 @@ export type PartnerMinOrderByAggregateInput = {
   totalEmployees?: Prisma.SortOrder
   annualTurnover?: Prisma.SortOrder
   businessRegistrationNumber?: Prisma.SortOrder
-  commissionType?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrder
   paymentCycle?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrder
   taxDeduction?: Prisma.SortOrder
@@ -972,15 +1054,30 @@ export type PartnerMinOrderByAggregateInput = {
 }
 
 export type PartnerSumOrderByAggregateInput = {
+  commissionValue?: Prisma.SortOrder
   establishedYear?: Prisma.SortOrder
   totalEmployees?: Prisma.SortOrder
   annualTurnover?: Prisma.SortOrder
-  commissionValue?: Prisma.SortOrder
   minimumPayout?: Prisma.SortOrder
   taxDeduction?: Prisma.SortOrder
   totalReferrals?: Prisma.SortOrder
   activeReferrals?: Prisma.SortOrder
   commissionEarned?: Prisma.SortOrder
+}
+
+export type PartnerScalarRelationFilter = {
+  is?: Prisma.PartnerWhereInput
+  isNot?: Prisma.PartnerWhereInput
+}
+
+export type PartnerListRelationFilter = {
+  every?: Prisma.PartnerWhereInput
+  some?: Prisma.PartnerWhereInput
+  none?: Prisma.PartnerWhereInput
+}
+
+export type PartnerOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PartnerCreateNestedOneWithoutUserInput = {
@@ -1019,6 +1116,18 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumCommissionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.CommissionType
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -1031,20 +1140,80 @@ export type EnumPartnerTypeFieldUpdateOperationsInput = {
   set?: $Enums.PartnerType
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type EnumCommissionTypeFieldUpdateOperationsInput = {
-  set?: $Enums.CommissionType
-}
-
 export type EnumPaymentCycleFieldUpdateOperationsInput = {
   set?: $Enums.PaymentCycle
+}
+
+export type PartnerCreateNestedOneWithoutCommissionInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutCommissionInput, Prisma.PartnerUncheckedCreateWithoutCommissionInput>
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutCommissionInput
+  connect?: Prisma.PartnerWhereUniqueInput
+}
+
+export type PartnerUpdateOneRequiredWithoutCommissionNestedInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutCommissionInput, Prisma.PartnerUncheckedCreateWithoutCommissionInput>
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutCommissionInput
+  upsert?: Prisma.PartnerUpsertWithoutCommissionInput
+  connect?: Prisma.PartnerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PartnerUpdateToOneWithWhereWithoutCommissionInput, Prisma.PartnerUpdateWithoutCommissionInput>, Prisma.PartnerUncheckedUpdateWithoutCommissionInput>
+}
+
+export type PartnerCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput> | Prisma.PartnerCreateWithoutBranchInput[] | Prisma.PartnerUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutBranchInput | Prisma.PartnerCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.PartnerCreateManyBranchInputEnvelope
+  connect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+}
+
+export type PartnerUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput> | Prisma.PartnerCreateWithoutBranchInput[] | Prisma.PartnerUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutBranchInput | Prisma.PartnerCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.PartnerCreateManyBranchInputEnvelope
+  connect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+}
+
+export type PartnerUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput> | Prisma.PartnerCreateWithoutBranchInput[] | Prisma.PartnerUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutBranchInput | Prisma.PartnerCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.PartnerUpsertWithWhereUniqueWithoutBranchInput | Prisma.PartnerUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.PartnerCreateManyBranchInputEnvelope
+  set?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  disconnect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  delete?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  connect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  update?: Prisma.PartnerUpdateWithWhereUniqueWithoutBranchInput | Prisma.PartnerUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.PartnerUpdateManyWithWhereWithoutBranchInput | Prisma.PartnerUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.PartnerScalarWhereInput | Prisma.PartnerScalarWhereInput[]
+}
+
+export type PartnerUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput> | Prisma.PartnerCreateWithoutBranchInput[] | Prisma.PartnerUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutBranchInput | Prisma.PartnerCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.PartnerUpsertWithWhereUniqueWithoutBranchInput | Prisma.PartnerUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.PartnerCreateManyBranchInputEnvelope
+  set?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  disconnect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  delete?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  connect?: Prisma.PartnerWhereUniqueInput | Prisma.PartnerWhereUniqueInput[]
+  update?: Prisma.PartnerUpdateWithWhereUniqueWithoutBranchInput | Prisma.PartnerUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.PartnerUpdateManyWithWhereWithoutBranchInput | Prisma.PartnerUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.PartnerScalarWhereInput | Prisma.PartnerScalarWhereInput[]
+}
+
+export type PartnerCreateNestedOneWithoutLeadsInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutLeadsInput, Prisma.PartnerUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutLeadsInput
+  connect?: Prisma.PartnerWhereUniqueInput
+}
+
+export type PartnerUpdateOneWithoutLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.PartnerCreateWithoutLeadsInput, Prisma.PartnerUncheckedCreateWithoutLeadsInput>
+  connectOrCreate?: Prisma.PartnerCreateOrConnectWithoutLeadsInput
+  upsert?: Prisma.PartnerUpsertWithoutLeadsInput
+  disconnect?: Prisma.PartnerWhereInput | boolean
+  delete?: Prisma.PartnerWhereInput | boolean
+  connect?: Prisma.PartnerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PartnerUpdateToOneWithWhereWithoutLeadsInput, Prisma.PartnerUpdateWithoutLeadsInput>, Prisma.PartnerUncheckedUpdateWithoutLeadsInput>
 }
 
 export type PartnerCreateWithoutUserInput = {
@@ -1053,7 +1222,11 @@ export type PartnerCreateWithoutUserInput = {
   companyName: string
   contactPerson: string
   alternateNumber?: string | null
-  website?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
   establishedYear?: number | null
   partnerType: $Enums.PartnerType
   businessNature?: string | null
@@ -1067,8 +1240,6 @@ export type PartnerCreateWithoutUserInput = {
   totalEmployees?: number | null
   annualTurnover?: number | null
   businessRegistrationNumber?: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue?: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout?: number | null
   taxDeduction?: number | null
@@ -1078,6 +1249,9 @@ export type PartnerCreateWithoutUserInput = {
   commissionEarned?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutPartnersInput
+  leads?: Prisma.LeadsCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionCreateNestedManyWithoutPartnerInput
 }
 
 export type PartnerUncheckedCreateWithoutUserInput = {
@@ -1086,7 +1260,12 @@ export type PartnerUncheckedCreateWithoutUserInput = {
   companyName: string
   contactPerson: string
   alternateNumber?: string | null
-  website?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  branchId: string
+  isActive?: boolean
   establishedYear?: number | null
   partnerType: $Enums.PartnerType
   businessNature?: string | null
@@ -1100,8 +1279,6 @@ export type PartnerUncheckedCreateWithoutUserInput = {
   totalEmployees?: number | null
   annualTurnover?: number | null
   businessRegistrationNumber?: string | null
-  commissionType: $Enums.CommissionType
-  commissionValue?: number | null
   paymentCycle: $Enums.PaymentCycle
   minimumPayout?: number | null
   taxDeduction?: number | null
@@ -1111,6 +1288,8 @@ export type PartnerUncheckedCreateWithoutUserInput = {
   commissionEarned?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  leads?: Prisma.LeadsUncheckedCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionUncheckedCreateNestedManyWithoutPartnerInput
 }
 
 export type PartnerCreateOrConnectWithoutUserInput = {
@@ -1135,7 +1314,11 @@ export type PartnerUpdateWithoutUserInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1149,8 +1332,6 @@ export type PartnerUpdateWithoutUserInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
-  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1160,6 +1341,9 @@ export type PartnerUpdateWithoutUserInput = {
   commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPartnersNestedInput
+  leads?: Prisma.LeadsUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUpdateManyWithoutPartnerNestedInput
 }
 
 export type PartnerUncheckedUpdateWithoutUserInput = {
@@ -1168,7 +1352,12 @@ export type PartnerUncheckedUpdateWithoutUserInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
   alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
   businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1182,8 +1371,634 @@ export type PartnerUncheckedUpdateWithoutUserInput = {
   totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadsUncheckedUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUncheckedUpdateManyWithoutPartnerNestedInput
+}
+
+export type PartnerCreateWithoutCommissionInput = {
+  id?: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutPartnersInput
+  leads?: Prisma.LeadsCreateNestedManyWithoutPartnerInput
+  user: Prisma.UserCreateNestedOneWithoutPartnerInput
+}
+
+export type PartnerUncheckedCreateWithoutCommissionInput = {
+  id?: string
+  userId: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  branchId: string
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadsUncheckedCreateNestedManyWithoutPartnerInput
+}
+
+export type PartnerCreateOrConnectWithoutCommissionInput = {
+  where: Prisma.PartnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutCommissionInput, Prisma.PartnerUncheckedCreateWithoutCommissionInput>
+}
+
+export type PartnerUpsertWithoutCommissionInput = {
+  update: Prisma.XOR<Prisma.PartnerUpdateWithoutCommissionInput, Prisma.PartnerUncheckedUpdateWithoutCommissionInput>
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutCommissionInput, Prisma.PartnerUncheckedCreateWithoutCommissionInput>
+  where?: Prisma.PartnerWhereInput
+}
+
+export type PartnerUpdateToOneWithWhereWithoutCommissionInput = {
+  where?: Prisma.PartnerWhereInput
+  data: Prisma.XOR<Prisma.PartnerUpdateWithoutCommissionInput, Prisma.PartnerUncheckedUpdateWithoutCommissionInput>
+}
+
+export type PartnerUpdateWithoutCommissionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
   commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPartnersNestedInput
+  leads?: Prisma.LeadsUpdateManyWithoutPartnerNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPartnerNestedInput
+}
+
+export type PartnerUncheckedUpdateWithoutCommissionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadsUncheckedUpdateManyWithoutPartnerNestedInput
+}
+
+export type PartnerCreateWithoutBranchInput = {
+  id?: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadsCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionCreateNestedManyWithoutPartnerInput
+  user: Prisma.UserCreateNestedOneWithoutPartnerInput
+}
+
+export type PartnerUncheckedCreateWithoutBranchInput = {
+  id?: string
+  userId: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadsUncheckedCreateNestedManyWithoutPartnerInput
+  commission?: Prisma.PartnerCommissionUncheckedCreateNestedManyWithoutPartnerInput
+}
+
+export type PartnerCreateOrConnectWithoutBranchInput = {
+  where: Prisma.PartnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput>
+}
+
+export type PartnerCreateManyBranchInputEnvelope = {
+  data: Prisma.PartnerCreateManyBranchInput | Prisma.PartnerCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type PartnerUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.PartnerWhereUniqueInput
+  update: Prisma.XOR<Prisma.PartnerUpdateWithoutBranchInput, Prisma.PartnerUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutBranchInput, Prisma.PartnerUncheckedCreateWithoutBranchInput>
+}
+
+export type PartnerUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.PartnerWhereUniqueInput
+  data: Prisma.XOR<Prisma.PartnerUpdateWithoutBranchInput, Prisma.PartnerUncheckedUpdateWithoutBranchInput>
+}
+
+export type PartnerUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.PartnerScalarWhereInput
+  data: Prisma.XOR<Prisma.PartnerUpdateManyMutationInput, Prisma.PartnerUncheckedUpdateManyWithoutBranchInput>
+}
+
+export type PartnerScalarWhereInput = {
+  AND?: Prisma.PartnerScalarWhereInput | Prisma.PartnerScalarWhereInput[]
+  OR?: Prisma.PartnerScalarWhereInput[]
+  NOT?: Prisma.PartnerScalarWhereInput | Prisma.PartnerScalarWhereInput[]
+  id?: Prisma.StringFilter<"Partner"> | string
+  userId?: Prisma.StringFilter<"Partner"> | string
+  partnerId?: Prisma.StringFilter<"Partner"> | string
+  companyName?: Prisma.StringFilter<"Partner"> | string
+  contactPerson?: Prisma.StringFilter<"Partner"> | string
+  alternateNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
+  panNumber?: Prisma.StringFilter<"Partner"> | string
+  gstNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
+  commissionType?: Prisma.EnumCommissionTypeFilter<"Partner"> | $Enums.CommissionType
+  commissionValue?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  branchId?: Prisma.StringFilter<"Partner"> | string
+  isActive?: Prisma.BoolFilter<"Partner"> | boolean
+  establishedYear?: Prisma.IntNullableFilter<"Partner"> | number | null
+  partnerType?: Prisma.EnumPartnerTypeFilter<"Partner"> | $Enums.PartnerType
+  businessNature?: Prisma.StringNullableFilter<"Partner"> | string | null
+  fullAddress?: Prisma.StringNullableFilter<"Partner"> | string | null
+  city?: Prisma.StringNullableFilter<"Partner"> | string | null
+  state?: Prisma.StringNullableFilter<"Partner"> | string | null
+  pinCode?: Prisma.StringNullableFilter<"Partner"> | string | null
+  designation?: Prisma.StringNullableFilter<"Partner"> | string | null
+  businessCategory?: Prisma.StringNullableFilter<"Partner"> | string | null
+  specialization?: Prisma.StringNullableFilter<"Partner"> | string | null
+  totalEmployees?: Prisma.IntNullableFilter<"Partner"> | number | null
+  annualTurnover?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  businessRegistrationNumber?: Prisma.StringNullableFilter<"Partner"> | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFilter<"Partner"> | $Enums.PaymentCycle
+  minimumPayout?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  taxDeduction?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  targetArea?: Prisma.StringNullableFilter<"Partner"> | string | null
+  totalReferrals?: Prisma.IntNullableFilter<"Partner"> | number | null
+  activeReferrals?: Prisma.IntNullableFilter<"Partner"> | number | null
+  commissionEarned?: Prisma.FloatNullableFilter<"Partner"> | number | null
+  createdAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Partner"> | Date | string
+}
+
+export type PartnerCreateWithoutLeadsInput = {
+  id?: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutPartnersInput
+  commission?: Prisma.PartnerCommissionCreateNestedManyWithoutPartnerInput
+  user: Prisma.UserCreateNestedOneWithoutPartnerInput
+}
+
+export type PartnerUncheckedCreateWithoutLeadsInput = {
+  id?: string
+  userId: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  branchId: string
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  commission?: Prisma.PartnerCommissionUncheckedCreateNestedManyWithoutPartnerInput
+}
+
+export type PartnerCreateOrConnectWithoutLeadsInput = {
+  where: Prisma.PartnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutLeadsInput, Prisma.PartnerUncheckedCreateWithoutLeadsInput>
+}
+
+export type PartnerUpsertWithoutLeadsInput = {
+  update: Prisma.XOR<Prisma.PartnerUpdateWithoutLeadsInput, Prisma.PartnerUncheckedUpdateWithoutLeadsInput>
+  create: Prisma.XOR<Prisma.PartnerCreateWithoutLeadsInput, Prisma.PartnerUncheckedCreateWithoutLeadsInput>
+  where?: Prisma.PartnerWhereInput
+}
+
+export type PartnerUpdateToOneWithWhereWithoutLeadsInput = {
+  where?: Prisma.PartnerWhereInput
+  data: Prisma.XOR<Prisma.PartnerUpdateWithoutLeadsInput, Prisma.PartnerUncheckedUpdateWithoutLeadsInput>
+}
+
+export type PartnerUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPartnersNestedInput
+  commission?: Prisma.PartnerCommissionUpdateManyWithoutPartnerNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPartnerNestedInput
+}
+
+export type PartnerUncheckedUpdateWithoutLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  commission?: Prisma.PartnerCommissionUncheckedUpdateManyWithoutPartnerNestedInput
+}
+
+export type PartnerCreateManyBranchInput = {
+  id?: string
+  userId: string
+  partnerId: string
+  companyName: string
+  contactPerson: string
+  alternateNumber?: string | null
+  panNumber: string
+  gstNumber?: string | null
+  commissionType: $Enums.CommissionType
+  commissionValue?: number | null
+  isActive?: boolean
+  establishedYear?: number | null
+  partnerType: $Enums.PartnerType
+  businessNature?: string | null
+  fullAddress?: string | null
+  city?: string | null
+  state?: string | null
+  pinCode?: string | null
+  designation?: string | null
+  businessCategory?: string | null
+  specialization?: string | null
+  totalEmployees?: number | null
+  annualTurnover?: number | null
+  businessRegistrationNumber?: string | null
+  paymentCycle: $Enums.PaymentCycle
+  minimumPayout?: number | null
+  taxDeduction?: number | null
+  targetArea?: string | null
+  totalReferrals?: number | null
+  activeReferrals?: number | null
+  commissionEarned?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PartnerUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadsUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUpdateManyWithoutPartnerNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPartnerNestedInput
+}
+
+export type PartnerUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
+  minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activeReferrals?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  commissionEarned?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadsUncheckedUpdateManyWithoutPartnerNestedInput
+  commission?: Prisma.PartnerCommissionUncheckedUpdateManyWithoutPartnerNestedInput
+}
+
+export type PartnerUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactPerson?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commissionType?: Prisma.EnumCommissionTypeFieldUpdateOperationsInput | $Enums.CommissionType
+  commissionValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerType?: Prisma.EnumPartnerTypeFieldUpdateOperationsInput | $Enums.PartnerType
+  businessNature?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pinCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalEmployees?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualTurnover?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  businessRegistrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentCycle?: Prisma.EnumPaymentCycleFieldUpdateOperationsInput | $Enums.PaymentCycle
   minimumPayout?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   taxDeduction?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1195,6 +2010,44 @@ export type PartnerUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type PartnerCountOutputType
+ */
+
+export type PartnerCountOutputType = {
+  leads: number
+  commission: number
+}
+
+export type PartnerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  leads?: boolean | PartnerCountOutputTypeCountLeadsArgs
+  commission?: boolean | PartnerCountOutputTypeCountCommissionArgs
+}
+
+/**
+ * PartnerCountOutputType without action
+ */
+export type PartnerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PartnerCountOutputType
+   */
+  select?: Prisma.PartnerCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PartnerCountOutputType without action
+ */
+export type PartnerCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadsWhereInput
+}
+
+/**
+ * PartnerCountOutputType without action
+ */
+export type PartnerCountOutputTypeCountCommissionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PartnerCommissionWhereInput
+}
 
 
 export type PartnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1204,7 +2057,12 @@ export type PartnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   companyName?: boolean
   contactPerson?: boolean
   alternateNumber?: boolean
-  website?: boolean
+  panNumber?: boolean
+  gstNumber?: boolean
+  commissionType?: boolean
+  commissionValue?: boolean
+  branchId?: boolean
+  isActive?: boolean
   establishedYear?: boolean
   partnerType?: boolean
   businessNature?: boolean
@@ -1218,8 +2076,6 @@ export type PartnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   totalEmployees?: boolean
   annualTurnover?: boolean
   businessRegistrationNumber?: boolean
-  commissionType?: boolean
-  commissionValue?: boolean
   paymentCycle?: boolean
   minimumPayout?: boolean
   taxDeduction?: boolean
@@ -1229,7 +2085,11 @@ export type PartnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   commissionEarned?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+  leads?: boolean | Prisma.Partner$leadsArgs<ExtArgs>
+  commission?: boolean | Prisma.Partner$commissionArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.PartnerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["partner"]>
 
 
@@ -1241,7 +2101,12 @@ export type PartnerSelectScalar = {
   companyName?: boolean
   contactPerson?: boolean
   alternateNumber?: boolean
-  website?: boolean
+  panNumber?: boolean
+  gstNumber?: boolean
+  commissionType?: boolean
+  commissionValue?: boolean
+  branchId?: boolean
+  isActive?: boolean
   establishedYear?: boolean
   partnerType?: boolean
   businessNature?: boolean
@@ -1255,8 +2120,6 @@ export type PartnerSelectScalar = {
   totalEmployees?: boolean
   annualTurnover?: boolean
   businessRegistrationNumber?: boolean
-  commissionType?: boolean
-  commissionValue?: boolean
   paymentCycle?: boolean
   minimumPayout?: boolean
   taxDeduction?: boolean
@@ -1268,14 +2131,21 @@ export type PartnerSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PartnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "partnerId" | "companyName" | "contactPerson" | "alternateNumber" | "website" | "establishedYear" | "partnerType" | "businessNature" | "fullAddress" | "city" | "state" | "pinCode" | "designation" | "businessCategory" | "specialization" | "totalEmployees" | "annualTurnover" | "businessRegistrationNumber" | "commissionType" | "commissionValue" | "paymentCycle" | "minimumPayout" | "taxDeduction" | "targetArea" | "totalReferrals" | "activeReferrals" | "commissionEarned" | "createdAt" | "updatedAt", ExtArgs["result"]["partner"]>
+export type PartnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "partnerId" | "companyName" | "contactPerson" | "alternateNumber" | "panNumber" | "gstNumber" | "commissionType" | "commissionValue" | "branchId" | "isActive" | "establishedYear" | "partnerType" | "businessNature" | "fullAddress" | "city" | "state" | "pinCode" | "designation" | "businessCategory" | "specialization" | "totalEmployees" | "annualTurnover" | "businessRegistrationNumber" | "paymentCycle" | "minimumPayout" | "taxDeduction" | "targetArea" | "totalReferrals" | "activeReferrals" | "commissionEarned" | "createdAt" | "updatedAt", ExtArgs["result"]["partner"]>
 export type PartnerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+  leads?: boolean | Prisma.Partner$leadsArgs<ExtArgs>
+  commission?: boolean | Prisma.Partner$commissionArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.PartnerCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $PartnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Partner"
   objects: {
+    branch: Prisma.$BranchPayload<ExtArgs>
+    leads: Prisma.$LeadsPayload<ExtArgs>[]
+    commission: Prisma.$PartnerCommissionPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1285,7 +2155,12 @@ export type $PartnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     companyName: string
     contactPerson: string
     alternateNumber: string | null
-    website: string | null
+    panNumber: string
+    gstNumber: string | null
+    commissionType: $Enums.CommissionType
+    commissionValue: number | null
+    branchId: string
+    isActive: boolean
     establishedYear: number | null
     partnerType: $Enums.PartnerType
     businessNature: string | null
@@ -1299,8 +2174,6 @@ export type $PartnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     totalEmployees: number | null
     annualTurnover: number | null
     businessRegistrationNumber: string | null
-    commissionType: $Enums.CommissionType
-    commissionValue: number | null
     paymentCycle: $Enums.PaymentCycle
     minimumPayout: number | null
     taxDeduction: number | null
@@ -1650,6 +2523,9 @@ readonly fields: PartnerFieldRefs;
  */
 export interface Prisma__PartnerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  leads<T extends Prisma.Partner$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Partner$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  commission<T extends Prisma.Partner$commissionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Partner$commissionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartnerCommissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1686,7 +2562,12 @@ export interface PartnerFieldRefs {
   readonly companyName: Prisma.FieldRef<"Partner", 'String'>
   readonly contactPerson: Prisma.FieldRef<"Partner", 'String'>
   readonly alternateNumber: Prisma.FieldRef<"Partner", 'String'>
-  readonly website: Prisma.FieldRef<"Partner", 'String'>
+  readonly panNumber: Prisma.FieldRef<"Partner", 'String'>
+  readonly gstNumber: Prisma.FieldRef<"Partner", 'String'>
+  readonly commissionType: Prisma.FieldRef<"Partner", 'CommissionType'>
+  readonly commissionValue: Prisma.FieldRef<"Partner", 'Float'>
+  readonly branchId: Prisma.FieldRef<"Partner", 'String'>
+  readonly isActive: Prisma.FieldRef<"Partner", 'Boolean'>
   readonly establishedYear: Prisma.FieldRef<"Partner", 'Int'>
   readonly partnerType: Prisma.FieldRef<"Partner", 'PartnerType'>
   readonly businessNature: Prisma.FieldRef<"Partner", 'String'>
@@ -1700,8 +2581,6 @@ export interface PartnerFieldRefs {
   readonly totalEmployees: Prisma.FieldRef<"Partner", 'Int'>
   readonly annualTurnover: Prisma.FieldRef<"Partner", 'Float'>
   readonly businessRegistrationNumber: Prisma.FieldRef<"Partner", 'String'>
-  readonly commissionType: Prisma.FieldRef<"Partner", 'CommissionType'>
-  readonly commissionValue: Prisma.FieldRef<"Partner", 'Float'>
   readonly paymentCycle: Prisma.FieldRef<"Partner", 'PaymentCycle'>
   readonly minimumPayout: Prisma.FieldRef<"Partner", 'Float'>
   readonly taxDeduction: Prisma.FieldRef<"Partner", 'Float'>
@@ -2051,6 +2930,54 @@ export type PartnerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Partners to delete.
    */
   limit?: number
+}
+
+/**
+ * Partner.leads
+ */
+export type Partner$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Leads
+   */
+  select?: Prisma.LeadsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Leads
+   */
+  omit?: Prisma.LeadsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadsInclude<ExtArgs> | null
+  where?: Prisma.LeadsWhereInput
+  orderBy?: Prisma.LeadsOrderByWithRelationInput | Prisma.LeadsOrderByWithRelationInput[]
+  cursor?: Prisma.LeadsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadsScalarFieldEnum | Prisma.LeadsScalarFieldEnum[]
+}
+
+/**
+ * Partner.commission
+ */
+export type Partner$commissionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PartnerCommission
+   */
+  select?: Prisma.PartnerCommissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PartnerCommission
+   */
+  omit?: Prisma.PartnerCommissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PartnerCommissionInclude<ExtArgs> | null
+  where?: Prisma.PartnerCommissionWhereInput
+  orderBy?: Prisma.PartnerCommissionOrderByWithRelationInput | Prisma.PartnerCommissionOrderByWithRelationInput[]
+  cursor?: Prisma.PartnerCommissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PartnerCommissionScalarFieldEnum | Prisma.PartnerCommissionScalarFieldEnum[]
 }
 
 /**
