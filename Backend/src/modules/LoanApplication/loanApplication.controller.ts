@@ -15,7 +15,6 @@ import {
 import { prisma } from "../../db/prismaService.js";
 
 import { cleanupFiles } from "../../common/utils/cleanup.js";
-import { id } from "zod/locales";
 
 export const createLoanApplicationController = async (
   req: Request,

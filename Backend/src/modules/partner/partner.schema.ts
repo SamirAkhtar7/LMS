@@ -7,7 +7,7 @@ export const partnerTypeEnum = z.enum([
   "INSTITUTION",
   "CORPORATE",
   "AGENCY",
-]); 
+]);
 
 export const commissionTypeEnum = z.enum(["FIXED", "PERCENTAGE"]);
 
@@ -29,8 +29,7 @@ export const createPartnerSchema = z
     password: z.string().min(8, "Password must be at least 8 characters"),
     role: z.literal("PARTNER").optional(),
     userName: z.string().trim(),
-    branchId: z.string().trim().min(1, "branchId is required").optional(),
-
+    branchId: z.string().trim().min(1, "branchId cannot be empty").optional(),
     // Contact
     contactNumber: z.string().trim().min(1, "contactNumber is required"),
     alternateNumber: z.string().trim().optional(),
@@ -97,8 +96,6 @@ export const updatePartnerSchema = createPartnerSchema
 export const partnerIdParamSchema = z.object({
   id: z.string().min(1, "id param is required"),
 });
-
-
 
 export const createLeadSchema = z.object({
   fullName: z.string().trim().min(1, "fullName is required"),

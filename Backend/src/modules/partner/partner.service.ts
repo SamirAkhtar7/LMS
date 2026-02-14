@@ -12,7 +12,6 @@ import * as Enums from "../../../generated/prisma-client/enums.js";
 import { logAction } from "../../audit/audit.helper.js";
 import { generateUniqueLeadNumber } from "../../common/generateId/generateLeadNumber.js";
 import createLoanApplicationSchema from "../LoanApplication/loanApplication.schema.js";
-import { child } from "winston";
 
 export async function createPartnerService(partnerData: CreatePartner) {
   const existing = await prisma.user.findUnique({
@@ -568,18 +567,18 @@ export async function createPartnerLoanApplicationService(
 export const createChildPartnerService = async (
   parentUserId: string,
   data: CreatePartner,
-
-) => { 
+) => {
   return prisma.$transaction(async (tx) => {
     const parentPartner = await tx.partner.findUnique({
       where: { userId: parentUserId },
     });
     if (!parentPartner) {
-      const e: any = new Error("Parent partner not found for the authenticated user");
+      const e: any = new Error(
+        "Parent partner not found for the authenticated user",
+      );
       e.statusCode = 404;
       throw e;
     }
-
 
     const existing = await tx.user.findUnique({
       where: { email: data.email },
@@ -641,7 +640,4 @@ export const createChildPartnerService = async (
       user: safeUser,
     };
   });
-}
-  
-
-  
+};

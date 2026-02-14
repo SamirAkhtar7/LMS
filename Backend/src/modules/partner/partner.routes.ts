@@ -30,14 +30,14 @@ partnerRouter.post(
   authMiddleware,
   validate(createPartnerSchema),
   checkPermissionMiddleware("CREATE_PARTNER"),
-  createPartnerController
+  createPartnerController,
 );
 
 partnerRouter.get(
   "/all",
   authMiddleware,
   checkPermissionMiddleware("VIEW_ALL_PARTNERS"),
-  getAllPartnersController
+  getAllPartnersController,
 );
 
 partnerRouter.get(
@@ -45,7 +45,7 @@ partnerRouter.get(
   authMiddleware,
   validate(partnerIdParamSchema, "params"),
   checkPermissionMiddleware("VIEW_PARTNER_DETAILS"),
-  getPartnerByIdController
+  getPartnerByIdController,
 );
 
 partnerRouter.patch(
@@ -54,17 +54,17 @@ partnerRouter.patch(
   validate(partnerIdParamSchema, "params"),
   validate(updatePartnerSchema),
   checkPermissionMiddleware("UPDATE_PARTNER"),
-  updatePartnerController
+  updatePartnerController,
 );
 
 partnerRouter.post(
   "/create-lead",
   authMiddleware,
-   validate(createLeadSchema),
+  validate(createLeadSchema),
   checkPermissionMiddleware("CREATE_LEAD"),
   createPartnerLeadController,
 );
-  
+
 partnerRouter.post(
   "/create-loan-application",
   authMiddleware,
@@ -77,10 +77,9 @@ partnerRouter.post(
   "/create-child-partner",
   authMiddleware,
   validate(createPartnerSchema),
-  //checkPermissionMiddleware("CREATE_CHILD_PARTNER"),
+  checkPermissionMiddleware("CREATE_CHILD_PARTNER"),
   createChildPartnerController,
-)
-
+);
 //todo: add delete route if needed
 
 export default partnerRouter;
