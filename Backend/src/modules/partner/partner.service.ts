@@ -88,6 +88,22 @@ export async function createPartnerService(partnerData: CreatePartner) {
       },
     });
 
+    await logAction({
+      entityType: "PARTNER_COMMISSION",
+      entityId: partner.id,
+      action: "CREATE_COMMISSION",
+      performedBy: user.id,
+      branchId: partnerData.branchId,
+      oldValue: null,
+      newValue: {
+        partner: {
+          partnerId: partner.partnerId,
+          companyName: partner.companyName,
+          partnerType: partner.partnerType,
+        },
+      },
+    });
+
     const { password: _pw, ...safeUser } = user as any;
     return { user: safeUser, partner };
   } catch (error: any) {
@@ -155,7 +171,10 @@ export const getPartnerByIdService = async (id: string) => {
 };
 
 export const updatePartnerService = async (id: string, updateData: any) => {
-  const partner = await prisma.partner.findUnique({ where: { id } });
+  const partner = await prisma.partner.findUnique({
+    where: { id },
+    include: { user: true },
+  });
 
   if (!partner) {
     const e: any = new Error("Partner not found");
@@ -212,12 +231,32 @@ export const updatePartnerService = async (id: string, updateData: any) => {
     },
   });
 
-  await prisma.partner.update({
+  const updatedPartnerRecord = await prisma.partner.update({
     where: { id },
     data: {
       ...partnerUpdateData,
     },
   });
+
+  await logAction({
+    entityType: "PARTNER_COMMISSION",
+    entityId: id,
+    action: "UPDATE_COMMISSION",
+    performedBy: partner.userId,
+    branchId: partner.branchId,
+    oldValue: {
+      user: partner.user,
+      partner: {
+        partnerType: partner.partnerType,
+        targetArea: partner.targetArea,
+      },
+    },
+    newValue: {
+      user: userUpdateData,
+      partner: partnerUpdateData,
+    },
+  });
+
   const updatedPartner = await getPartnerByIdService(id);
   return updatedPartner;
 };
