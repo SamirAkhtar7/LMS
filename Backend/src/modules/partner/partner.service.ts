@@ -260,7 +260,12 @@ export const createPartnerLeadService = async (
 
     return lead;
   } catch (error: any) {
-    throw new Error(error.message || "Failed to create lead");
+    if (error.statusCode) {
+      throw error;
+    }
+    const e: any = new Error(error.message || "Failed to create lead");
+    e.statusCode = 500;
+    throw e;
   }
 };
 

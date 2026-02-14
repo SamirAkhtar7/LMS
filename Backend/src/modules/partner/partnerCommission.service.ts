@@ -25,15 +25,17 @@ export const calculatePartnerCommission = async (
     const partner = loan.partner;
 
     /* 2️⃣ Calculate amount */
-    let commissionAmount = 0;
+    let commissionAmountCents = 0;
+    const approvedAmountCents = Math.round((loan.approvedAmount ?? 0) * 100);
 
     if (partner.commissionType === "PERCENTAGE") {
-      commissionAmount =
-        ((loan.approvedAmount ?? 0) * (partner.commissionValue ?? 0)) / 100;
+      commissionAmountCents = Math.round(
+        (approvedAmountCents * (partner.commissionValue ?? 0)) / 100,
+      );
     } else {
-      commissionAmount = partner.commissionValue ?? 0;
+      commissionAmountCents = Math.round((partner.commissionValue ?? 0) * 100);
     }
-
+    const commissionAmount = commissionAmountCents / 100;
     /* 3️⃣ Idempotent check */
     const existing = await tx.partnerCommission.findFirst({
       where: { loanId },
@@ -43,6 +45,8 @@ export const calculatePartnerCommission = async (
 
     if (existing) {
       // Update commission if loan edited
+      const delta = commissionAmount - existing.commissionAmount;
+
       commission = await tx.partnerCommission.update({
         where: { id: existing.id },
         data: {
@@ -51,6 +55,15 @@ export const calculatePartnerCommission = async (
           commissionValue: partner.commissionValue ?? 0,
         },
       });
+
+      if (delta !== 0) {
+        await tx.partner.update({
+          where: { id: partner.id },
+          data: {
+            commissionEarned: { increment: delta },
+          },
+        });
+      }
     } else {
       commission = await tx.partnerCommission.create({
         data: {
@@ -71,7 +84,6 @@ export const calculatePartnerCommission = async (
         },
       });
     }
-
     /* 4️⃣ Audit log */
     await logAction({
       entityType: "PARTNER_COMMISSION",

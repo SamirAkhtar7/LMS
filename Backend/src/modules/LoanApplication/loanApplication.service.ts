@@ -17,6 +17,7 @@ import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 import { logAction } from "../../audit/audit.helper.js";
 import { calculatePartnerCommission } from "../partner/partnerCommission.service.js";
+import logger from "../../common/logger.js";
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
@@ -870,7 +871,12 @@ export const approveLoanService = async (
     },
     remarks: `Loan approved with amount ${data.approvedAmount} for ${data.tenureMonths} months`,
   });
-  await calculatePartnerCommission(loanId);
+  try {
+    await calculatePartnerCommission(loanId);
+  } catch (error) {
+    logger.error(`Failed to calculate partner commission for loan ${loanId} after approval:`, error);
+    
+  }
 
   return loandata;
 };

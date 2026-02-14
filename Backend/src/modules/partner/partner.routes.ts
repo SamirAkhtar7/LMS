@@ -12,9 +12,11 @@ import {
   createPartnerSchema,
   updatePartnerSchema,
   partnerIdParamSchema,
+  createLeadSchema,
 } from "./partner.schema.js";
 import { authMiddleware } from "../../common/middlewares/auth.middleware.js";
 import { checkPermissionMiddleware } from "../../common/middlewares/permission.middleware.js";
+import { createLoanApplicationSchema } from "../LoanApplication/loanApplication.schema.js";
 
 const partnerRouter = Router();
 
@@ -57,7 +59,7 @@ partnerRouter.patch(
 partnerRouter.post(
   "/create-lead",
   authMiddleware,
-  
+   validate(createLeadSchema),
   checkPermissionMiddleware("CREATE_LEAD"),
   createPartnerLeadController,
 );
@@ -65,9 +67,10 @@ partnerRouter.post(
 partnerRouter.post(
   "/create-loan-application",
   authMiddleware,
-  //checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
+  validate(createLoanApplicationSchema),
+  checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
   createPartnerLoanApplicationController,
-)
+);
 
 //todo: add delete route if needed
 
