@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
   createPartnerController,
+  createPartnerLeadController,
   getAllPartnersController,
   getPartnerByIdController,
   updatePartnerController,
+  createPartnerLoanApplicationController,
 } from "./partner.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {
@@ -27,12 +29,14 @@ partnerRouter.post(
   checkPermissionMiddleware("CREATE_PARTNER"),
   createPartnerController
 );
+
 partnerRouter.get(
   "/all",
   authMiddleware,
   checkPermissionMiddleware("VIEW_ALL_PARTNERS"),
   getAllPartnersController
 );
+
 partnerRouter.get(
   "/:id",
   authMiddleware,
@@ -40,6 +44,7 @@ partnerRouter.get(
   checkPermissionMiddleware("VIEW_PARTNER_DETAILS"),
   getPartnerByIdController
 );
+
 partnerRouter.patch(
   "/:id",
   authMiddleware,
@@ -48,6 +53,21 @@ partnerRouter.patch(
   checkPermissionMiddleware("UPDATE_PARTNER"),
   updatePartnerController
 );
+
+partnerRouter.post(
+  "/create-lead",
+  authMiddleware,
+  
+  checkPermissionMiddleware("CREATE_LEAD"),
+  createPartnerLeadController,
+);
+  
+partnerRouter.post(
+  "/create-loan-application",
+  authMiddleware,
+  //checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
+  createPartnerLoanApplicationController,
+)
 
 //todo: add delete route if needed
 

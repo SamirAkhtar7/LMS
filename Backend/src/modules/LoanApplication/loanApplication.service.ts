@@ -16,6 +16,7 @@ import fs from "fs";
 import { getAccessibleBranchIds } from "../../common/utils/branchAccess.js";
 import { buildBranchFilter } from "../../common/utils/branchFilter.js";
 import { logAction } from "../../audit/audit.helper.js";
+import { calculatePartnerCommission } from "../partner/partnerCommission.service.js";
 
 export async function createLoanApplicationService(
   data: CreateLoanApplication,
@@ -869,6 +870,7 @@ export const approveLoanService = async (
     },
     remarks: `Loan approved with amount ${data.approvedAmount} for ${data.tenureMonths} months`,
   });
+  await calculatePartnerCommission(loanId);
 
   return loandata;
 };

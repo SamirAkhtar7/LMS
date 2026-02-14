@@ -20,6 +20,7 @@ export interface CreatePartner {
   password: string;
   role?: "PARTNER";
   userName: string;
+  branchId: string;
 
   // contact
   address?: string;
@@ -31,7 +32,8 @@ export interface CreatePartner {
   // partner-specific
   companyName?: string;
   contactPerson?: string;
-  website?: string;
+  panNumber: string;
+  gstNumber?: string;
   establishedYear?: number;
   partnerType: PartnerType;
   businessNature?: string;
@@ -74,7 +76,9 @@ export interface PartnerModel {
   companyName?: string | null;
   contactPerson?: string | null;
   alternateNumber?: string | null;
-  website?: string | null;
+  panNumber?: string | null;
+  gstNumber?: string | null;
+  branchId?: string | null;
   establishedYear?: number | null;
   partnerType?: PartnerType | null;
   businessNature?: string | null;

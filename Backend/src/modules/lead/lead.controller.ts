@@ -34,32 +34,6 @@ export const createLeadController = async (req: Request, res: Response) => {
   }
 };
 
-
-export const convertLeadToLoanController = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-
-       if (!id || typeof id !== 'string' || id.trim() === '') {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid lead ID provided",
-    });
-  }
-    const loan = await convertLeadToLoanApplicationService(id);
-
-    res.status(200).json({
-      success: true,
-      message: "Lead converted to loan application successfully",
-      data: loan, // return converted loan application data
-    });
-  } catch (error: any) {
-    res.status(error.statusCode || 500).json({
-      success: false,
-      message: error.message || "Conversion failed",
-    });
-  }
-};
-
 export const getAllLeadsController = async (req: Request, res: Response) => {
   try {
     const leads = await getAllLeadsService({
@@ -100,24 +74,24 @@ export const getLeadByIdController = async (req: Request, res: Response) => {
 };
 export const updateLeadStatusController = async (
   req: Request,
-    res: Response
+  res: Response,
 ) => {
   try {
-      const { id } = req.params;
-      const { status } = req.body;
-      const updatedLead = await updateLeadStatusService(id, status);
-      res.status(200).json({
-          success: true,
-          message: "Lead status updated successfully",
-          data: updatedLead,
-      });
+    const { id } = req.params;
+    const { status } = req.body;
+    const updatedLead = await updateLeadStatusService(id, status);
+    res.status(200).json({
+      success: true,
+      message: "Lead status updated successfully",
+      data: updatedLead,
+    });
   } catch (error: any) {
-      res.status(400).json({
-          success: false,
-          message: "Failed to update lead status",
-          error: error.message || "INTERNAL_SERVER_ERROR",
-      });
-    }
+    res.status(400).json({
+      success: false,
+      message: "Failed to update lead status",
+      error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
 };
 export const assignLeadController = async (req: Request, res: Response) => {
   try {
@@ -150,6 +124,34 @@ export const assignLeadController = async (req: Request, res: Response) => {
       success: false,
       message: "Lead assignment failed",
       error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
+};
+
+export const convertLeadToLoanController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || typeof id !== "string" || id.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid lead ID provided",
+      });
+    }
+    const loan = await convertLeadToLoanApplicationService(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Lead converted to loan application successfully",
+      data: loan, // return converted loan application data
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Conversion failed",
     });
   }
 };

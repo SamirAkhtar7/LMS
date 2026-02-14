@@ -37,7 +37,7 @@ loanApplicationRouter.post(
 loanApplicationRouter.get(
   "/",
   authMiddleware,
- // checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
+  checkPermissionMiddleware("VIEW_LOAN_APPLICATIONS"),
   getAllLoanApplicationsController,
 );
 

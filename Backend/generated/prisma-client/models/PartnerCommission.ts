@@ -313,11 +313,11 @@ export type PartnerCommissionOrderByWithRelationInput = {
 
 export type PartnerCommissionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  loanId?: string
   AND?: Prisma.PartnerCommissionWhereInput | Prisma.PartnerCommissionWhereInput[]
   OR?: Prisma.PartnerCommissionWhereInput[]
   NOT?: Prisma.PartnerCommissionWhereInput | Prisma.PartnerCommissionWhereInput[]
   partnerId?: Prisma.StringFilter<"PartnerCommission"> | string
-  loanId?: Prisma.StringFilter<"PartnerCommission"> | string
   approvedAmount?: Prisma.FloatFilter<"PartnerCommission"> | number
   commissionType?: Prisma.EnumCommissionTypeFilter<"PartnerCommission"> | $Enums.CommissionType
   commissionValue?: Prisma.FloatFilter<"PartnerCommission"> | number
@@ -330,7 +330,7 @@ export type PartnerCommissionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"PartnerCommission"> | Date | string
   partner?: Prisma.XOR<Prisma.PartnerScalarRelationFilter, Prisma.PartnerWhereInput>
   loan?: Prisma.XOR<Prisma.LoanApplicationScalarRelationFilter, Prisma.LoanApplicationWhereInput>
-}, "id">
+}, "id" | "loanId">
 
 export type PartnerCommissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

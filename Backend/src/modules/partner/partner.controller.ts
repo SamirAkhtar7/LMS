@@ -4,8 +4,11 @@ import {
   getAllPartnerService,
   getPartnerByIdService,
   updatePartnerService,
+  createPartnerLeadService,
+  createPartnerLoanApplicationService,
 } from "./partner.service.js";
 import logger from "../../common/logger.js";
+import * as Enums from "../../../generated/prisma-client/enums.js";
 
 function sanitizeError(error: any) {
   return {
@@ -109,3 +112,79 @@ export const updatePartnerController = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
+export const createPartnerLeadController = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: User not authenticated",
+      });
+    }
+    const leads = await createPartnerLeadService(req.body, userId);
+    res.status(201).json({
+      success: true,
+      message: "Lead created successfully",
+      data: leads,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to create lead",
+      error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
+};
+
+
+// export const calculatePartnerEarningsCommissionController = async(
+//   req: Request,
+//   res: Response
+// ) => {
+//   try {
+//     const {loanId } = req.params;
+  
+//     const earnings = await calculatePartnerEarningsCommissionService(loanId);
+//     res.status(200).json({
+//       success: true,
+//       message: "Earnings and commission calculated successfully",
+//       data: earnings,
+//     });
+//   } catch (error: any) {
+//     logger.error("calculatePartnerEarningsCommissionController error", sanitizeError(error));
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to calculate earnings and commission",
+//       error: error.message || "INTERNAL_SERVER_ERROR",
+//     });
+//   }
+// };
+
+export const createPartnerLoanApplicationController = async (req: Request, res: Response) => {
+  try {
+    if (!req.user)
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    const loanApplication = await createPartnerLoanApplicationService(req.body, 
+      { id: req.user.id, role: req.user.role as Enums.Role }
+    );
+    res.status(201).json({
+      success: true,
+      message: "Loan application created successfully",
+      data: loanApplication,
+    });
+  }
+
+  catch (error: any) {
+    logger.error("createPartnerLoanApplicationController error", sanitizeError(error));
+    res.status(500).json({
+      success: false,
+      message: "Failed to create loan application",
+      error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
+};
+
+

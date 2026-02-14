@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+export const genderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
 
 export const partnerTypeEnum = z.enum([
   "INDIVIDUAL",
@@ -27,8 +27,9 @@ export const createPartnerSchema = z
     fullName: z.string().trim().min(1, "fullName is required"),
     email: z.string().toLowerCase().email("Valid email is required"),
     password: z.string().min(8, "Password must be at least 8 characters"),
-    role: z.literal("PARTNER"),
+    role: z.literal("PARTNER").optional(),
     userName: z.string().trim(),
+    branchId: z.string().trim().min(1, "branchId is required"),
 
     // Contact
     contactNumber: z.string().trim().min(1, "contactNumber is required"),
@@ -38,10 +39,11 @@ export const createPartnerSchema = z
     isActive: z.coerce.boolean().optional(),
 
     // Partner-specific
-    partnerId: z.string().trim(),
+    partnerId: z.string().trim().optional(), // allow client to provide custom partnerId or let system generate
     companyName: z.string().trim().optional(),
     contactPerson: z.string().trim().optional(),
-    website: z.string().trim().url().optional(),
+    panNumber: z.string().trim().min(1, "panNumber is required"),
+    gstNumber: z.string().trim().optional(),
     establishedYear: z.coerce.number().int().min(1800).optional(),
     partnerType: partnerTypeEnum.optional(),
     businessNature: z.string().trim().optional(),
@@ -94,4 +96,20 @@ export const updatePartnerSchema = createPartnerSchema
 
 export const partnerIdParamSchema = z.object({
   id: z.string().min(1, "id param is required"),
+});
+
+
+
+export const createLeadSchema = z.object({
+  fullName: z.string().trim().min(1, "fullName is required"),
+  contactNumber: z.string().trim().min(1, "contactNumber is required"),
+  email: z.string().email("Valid email is required"),
+  dob: z.coerce.date(),
+  gender: genderEnum,
+  loanAmount: z.coerce.number().nonnegative(),
+  loanTypeId: z.string().trim().min(1, "loanTypeId is required"),
+  city: z.string().trim().nullable(),
+  state: z.string().trim().nullable(),
+  pinCode: z.string().trim().nullable(),
+  address: z.string().trim().nullable(),
 });
