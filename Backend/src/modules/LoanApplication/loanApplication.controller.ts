@@ -15,6 +15,7 @@ import {
 import { prisma } from "../../db/prismaService.js";
 
 import { cleanupFiles } from "../../common/utils/cleanup.js";
+import { id } from "zod/locales";
 
 export const createLoanApplicationController = async (
   req: Request,
@@ -272,7 +273,7 @@ export const rejectDocumentController = async (req: Request, res: Response) => {
   }
 };
 
-export const reviewLoanController = async (req: any, res: Response) => {
+export const reviewLoanController = async (req: Request, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -294,7 +295,7 @@ export const reviewLoanController = async (req: any, res: Response) => {
   }
 };
 
-export const approveLoanController = async (req: any, res: Response) => {
+export const approveLoanController = async (req: Request, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -318,8 +319,11 @@ export const approveLoanController = async (req: any, res: Response) => {
   }
 };
 
-export const rejectLoanController = async (req: any, res: Response) => {
+export const rejectLoanController = async (req: Request, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
     const { id } = req.params;
     const { reason } = req.body;
     const rejectedBy = req.user.id;

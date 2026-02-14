@@ -12,7 +12,6 @@ import {
   verifyDocumentController,
   rejectDocumentController,
   reuploadLoanDocumentController,
-
 } from "./loanApplication.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {

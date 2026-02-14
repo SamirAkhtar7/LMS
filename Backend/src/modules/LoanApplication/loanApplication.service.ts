@@ -874,8 +874,10 @@ export const approveLoanService = async (
   try {
     await calculatePartnerCommission(loanId);
   } catch (error) {
-    logger.error(`Failed to calculate partner commission for loan ${loanId} after approval:`, error);
-    
+    logger.error(
+      `Failed to calculate partner commission for loan ${loanId} after approval:`,
+      error,
+    );
   }
 
   return loandata;

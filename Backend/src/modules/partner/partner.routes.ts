@@ -6,6 +6,7 @@ import {
   getPartnerByIdController,
   updatePartnerController,
   createPartnerLoanApplicationController,
+  createChildPartnerController,
 } from "./partner.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {
@@ -71,6 +72,14 @@ partnerRouter.post(
   checkPermissionMiddleware("CREATE_LOAN_APPLICATION"),
   createPartnerLoanApplicationController,
 );
+
+partnerRouter.post(
+  "/create-child-partner",
+  authMiddleware,
+  validate(createPartnerSchema),
+  //checkPermissionMiddleware("CREATE_CHILD_PARTNER"),
+  createChildPartnerController,
+)
 
 //todo: add delete route if needed
 

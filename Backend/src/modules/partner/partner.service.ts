@@ -12,6 +12,7 @@ import * as Enums from "../../../generated/prisma-client/enums.js";
 import { logAction } from "../../audit/audit.helper.js";
 import { generateUniqueLeadNumber } from "../../common/generateId/generateLeadNumber.js";
 import createLoanApplicationSchema from "../LoanApplication/loanApplication.schema.js";
+import { child } from "winston";
 
 export async function createPartnerService(partnerData: CreatePartner) {
   const existing = await prisma.user.findUnique({
@@ -563,3 +564,84 @@ export async function createPartnerLoanApplicationService(
     throw error;
   }
 }
+
+export const createChildPartnerService = async (
+  parentUserId: string,
+  data: CreatePartner,
+
+) => { 
+  return prisma.$transaction(async (tx) => {
+    const parentPartner = await tx.partner.findUnique({
+      where: { userId: parentUserId },
+    });
+    if (!parentPartner) {
+      const e: any = new Error("Parent partner not found for the authenticated user");
+      e.statusCode = 404;
+      throw e;
+    }
+
+
+    const existing = await tx.user.findUnique({
+      where: { email: data.email },
+    });
+    if (existing) {
+      const e: any = new Error("User with this email already exists");
+      e.statusCode = 409;
+      throw e;
+    }
+    const hashedPassword = await hashPassword(data.password);
+    const user = await tx.user.create({
+      data: {
+        fullName: data.fullName,
+        userName: data.userName,
+        email: data.email,
+        password: hashedPassword,
+        role: "PARTNER",
+        contactNumber: data.contactNumber ?? "",
+        branchId: parentPartner.branchId,
+        isActive: data.isActive ?? true,
+      },
+    });
+    const partner = await tx.partner.create({
+      data: {
+        userId: user.id,
+        partnerId: await generateUniquePartnerNumber(),
+        companyName: data.companyName ?? "",
+        contactPerson: data.contactPerson ?? data.fullName ?? "",
+        alternateNumber: data.alternateNumber ?? "",
+        panNumber: data.panNumber,
+        gstNumber: data.gstNumber ?? null,
+        establishedYear: data.establishedYear ?? null,
+        partnerType: (data.partnerType ?? "INDIVIDUAL") as any,
+        businessNature: data.businessNature ?? null,
+        commissionType: (data.commissionType ?? "FIXED") as any,
+        commissionValue: data.commissionValue ?? null,
+        paymentCycle: (data.paymentCycle ?? "MONTHLY") as any,
+        minimumPayout: data.minimumPayout,
+        taxDeduction: data.taxDeduction,
+        targetArea: data.targetArea ?? "",
+        parentPartnerId: parentPartner.id,
+        branchId: parentPartner.branchId,
+        city: data.city,
+        state: data.state,
+        pinCode: data.pinCode,
+        designation: data.designation,
+        businessCategory: data.businessCategory ?? "",
+        specialization: data.specialization ?? "",
+        totalEmployees: data.totalEmployees,
+        annualTurnover: data.annualTurnover,
+        businessRegistrationNumber: data.businessRegistrationNumber ?? "",
+      },
+    });
+
+    const { password: _pw, ...safeUser } = user as any;
+    return {
+      parentPartnerId: parentPartner.id,
+      childPartner: partner,
+      user: safeUser,
+    };
+  });
+}
+  
+
+  

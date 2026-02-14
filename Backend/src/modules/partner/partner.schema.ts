@@ -29,7 +29,7 @@ export const createPartnerSchema = z
     password: z.string().min(8, "Password must be at least 8 characters"),
     role: z.literal("PARTNER").optional(),
     userName: z.string().trim(),
-    branchId: z.string().trim().min(1, "branchId is required"),
+    branchId: z.string().trim().min(1, "branchId is required").optional(),
 
     // Contact
     contactNumber: z.string().trim().min(1, "contactNumber is required"),

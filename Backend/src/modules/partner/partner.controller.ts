@@ -6,6 +6,7 @@ import {
   updatePartnerService,
   createPartnerLeadService,
   createPartnerLoanApplicationService,
+  createChildPartnerService,
 } from "./partner.service.js";
 import logger from "../../common/logger.js";
 import * as Enums from "../../../generated/prisma-client/enums.js";
@@ -187,4 +188,24 @@ export const createPartnerLoanApplicationController = async (req: Request, res: 
   }
 };
 
-
+export const createChildPartnerController = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const childPartner = await createChildPartnerService(req.user.id, req.body);
+    res.status(201).json({
+      success: true,
+      message: "Child partner created successfully",
+      data: childPartner,
+    });
+  }
+  catch (error: any) {
+    logger.error("createChildPartnerController error", sanitizeError(error));
+    res.status(500).json({
+      success: false,
+      message: "Failed to create child partner",
+      error: error.message || "INTERNAL_SERVER_ERROR",
+    });
+  }
+};
