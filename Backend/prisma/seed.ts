@@ -28,6 +28,7 @@ async function main(): Promise<void> {
       code: "HQ-SUPER",
       type: "MAIN",
       isActive: true,
+      parentBranchId: null,
     },
   });
 
