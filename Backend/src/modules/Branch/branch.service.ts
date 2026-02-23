@@ -8,25 +8,33 @@ export const createBranchService = async (
   data: CreateBranchInput,
   userId: string,
 ) => {
-
-  const superBranch = await prisma.branch.findFirst({
-    where: {type: "SUPER"}
-  });
-  if (!superBranch) {
-    throw new Error("No super branch found. Please create a super branch first.");
-  }
-
-  if (data.type === "MAIN") {
-   data.parentBranchId = superBranch.id;
-  }
-
-  if (data.type === "SUB" && !data.parentBranchId) {
-    throw new Error("Sub branches must have a parentBranchId");
-  }
-
   if (data.type === "SUPER") {
-    throw new Error("cannot create another Super branch");
-}
+    const existingSuperBranch = await prisma.branch.findFirst({
+      where: { type: "SUPER" },
+    });
+
+    if (existingSuperBranch) {
+      throw new Error("cannot create another Super branch");
+    }
+  } else {
+    const superBranch = await prisma.branch.findFirst({
+      where: { type: "SUPER" },
+    });
+
+    if (!superBranch) {
+      throw new Error(
+        "No super branch found. Please create a super branch first.",
+      );
+    }
+
+    if (data.type === "MAIN") {
+      data.parentBranchId = superBranch.id;
+    }
+
+    if (data.type === "SUB" && !data.parentBranchId) {
+      throw new Error("Sub branches must have a parentBranchId");
+    }
+  }
 
   // Check if branch with same code already exists
   const existingBranch = await prisma.branch.findUnique({
