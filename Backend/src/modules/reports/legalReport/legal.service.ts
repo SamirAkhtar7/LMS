@@ -44,6 +44,7 @@ export const createLegalReportService = async (
         entityId: report.id,
         action: "SUBMITTED",
         performedBy: userId,
+        branchId: loanApplication.branchId,
       },
     });
 
