@@ -413,7 +413,8 @@ export const ModelName = {
   LoanAssignment: 'LoanAssignment',
   AuditLog: 'AuditLog',
   SLAPolicy: 'SLAPolicy',
-  SLABreachLog: 'SLABreachLog'
+  SLABreachLog: 'SLABreachLog',
+  LoanDisbursement: 'LoanDisbursement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "partnerCommission" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "partnerCommission" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog" | "loanDisbursement"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2413,6 +2414,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LoanDisbursement: {
+      payload: Prisma.$LoanDisbursementPayload<ExtArgs>
+      fields: Prisma.LoanDisbursementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoanDisbursementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoanDisbursementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        findFirst: {
+          args: Prisma.LoanDisbursementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoanDisbursementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        findMany: {
+          args: Prisma.LoanDisbursementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>[]
+        }
+        create: {
+          args: Prisma.LoanDisbursementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        createMany: {
+          args: Prisma.LoanDisbursementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoanDisbursementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        update: {
+          args: Prisma.LoanDisbursementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoanDisbursementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoanDisbursementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoanDisbursementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoanDisbursementPayload>
+        }
+        aggregate: {
+          args: Prisma.LoanDisbursementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoanDisbursement>
+        }
+        groupBy: {
+          args: Prisma.LoanDisbursementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanDisbursementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoanDisbursementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoanDisbursementCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3111,6 +3178,22 @@ export const SLABreachLogScalarFieldEnum = {
 export type SLABreachLogScalarFieldEnum = (typeof SLABreachLogScalarFieldEnum)[keyof typeof SLABreachLogScalarFieldEnum]
 
 
+export const LoanDisbursementScalarFieldEnum = {
+  id: 'id',
+  loanId: 'loanId',
+  amount: 'amount',
+  disbursementMode: 'disbursementMode',
+  transactionReference: 'transactionReference',
+  disbursementDate: 'disbursementDate',
+  processedBy: 'processedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanDisbursementScalarFieldEnum = (typeof LoanDisbursementScalarFieldEnum)[keyof typeof LoanDisbursementScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3554,6 +3637,17 @@ export const SLABreachLogOrderByRelevanceFieldEnum = {
 export type SLABreachLogOrderByRelevanceFieldEnum = (typeof SLABreachLogOrderByRelevanceFieldEnum)[keyof typeof SLABreachLogOrderByRelevanceFieldEnum]
 
 
+export const LoanDisbursementOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanId: 'loanId',
+  transactionReference: 'transactionReference',
+  processedBy: 'processedBy',
+  remarks: 'remarks'
+} as const
+
+export type LoanDisbursementOrderByRelevanceFieldEnum = (typeof LoanDisbursementOrderByRelevanceFieldEnum)[keyof typeof LoanDisbursementOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -3832,6 +3926,13 @@ export type EnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 export type EnumAssignedRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssignedRole'>
     
 
+
+/**
+ * Reference to a field of type 'DisbursementMode'
+ */
+export type EnumDisbursementModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisbursementMode'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -3957,6 +4058,7 @@ export type GlobalOmitConfig = {
   auditLog?: Prisma.AuditLogOmit
   sLAPolicy?: Prisma.SLAPolicyOmit
   sLABreachLog?: Prisma.SLABreachLogOmit
+  loanDisbursement?: Prisma.LoanDisbursementOmit
 }
 
 /* Types for Logging */

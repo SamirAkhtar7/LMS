@@ -189,3 +189,8 @@ export type SLAPolicy = Prisma.SLAPolicyModel
  * 
  */
 export type SLABreachLog = Prisma.SLABreachLogModel
+/**
+ * Model LoanDisbursement
+ * 
+ */
+export type LoanDisbursement = Prisma.LoanDisbursementModel

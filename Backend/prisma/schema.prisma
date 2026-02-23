@@ -309,6 +309,7 @@ model LoanApplication {
   // Relations
   documents            Document[]
   loanRecoveries       LoanRecovery[]
+  loanDisbursement     LoanDisbursement[]
   technicalReports     TechnicalReport[]
   legalReports         LegalReport[]
   emis                 LoanEmiSchedule[]
@@ -897,7 +898,33 @@ model SLABreachLog {
   @@index([branchId])
 }
 
+model LoanDisbursement {
+  id                   String           @id @default(cuid())
+  loanId               String           @unique
+  amount               Float
+  disbursementMode     DisbursementMode
+  transactionReference String
+  disbursementDate     DateTime         @default(now())
+  processedBy          String
+  remarks              String?
+
+  loanApplication LoanApplication @relation(fields: [loanId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([loanId])
+}
+
 // =================================ENUMS=====================================
+enum DisbursementMode {
+  BANK_TRANSFER
+  NEFT
+  RTGS
+  IMPS
+  CHEQUE
+  CASH
+  UPI
+}
 
 enum ReportStatus {
   PENDING

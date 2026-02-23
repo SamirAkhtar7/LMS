@@ -16,6 +16,15 @@ export const getOrCreateCreditReport = async (
   userId?: string,
   branchId?: string,
 ) => {
+  // Validate customer exists
+  const customer = await prisma.customer.findUnique({
+    where: { id: customerId },
+  });
+
+  if (!customer) {
+    throw new Error(`Customer not found`);
+  }
+
   // Check if credit report already exists
   let creditReport = await prisma.creditReport.findFirst({
     where: {
@@ -155,6 +164,15 @@ export const refreshCreditReportService = async (
     reason: string;
   },
 ) => {
+  // Validate customer exists
+  const customer = await prisma.customer.findUnique({
+    where: { id: customerId },
+  });
+
+  if (!customer) {
+    throw new Error(`Customer with ID ${customerId} not found`);
+  }
+
   // Fetch existing credit report before invalidating
   const existingReport = await prisma.creditReport.findFirst({
     where: {

@@ -34,19 +34,20 @@ export const generateEmiScheduleService = async (
       },
     },
   });
-  if (
-    !loan ||
-    !loan.approvedAmount ||
-    !loan.interestRate ||
-    !loan.tenureMonths ||
-    loan.status !== "approved"
-  ) {
-    if (loan && loan.status == "active") {
-      throw new Error("EMI schedule already generated");
-    }
+
+  if (!loan) {
+    throw new Error("Loan application not found");
+  }
+  if (loan.status === "active") {
+    throw new Error("EMI schedule already generated");
+  }
+  if (loan.status !== "disbursed") {
     throw new Error(
-      "Invalid loan data for EMI schedule can be generated only for approved loans",
+      "EMI schedule can only be generated after loan disbursement",
     );
+  }
+  if (!loan.approvedAmount || !loan.interestRate || !loan.tenureMonths) {
+    throw new Error("Invalid loan data for EMI schedule generation");
   }
 
   const principal = loan.approvedAmount ?? loan.requestedAmount;

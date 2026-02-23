@@ -115,6 +115,7 @@ export async function createEmployeeService(data: CreateEmployee) {
     throw error;
   }
 }
+
 export async function getAllEmployeesService(params: {
   page?: number;
   limit?: number;

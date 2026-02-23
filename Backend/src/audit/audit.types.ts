@@ -40,6 +40,7 @@ export type AuditAction =
   | "SLA_BREACH_AUTO_UNASSIGN"
   | "MANUAL_REFRESH"
   | "UPDATE_COMMISSION"
+  | "LOAN_DISBURSED"
   | "CREATE_COMMISSION";
 
 export type AuditEntityType =
@@ -57,6 +58,8 @@ export type AuditEntityType =
   | "TECHNICAL_REPORT"
   | "BRANCH"
   | "EMI_SCHEDULE"
+  | "LOAN_DISBURSED"
+  | "LOAN_APPLICATION"
   | "PARTNER_COMMISSION";
 
 export interface CreateAuditLogInput {

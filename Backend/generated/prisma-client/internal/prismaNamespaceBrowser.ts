@@ -80,7 +80,8 @@ export const ModelName = {
   LoanAssignment: 'LoanAssignment',
   AuditLog: 'AuditLog',
   SLAPolicy: 'SLAPolicy',
-  SLABreachLog: 'SLABreachLog'
+  SLABreachLog: 'SLABreachLog',
+  LoanDisbursement: 'LoanDisbursement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -758,6 +759,22 @@ export const SLABreachLogScalarFieldEnum = {
 export type SLABreachLogScalarFieldEnum = (typeof SLABreachLogScalarFieldEnum)[keyof typeof SLABreachLogScalarFieldEnum]
 
 
+export const LoanDisbursementScalarFieldEnum = {
+  id: 'id',
+  loanId: 'loanId',
+  amount: 'amount',
+  disbursementMode: 'disbursementMode',
+  transactionReference: 'transactionReference',
+  disbursementDate: 'disbursementDate',
+  processedBy: 'processedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LoanDisbursementScalarFieldEnum = (typeof LoanDisbursementScalarFieldEnum)[keyof typeof LoanDisbursementScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1199,4 +1216,15 @@ export const SLABreachLogOrderByRelevanceFieldEnum = {
 } as const
 
 export type SLABreachLogOrderByRelevanceFieldEnum = (typeof SLABreachLogOrderByRelevanceFieldEnum)[keyof typeof SLABreachLogOrderByRelevanceFieldEnum]
+
+
+export const LoanDisbursementOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanId: 'loanId',
+  transactionReference: 'transactionReference',
+  processedBy: 'processedBy',
+  remarks: 'remarks'
+} as const
+
+export type LoanDisbursementOrderByRelevanceFieldEnum = (typeof LoanDisbursementOrderByRelevanceFieldEnum)[keyof typeof LoanDisbursementOrderByRelevanceFieldEnum]
 

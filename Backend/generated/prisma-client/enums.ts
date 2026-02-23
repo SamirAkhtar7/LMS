@@ -19,6 +19,19 @@ export const KycStatus = {
 export type KycStatus = (typeof KycStatus)[keyof typeof KycStatus]
 
 
+export const DisbursementMode = {
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  NEFT: 'NEFT',
+  RTGS: 'RTGS',
+  IMPS: 'IMPS',
+  CHEQUE: 'CHEQUE',
+  CASH: 'CASH',
+  UPI: 'UPI'
+} as const
+
+export type DisbursementMode = (typeof DisbursementMode)[keyof typeof DisbursementMode]
+
+
 export const ReportStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',

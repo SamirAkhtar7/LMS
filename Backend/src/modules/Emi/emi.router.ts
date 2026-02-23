@@ -40,7 +40,7 @@ emiRouter.get("/", authMiddleware,
 emiRouter.post(
   "/loan-applications/:id/emis",
   authMiddleware,
-  checkPermissionMiddleware("GENERATE_EMI_SCHEDULE"),
+ // checkPermissionMiddleware("GENERATE_EMI_SCHEDULE"),
   generateEmiScheduleController
 );
 

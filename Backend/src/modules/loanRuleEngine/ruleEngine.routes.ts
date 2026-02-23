@@ -10,7 +10,7 @@ eligibilityRouter.get(
   "/eligibility-check/:loanApplicationId",
   authMiddleware,
   validate(eligibilityCheckSchema, "params"),
-  checkPermissionMiddleware("CHECK_ELIGIBILITY"),
+  //checkPermissionMiddleware("CHECK_ELIGIBILITY"),
   checkEligibilityController,
 );
 

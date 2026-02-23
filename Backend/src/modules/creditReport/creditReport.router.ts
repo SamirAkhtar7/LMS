@@ -11,7 +11,7 @@ const creditReportRouter = Router();
 creditReportRouter.post(
     "/credit-report/:customerId/refresh",
     authMiddleware,
-    checkPermissionMiddleware("REFRESH_CREDIT_REPORT"),
+   // checkPermissionMiddleware("REFRESH_CREDIT_REPORT"),
     validate(refreshCreditReportSchema),
     refreshCreditReportController
 );

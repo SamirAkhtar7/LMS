@@ -983,6 +983,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumDisbursementModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisbursementMode | Prisma.EnumDisbursementModeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisbursementMode[]
+  notIn?: $Enums.DisbursementMode[]
+  not?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel> | $Enums.DisbursementMode
+}
+
+export type EnumDisbursementModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisbursementMode | Prisma.EnumDisbursementModeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisbursementMode[]
+  notIn?: $Enums.DisbursementMode[]
+  not?: Prisma.NestedEnumDisbursementModeWithAggregatesFilter<$PrismaModel> | $Enums.DisbursementMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -1891,6 +1908,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue
   gte?: runtime.InputJsonValue
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumDisbursementModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisbursementMode | Prisma.EnumDisbursementModeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisbursementMode[]
+  notIn?: $Enums.DisbursementMode[]
+  not?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel> | $Enums.DisbursementMode
+}
+
+export type NestedEnumDisbursementModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisbursementMode | Prisma.EnumDisbursementModeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisbursementMode[]
+  notIn?: $Enums.DisbursementMode[]
+  not?: Prisma.NestedEnumDisbursementModeWithAggregatesFilter<$PrismaModel> | $Enums.DisbursementMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
 }
 
 
