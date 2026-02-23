@@ -24,6 +24,7 @@ import branchAdminRouter from "./modules/branchAdmin/branchAdmin.router.js";
 import slaRouter from "./modules/sla/sla.router.js";
 import { superAdminRouter } from "./modules/superAdmin/dashboard.routers.js";
 import loanDisbursementRouter from "./modules/loanDisbursement/loanDisburesment.router.js";
+
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -51,9 +52,8 @@ router.use("/co-applicant", coApplicantRouter);
 router.use("/loan-assignment", loanAssignmentRouter);
 router.use("/branches", branchRouter);
 router.use("/branch-admins", branchAdminRouter);
-router.use("/sla", slaRouter )
+router.use("/sla", slaRouter);
 router.use("/super-admin", superAdminRouter);
 router.use("/disbursement", loanDisbursementRouter);
-
 
 export default router;

@@ -170,9 +170,8 @@ export const refreshCreditReportService = async (
   });
 
   if (!customer) {
-    throw new Error(`Customer with ID ${customerId} not found`);
+    throw new Error(`Customer not found`);
   }
-
   // Fetch existing credit report before invalidating
   const existingReport = await prisma.creditReport.findFirst({
     where: {

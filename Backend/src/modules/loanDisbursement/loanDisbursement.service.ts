@@ -74,5 +74,7 @@ export const disburseLoanService = async (
       },
       remarks: `Disbursed via ${input.disbursementMode} `,
     });
+
+    return disbursement;
   });
 };

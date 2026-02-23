@@ -9,9 +9,8 @@ const loanDisbursementRouter = Router();
 loanDisbursementRouter.post(
     "/:id/disburse",
     authMiddleware,
-    // checkPermissionMiddleware("DISBURSE_LOAN"),
+    checkPermissionMiddleware("DISBURSE_LOAN"),
     validate(disburseLoanSchema),
     disburseloanController,
-)
-
+);
 export default loanDisbursementRouter;

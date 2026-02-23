@@ -130,7 +130,7 @@ export const generateEmiScheduleService = async (
       action: "GENERATE_EMI_SCHEDULE",
       performedBy: userId,
       branchId: branchId,
-      oldValue: { status: "approved" },
+      oldValue: { status: "disbursed" },
       newValue: { status: "active" },
       remarks: `EMI schedule generated for loan application ${loanId}`,
     });

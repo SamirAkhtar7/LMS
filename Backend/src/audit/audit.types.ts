@@ -58,8 +58,10 @@ export type AuditEntityType =
   | "TECHNICAL_REPORT"
   | "BRANCH"
   | "EMI_SCHEDULE"
-  | "LOAN_DISBURSED"
+  | "EMI_SCHEDULE"
+  | "LOAN_DISBURSEMENT"
   | "LOAN_APPLICATION"
+  | "PARTNER_COMMISSION"
   | "PARTNER_COMMISSION";
 
 export interface CreateAuditLogInput {
