@@ -11,6 +11,6 @@ export const createNachSchema = z.object({
   endDate: z.coerce.date(),
 });
 
-export const activeteMandateSchema = z.object({
-    mandateId: z.string(),
-})
+export const activateMandateSchema = z.object({
+  mandateId: z.string(),
+});

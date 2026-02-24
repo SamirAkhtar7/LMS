@@ -32,7 +32,7 @@ export const createNachMandateService = async (data: any) => {
       accountNumber: data.accountNumber,
       ifscCode: data.ifscCode,
       maxDebitAmount,
-      StartDate: data.startDate,
+      startDate: data.startDate,
       endDate: data.endDate,
       status: "PENDING",
     },
@@ -40,7 +40,7 @@ export const createNachMandateService = async (data: any) => {
   return mandate;
 };
 
-export const activeteMandateService = async (mandateId: string) => {
+export const activateMandateService = async (mandateId: string) => {
   const mandate = await prisma.nachMandate.findUnique({
     where: {
       id: mandateId,

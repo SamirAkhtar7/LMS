@@ -44,7 +44,7 @@ export type NachMandateMinAggregateOutputType = {
   accountNumber: string | null
   ifscCode: string | null
   maxDebitAmount: number | null
-  StartDate: Date | null
+  startDate: Date | null
   endDate: Date | null
   status: $Enums.NachStatus | null
   failureCount: number | null
@@ -59,7 +59,7 @@ export type NachMandateMaxAggregateOutputType = {
   accountNumber: string | null
   ifscCode: string | null
   maxDebitAmount: number | null
-  StartDate: Date | null
+  startDate: Date | null
   endDate: Date | null
   status: $Enums.NachStatus | null
   failureCount: number | null
@@ -74,7 +74,7 @@ export type NachMandateCountAggregateOutputType = {
   accountNumber: number
   ifscCode: number
   maxDebitAmount: number
-  StartDate: number
+  startDate: number
   endDate: number
   status: number
   failureCount: number
@@ -101,7 +101,7 @@ export type NachMandateMinAggregateInputType = {
   accountNumber?: true
   ifscCode?: true
   maxDebitAmount?: true
-  StartDate?: true
+  startDate?: true
   endDate?: true
   status?: true
   failureCount?: true
@@ -116,7 +116,7 @@ export type NachMandateMaxAggregateInputType = {
   accountNumber?: true
   ifscCode?: true
   maxDebitAmount?: true
-  StartDate?: true
+  startDate?: true
   endDate?: true
   status?: true
   failureCount?: true
@@ -131,7 +131,7 @@ export type NachMandateCountAggregateInputType = {
   accountNumber?: true
   ifscCode?: true
   maxDebitAmount?: true
-  StartDate?: true
+  startDate?: true
   endDate?: true
   status?: true
   failureCount?: true
@@ -233,7 +233,7 @@ export type NachMandateGroupByOutputType = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date
+  startDate: Date
   endDate: Date
   status: $Enums.NachStatus
   failureCount: number
@@ -271,7 +271,7 @@ export type NachMandateWhereInput = {
   accountNumber?: Prisma.StringFilter<"NachMandate"> | string
   ifscCode?: Prisma.StringFilter<"NachMandate"> | string
   maxDebitAmount?: Prisma.FloatFilter<"NachMandate"> | number
-  StartDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
+  startDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   status?: Prisma.EnumNachStatusFilter<"NachMandate"> | $Enums.NachStatus
   failureCount?: Prisma.IntFilter<"NachMandate"> | number
@@ -289,7 +289,7 @@ export type NachMandateOrderByWithRelationInput = {
   accountNumber?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
   maxDebitAmount?: Prisma.SortOrder
-  StartDate?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   failureCount?: Prisma.SortOrder
@@ -311,7 +311,7 @@ export type NachMandateWhereUniqueInput = Prisma.AtLeast<{
   accountNumber?: Prisma.StringFilter<"NachMandate"> | string
   ifscCode?: Prisma.StringFilter<"NachMandate"> | string
   maxDebitAmount?: Prisma.FloatFilter<"NachMandate"> | number
-  StartDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
+  startDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   status?: Prisma.EnumNachStatusFilter<"NachMandate"> | $Enums.NachStatus
   failureCount?: Prisma.IntFilter<"NachMandate"> | number
@@ -329,7 +329,7 @@ export type NachMandateOrderByWithAggregationInput = {
   accountNumber?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
   maxDebitAmount?: Prisma.SortOrder
-  StartDate?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   failureCount?: Prisma.SortOrder
@@ -352,7 +352,7 @@ export type NachMandateScalarWhereWithAggregatesInput = {
   accountNumber?: Prisma.StringWithAggregatesFilter<"NachMandate"> | string
   ifscCode?: Prisma.StringWithAggregatesFilter<"NachMandate"> | string
   maxDebitAmount?: Prisma.FloatWithAggregatesFilter<"NachMandate"> | number
-  StartDate?: Prisma.DateTimeWithAggregatesFilter<"NachMandate"> | Date | string
+  startDate?: Prisma.DateTimeWithAggregatesFilter<"NachMandate"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"NachMandate"> | Date | string
   status?: Prisma.EnumNachStatusWithAggregatesFilter<"NachMandate"> | $Enums.NachStatus
   failureCount?: Prisma.IntWithAggregatesFilter<"NachMandate"> | number
@@ -365,7 +365,7 @@ export type NachMandateCreateInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -383,7 +383,7 @@ export type NachMandateUncheckedCreateInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -397,7 +397,7 @@ export type NachMandateUpdateInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -415,7 +415,7 @@ export type NachMandateUncheckedUpdateInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -431,7 +431,7 @@ export type NachMandateCreateManyInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -444,7 +444,7 @@ export type NachMandateUpdateManyMutationInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -459,7 +459,7 @@ export type NachMandateUncheckedUpdateManyInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -490,7 +490,7 @@ export type NachMandateCountOrderByAggregateInput = {
   accountNumber?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
   maxDebitAmount?: Prisma.SortOrder
-  StartDate?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   failureCount?: Prisma.SortOrder
@@ -510,7 +510,7 @@ export type NachMandateMaxOrderByAggregateInput = {
   accountNumber?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
   maxDebitAmount?: Prisma.SortOrder
-  StartDate?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   failureCount?: Prisma.SortOrder
@@ -525,7 +525,7 @@ export type NachMandateMinOrderByAggregateInput = {
   accountNumber?: Prisma.SortOrder
   ifscCode?: Prisma.SortOrder
   maxDebitAmount?: Prisma.SortOrder
-  StartDate?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   failureCount?: Prisma.SortOrder
@@ -650,7 +650,7 @@ export type NachMandateCreateWithoutLoanApplicationInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -666,7 +666,7 @@ export type NachMandateUncheckedCreateWithoutLoanApplicationInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -711,7 +711,7 @@ export type NachMandateScalarWhereInput = {
   accountNumber?: Prisma.StringFilter<"NachMandate"> | string
   ifscCode?: Prisma.StringFilter<"NachMandate"> | string
   maxDebitAmount?: Prisma.FloatFilter<"NachMandate"> | number
-  StartDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
+  startDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NachMandate"> | Date | string
   status?: Prisma.EnumNachStatusFilter<"NachMandate"> | $Enums.NachStatus
   failureCount?: Prisma.IntFilter<"NachMandate"> | number
@@ -724,7 +724,7 @@ export type NachMandateCreateWithoutCustomerInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -740,7 +740,7 @@ export type NachMandateUncheckedCreateWithoutCustomerInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -780,7 +780,7 @@ export type NachMandateCreateWithoutDebitsInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -797,7 +797,7 @@ export type NachMandateUncheckedCreateWithoutDebitsInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -826,7 +826,7 @@ export type NachMandateUpdateWithoutDebitsInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -843,7 +843,7 @@ export type NachMandateUncheckedUpdateWithoutDebitsInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -857,7 +857,7 @@ export type NachMandateCreateManyLoanApplicationInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -870,7 +870,7 @@ export type NachMandateUpdateWithoutLoanApplicationInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -886,7 +886,7 @@ export type NachMandateUncheckedUpdateWithoutLoanApplicationInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -901,7 +901,7 @@ export type NachMandateUncheckedUpdateManyWithoutLoanApplicationInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -915,7 +915,7 @@ export type NachMandateCreateManyCustomerInput = {
   accountNumber: string
   ifscCode: string
   maxDebitAmount: number
-  StartDate: Date | string
+  startDate: Date | string
   endDate: Date | string
   status?: $Enums.NachStatus
   failureCount?: number
@@ -928,7 +928,7 @@ export type NachMandateUpdateWithoutCustomerInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -944,7 +944,7 @@ export type NachMandateUncheckedUpdateWithoutCustomerInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -959,7 +959,7 @@ export type NachMandateUncheckedUpdateManyWithoutCustomerInput = {
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
   maxDebitAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  StartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNachStatusFieldUpdateOperationsInput | $Enums.NachStatus
   failureCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1005,7 +1005,7 @@ export type NachMandateSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   accountNumber?: boolean
   ifscCode?: boolean
   maxDebitAmount?: boolean
-  StartDate?: boolean
+  startDate?: boolean
   endDate?: boolean
   status?: boolean
   failureCount?: boolean
@@ -1026,14 +1026,14 @@ export type NachMandateSelectScalar = {
   accountNumber?: boolean
   ifscCode?: boolean
   maxDebitAmount?: boolean
-  StartDate?: boolean
+  startDate?: boolean
   endDate?: boolean
   status?: boolean
   failureCount?: boolean
   lastDebitDate?: boolean
 }
 
-export type NachMandateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "customerId" | "bankName" | "accountNumber" | "ifscCode" | "maxDebitAmount" | "StartDate" | "endDate" | "status" | "failureCount" | "lastDebitDate", ExtArgs["result"]["nachMandate"]>
+export type NachMandateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "loanApplicationId" | "customerId" | "bankName" | "accountNumber" | "ifscCode" | "maxDebitAmount" | "startDate" | "endDate" | "status" | "failureCount" | "lastDebitDate", ExtArgs["result"]["nachMandate"]>
 export type NachMandateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   debits?: boolean | Prisma.NachMandate$debitsArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -1056,7 +1056,7 @@ export type $NachMandatePayload<ExtArgs extends runtime.Types.Extensions.Interna
     accountNumber: string
     ifscCode: string
     maxDebitAmount: number
-    StartDate: Date
+    startDate: Date
     endDate: Date
     status: $Enums.NachStatus
     failureCount: number
@@ -1440,7 +1440,7 @@ export interface NachMandateFieldRefs {
   readonly accountNumber: Prisma.FieldRef<"NachMandate", 'String'>
   readonly ifscCode: Prisma.FieldRef<"NachMandate", 'String'>
   readonly maxDebitAmount: Prisma.FieldRef<"NachMandate", 'Float'>
-  readonly StartDate: Prisma.FieldRef<"NachMandate", 'DateTime'>
+  readonly startDate: Prisma.FieldRef<"NachMandate", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"NachMandate", 'DateTime'>
   readonly status: Prisma.FieldRef<"NachMandate", 'NachStatus'>
   readonly failureCount: Prisma.FieldRef<"NachMandate", 'Int'>

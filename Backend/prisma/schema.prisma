@@ -926,7 +926,7 @@ model NachMandate {
   accountNumber     String
   ifscCode          String
   maxDebitAmount    Float
-  StartDate         DateTime
+  startDate         DateTime
   endDate           DateTime
   status            NachStatus      @default(PENDING)
   failureCount      Int             @default(0)

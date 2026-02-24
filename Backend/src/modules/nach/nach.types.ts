@@ -6,6 +6,5 @@ export interface CreateNachMandateInput {
     accountHolderName: string;
     startDate: Date;
     endDate: Date;
-    frequency: "MONTHLY" | "QUARTERLY" | "HALF_YEARLY" | "YEARLY";
     amount: number;
 }

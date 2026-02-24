@@ -3336,7 +3336,7 @@ export const NachMandateScalarFieldEnum = {
   accountNumber: 'accountNumber',
   ifscCode: 'ifscCode',
   maxDebitAmount: 'maxDebitAmount',
-  StartDate: 'StartDate',
+  startDate: 'startDate',
   endDate: 'endDate',
   status: 'status',
   failureCount: 'failureCount',

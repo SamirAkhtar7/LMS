@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import {
-  activeteMandateService,
+  activateMandateService,
   cancelMandateService,
   createNachMandateService,
   getMandateByLoanApplicationIdService,
@@ -30,19 +30,26 @@ export const createNachMandateController = async (
   }
 };
 
-export const activeteMandateController = async (
+export const activateMandateController = async (
   req: Request,
   res: Response,
 ) => {
   try {
     const mandateId = req.params.id;
-    const updatedMandate = await activeteMandateService(mandateId);
+    const updatedMandate = await activateMandateService(mandateId);
     res.status(200).json({
       success: true,
       message: "NACH mandate activated successfully",
       data: updatedMandate,
     });
   } catch (error: any) {
+    if (error.message?.includes("Mandate not found")) {
+      return res.status(404).json({
+        success: false,
+        message: "Mandate not found",
+        error: error.message || "NOT_FOUND",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to activate NACH mandate",
@@ -61,6 +68,13 @@ export const suspendMandateController = async (req: Request, res: Response) => {
       data: updatedMandate,
     });
   } catch (error: any) {
+    if (error.message?.includes("Mandate not found")) {
+      return res.status(404).json({
+        success: false,
+        message: "Mandate not found",
+        error: error.message || "NOT_FOUND",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to suspend NACH mandate",
@@ -79,6 +93,13 @@ export const cancelMandateController = async (req: Request, res: Response) => {
       data: mandate,
     });
   } catch (error: any) {
+    if (error.message?.includes("Mandate not found")) {
+      return res.status(404).json({
+        success: false,
+        message: "Mandate not found",
+        error: error.message || "NOT_FOUND",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to cancel NACH mandate",
@@ -101,6 +122,13 @@ export const getMandateByLoanApplicationIdController = async (
       data: mandate,
     });
   } catch (error: any) {
+    if (error.message?.includes("Mandate not found")) {
+      return res.status(404).json({
+        success: false,
+        message: "Mandate not found",
+        error: error.message || "NOT_FOUND",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Failed to retrieve NACH mandate",

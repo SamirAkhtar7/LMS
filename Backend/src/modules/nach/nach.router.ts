@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {
-  activeteMandateController,
+  activateMandateController,
   cancelMandateController,
   createNachMandateController,
   getMandateByLoanApplicationIdController,
@@ -25,7 +25,7 @@ nachRouter.post(
 nachRouter.post(
   "/:id/activate",
   checkPermissionMiddleware("ACTIVATE_NACH_MANDATE"),
-  activeteMandateController,
+  activateMandateController,
 );
 
 nachRouter.post(
