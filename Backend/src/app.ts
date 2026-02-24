@@ -6,6 +6,7 @@ import cors from "cors";
 import { startEmiOverdueJob } from "./jobs/emiOverdue.job.js";
 import { runLoanDefaultCron } from "./jobs/jobs.controller.js";
 import { startSlaScheduler } from "./modules/sla/sla.cron.js";
+import { startNachAutoDebitJob } from "./jobs/nachDebit.job.js";
 const app = express();
 
 // Start the EMI overdue job scheduler
@@ -14,6 +15,8 @@ startEmiOverdueJob();
 runLoanDefaultCron();
 // Start the SLA scheduler
 startSlaScheduler();
+// Start the NACH auto-debit job
+startNachAutoDebitJob();
 
 app.use(
   cors({
