@@ -81,7 +81,9 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   SLAPolicy: 'SLAPolicy',
   SLABreachLog: 'SLABreachLog',
-  LoanDisbursement: 'LoanDisbursement'
+  LoanDisbursement: 'LoanDisbursement',
+  NachMandate: 'NachMandate',
+  NachDebit: 'NachDebit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -775,6 +777,40 @@ export const LoanDisbursementScalarFieldEnum = {
 export type LoanDisbursementScalarFieldEnum = (typeof LoanDisbursementScalarFieldEnum)[keyof typeof LoanDisbursementScalarFieldEnum]
 
 
+export const NachMandateScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  customerId: 'customerId',
+  bankName: 'bankName',
+  accountNumber: 'accountNumber',
+  ifscCode: 'ifscCode',
+  maxDebitAmount: 'maxDebitAmount',
+  StartDate: 'StartDate',
+  endDate: 'endDate',
+  status: 'status',
+  failureCount: 'failureCount',
+  lastDebitDate: 'lastDebitDate'
+} as const
+
+export type NachMandateScalarFieldEnum = (typeof NachMandateScalarFieldEnum)[keyof typeof NachMandateScalarFieldEnum]
+
+
+export const NachDebitScalarFieldEnum = {
+  id: 'id',
+  mandateId: 'mandateId',
+  emiId: 'emiId',
+  debitAmount: 'debitAmount',
+  debitDate: 'debitDate',
+  status: 'status',
+  bankReferenceId: 'bankReferenceId',
+  failureReason: 'failureReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NachDebitScalarFieldEnum = (typeof NachDebitScalarFieldEnum)[keyof typeof NachDebitScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1227,4 +1263,27 @@ export const LoanDisbursementOrderByRelevanceFieldEnum = {
 } as const
 
 export type LoanDisbursementOrderByRelevanceFieldEnum = (typeof LoanDisbursementOrderByRelevanceFieldEnum)[keyof typeof LoanDisbursementOrderByRelevanceFieldEnum]
+
+
+export const NachMandateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  customerId: 'customerId',
+  bankName: 'bankName',
+  accountNumber: 'accountNumber',
+  ifscCode: 'ifscCode'
+} as const
+
+export type NachMandateOrderByRelevanceFieldEnum = (typeof NachMandateOrderByRelevanceFieldEnum)[keyof typeof NachMandateOrderByRelevanceFieldEnum]
+
+
+export const NachDebitOrderByRelevanceFieldEnum = {
+  id: 'id',
+  mandateId: 'mandateId',
+  emiId: 'emiId',
+  bankReferenceId: 'bankReferenceId',
+  failureReason: 'failureReason'
+} as const
+
+export type NachDebitOrderByRelevanceFieldEnum = (typeof NachDebitOrderByRelevanceFieldEnum)[keyof typeof NachDebitOrderByRelevanceFieldEnum]
 

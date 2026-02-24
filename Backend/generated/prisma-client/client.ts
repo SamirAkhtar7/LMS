@@ -194,3 +194,13 @@ export type SLABreachLog = Prisma.SLABreachLogModel
  * 
  */
 export type LoanDisbursement = Prisma.LoanDisbursementModel
+/**
+ * Model NachMandate
+ * 
+ */
+export type NachMandate = Prisma.NachMandateModel
+/**
+ * Model NachDebit
+ * 
+ */
+export type NachDebit = Prisma.NachDebitModel

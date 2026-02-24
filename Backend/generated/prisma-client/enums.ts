@@ -32,6 +32,26 @@ export const DisbursementMode = {
 export type DisbursementMode = (typeof DisbursementMode)[keyof typeof DisbursementMode]
 
 
+export const NachStatus = {
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type NachStatus = (typeof NachStatus)[keyof typeof NachStatus]
+
+
+export const DebitStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type DebitStatus = (typeof DebitStatus)[keyof typeof DebitStatus]
+
+
 export const ReportStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',

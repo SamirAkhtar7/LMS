@@ -1000,6 +1000,40 @@ export type EnumDisbursementModeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
 }
 
+export type EnumNachStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.NachStatus | Prisma.EnumNachStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.NachStatus[]
+  notIn?: $Enums.NachStatus[]
+  not?: Prisma.NestedEnumNachStatusFilter<$PrismaModel> | $Enums.NachStatus
+}
+
+export type EnumNachStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.NachStatus | Prisma.EnumNachStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.NachStatus[]
+  notIn?: $Enums.NachStatus[]
+  not?: Prisma.NestedEnumNachStatusWithAggregatesFilter<$PrismaModel> | $Enums.NachStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumNachStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumNachStatusFilter<$PrismaModel>
+}
+
+export type EnumDebitStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DebitStatus | Prisma.EnumDebitStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DebitStatus[]
+  notIn?: $Enums.DebitStatus[]
+  not?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel> | $Enums.DebitStatus
+}
+
+export type EnumDebitStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DebitStatus | Prisma.EnumDebitStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DebitStatus[]
+  notIn?: $Enums.DebitStatus[]
+  not?: Prisma.NestedEnumDebitStatusWithAggregatesFilter<$PrismaModel> | $Enums.DebitStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -1925,6 +1959,40 @@ export type NestedEnumDisbursementModeWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDisbursementModeFilter<$PrismaModel>
+}
+
+export type NestedEnumNachStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.NachStatus | Prisma.EnumNachStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.NachStatus[]
+  notIn?: $Enums.NachStatus[]
+  not?: Prisma.NestedEnumNachStatusFilter<$PrismaModel> | $Enums.NachStatus
+}
+
+export type NestedEnumNachStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.NachStatus | Prisma.EnumNachStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.NachStatus[]
+  notIn?: $Enums.NachStatus[]
+  not?: Prisma.NestedEnumNachStatusWithAggregatesFilter<$PrismaModel> | $Enums.NachStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumNachStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumNachStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDebitStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DebitStatus | Prisma.EnumDebitStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DebitStatus[]
+  notIn?: $Enums.DebitStatus[]
+  not?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel> | $Enums.DebitStatus
+}
+
+export type NestedEnumDebitStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DebitStatus | Prisma.EnumDebitStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DebitStatus[]
+  notIn?: $Enums.DebitStatus[]
+  not?: Prisma.NestedEnumDebitStatusWithAggregatesFilter<$PrismaModel> | $Enums.DebitStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDebitStatusFilter<$PrismaModel>
 }
 
 

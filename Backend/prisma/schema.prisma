@@ -313,6 +313,7 @@ model LoanApplication {
   technicalReports     TechnicalReport[]
   legalReports         LegalReport[]
   emis                 LoanEmiSchedule[]
+  nachMandates         NachMandate[]
   commissionPayments   PartnerCommission[]
   createdById          String?
   createdBy            User?               @relation(fields: [createdById], references: [id])
@@ -515,6 +516,7 @@ model LoanEmiSchedule {
   status          EmiStatus       @default(pending)
   paidDate        DateTime?
   isDeferred      Boolean         @default(false)
+  nachDebits      NachDebit[]
   loanApplication LoanApplication @relation(fields: [loanApplicationId], references: [id])
 
   @@index([loanApplicationId, emiNo])
@@ -731,6 +733,7 @@ model Customer {
   status           CustomerStatus    @default(ACTIVE)
   loanApplications LoanApplication[]
   loanRecoveries   LoanRecovery[]
+  nachMandates     NachMandate[]
   creditReport     CreditReport?
   // kycs             CustomerKYC[]
   createdAt        DateTime          @default(now())
@@ -915,6 +918,44 @@ model LoanDisbursement {
   @@index([loanId])
 }
 
+model NachMandate {
+  id                String          @id @default(cuid())
+  loanApplicationId String
+  customerId        String
+  bankName          String
+  accountNumber     String
+  ifscCode          String
+  maxDebitAmount    Float
+  StartDate         DateTime
+  endDate           DateTime
+  status            NachStatus      @default(PENDING)
+  failureCount      Int             @default(0)
+  lastDebitDate     DateTime?
+  debits            NachDebit[]
+  customer          Customer        @relation(fields: [customerId], references: [id])
+  loanApplication   LoanApplication @relation(fields: [loanApplicationId], references: [id])
+
+  @@index([loanApplicationId])
+}
+
+model NachDebit {
+  id              String          @id @default(cuid())
+  mandateId       String
+  emiId           String
+  debitAmount     Float
+  debitDate       DateTime
+  status          DebitStatus     @default(PENDING)
+  bankReferenceId String?
+  failureReason   String?
+  mandate         NachMandate     @relation(fields: [mandateId], references: [id])
+  emiSchedule     LoanEmiSchedule @relation(fields: [emiId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([mandateId])
+  @@index([emiId])
+}
+
 // =================================ENUMS=====================================
 enum DisbursementMode {
   BANK_TRANSFER
@@ -924,6 +965,20 @@ enum DisbursementMode {
   CHEQUE
   CASH
   UPI
+}
+
+enum NachStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  FAILED
+  CANCELLED
+}
+
+enum DebitStatus {
+  PENDING
+  SUCCESS
+  FAILED
 }
 
 enum ReportStatus {

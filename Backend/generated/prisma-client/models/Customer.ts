@@ -450,6 +450,7 @@ export type CustomerWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   loanApplications?: Prisma.LoanApplicationListRelationFilter
   loanRecoveries?: Prisma.LoanRecoveryListRelationFilter
+  nachMandates?: Prisma.NachMandateListRelationFilter
   creditReport?: Prisma.XOR<Prisma.CreditReportNullableScalarRelationFilter, Prisma.CreditReportWhereInput> | null
 }
 
@@ -489,6 +490,7 @@ export type CustomerOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   loanApplications?: Prisma.LoanApplicationOrderByRelationAggregateInput
   loanRecoveries?: Prisma.LoanRecoveryOrderByRelationAggregateInput
+  nachMandates?: Prisma.NachMandateOrderByRelationAggregateInput
   creditReport?: Prisma.CreditReportOrderByWithRelationInput
   _relevance?: Prisma.CustomerOrderByRelevanceInput
 }
@@ -532,6 +534,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   loanApplications?: Prisma.LoanApplicationListRelationFilter
   loanRecoveries?: Prisma.LoanRecoveryListRelationFilter
+  nachMandates?: Prisma.NachMandateListRelationFilter
   creditReport?: Prisma.XOR<Prisma.CreditReportNullableScalarRelationFilter, Prisma.CreditReportWhereInput> | null
 }, "id">
 
@@ -651,6 +654,7 @@ export type CustomerCreateInput = {
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportCreateNestedOneWithoutCustomerInput
 }
 
@@ -690,6 +694,7 @@ export type CustomerUncheckedCreateInput = {
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateUncheckedCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportUncheckedCreateNestedOneWithoutCustomerInput
 }
 
@@ -729,6 +734,7 @@ export type CustomerUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUpdateOneWithoutCustomerNestedInput
 }
 
@@ -768,6 +774,7 @@ export type CustomerUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUncheckedUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUncheckedUpdateOneWithoutCustomerNestedInput
 }
 
@@ -1068,6 +1075,20 @@ export type EnumCustomerStatusFieldUpdateOperationsInput = {
   set?: $Enums.CustomerStatus
 }
 
+export type CustomerCreateNestedOneWithoutNachMandatesInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutNachMandatesInput, Prisma.CustomerUncheckedCreateWithoutNachMandatesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutNachMandatesInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutNachMandatesNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutNachMandatesInput, Prisma.CustomerUncheckedCreateWithoutNachMandatesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutNachMandatesInput
+  upsert?: Prisma.CustomerUpsertWithoutNachMandatesInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutNachMandatesInput, Prisma.CustomerUpdateWithoutNachMandatesInput>, Prisma.CustomerUncheckedUpdateWithoutNachMandatesInput>
+}
+
 export type CustomerCreateWithoutLoanApplicationsInput = {
   id?: string
   title: $Enums.Title
@@ -1103,6 +1124,7 @@ export type CustomerCreateWithoutLoanApplicationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportCreateNestedOneWithoutCustomerInput
 }
 
@@ -1141,6 +1163,7 @@ export type CustomerUncheckedCreateWithoutLoanApplicationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateUncheckedCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportUncheckedCreateNestedOneWithoutCustomerInput
 }
 
@@ -1195,6 +1218,7 @@ export type CustomerUpdateWithoutLoanApplicationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUpdateOneWithoutCustomerNestedInput
 }
 
@@ -1233,6 +1257,7 @@ export type CustomerUncheckedUpdateWithoutLoanApplicationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUncheckedUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUncheckedUpdateOneWithoutCustomerNestedInput
 }
 
@@ -1271,6 +1296,7 @@ export type CustomerCreateWithoutLoanRecoveriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportCreateNestedOneWithoutCustomerInput
 }
 
@@ -1309,6 +1335,7 @@ export type CustomerUncheckedCreateWithoutLoanRecoveriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateUncheckedCreateNestedManyWithoutCustomerInput
   creditReport?: Prisma.CreditReportUncheckedCreateNestedOneWithoutCustomerInput
 }
 
@@ -1363,6 +1390,7 @@ export type CustomerUpdateWithoutLoanRecoveriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUpdateOneWithoutCustomerNestedInput
 }
 
@@ -1401,6 +1429,7 @@ export type CustomerUncheckedUpdateWithoutLoanRecoveriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUncheckedUpdateManyWithoutCustomerNestedInput
   creditReport?: Prisma.CreditReportUncheckedUpdateOneWithoutCustomerNestedInput
 }
 
@@ -1440,6 +1469,7 @@ export type CustomerCreateWithoutCreditReportInput = {
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
   loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutCreditReportInput = {
@@ -1478,6 +1508,7 @@ export type CustomerUncheckedCreateWithoutCreditReportInput = {
   updatedAt?: Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutCustomerInput
+  nachMandates?: Prisma.NachMandateUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutCreditReportInput = {
@@ -1532,6 +1563,7 @@ export type CustomerUpdateWithoutCreditReportInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutCreditReportInput = {
@@ -1570,6 +1602,179 @@ export type CustomerUncheckedUpdateWithoutCreditReportInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
   loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutCustomerNestedInput
+  nachMandates?: Prisma.NachMandateUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerCreateWithoutNachMandatesInput = {
+  id?: string
+  title: $Enums.Title
+  firstName: string
+  lastName: string
+  middleName?: string | null
+  gender: $Enums.Gender
+  dob: Date | string
+  aadhaarNumber?: string | null
+  panNumber?: string | null
+  voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
+  passportNumber?: string | null
+  contactNumber: string
+  alternateNumber?: string | null
+  email?: string | null
+  address: string
+  city: string
+  state: string
+  pinCode: string
+  employmentType: $Enums.EmploymentType
+  monthlyIncome?: number | null
+  annualIncome?: number | null
+  bankName?: string | null
+  bankAccountNumber?: string | null
+  otherIncome?: number | null
+  ifscCode?: string | null
+  accountType?: string | null
+  status?: $Enums.CustomerStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplications?: Prisma.LoanApplicationCreateNestedManyWithoutCustomerInput
+  loanRecoveries?: Prisma.LoanRecoveryCreateNestedManyWithoutCustomerInput
+  creditReport?: Prisma.CreditReportCreateNestedOneWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutNachMandatesInput = {
+  id?: string
+  title: $Enums.Title
+  firstName: string
+  lastName: string
+  middleName?: string | null
+  gender: $Enums.Gender
+  dob: Date | string
+  aadhaarNumber?: string | null
+  panNumber?: string | null
+  voterId?: string | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  nationality?: string | null
+  category?: $Enums.Category | null
+  spouseName?: string | null
+  passportNumber?: string | null
+  contactNumber: string
+  alternateNumber?: string | null
+  email?: string | null
+  address: string
+  city: string
+  state: string
+  pinCode: string
+  employmentType: $Enums.EmploymentType
+  monthlyIncome?: number | null
+  annualIncome?: number | null
+  bankName?: string | null
+  bankAccountNumber?: string | null
+  otherIncome?: number | null
+  ifscCode?: string | null
+  accountType?: string | null
+  status?: $Enums.CustomerStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  loanApplications?: Prisma.LoanApplicationUncheckedCreateNestedManyWithoutCustomerInput
+  loanRecoveries?: Prisma.LoanRecoveryUncheckedCreateNestedManyWithoutCustomerInput
+  creditReport?: Prisma.CreditReportUncheckedCreateNestedOneWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutNachMandatesInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutNachMandatesInput, Prisma.CustomerUncheckedCreateWithoutNachMandatesInput>
+}
+
+export type CustomerUpsertWithoutNachMandatesInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutNachMandatesInput, Prisma.CustomerUncheckedUpdateWithoutNachMandatesInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutNachMandatesInput, Prisma.CustomerUncheckedCreateWithoutNachMandatesInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutNachMandatesInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutNachMandatesInput, Prisma.CustomerUncheckedUpdateWithoutNachMandatesInput>
+}
+
+export type CustomerUpdateWithoutNachMandatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.EnumTitleFieldUpdateOperationsInput | $Enums.Title
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  employmentType?: Prisma.EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
+  monthlyIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplications?: Prisma.LoanApplicationUpdateManyWithoutCustomerNestedInput
+  loanRecoveries?: Prisma.LoanRecoveryUpdateManyWithoutCustomerNestedInput
+  creditReport?: Prisma.CreditReportUpdateOneWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutNachMandatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.EnumTitleFieldUpdateOperationsInput | $Enums.Title
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  aadhaarNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  panNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableEnumCategoryFieldUpdateOperationsInput | $Enums.Category | null
+  spouseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passportNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  employmentType?: Prisma.EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
+  monthlyIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  annualIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  otherIncome?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ifscCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  loanApplications?: Prisma.LoanApplicationUncheckedUpdateManyWithoutCustomerNestedInput
+  loanRecoveries?: Prisma.LoanRecoveryUncheckedUpdateManyWithoutCustomerNestedInput
+  creditReport?: Prisma.CreditReportUncheckedUpdateOneWithoutCustomerNestedInput
 }
 
 
@@ -1580,11 +1785,13 @@ export type CustomerUncheckedUpdateWithoutCreditReportInput = {
 export type CustomerCountOutputType = {
   loanApplications: number
   loanRecoveries: number
+  nachMandates: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplications?: boolean | CustomerCountOutputTypeCountLoanApplicationsArgs
   loanRecoveries?: boolean | CustomerCountOutputTypeCountLoanRecoveriesArgs
+  nachMandates?: boolean | CustomerCountOutputTypeCountNachMandatesArgs
 }
 
 /**
@@ -1609,6 +1816,13 @@ export type CustomerCountOutputTypeCountLoanApplicationsArgs<ExtArgs extends run
  */
 export type CustomerCountOutputTypeCountLoanRecoveriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LoanRecoveryWhereInput
+}
+
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountNachMandatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NachMandateWhereInput
 }
 
 
@@ -1648,6 +1862,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   loanApplications?: boolean | Prisma.Customer$loanApplicationsArgs<ExtArgs>
   loanRecoveries?: boolean | Prisma.Customer$loanRecoveriesArgs<ExtArgs>
+  nachMandates?: boolean | Prisma.Customer$nachMandatesArgs<ExtArgs>
   creditReport?: boolean | Prisma.Customer$creditReportArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
@@ -1694,6 +1909,7 @@ export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   loanApplications?: boolean | Prisma.Customer$loanApplicationsArgs<ExtArgs>
   loanRecoveries?: boolean | Prisma.Customer$loanRecoveriesArgs<ExtArgs>
+  nachMandates?: boolean | Prisma.Customer$nachMandatesArgs<ExtArgs>
   creditReport?: boolean | Prisma.Customer$creditReportArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1703,6 +1919,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     loanApplications: Prisma.$LoanApplicationPayload<ExtArgs>[]
     loanRecoveries: Prisma.$LoanRecoveryPayload<ExtArgs>[]
+    nachMandates: Prisma.$NachMandatePayload<ExtArgs>[]
     creditReport: Prisma.$CreditReportPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2081,6 +2298,7 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   loanApplications<T extends Prisma.Customer$loanApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$loanApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   loanRecoveries<T extends Prisma.Customer$loanRecoveriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$loanRecoveriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoanRecoveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  nachMandates<T extends Prisma.Customer$nachMandatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$nachMandatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NachMandatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   creditReport<T extends Prisma.Customer$creditReportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$creditReportArgs<ExtArgs>>): Prisma.Prisma__CreditReportClient<runtime.Types.Result.GetResult<Prisma.$CreditReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2532,6 +2750,30 @@ export type Customer$loanRecoveriesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.LoanRecoveryScalarFieldEnum | Prisma.LoanRecoveryScalarFieldEnum[]
+}
+
+/**
+ * Customer.nachMandates
+ */
+export type Customer$nachMandatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NachMandate
+   */
+  select?: Prisma.NachMandateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NachMandate
+   */
+  omit?: Prisma.NachMandateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NachMandateInclude<ExtArgs> | null
+  where?: Prisma.NachMandateWhereInput
+  orderBy?: Prisma.NachMandateOrderByWithRelationInput | Prisma.NachMandateOrderByWithRelationInput[]
+  cursor?: Prisma.NachMandateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NachMandateScalarFieldEnum | Prisma.NachMandateScalarFieldEnum[]
 }
 
 /**

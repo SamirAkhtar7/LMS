@@ -414,7 +414,9 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   SLAPolicy: 'SLAPolicy',
   SLABreachLog: 'SLABreachLog',
-  LoanDisbursement: 'LoanDisbursement'
+  LoanDisbursement: 'LoanDisbursement',
+  NachMandate: 'NachMandate',
+  NachDebit: 'NachDebit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "partnerCommission" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog" | "loanDisbursement"
+    modelProps: "loanNumberCounter" | "user" | "userProfile" | "admin" | "employee" | "partner" | "partnerCommission" | "branch" | "leads" | "loanApplication" | "loanRecovery" | "recoveryPayment" | "permission" | "userPermission" | "document" | "kyc" | "coApplicant" | "loanEmiSchedule" | "emiPayment" | "emiMoratorium" | "creditReport" | "creditAccount" | "loanType" | "customer" | "technicalReport" | "legalReport" | "loanAssignment" | "auditLog" | "sLAPolicy" | "sLABreachLog" | "loanDisbursement" | "nachMandate" | "nachDebit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2480,6 +2482,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NachMandate: {
+      payload: Prisma.$NachMandatePayload<ExtArgs>
+      fields: Prisma.NachMandateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NachMandateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NachMandateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        findFirst: {
+          args: Prisma.NachMandateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NachMandateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        findMany: {
+          args: Prisma.NachMandateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>[]
+        }
+        create: {
+          args: Prisma.NachMandateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        createMany: {
+          args: Prisma.NachMandateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.NachMandateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        update: {
+          args: Prisma.NachMandateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        deleteMany: {
+          args: Prisma.NachMandateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NachMandateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.NachMandateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachMandatePayload>
+        }
+        aggregate: {
+          args: Prisma.NachMandateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNachMandate>
+        }
+        groupBy: {
+          args: Prisma.NachMandateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NachMandateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NachMandateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NachMandateCountAggregateOutputType> | number
+        }
+      }
+    }
+    NachDebit: {
+      payload: Prisma.$NachDebitPayload<ExtArgs>
+      fields: Prisma.NachDebitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NachDebitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NachDebitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        findFirst: {
+          args: Prisma.NachDebitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NachDebitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        findMany: {
+          args: Prisma.NachDebitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>[]
+        }
+        create: {
+          args: Prisma.NachDebitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        createMany: {
+          args: Prisma.NachDebitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.NachDebitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        update: {
+          args: Prisma.NachDebitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        deleteMany: {
+          args: Prisma.NachDebitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NachDebitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.NachDebitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NachDebitPayload>
+        }
+        aggregate: {
+          args: Prisma.NachDebitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNachDebit>
+        }
+        groupBy: {
+          args: Prisma.NachDebitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NachDebitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NachDebitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NachDebitCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3194,6 +3328,40 @@ export const LoanDisbursementScalarFieldEnum = {
 export type LoanDisbursementScalarFieldEnum = (typeof LoanDisbursementScalarFieldEnum)[keyof typeof LoanDisbursementScalarFieldEnum]
 
 
+export const NachMandateScalarFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  customerId: 'customerId',
+  bankName: 'bankName',
+  accountNumber: 'accountNumber',
+  ifscCode: 'ifscCode',
+  maxDebitAmount: 'maxDebitAmount',
+  StartDate: 'StartDate',
+  endDate: 'endDate',
+  status: 'status',
+  failureCount: 'failureCount',
+  lastDebitDate: 'lastDebitDate'
+} as const
+
+export type NachMandateScalarFieldEnum = (typeof NachMandateScalarFieldEnum)[keyof typeof NachMandateScalarFieldEnum]
+
+
+export const NachDebitScalarFieldEnum = {
+  id: 'id',
+  mandateId: 'mandateId',
+  emiId: 'emiId',
+  debitAmount: 'debitAmount',
+  debitDate: 'debitDate',
+  status: 'status',
+  bankReferenceId: 'bankReferenceId',
+  failureReason: 'failureReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NachDebitScalarFieldEnum = (typeof NachDebitScalarFieldEnum)[keyof typeof NachDebitScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3648,6 +3816,29 @@ export const LoanDisbursementOrderByRelevanceFieldEnum = {
 export type LoanDisbursementOrderByRelevanceFieldEnum = (typeof LoanDisbursementOrderByRelevanceFieldEnum)[keyof typeof LoanDisbursementOrderByRelevanceFieldEnum]
 
 
+export const NachMandateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  loanApplicationId: 'loanApplicationId',
+  customerId: 'customerId',
+  bankName: 'bankName',
+  accountNumber: 'accountNumber',
+  ifscCode: 'ifscCode'
+} as const
+
+export type NachMandateOrderByRelevanceFieldEnum = (typeof NachMandateOrderByRelevanceFieldEnum)[keyof typeof NachMandateOrderByRelevanceFieldEnum]
+
+
+export const NachDebitOrderByRelevanceFieldEnum = {
+  id: 'id',
+  mandateId: 'mandateId',
+  emiId: 'emiId',
+  bankReferenceId: 'bankReferenceId',
+  failureReason: 'failureReason'
+} as const
+
+export type NachDebitOrderByRelevanceFieldEnum = (typeof NachDebitOrderByRelevanceFieldEnum)[keyof typeof NachDebitOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -3933,6 +4124,20 @@ export type EnumAssignedRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 export type EnumDisbursementModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisbursementMode'>
     
 
+
+/**
+ * Reference to a field of type 'NachStatus'
+ */
+export type EnumNachStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NachStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DebitStatus'
+ */
+export type EnumDebitStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DebitStatus'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -4059,6 +4264,8 @@ export type GlobalOmitConfig = {
   sLAPolicy?: Prisma.SLAPolicyOmit
   sLABreachLog?: Prisma.SLABreachLogOmit
   loanDisbursement?: Prisma.LoanDisbursementOmit
+  nachMandate?: Prisma.NachMandateOmit
+  nachDebit?: Prisma.NachDebitOmit
 }
 
 /* Types for Logging */
