@@ -9,14 +9,18 @@ import { startSlaScheduler } from "./modules/sla/sla.cron.js";
 import { startNachAutoDebitJob } from "./jobs/nachDebit.job.js";
 const app = express();
 
-// Start the EMI overdue job scheduler
-startEmiOverdueJob();
-// Start the Loan Default cron job (you might want to schedule this as well)
-runLoanDefaultCron();
-// Start the SLA scheduler
-startSlaScheduler();
-// Start the NACH auto-debit job
-startNachAutoDebitJob();
+async function  bootstrap() {
+  try {
+    await startEmiOverdueJob();
+    await runLoanDefaultCron();
+    await startSlaScheduler();
+    await startNachAutoDebitJob();
+  } catch (err) {
+    console.error("Critical job startup failure:", err);
+    process.exit(1);
+  }
+}
+bootstrap();
 
 app.use(
   cors({
