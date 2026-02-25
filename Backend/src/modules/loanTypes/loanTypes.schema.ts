@@ -6,7 +6,7 @@ import {
   LoanTypes,
 } from "../../../generated/prisma-client/enums.js";
 
-export const createLoanTypeSchema = z.object({
+const loanTypeBaseSchema = z.object({
   code: z.string().trim().uppercase().min(3).max(50),
   name: z.string().trim().min(3).max(100),
   description: z.string().optional(),
@@ -50,21 +50,65 @@ export const createLoanTypeSchema = z.object({
 
   estimatedProcessingTimeDays: z.number().int().positive().optional(),
   documentsRequired: z.string().optional(),
-}).refine((data) => data.maxInterestRate >= data.minInterestRate, {
-  message: "maxInterestRate must be greater than or equal to minInterestRate",
-  path: ["maxInterestRate"],
-}).refine(
-  (data) =>
-    data.defaultInterestRate >= data.minInterestRate &&
-    data.defaultInterestRate <= data.maxInterestRate,
-  {
-    message:
-      "defaultInterestRate must be within minInterestRate and maxInterestRate",
-    path: ["defaultInterestRate"],
-  }
-);
+});
 
-export const updateLoanTypeSchema = createLoanTypeSchema.partial();
+export const createLoanTypeSchema = loanTypeBaseSchema.superRefine((data, ctx) => {
+  const min = data.minInterestRate;
+  const max = data.maxInterestRate;
+  const def = data.defaultInterestRate;
+
+  if (min === undefined || max === undefined || def === undefined) {
+    return;
+  }
+
+  if (max < min) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "maxInterestRate must be greater than or equal to minInterestRate",
+      path: ["maxInterestRate"],
+    });
+  }
+
+  if (def < min || def > max) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message:
+        "defaultInterestRate must be within minInterestRate and maxInterestRate",
+      path: ["defaultInterestRate"],
+    });
+  }
+});
+
+export const updateLoanTypeSchema = loanTypeBaseSchema
+  .partial()
+  .superRefine((data, ctx) => {
+    const min = data.minInterestRate;
+    const max = data.maxInterestRate;
+    const def = data.defaultInterestRate;
+
+    if (min !== undefined && max !== undefined && max < min) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "maxInterestRate must be greater than or equal to minInterestRate",
+        path: ["maxInterestRate"],
+      });
+    }
+
+    if (
+      min !== undefined &&
+      max !== undefined &&
+      def !== undefined &&
+      (def < min || def > max)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "defaultInterestRate must be within minInterestRate and maxInterestRate",
+        path: ["defaultInterestRate"],
+      });
+    }
+  });
 
 export const loanTypeIdSchema = z.object({
   id: z.string().cuid(),

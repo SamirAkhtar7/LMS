@@ -456,3 +456,44 @@ export const buildKycSearch = (q?: string) => {
     ],
   };
 };
+
+
+export const buildCreditReportSearch = (q?: string) => {
+  if (!q) return {};
+  return {
+    OR: [
+      {
+        customer: {
+          loanApplications: {
+            some: {
+              loanNumber: {
+                contains: q,
+              },
+            },
+          },
+        },
+      },
+      {
+        customer: {
+          aadhaarNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        customer: {
+          panNumber: {
+            contains: q,
+          },
+        },
+      },
+      {
+        customer: {
+          contactNumber: {
+            contains: q,
+          },
+        },
+      },
+    ],
+  };
+};

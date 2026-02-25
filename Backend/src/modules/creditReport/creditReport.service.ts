@@ -2,6 +2,7 @@ import { prisma } from "../../db/prismaService.js";
 import { CreditProvider } from "./providers/creditProvider.interface.js";
 import { getCreditProvider } from "./creditProvider.factory.js";
 import { logAction } from "../../audit/audit.helper.js";
+import { buildCreditReportSearch } from "../../common/utils/search.js";
 
 const creditProvider = getCreditProvider();
 
@@ -156,7 +157,7 @@ export const getOrCreateCreditReport = async (
 };
 
 export const refreshCreditReportService = async (
-  customerId: string,
+  params: { customerId?: string; q?: string },
   provider: typeof creditProvider,
   meta: {
     requestedBy: string;
@@ -164,9 +165,27 @@ export const refreshCreditReportService = async (
     reason: string;
   },
 ) => {
+  let resolvedCustomerId = params.customerId;
+  if (!resolvedCustomerId) {
+    if (!params.q) {
+      throw new Error("Customer ID or search query is required");
+    }
+    const existingReport = await prisma.creditReport.findFirst({
+      where: {
+        isValid: true,
+        ...buildCreditReportSearch(params.q),
+      },
+      orderBy: { createdAt: "desc" },
+      select: { customerId: true },
+    });
+    if (!existingReport) {
+      throw new Error("No credit report found for the search query");
+    }
+    resolvedCustomerId = existingReport.customerId;
+  }
   // Validate customer exists
   const customer = await prisma.customer.findUnique({
-    where: { id: customerId },
+    where: { id: resolvedCustomerId },
   });
 
   if (!customer) {
@@ -175,7 +194,7 @@ export const refreshCreditReportService = async (
   // Fetch existing credit report before invalidating
   const existingReport = await prisma.creditReport.findFirst({
     where: {
-      customerId,
+      customerId: resolvedCustomerId,
       isValid: true,
     },
     orderBy: { createdAt: "desc" },
@@ -183,7 +202,7 @@ export const refreshCreditReportService = async (
 
   await prisma.creditReport.updateMany({
     where: {
-      customerId,
+      customerId: resolvedCustomerId,
       isValid: true,
     },
     data: {
@@ -195,13 +214,13 @@ export const refreshCreditReportService = async (
   // Fetch new report
 
   const report = await provider.fetchCreditReport({
-    customerId,
+    customerId: resolvedCustomerId,
   });
 
   let saved;
   try {
     saved = await prisma.creditReport.upsert({
-      where: { customerId },
+      where: { customerId: resolvedCustomerId },
       update: {
         provider: "CIBIL",
         creditScore: report.creditScore,
@@ -229,7 +248,7 @@ export const refreshCreditReportService = async (
         },
       },
       create: {
-        customerId,
+        customerId: resolvedCustomerId,
         provider: "CIBIL",
         creditScore: report.creditScore,
         totalAtiveLoans: report.totalActiveLoans,
@@ -259,7 +278,7 @@ export const refreshCreditReportService = async (
   } catch (err: any) {
     if (err?.code === "P2002") {
       const existing = await prisma.creditReport.findFirst({
-        where: { customerId, isValid: true },
+        where: { customerId: resolvedCustomerId, isValid: true },
         include: { creditAccount: true },
         orderBy: { createdAt: "desc" },
       });
