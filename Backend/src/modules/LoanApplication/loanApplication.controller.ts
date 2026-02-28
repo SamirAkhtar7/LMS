@@ -15,6 +15,7 @@ import {
 import { prisma } from "../../db/prismaService.js";
 
 import { cleanupFiles } from "../../common/utils/cleanup.js";
+import path from "path/win32";
 
 export const createLoanApplicationController = async (
   req: Request,
@@ -52,7 +53,7 @@ export const getAllLoanApplicationsController = async (
     const result = await getAllLoanApplicationsService({
       page: Number(req.query.page),
       limit: Number(req.query.limit),
-      q: req.query.q?.toString(),
+      q: typeof req.query.q === 'string' ? req.query.q : undefined,
       user: {
         id: req.user.id,
         role: req.user.role as any,
@@ -77,8 +78,9 @@ export const getLoanApplicationByIdController = async (
   res: Response,
 ) => {
   try {
+    const loanApplicationId = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const loanApplication = await getLoanApplicationByIdService(
-      req.params.id,
+      loanApplicationId,
       req.user ? { id: req.user.id, role: req.user.role as any } : undefined,
     );
     res.status(200).json({
@@ -101,7 +103,7 @@ export const updateLoanApplicationStatusController = async (
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const { status } = req.body;
     const updatedLoanApplication = await updateLoanApplicationStatusService(
       id,
@@ -132,7 +134,7 @@ export const uploadLoanDocumentsController = async (
     });
   }
 
-  const loanApplicationId = req.params.id;
+  const loanApplicationId = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
   const userId = req.user.id;
   const files = req.files as Express.Multer.File[];
 
@@ -150,9 +152,16 @@ export const uploadLoanDocumentsController = async (
       where: { id: loanApplicationId },
       include: {
         kyc: true,
-        loanType: true,
       },
     });
+
+    /* Fetch loanType separately (not a relation in schema) */
+    let loanType = null;
+    if (loanApplication?.loanTypeId) {
+      loanType = await prisma.loanType.findUnique({
+        where: { id: loanApplication.loanTypeId },
+      });
+    }
 
     if (!loanApplication) {
       cleanupFiles(files);
@@ -172,9 +181,9 @@ export const uploadLoanDocumentsController = async (
 
     /* ---------------- 3️⃣ Required documents check ---------------- */
     const requiredDocuments =
-      loanApplication.loanType?.documentsRequired
+      loanType?.documentsRequired
         ?.split(",")
-        .map((d) => d.trim()) || [];
+        .map((d: string) => d.trim()) || [];
 
     if (requiredDocuments.length === 0) {
       cleanupFiles(files);
@@ -199,11 +208,19 @@ export const uploadLoanDocumentsController = async (
     }
 
     /* ---------------- 4️⃣ Build payload and save documents (service handles create/update) ---------------- */
-    const documentsPayload = files.map((file) => ({
-      documentType: file.fieldname,
-      documentPath: file.path,
-      uploadedBy: userId,
-    }));
+const documentsPayload = files.map((file) => {
+  const relativePath = path.join(
+    "public",
+    "uploads",
+    path.basename(file.path),
+  );
+
+  return {
+    documentType: file.fieldname,
+    documentPath: relativePath.replace(/\\/g, "/"), // fix Windows paths
+    uploadedBy: userId,
+  };
+});
 
     /* Save documents */
     const documents = await uploadLoanDocumentsService(
@@ -231,7 +248,7 @@ export const verifyDocumentController = async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const documentId = req.params.id;
+    const documentId = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const doc = await verifyDocumentService(documentId, req.user.id);
     res.status(200).json({
       success: true,
@@ -251,7 +268,7 @@ export const rejectDocumentController = async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const documentId = req.params.id;
+    const documentId = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const { reason } = req.body;
     if (!reason) {
       return res
@@ -277,7 +294,7 @@ export const reviewLoanController = async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
 
     const loan = await reviewLoanService(id);
 
@@ -299,7 +316,7 @@ export const approveLoanController = async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const approvedBy = req.user.id;
     const data = req.body;
 
@@ -323,7 +340,7 @@ export const rejectLoanController = async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    const { id } = req.params;
+    const id = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
     const { reason } = req.body;
     const rejectedBy = req.user.id;
 
@@ -355,7 +372,8 @@ export const reuploadLoanDocumentController = async (
   next: Function,
 ) => {
   try {
-    const { loanApplicationId, documentType } = req.params;
+    const loanApplicationId = typeof req.params.loanApplicationId === 'string' ? req.params.loanApplicationId : (Array.isArray(req.params.loanApplicationId) ? req.params.loanApplicationId[0] : '');
+    const documentType = typeof req.params.documentType === 'string' ? req.params.documentType : (Array.isArray(req.params.documentType) ? req.params.documentType[0] : '');
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }

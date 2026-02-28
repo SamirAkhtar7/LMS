@@ -12,11 +12,12 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + randomUUID();
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
-  },
+ filename: function (req, file, cb) {
+  const shortId = randomUUID().slice(0, 8); // only 8 chars
+  const ext = path.extname(file.originalname);
+  cb(null, `${file.fieldname}-${shortId}${ext}`);
+},
+  
 });
 
 const fileFilter = function (
