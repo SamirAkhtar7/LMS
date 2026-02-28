@@ -445,6 +445,19 @@ export async function rejectDocumentService(
   return document;
 }
 
+
+export async function  getAlldoumentsforLoanApplicationService(loanApplicationId: string) {
+  try {
+    const documents = await prisma.document.findMany({
+      where: { loanApplicationId },
+      orderBy: { createdAt: "asc" },
+    });
+    return documents;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const reuploadLoanDocumentService = async (
   loanApplicationId: string,
   documentType: string,

@@ -11,6 +11,7 @@ import {
   verifyDocumentService,
   rejectDocumentService,
   reuploadLoanDocumentService,
+  getAlldoumentsforLoanApplicationService
 } from "./loanApplication.service.js";
 import { prisma } from "../../db/prismaService.js";
 
@@ -256,6 +257,28 @@ export const verifyDocumentController = async (req: Request, res: Response) => {
     res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Document verification failed",
+    });
+  }
+};
+
+
+
+export const getAlldoumentsforLoanApplicationController = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const loanApplicationId = typeof req.params.id === 'string' ? req.params.id : (Array.isArray(req.params.id) ? req.params.id[0] : '');
+    const documents = await getAlldoumentsforLoanApplicationService(loanApplicationId);
+    res.status(200).json({
+      success: true,
+      message: "Documents retrieved successfully",
+      data: documents,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Failed to retrieve documents",
     });
   }
 };

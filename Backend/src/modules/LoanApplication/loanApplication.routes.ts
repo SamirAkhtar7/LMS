@@ -12,6 +12,7 @@ import {
   verifyDocumentController,
   rejectDocumentController,
   reuploadLoanDocumentController,
+  getAlldoumentsforLoanApplicationController,
 } from "./loanApplication.controller.js";
 import { validate } from "../../common/middlewares/zod.middleware.js";
 import {
@@ -103,6 +104,15 @@ loanApplicationRouter.post(
   rejectDocumentController,
 );
 
+
+loanApplicationRouter.get(
+  "/:id/documents",
+  authMiddleware,
+  validate(loanApplicationIdParamSchema, "params"),
+  checkPermissionMiddleware("VIEW_LOAN_APPLICATION"),
+  getAlldoumentsforLoanApplicationController
+);
+  
 loanApplicationRouter.post(
   "/loans/:loanId/check-default",
   authMiddleware,
