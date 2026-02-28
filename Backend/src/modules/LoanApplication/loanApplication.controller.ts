@@ -15,7 +15,7 @@ import {
 import { prisma } from "../../db/prismaService.js";
 
 import { cleanupFiles } from "../../common/utils/cleanup.js";
-import path from "path/win32";
+import path from "path";
 
 export const createLoanApplicationController = async (
   req: Request,
@@ -208,19 +208,16 @@ export const uploadLoanDocumentsController = async (
     }
 
     /* ---------------- 4️⃣ Build payload and save documents (service handles create/update) ---------------- */
-const documentsPayload = files.map((file) => {
-  const relativePath = path.join(
-    "public",
-    "uploads",
-    path.basename(file.path),
-  );
+    const documentsPayload = files.map((file) => {
+      // Store path as accessible URL: /public/uploads/filename
+      const relativePath = `/public/uploads/${path.basename(file.path)}`;
 
-  return {
-    documentType: file.fieldname,
-    documentPath: relativePath.replace(/\\/g, "/"), // fix Windows paths
-    uploadedBy: userId,
-  };
-});
+      return {
+        documentType: file.fieldname,
+        documentPath: relativePath,
+        uploadedBy: userId,
+      };
+    });
 
     /* Save documents */
     const documents = await uploadLoanDocumentsService(
@@ -388,7 +385,7 @@ export const reuploadLoanDocumentController = async (
       documentType,
       {
         filename: req.file.filename,
-        path: req.file.path,
+        path: `/public/uploads/${req.file.filename}`,
         uploadedBy: req.user.id,
       },
     );

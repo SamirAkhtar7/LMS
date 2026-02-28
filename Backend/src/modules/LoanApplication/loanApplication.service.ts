@@ -472,11 +472,13 @@ export const reuploadLoanDocumentService = async (
     }
     /* 2️⃣ Delete old file from disk */
     if (existingDoc.documentPath) {
-      const oldFilePath = path.join(
-        process.cwd(),
-        "public",
-        existingDoc.documentPath,
-      );
+      // Handle path format: /public/uploads/filename or /uploads/filename
+      let filePath = existingDoc.documentPath;
+      // Remove leading slash if present
+      if (filePath.startsWith('/')) {
+        filePath = filePath.slice(1);
+      }
+      const oldFilePath = path.join(process.cwd(), filePath);
 
       try {
         fs.unlinkSync(oldFilePath);
@@ -491,7 +493,7 @@ export const reuploadLoanDocumentService = async (
     const updatedDocument = await tx.document.update({
       where: { id: existingDoc.id },
       data: {
-        documentPath: `/uploads/${file.filename}`,
+        documentPath: file.path,
         uploadedBy: file.uploadedBy,
         verificationStatus: "pending",
         rejectionReason: null,

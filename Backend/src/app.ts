@@ -3,6 +3,7 @@ import routes from "./routes.js";
 import cookieParser from "cookie-parser";
 import multer from "multer";
 import cors from "cors";
+import path from "path";
 import { startEmiOverdueJob } from "./jobs/emiOverdue.job.js";
 import { runLoanDefaultCron } from "./jobs/jobs.controller.js";
 import { startSlaScheduler } from "./modules/sla/sla.cron.js";
@@ -35,6 +36,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// ✅ Add static file serving for uploads
+app.use("/public", express.static(path.join(process.cwd(), "public")));
+
 app.use("/api", routes);
 
 // Multer / upload error handler (returns JSON instead of HTML)
