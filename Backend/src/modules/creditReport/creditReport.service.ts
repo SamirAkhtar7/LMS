@@ -166,23 +166,24 @@ export const refreshCreditReportService = async (
   },
 ) => {
   let resolvedCustomerId = params.customerId;
-  if (!resolvedCustomerId) {
-    if (!params.q) {
-      throw new Error("Customer ID or search query is required");
-    }
-    const existingReport = await prisma.creditReport.findFirst({
-      where: {
-        isValid: true,
-        ...buildCreditReportSearch(params.q),
-      },
-      orderBy: { createdAt: "desc" },
-      select: { customerId: true },
-    });
-    if (!existingReport) {
-      throw new Error("No credit report found for the search query");
-    }
-    resolvedCustomerId = existingReport.customerId;
+ if (!resolvedCustomerId) {
+  if (!params.q) {
+    throw new Error("Customer ID or search query is required");
   }
+
+  const existingReport = await prisma.creditReport.findFirst({
+    where: {
+      isValid: true,
+      ...buildCreditReportSearch(params.q),
+    },
+  });
+
+  if (!existingReport) {
+    throw new Error("No credit report found for the search query");
+  }
+
+  resolvedCustomerId = existingReport.customerId;
+}
   // Validate customer exists
   const customer = await prisma.customer.findUnique({
     where: { id: resolvedCustomerId },
