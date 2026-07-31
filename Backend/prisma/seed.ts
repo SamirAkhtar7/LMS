@@ -2,7 +2,6 @@ import { hashPassword } from "../src/common/utils/utils.ts";
 import { prisma } from "../src/db/prismaService.ts";
 import { PERMISSIONS } from "../src/common/constants/permission.ts";
 
-
 async function main(): Promise<void> {
   const now: Date = new Date();
 
